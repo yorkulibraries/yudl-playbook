@@ -95,7 +95,3 @@
 - src: https://github.com/Islandora-Devops/ansible-role-keymaster
   name: Islandora-Devops.keymaster
   version: main
-
-- src: https://github.com/Islandora-Devops/ansible-role-matomo
-  name: Islandora-Devops.matomo
-  version: main

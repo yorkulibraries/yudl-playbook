@@ -51,7 +51,3 @@ You have to select the islandora namespace in the [namespaces tab](http://localh
 ### FITS
 
 You can access the FITS Web Service at http://omega.library.yorku.ca:8080/fits/  
-
-### Matomo
-
-The Playbook installs an instance of the [Matomo](https://matomo.org/) (formally PIWIK) web analytics platform. You can access your instance at: http://omega.library.yorku.ca/matomo
