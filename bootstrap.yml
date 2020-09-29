@@ -71,11 +71,11 @@
       stat:
         path: "{{ drupal_composer_install_dir }}/web/sites/default/"
       register: defaultdir_exists
-   
-    # if we are re-running, change the perms on the default dir so composer 
-    # doesn't error out.   
-    - name: Set writable perms on the default/ directory 
-      file: 
+
+    # if we are re-running, change the perms on the default dir so composer
+    # doesn't error out.
+    - name: Set writable perms on the default/ directory
+      file:
         path: "{{ drupal_composer_install_dir }}/web/sites/default/"
         mode: u+rw
         recurse: yes

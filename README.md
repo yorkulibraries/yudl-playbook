@@ -7,14 +7,16 @@ This is an Ansible playbook for Islandora 8 for York University Libraries. It is
 
 ## Use
 
+1. `ansible-galaxy install -r requirements.yml`
+2. `ansible-playbook --ask-vault-pass -i inventory/yudl8 playbook.yml -e "islandora_distro=ubuntu/bionic64" --extra-vars "ansible_sudo_pass=somepassword"`
+
 Detailed installation and usage instructions can be found on the [official installation documentation for Islandora 8](https://islandora.github.io/documentation/installation/playbook/).
 
 ## Connect
 
 You can connect to the machine via the browser at [http://omega.library.yorku.ca](http://omega.library.yorku.ca).
 
-
-### Fedora5
+### Fedora
 
 The Fedora 5 REST API can be accessed at [http://omega.library.yorku.ca:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest). 
 
