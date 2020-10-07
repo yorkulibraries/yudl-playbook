@@ -72,4 +72,4 @@ cantaloupe_cache_source: FilesystemCache
 cantaloupe_cache_derivative: FilesystemCache
 cantaloupe_create_FilesystemCache_dir: yes
 cantaloupe_resolver_static: HttpResolver
-cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: "http://omega.library.yorku.ca"
+cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: ""
