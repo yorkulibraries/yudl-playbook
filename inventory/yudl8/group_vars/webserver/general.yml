@@ -3,3 +3,8 @@
 webserver_app: yes
 openseadragon_iiiv_set_var: yes
 openseadragon_iiiv_server: "http://omega.library.yorku.ca:8080/cantaloupe/iiif/2"
+php_upload_max_filesize: 2056M
+php_post_max_size: 2056M
+php_max_input_time: 100
+php_max_execution_time: 100
+php_date_timezone: "America/Toronto"
