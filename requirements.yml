@@ -40,9 +40,9 @@
 - src: geerlingguy.drush
   version: 3.1.1
 
-- src: https://github.com/Islandora-Devops/ansible-role-activemq
+- src: https://github.com/yorkulibraries/ansible-role-activemq
   name: Islandora-Devops.activemq
-  version: main
+  version: omega
 
 - src: https://github.com/Islandora-Devops/ansible-role-alpaca
   name: Islandora-Devops.alpaca
