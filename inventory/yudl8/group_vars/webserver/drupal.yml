@@ -21,6 +21,7 @@ drupal_composer_dependencies:
   - "islandora/carapace:3.0.0"
   - "islandora/islandora_defaults:1.1.1"
   - "islandora-rdm/islandora_fits:dev-master"
+  - "drupal/ldap:^4.0@alpha"
 drupal_composer_project_package: "islandora/drupal-project:8.8.1"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
@@ -39,7 +40,6 @@ drupal_enable_modules:
   - serialization
   - basic_auth
   - rest
-  - simpletest
   - restui
   - devel
   - search_api_solr
@@ -58,6 +58,9 @@ drupal_enable_modules:
   - islandora_iiif
   - islandora_oaipmh
   - islandora_search
+  - ldap_authentication
+  - ldap_user
+  - permissions_by_term
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"

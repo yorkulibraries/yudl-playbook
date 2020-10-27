@@ -1,0 +1,5 @@
+PATH=$HOME/bin:$PATH:$HOME/bin:/var/www/html/drupal/vendor/bin
+
+HISTFILE=~/.bash_history
+HISTSIZE=100000
+HISTFILESIZE=999999
