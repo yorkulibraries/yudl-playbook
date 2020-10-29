@@ -52,7 +52,7 @@
 
     - name: Chown islandora_defaults feature
       file:
-        dest: "{{ drupal_core_path }}/modules/contrib/islandora_defaults"
+        dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
@@ -70,7 +70,7 @@
 
     - name: Apply patched LDAP library https://www.drupal.org/project/ldap/issues/3151284
       template:
-        src: "Connection.php"
+        src: Connection.php.j2
         dest: "/var/www/html/drupal/vendor/grahl/ldap/Adapter/ExtLdap/Connection.php"
 
     - name: Clear cache
@@ -78,5 +78,5 @@
 
     - name: Setup bash profile
       template:
-        src: "bash_profile"
+        src: bash_profile.j2
         dest: "/home/nruest/.bash_profile"

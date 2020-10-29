@@ -9,4 +9,3 @@ php_max_input_time: 100
 php_max_execution_time: 100
 php_date_timezone: "America/Toronto"
 php_memory_limit: 4G
-php_packages_extra: [php{{ php_default_version_debian }}-ldap]
