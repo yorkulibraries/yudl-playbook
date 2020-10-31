@@ -1,0 +1,16 @@
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+  ServerName omega.library.yorku.ca
+  DocumentRoot "/var/www/html/drupal/web"
+
+  <Directory "/var/www/html/drupal/web">
+    AllowOverride All
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+
+  Include /etc/letsencrypt/options-ssl-apache.conf
+  SSLCertificateFile /etc/letsencrypt/live/omega.library.yorku.ca/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/omega.library.yorku.ca/privkey.pem
+</VirtualHost>
+</IfModule>

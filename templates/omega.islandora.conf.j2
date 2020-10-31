@@ -1,0 +1,16 @@
+DirectoryIndex index.php index.html
+
+<VirtualHost *:80>
+  ServerName omega.library.yorku.ca
+  DocumentRoot "/var/www/html/drupal/web"
+
+  <Directory "/var/www/html/drupal/web">
+    AllowOverride All
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+
+  RewriteEngine on
+  RewriteCond %{SERVER_NAME} =omega.library.yorku.ca
+  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>

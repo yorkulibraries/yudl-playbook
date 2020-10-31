@@ -1,0 +1,46 @@
+---
+
+- hosts: webserver
+  become: yes
+
+  tasks:
+    - name: Add Certbot ppa
+      apt_repository:
+        repo: ppa:certbot/certbot
+        update_cache: yes
+
+    - name: Install certbot
+      apt:
+        name: python-certbot-apache
+
+    - name: Stop Apache to install certificates
+      service:
+        name: apache2
+        state: stopped
+
+    - name: Certbot setup for dev.cloud.archivesunleashed.org
+      action: shell certbot --apache certonly --agree-tos --email ruestn@yorku.ca --noninteractive -d omega.library.yorku.ca
+
+    - name: Add omega https config
+      template:
+        src: omega.islandora-le-ssl.conf.j2
+        dest: /etc/apache2/sites-available/islandora-le-ssl.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Add omega http config
+      template:
+        src: omega.islandora.conf.j2
+        dest: /etc/apache2/sites-available/islandora.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Enable auk https site
+      action: shell a2ensite islandora-le-ssl.conf
+
+    - name: Start Apache
+      service:
+        name: apache2
+        state: started
