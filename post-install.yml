@@ -41,6 +41,13 @@
             group={{ webserver_app_user }}
             append=yes
 
+    - name: Download Islandora Workbench Integration module
+      git: repo=https://github.com/mjordan/islandora_workbench_integration.git
+           dest="{{ drupal_core_path }}/modules/contrib"
+
+    - name: Enable Islandora Workbench Integration module
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_workbench_integration"
+
     - name: Chown islandora core feature
       file:
         dest: "{{ drupal_core_path }}/modules/contrib/islandora/modules/islandora_core_feature"
