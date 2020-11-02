@@ -59,6 +59,26 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
 
+- name: Copy ldap_authentication.settings.yml
+  template:
+    src: "ldap_authentication.settings.yml.j2"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_authentication.settings.yml"
+
+- name: Copy ldap_servers.server.pydirectory.yml
+  template:
+    src: "ldap_servers.server.pydirectory.yml.j2"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_servers.server.pydirectory.yml"
+
+- name: Copy ldap_servers.settings.yml
+  template:
+    src: "ldap_servers.settings.yml.j2"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_servers.settings.yml"
+
+- name: Copy ldap_user.settings.yml
+  template:
+    src: "ldap_user.settings.yml.j2"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_user.settings.yml"
+
 - name: Import features
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,controlled_access_terms_defaults,islandora_defaults,islandora_search"
 

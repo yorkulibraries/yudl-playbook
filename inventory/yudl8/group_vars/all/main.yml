@@ -39,3 +39,10 @@ mysql_users:
 # Used by both the webserver and crayfish role for CentOS.
 php_enablerepo: "remi-php72"
 php_packages_state: "latest"
+
+apache_mods_enabled:
+  - rewrite.load
+  - proxy.load
+  - proxy_http.load
+  - headers.load
+  - ssl.load

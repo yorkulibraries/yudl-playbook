@@ -12,5 +12,16 @@
   Include /etc/letsencrypt/options-ssl-apache.conf
   SSLCertificateFile /etc/letsencrypt/live/omega.library.yorku.ca/fullchain.pem
   SSLCertificateKeyFile /etc/letsencrypt/live/omega.library.yorku.ca/privkey.pem
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
+  ProxyPass /cantaloupe/iiif/2 http://omega.library.yorku.ca:8080/cantaloupe/iiif/2 nocanon
+  ProxyPassReverse /cantaloupe/iiif/2 http://omega.library.yorku.ca:8080/cantaloupe/iiif/2
 </VirtualHost>
 </IfModule>

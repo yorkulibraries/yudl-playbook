@@ -10,6 +10,11 @@
 
   tasks:
 
+    - name: Setup bash profile
+      template:
+        src: bash_profile.j2
+        dest: "/home/nruest/.bash_profile"
+
     - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
@@ -41,12 +46,6 @@
             group={{ webserver_app_user }}
             append=yes
 
-    - name: Download Islandora Workbench Integration module
-      git: repo=https://github.com/mjordan/islandora_workbench_integration.git
-           dest="{{ drupal_core_path }}/modules/contrib"
-
-    - name: Enable Islandora Workbench Integration module
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_workbench_integration"
 
     - name: Chown islandora core feature
       file:
@@ -75,15 +74,21 @@
         mode: 0775
         recurse: yes
 
+    - name: Import YUDL8 Controlled Vocabularies
+      command: "{{ drush_path }} --root {{ drupal_core_path }} dcdi -y --folder {{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/content"
+
     - name: Apply patched LDAP library https://www.drupal.org/project/ldap/issues/3151284
       template:
         src: Connection.php.j2
         dest: "/var/www/html/drupal/vendor/grahl/ldap/Adapter/ExtLdap/Connection.php"
 
+    - name: Download Islandora Workbench Integration module
+      git:
+        repo: https://github.com/mjordan/islandora_workbench_integration.git
+        dest: "{{ drupal_core_path }}/modules/contrib/islandora_workbench_integration"
+
+    - name: Enable Islandora Workbench Integration module
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_workbench_integration"
+
     - name: Clear cache
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"
-
-    - name: Setup bash profile
-      template:
-        src: bash_profile.j2
-        dest: "/home/nruest/.bash_profile"
