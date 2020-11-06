@@ -103,17 +103,6 @@
   args:
     creates: "{{ drupal_external_libraries_directory }}/masonry"
 
-# Set Matomo Settings
-- name: Set Matomo site id.
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set matomo.settings site_id 3"
-  register: set_search_api_config
-  changed_when: "'Do you want to update site_id' in set_search_api_config.stdout"
-
-- name: Set Matmo sever url.
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set matomo.settings url_http https://omega.library.yorku.ca"
-  register: set_search_api_config
-  changed_when: "'Do you want to update site_id' in set_search_api_config.stdout"
-
 # pdf.js library
 - name: ensure pdf.js directory exists
   file:
