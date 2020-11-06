@@ -60,6 +60,7 @@ cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
 cantaloupe_user: tomcat8
 cantaloupe_group: tomcat8
 cantaloupe_admin_enabled: "true"
+cantaloupe_admin_username: admin
 cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
 cantaloupe_log_application_ConsoleAppender_enabled: "false"
 cantaloupe_log_application_FileAppender_enabled: "true"

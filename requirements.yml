@@ -56,9 +56,9 @@
   name: Islandora-Devops.blazegraph
   version: main
 
-- src: https://github.com/Islandora-Devops/ansible-role-cantaloupe
+- src: https://github.com/yorkulibraries/ansible-role-cantaloupe
   name: Islandora-Devops.cantaloupe
-  version: main
+  version: cantaloupe4
 
 - src: https://github.com/yorkulibraries/ansible-role-crayfish
   name: Islandora-Devops.crayfish
