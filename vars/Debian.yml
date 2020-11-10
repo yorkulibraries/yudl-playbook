@@ -2,11 +2,9 @@
 
 grok_version_tag: v3.1.0
 
-composer_version: '1.10.16'
-
 php_packages_extra:
-  - libapache2-mod-php7.2
-  - php7.2-mysql
-  - php7.2-pgsql
-  - php7.2-gd
-  - php7.2-ldap
+  - libapache2-mod-php7.4
+  - php7.4-mysql
+  - php7.4-pgsql
+  - php7.4-gd
+  - php7.4-ldap

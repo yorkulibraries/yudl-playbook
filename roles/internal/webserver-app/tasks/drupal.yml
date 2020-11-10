@@ -80,7 +80,7 @@
     dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_user.settings.yml"
 
 - name: Import features
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,controlled_access_terms_defaults,islandora_defaults,islandora_search"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults,islandora_search"
 
 
 # masonry library is required by content_browser and not installed by composer due to issue 2971165.

@@ -60,9 +60,9 @@
   name: Islandora-Devops.cantaloupe
   version: cantaloupe4
 
-- src: https://github.com/yorkulibraries/ansible-role-crayfish
+- src: https://github.com/Islandora-Devops/ansible-role-crayfish
   name: Islandora-Devops.crayfish
-  version: omega
+  version: main
 
 - src: https://github.com/Islandora-Devops/ansible-role-drupal-openseadragon
   name: Islandora-Devops.drupal-openseadragon
@@ -80,9 +80,9 @@
   name: Islandora-Devops.tomcat8
   version: main
 
-- src: https://github.com/yorkulibraries/ansible-role-fits
+- src: https://github.com/Islandora-Devops/ansible-role-fits
   name: Islandora-Devops.fits
-  version: omega
+  version: main
 
 - src: https://github.com/Islandora-Devops/ansible-role-grok
   name: Islandora-Devops.grok
