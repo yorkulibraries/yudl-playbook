@@ -10,7 +10,7 @@ This is an Ansible playbook for Islandora 8 for York University Libraries. It is
 ### DEV
 
 1. `ansible-galaxy install -r requirements.yml`
-2. `vagrant up`
+2. `vagrant up` (`--ask-vault-pass` will be triggered, and the password is required)
 
 ## STAGING
 
