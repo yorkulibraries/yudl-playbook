@@ -14,7 +14,7 @@ $virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "I
 # Available boxes are 'islandora/8', ubuntu/bionic64' and 'centos/7'
 # Use 'ubuntu/bionic64' or 'centos/7' to build a dev environment from scratch.
 # Use 'islandora/8' if you just want to download a ready to run VM.
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "islandora/8")
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "ubuntu/bionic64")
 
 # vagrant is the main user
 $vagrantUser = "vagrant"
@@ -55,11 +55,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if $vagrantBox != "islandora/8" then
     config.vm.provision :ansible do |ansible|
       ansible.compatibility_mode = "auto"
-      ansible.playbook = "playbook.yml"
+      ansible.playbook = "playbook-dev.yml"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.galaxy_command = "ansible-galaxy install --role-file=%{role_file}"
       ansible.limit = "all"
-      ansible.inventory_path = "inventory/vagrant"
+      ansible.raw_arguments = "--ask-vault-pass"
+      ansible.inventory_path = "inventory/dev"
       ansible.host_vars = {
         "all" => { "ansible_ssh_user" => $vagrantUser }
       }

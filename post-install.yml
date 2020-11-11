@@ -10,11 +10,6 @@
 
   tasks:
 
-    - name: Setup bash profile
-      template:
-        src: bash_profile.j2
-        dest: "/home/nruest/.bash_profile"
-
     - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
