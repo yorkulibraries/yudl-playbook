@@ -1,17 +1,23 @@
 ---
 
 webserver_app: yes
+
 openseadragon_iiiv_set_var: yes
 openseadragon_iiiv_server: "http://omega.library.yorku.ca:8080/cantaloupe/iiif/2"
+
 php_upload_max_filesize: 4G
 php_post_max_size: 4G
 php_max_input_time: 100
 php_max_execution_time: 100
 php_date_timezone: "America/Toronto"
 php_memory_limit: 4G
+
 certbot_admin_email: ruestn@yorku.ca
 certbot_create_if_missing: true
 certbot_create_standalone_stop_services: []
 certbot_certs:
   - domains:
     - omega.library.yorku.ca
+
+riprap_rest_endpoint: 'https://omega.library.yorku.ca/api/fixity'
+riprap_gemini_rest_endpoint: 'https://omega.library.yorku.ca/gemini'

@@ -95,3 +95,7 @@
 - src: https://github.com/Islandora-Devops/ansible-role-keymaster
   name: Islandora-Devops.keymaster
   version: main
+
+- src: https://github.com/yorkulibraries/Islandora-Devops.riprap
+  name: Islandora-Devops.riprap
+  version: omega
