@@ -2,6 +2,12 @@
 <VirtualHost *:443>
   ServerName omega.library.yorku.ca
   DocumentRoot "/var/www/html/drupal/web"
+  ErrorLog "/var/log/apache2/yudl8-staging-error.log"
+  CustomLog "/var/log/apache2/yudl8-staging-access.log" combined
+
+  RequestHeader set X-Forwarded-Proto HTTPS
+  RequestHeader set X-Forwarded-Port 443
+  RequestHeader set X-Forwarded-Path /
 
   <Directory "/var/www/html/drupal/web">
     AllowOverride All
@@ -21,7 +27,14 @@
     Allow from all
   </Proxy>
 
+  AllowEncodedSlashes NoDecode
+
   ProxyPass /cantaloupe/iiif/2 http://omega.library.yorku.ca:8080/cantaloupe/iiif/2 nocanon
   ProxyPassReverse /cantaloupe/iiif/2 http://omega.library.yorku.ca:8080/cantaloupe/iiif/2
+  ProxyPass /iiif/2 http://omega.library.yorku.ca:8080/cantaloupe/iiif/2 nocanon
+  ProxyPassReverse /iiif/2 http://omega.library.yorku.ca:8080/cantaloupe/iiif/2
+  ProxyPassReverseCookiePath /cantaloupe/iiif/2 /iiif/2
+  ProxyPassReverseCookieDomain /cantaloupe/iiif/2 omega.library.yorku.ca
+  ProxyPreserveHost on
 </VirtualHost>
 </IfModule>
