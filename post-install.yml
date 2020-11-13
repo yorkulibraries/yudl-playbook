@@ -95,6 +95,7 @@
       template:
         src: Connection.php.j2
         dest: "/var/www/html/drupal/vendor/grahl/ldap/Adapter/ExtLdap/Connection.php"
+      when: env == "staging" or env == "production"
 
     - name: Download Islandora Workbench Integration module
       git:

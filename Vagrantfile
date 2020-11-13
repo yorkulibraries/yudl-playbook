@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if $vagrantBox != "islandora/8" then
     config.vm.provision :ansible do |ansible|
       ansible.compatibility_mode = "auto"
-      ansible.playbook = "playbook-dev.yml"
+      ansible.playbook = "playbook.yml"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.galaxy_command = "ansible-galaxy install --role-file=%{role_file}"
       ansible.limit = "all"
@@ -64,7 +64,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.host_vars = {
         "all" => { "ansible_ssh_user" => $vagrantUser }
       }
-      ansible.extra_vars = { "islandora_distro" => $vagrantBox }
+      ansible.extra_vars = {
+        "islandora_distro" => $vagrantBox,
+        "env" => "dev"
+      }
     end
   end
 

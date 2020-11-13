@@ -63,25 +63,28 @@
   template:
     src: "ldap_authentication.settings.yml.j2"
     dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_authentication.settings.yml"
+  when: env == "staging" or env == "production"
 
 - name: Copy ldap_servers.server.pydirectory.yml
   template:
     src: "ldap_servers.server.pydirectory.yml.j2"
     dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_servers.server.pydirectory.yml"
+  when: env == "staging" or env == "production"
 
 - name: Copy ldap_servers.settings.yml
   template:
     src: "ldap_servers.settings.yml.j2"
     dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_servers.settings.yml"
+  when: env == "staging" or env == "production"
 
 - name: Copy ldap_user.settings.yml
   template:
     src: "ldap_user.settings.yml.j2"
     dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_user.settings.yml"
+  when: env == "staging" or env == "production"
 
 - name: Import features
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults,islandora_search"
-
 
 # masonry library is required by content_browser and not installed by composer due to issue 2971165.
 - name: Create drupal library directory.

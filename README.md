@@ -15,7 +15,7 @@ This is an Ansible playbook for Islandora 8 for York University Libraries. It is
 ## STAGING
 
 1. `ansible-galaxy install -r requirements.yml`
-2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/bionic64" --extra-vars "ansible_sudo_pass=somepassword"`
+2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/bionic64" --extra-vars "ansible_sudo_pass=somepassword" --extra-vars"env=staging"`
 
 ### PRODUCTION
 
