@@ -1,7 +1,7 @@
 solr_cores:
   - ISLANDORA
-
 solr_install_path: /opt/solr
-
+solr_version: "7.7.3"
+solr_mirror: "https://mirror.oceanmeat.tech"
 solr_user: solr
 solr_instance_conf_path: "/var/solr/data/{{ solr_cores[0] }}/conf"
