@@ -9,6 +9,12 @@ tomcat8_users:
 # For production use either "jdbc-mysql" or "jdbc-postgresql"
 fcrepo_persistence: jdbc-mysql
 
+# Set fcrepo directory structure
+fcrepo_data_dir: "/omega/fcrepo4-data"
+fcrepo_binary_directory: "{{ fcrepo_data_dir}}/binaries"
+fcrepo_object_directory: "{{ fcrepo_data_dir}}/objects"
+fcrepo_allowed_external_content: "https://omega.library.yorku.ca/"
+
 # Used for mysql or postgres object persistence.
 fcrepo_db_name: fcrepo
 fcrepo_db_user: fcrepo
