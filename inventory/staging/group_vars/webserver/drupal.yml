@@ -21,8 +21,6 @@ drupal_composer_dependencies:
   - "yorkulibraries/yudl8_defaults:dev-8.x-1.x"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/ldap:^4.0@alpha"
-  - "drupal/default_content:^1.0@alpha"
-  - "drupal/default_content_deploy:^1.0@beta"
 drupal_composer_project_package: "drupal/recommended-project:8.9.7"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
@@ -62,8 +60,6 @@ drupal_enable_modules:
   - ldap_authentication
   - ldap_user
   - permissions_by_term
-  - default_content
-  - default_content_deploy
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"

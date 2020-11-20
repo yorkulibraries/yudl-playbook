@@ -88,9 +88,6 @@
         mode: 0775
         recurse: yes
 
-    - name: Import YUDL8 Controlled Vocabularies
-      command: "{{ drush_path }} --root {{ drupal_core_path }} dcdi -y --folder {{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/content"
-
     - name: Apply patched LDAP library https://www.drupal.org/project/ldap/issues/3151284
       template:
         src: Connection.php.j2
