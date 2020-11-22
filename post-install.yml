@@ -33,8 +33,11 @@
     - name: Set iiif manifest view
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings manifest_view iiif_manifest"
 
-    - name: Run migrations
+    - name: Run Islandora migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim --group=islandora"
+
+    - name: Run York migration
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim --group=york"
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
