@@ -17,11 +17,10 @@ drupal_composer_dependencies:
   - "drupal/admin_toolbar:^2.0"
   - "drupal/rest_oai_pmh:^1.0"
   - "drupal/transliterate_filenames:^1.3"
-  - "islandora/carapace:3.0.0"
   - "yorkulibraries/yudl8_defaults:dev-8.x-1.x"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/ldap:^4.0@alpha"
-drupal_composer_project_package: "drupal/recommended-project:8.9.7"
+drupal_composer_project_package: "drupal/recommended-project:^8.9"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal8
@@ -59,7 +58,6 @@ drupal_enable_modules:
   - islandora_search
   - ldap_authentication
   - ldap_user
-  - permissions_by_term
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"

@@ -21,6 +21,7 @@
       file:
         path: /tmp/solr_config
         state: directory
+        mode: 0700
       tags: solr
 
     - name: Unarchive solr config
@@ -44,6 +45,7 @@
         dest: "{{ solr_instance_conf_path }}"
         owner: "{{ solr_user }}"
         group: "{{ solr_user }}"
+        mode: 0744
         remote_src: True
       with_items:
         - "{{ files_to_copy.stdout_lines }}"

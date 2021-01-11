@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.galaxy_role_file = "requirements.yml"
       ansible.galaxy_command = "ansible-galaxy install --role-file=%{role_file}"
       ansible.limit = "all"
-      ansible.raw_arguments = "--ask-vault-pass"
+      #ansible.raw_arguments = "--ask-vault-pass"
       ansible.inventory_path = "inventory/dev"
       ansible.host_vars = {
         "all" => { "ansible_ssh_user" => $vagrantUser }

@@ -22,7 +22,7 @@
       when: env == "staging" or env == "production"
 
     - name: Certbot setup
-      action: shell certbot --apache certonly --agree-tos --email "{{ certbot_admin_email }}" --noninteractive -d "{{ drupal_domain }}"
+      command: certbot --apache certonly --agree-tos --email "{{ certbot_admin_email }}" --noninteractive -d "{{ drupal_domain }}"
       when: env == "staging" or env == "production"
 
     - name: Add https config
@@ -44,7 +44,7 @@
       when: env == "staging" or env == "production"
 
     - name: Enable https site
-      action: shell a2ensite islandora-le-ssl.conf
+      command: a2ensite islandora-le-ssl.conf
       when: env == "staging" or env == "production"
 
     - name: Start Apache

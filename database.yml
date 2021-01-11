@@ -4,7 +4,7 @@
   become: yes
 
   pre_tasks:
-    - set_fact:
+    - set_fact: # noqa 502
         claw_db: 'mysql'
       when: claw_db is not defined
       tags:

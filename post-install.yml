@@ -10,34 +10,41 @@
 
   tasks:
 
-    - name: Add admin to fedoraAdmin role
+    - name: Add admin to fedoraAdmin role # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
     # Set jsonld module to strip ?_format=jsonld
-    - name: Set JSONLD Config
+    - name: Set JSONLD Config # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml jsonld.settings remove_jsonld_format {{ drupal_jsonld_remove_format }}"
 
-    - name: Set Gemini URL
+    - name: Set Gemini URL # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora.settings gemini_url {{ crayfish_gemini_base_url }}"
 
-    - name: Set pseudo field bundles
+    - name: Set pseudo field bundles # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora.settings gemini_pseudo_bundles.{{ item.0 }} {{ item.1 }}"
       with_indexed_items: "{{ drupal_gemini_pseudo_bundles }}"
 
-    - name: Set media urls
+    - name: Set media urls # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml media.settings standalone_url true"
 
-    - name: Set iiif url
+    - name: Set iiif url # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora_iiif.settings iiif_server {{ openseadragon_iiiv_server }}"
 
-    - name: Set iiif manifest view
+    - name: Set iiif manifest view # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings manifest_view iiif_manifest"
 
-    - name: Run Islandora migration
+    - name: Run Islandora migration # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim --group=islandora"
 
-    - name: Run York migration
+    - name: Run York migration # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim --group=york"
+
+    - name: Set site email # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.site mail {{ certbot_admin_email }}"
+      when: env == "staging" or env == "production"
+
+    - name: Set admin only account creation # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset user.settings register admin_only"
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
@@ -95,6 +102,9 @@
       template:
         src: Connection.php.j2
         dest: "/var/www/html/drupal/vendor/grahl/ldap/Adapter/ExtLdap/Connection.php"
+        owner: "{{ webserver_app_user }}"
+        group: "{{ webserver_app_user }}"
+        mode: 0755
       when: env == "staging" or env == "production"
 
     - name: Download Islandora Workbench Integration module
@@ -102,8 +112,8 @@
         repo: https://github.com/mjordan/islandora_workbench_integration.git
         dest: "{{ drupal_core_path }}/modules/contrib/islandora_workbench_integration"
 
-    - name: Enable Islandora Workbench Integration module
+    - name: Enable Islandora Workbench Integration module # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_workbench_integration"
 
-    - name: Clear cache
+    - name: Clear cache # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"

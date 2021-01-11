@@ -48,17 +48,13 @@
   name: Islandora-Devops.alpaca
   version: main
 
-#- src: https://github.com/Islandora-Devops/ansible-role-apix
-#  name: Islandora-Devops.apix
-#  version: 0.0.1
-
 - src: https://github.com/Islandora-Devops/ansible-role-blazegraph
   name: Islandora-Devops.blazegraph
   version: main
 
-- src: https://github.com/yorkulibraries/ansible-role-cantaloupe
+- src: https://github.com/Islandora-Devops/ansible-role-cantaloupe
   name: Islandora-Devops.cantaloupe
-  version: cantaloupe4
+  version: main
 
 - src: https://github.com/Islandora-Devops/ansible-role-crayfish
   name: Islandora-Devops.crayfish
@@ -96,6 +92,6 @@
   name: Islandora-Devops.keymaster
   version: main
 
-- src: https://github.com/yorkulibraries/Islandora-Devops.riprap
+- src: https://github.com/yorkulibraries/ansible-role-riprap
   name: Islandora-Devops.riprap
-  version: omega
+  version: main
