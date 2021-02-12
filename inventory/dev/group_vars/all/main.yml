@@ -30,6 +30,8 @@ islandora_extra_centos_packages:
   - gcc-c++
   - kernel-devel
 
+islandora_jwt_expiry: "+7 days"
+
 postgresql_user: postgres
 
 mysql_users:
