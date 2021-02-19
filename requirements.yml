@@ -23,7 +23,7 @@
   version: 2.0.2
 
 - src: geerlingguy.mysql
-  version: 3.1.0
+  version: 3.3.0
 
 - src: geerlingguy.postgresql
   version: 1.4.3
@@ -32,7 +32,7 @@
   version: 4.2.1
 
 - src: geerlingguy.java
-  version: 1.8.1
+  version: 1.10.0
 
 - src: geerlingguy.drupal
   version: 2.5.0
@@ -48,13 +48,13 @@
   name: Islandora-Devops.alpaca
   version: main
 
-- src: https://github.com/Islandora-Devops/ansible-role-blazegraph
+- src: https://github.com/yorkulibraries/ansible-role-blazegraph
   name: Islandora-Devops.blazegraph
-  version: main
+  version: issue-32
 
-- src: https://github.com/Islandora-Devops/ansible-role-cantaloupe
+- src: https://github.com/yorkulibraries/ansible-role-cantaloupe
   name: Islandora-Devops.cantaloupe
-  version: main
+  version: issue-32
 
 - src: https://github.com/Islandora-Devops/ansible-role-crayfish
   name: Islandora-Devops.crayfish
@@ -66,23 +66,23 @@
 
 - src: https://github.com/yorkulibraries/ansible-role-fcrepo
   name: Islandora-Devops.fcrepo
-  version: omega
+  version: issue-32
 
-- src: https://github.com/Islandora-Devops/ansible-role-fcrepo-syn
+- src: https://github.com/yorkulibraries/ansible-role-fcrepo-syn
   name: Islandora-Devops.fcrepo-syn
-  version: main
+  version: issue-32
 
-- src: https://github.com/Islandora-Devops/ansible-role-tomcat8
+- src: https://github.com/yorkulibraries/ansible-role-tomcat8
   name: Islandora-Devops.tomcat8
-  version: main
+  version: issue-32
 
-- src: https://github.com/Islandora-Devops/ansible-role-fits
+- src: https://github.com/yorkulibraries/ansible-role-fits
   name: Islandora-Devops.fits
-  version: main
+  version: issue-32
 
-- src: https://github.com/Islandora-Devops/ansible-role-grok
+- src: https://github.com/yorkulibraries/ansible-role-grok
   name: Islandora-Devops.grok
-  version: main
+  version: issue-32
 
 - src: https://github.com/Islandora-Devops/ansible-role-karaf
   name: Islandora-Devops.karaf

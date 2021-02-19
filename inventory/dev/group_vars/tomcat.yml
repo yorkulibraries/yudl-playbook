@@ -1,5 +1,27 @@
 ---
 
+blazegraph_user: tomcat
+blazegraph_log_dir: /var/log/tomcat9
+
+fcrepo_syn_user: tomcat
+
+fits_user: tomcat
+fits_group: tomcat
+fits_log_path: /var/log/tomcat9
+
+tomcat8_home: /var/lib/tomcat9
+
+tomcat8_packages:
+  - tomcat9
+tomcat8_admin_packages:
+  - tomcat9-admin
+
+tomcat_service_name: tomcat9
+
+tomcat8_server_user: tomcat
+tomcat8_server_group: tomcat
+tomcat8_user_home: /home/tomcat
+
 tomcat8_users:
   - username: islandora
     password: "{{ islandora_tomcat_password }}"
@@ -15,6 +37,12 @@ fcrepo_db_name: fcrepo
 fcrepo_db_user: fcrepo
 fcrepo_db_host: "127.0.0.1"
 fcrepo_db_port: "3306"
+fcrepo_data_dir: "{{ fcrepo_home_dir }}/fcrepo4-data"
+fcrepo_binary_directory: "{{ fcrepo_data_dir}}/binaries"
+fcrepo_object_directory: "{{ fcrepo_data_dir}}/objects"
+fcrepo_allowed_external_content:
+  - http://localhost:8000/
+fcrepo_allowed_external_content_file: "{{ fcrepo_config_dir }}/allowed-external-content.txt"
 
 tomcat8_java_opts:
   - -Djava.awt.headless=true
@@ -52,14 +80,14 @@ fcrepo_syn_tokens:
       - fedoraAdmin
     token: "{{ islandora_syn_token }}"
 
-fcrepo_version: "5.1.0"
+fcrepo_version: "5.1.1"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"
 
 cantaloupe_deploy_war: yes
 cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
-cantaloupe_user: tomcat8
-cantaloupe_group: tomcat8
+cantaloupe_user: tomcat
+cantaloupe_group: tomcat
 cantaloupe_admin_enabled: "true"
 cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
 cantaloupe_log_application_ConsoleAppender_enabled: "false"
