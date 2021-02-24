@@ -51,7 +51,7 @@
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
-            group={{ webserver_app_user }}
+            groups={{ webserver_app_user }}
             append=yes
 
     - name: Chown islandora core feature

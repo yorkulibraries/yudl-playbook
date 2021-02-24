@@ -1,5 +1,27 @@
 ---
 
+blazegraph_user: tomcat
+blazegraph_log_dir: /var/log/tomcat9
+
+fcrepo_syn_user: tomcat
+
+fits_user: tomcat
+fits_group: tomcat
+fits_log_path: /var/log/tomcat9
+
+tomcat8_home: /var/lib/tomcat9
+
+tomcat8_packages:
+  - tomcat9
+tomcat8_admin_packages:
+  - tomcat9-admin
+
+tomcat_service_name: tomcat9
+
+tomcat8_server_user: tomcat
+tomcat8_server_group: tomcat
+tomcat8_user_home: /home/tomcat
+
 tomcat8_users:
   - username: islandora
     password: "{{ islandora_tomcat_password }}"
@@ -58,14 +80,14 @@ fcrepo_syn_tokens:
       - fedoraAdmin
     token: "{{ islandora_syn_token }}"
 
-fcrepo_version: "5.1.0"
+fcrepo_version: "5.1.1"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"
 
 cantaloupe_deploy_war: yes
 cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
-cantaloupe_user: tomcat8
-cantaloupe_group: tomcat8
+cantaloupe_user: tomcat
+cantaloupe_group: tomcat
 cantaloupe_admin_enabled: "true"
 cantaloupe_admin_username: admin
 cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
@@ -74,6 +96,8 @@ cantaloupe_log_application_FileAppender_enabled: "true"
 cantaloupe_log_application_FileAppender_pathname: "{{ cantaloupe_log_path }}/application.log"
 cantaloupe_log_access_FileAppender_enabled: "true"
 cantaloupe_log_access_FileAppender_pathname: "{{ cantaloupe_log_path }}/access.log"
+cantaloupe_log_error_FileAppender_enabled: "true"
+cantaloupe_log_error_FileAppender_pathname: "{{ cantaloupe_log_path }}/error.log"
 cantaloupe_FilesystemResolver_BasicLookupStrategy_path_prefix: /var/www/html/drupal/web/
 cantaloupe_processor_jp2: OpenJpegProcessor
 cantaloupe_cache_source: FilesystemCache

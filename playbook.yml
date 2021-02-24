@@ -5,9 +5,9 @@
     - bootstrap
 - import_playbook: database.yml
 - import_playbook: webserver.yml
-- import_playbook: certbot.yml
 - import_playbook: solr.yml
 - import_playbook: tomcat.yml
 - import_playbook: crayfish.yml
+- import_playbook: certbot.yml
 - import_playbook: karaf.yml
 - import_playbook: post-install.yml

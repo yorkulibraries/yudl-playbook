@@ -15,7 +15,7 @@ This is an Ansible playbook for Islandora 8 for York University Libraries. It is
 ### STAGING
 
 1. `ansible-galaxy install -r requirements.yml`
-2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/bionic64" --extra-vars "ansible_sudo_pass=somepassword" --extra-vars"env=staging"`
+2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/focal64" --extra-vars "ansible_sudo_pass=somepassword" --extra-vars"env=staging"`
 
 ### PRODUCTION
 
@@ -41,7 +41,7 @@ You can connect to the machine via the browser at [http://localhost:8000](http:/
 
 #### STAGING
 
-You can connect to the machine via the browser at [http://omega.library.yorku.ca](http://omega.library.yorku.ca).
+You can connect to the machine via the browser at [https://omega.library.yorku.ca](https://omega.library.yorku.ca).
 
 #### PRODUCTION
 
@@ -54,7 +54,7 @@ The Fedora 5 REST API can be accessed at [http://localhost:8080/fcrepo/rest](htt
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 
 #### STAGING
-The Fedora 5 REST API can be accessed at [http://omega.library.yorku.ca:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest). 
+The Fedora 5 REST API can be accessed at [http://omega.library.yorku.ca:8080/fcrepo/rest](http://omega.library.yorku.ca:8080/fcrepo/rest). 
 
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 

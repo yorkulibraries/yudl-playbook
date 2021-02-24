@@ -4,15 +4,17 @@
   become: yes
 
   tasks:
-    - name: Add Certbot ppa
-      apt_repository:
-        repo: ppa:certbot/certbot
-        update_cache: yes
+    - name: Install certbot snap
+      snap:
+        name: certbot
+        classic: yes
       when: env == "staging" or env == "production"
 
-    - name: Install certbot
-      apt:
-        name: python-certbot-apache
+    - name: Symlink certbot executable
+      file:
+        src: /snap/bin/certbot
+        dest: /usr/bin/certbot
+        state: link
       when: env == "staging" or env == "production"
 
     - name: Stop Apache to install certificates

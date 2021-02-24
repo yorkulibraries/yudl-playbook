@@ -50,11 +50,11 @@
 
 - src: https://github.com/yorkulibraries/ansible-role-blazegraph
   name: Islandora-Devops.blazegraph
-  version: issue-32
+  version: yul
 
 - src: https://github.com/yorkulibraries/ansible-role-cantaloupe
   name: Islandora-Devops.cantaloupe
-  version: issue-32
+  version: yul
 
 - src: https://github.com/Islandora-Devops/ansible-role-crayfish
   name: Islandora-Devops.crayfish
@@ -66,23 +66,23 @@
 
 - src: https://github.com/yorkulibraries/ansible-role-fcrepo
   name: Islandora-Devops.fcrepo
-  version: issue-32
+  version: yul
 
 - src: https://github.com/yorkulibraries/ansible-role-fcrepo-syn
   name: Islandora-Devops.fcrepo-syn
-  version: issue-32
+  version: yul
 
 - src: https://github.com/yorkulibraries/ansible-role-tomcat8
   name: Islandora-Devops.tomcat8
-  version: issue-32
+  version: yul
 
 - src: https://github.com/yorkulibraries/ansible-role-fits
   name: Islandora-Devops.fits
-  version: issue-32
+  version: yul
 
 - src: https://github.com/yorkulibraries/ansible-role-grok
   name: Islandora-Devops.grok
-  version: issue-32
+  version: yul
 
 - src: https://github.com/Islandora-Devops/ansible-role-karaf
   name: Islandora-Devops.karaf
