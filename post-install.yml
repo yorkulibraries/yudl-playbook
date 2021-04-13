@@ -49,6 +49,26 @@
     - name: Set admin only account creation # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset user.settings register admin_only"
 
+    - name: Add admin users # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+
+    - name: Add islandora admin users # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+
+    - name: Add islandora creator users # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+
+    - name: Add past islandora creators # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+
+    - name: Add admin users to admin role # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} urol administrator {{ item }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
             groups={{ webserver_app_user }}
