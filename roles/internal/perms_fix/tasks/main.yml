@@ -1,4 +1,31 @@
 ---
+
+  - name: Move existing files sites/default/files
+    shell: mv "{{ drupal_core_path }}"/sites/default/files/* /tank/data/drupal/files
+    when: env == "production"
+
+  - name: Remove sites/default/files # noqa 301
+    file:
+      path: "{{ drupal_core_path }}/sites/default/files"
+      state: absent
+    when: env == "production"
+
+  - name: Link PRODUCTION Drupal files directory # noqa 301
+    file:
+      src: /tank/data/drupal/files
+      dest: "{{ drupal_core_path }}/sites/default/files"
+      state: link
+      force: yes
+    when: env == "production"
+
+  - name: Set symlink directory ownership # noqa 301
+    shell: chown -hR www-data:www-data "{{ drupal_core_path }}"/sites/default/files
+    when: env == "production"
+
+  - name: Set symlink directory permissions # noqa 301
+    shell: chmod -R 0775 "{{ drupal_core_path }}"/sites/default/files
+    when: env == "production"
+
   - name: Edit permissions for default.services.yml
     file:
       state: directory

@@ -9,11 +9,10 @@
       when: "ansible_os_family == 'Debian'"
       java_packages:
         - openjdk-8-jdk
-    - role: geerlingguy.java
-      when: "ansible_os_family == 'RedHat'"
-      java_packages:
-        - java-1.8.0-openjdk
+    - Islandora-Devops.tomcat8
     - geerlingguy.solr
+    - Islandora-Devops.grok
+    - Islandora-Devops.cantaloupe
 
   tasks:
 
@@ -72,3 +71,9 @@
       retries: 20
       delay: 3
       tags: solr
+
+    - name: tomcat9 restart tomcat9
+      service:
+        name: tomcat9
+        state: restarted
+      when: "'gamma' in inventory_hostname"

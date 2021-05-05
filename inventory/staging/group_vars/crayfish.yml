@@ -4,5 +4,4 @@ crayfish_db: "{{ claw_db }}"
 
 crayfish_fedora_base_url: "http://omega.library.yorku.ca:8080/fcrepo/rest"
 crayfish_drupal_base_url: "https://omega.library.yorku.ca"
-crayfish_gemini_base_url: "https://omega.library.yorku.ca/gemini"
 crayfish_log_directory: "/var/log/islandora"

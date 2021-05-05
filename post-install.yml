@@ -5,7 +5,7 @@
 
   # add some vars here so we can run with --start-at-task if desired
   vars:
-    webserver_app_user: "{% if ansible_os_family == 'RedHat' %}apache{% else %}www-data{% endif %}"
+    webserver_app_user: "www-data"
     vagrant_user: "vagrant"
 
   tasks:
@@ -17,8 +17,9 @@
     - name: Set JSONLD Config # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml jsonld.settings remove_jsonld_format {{ drupal_jsonld_remove_format }}"
 
-    - name: Set Gemini URL # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora.settings gemini_url {{ crayfish_gemini_base_url }}"
+    - name: Set broker_url (PRODUCTION) # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings broker_url 'tcp://10.0.0.16:61613'"
+      when: env == "production"
 
     - name: Set JWT Expiry # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings jwt_expiry '{{ islandora_jwt_expiry }}'"

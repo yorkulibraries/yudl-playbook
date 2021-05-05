@@ -1,8 +1,5 @@
 ---
 
-blazegraph_user: tomcat
-blazegraph_log_dir: /var/log/tomcat9
-
 fcrepo_syn_user: tomcat
 
 fits_user: tomcat
@@ -59,7 +56,6 @@ tomcat8_java_opts:
   - -Dfcrepo.activemq.configuration=file://{{ fcrepo_config_dir }}/activemq.xml
   - -Dfcrepo.spring.configuration=file://{{ fcrepo_home_dir }}/configs/fcrepo-config.xml
   - -Dfcrepo.external.content.allowed={{ fcrepo_allowed_external_content_file }}
-  - -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile={{ blazegraph_home_dir }}/conf/RWStore.properties
   - -Dcantaloupe.config={{ cantaloupe_symlink }}/cantaloupe.properties
   - -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
 

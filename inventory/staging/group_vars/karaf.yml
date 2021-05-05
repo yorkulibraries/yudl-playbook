@@ -9,10 +9,7 @@
   - mvn:org.apache.activemq/activemq-karaf/5.15.0/xml/features
   - mvn:ca.islandora.alpaca/islandora-karaf/1.0.2/xml/features
 
- triplestore_namespace: islandora
- alpaca_triplestore_base_url: "http://omega.library.yorku.ca:8080/bigdata"
  alpaca_milliner_base_url: "https://omega.library.yorku.ca/milliner/"
- alpaca_gemini_base_url: "https://omega.library.yorku.ca/gemini/"
  alpaca_houdini_base_url: "https://omega.library.yorku.ca/houdini"
  alpaca_homarus_base_url: "https://omega.library.yorku.ca/homarus"
  alpaca_fits_base_url: "https://omega.library.yorku.ca/crayfits"

@@ -1,0 +1,56 @@
+---
+
+karaf_jms_brokerUrl: localhost
+
+# Comment in to build Alpaca from source
+alpaca_from_source: yes
+alpaca_version: no-gemini
+alpaca_clone_directory: /opt/alpaca
+alpaca_karaf_repos:
+  - mvn:org.apache.camel.karaf/apache-camel/2.20.4/xml/features
+  - mvn:org.apache.activemq/activemq-karaf/5.15.0/xml/features
+  - mvn:ca.islandora.alpaca/islandora-karaf/1.0.2/xml/features
+
+alpaca_features:
+  - fcrepo-service-activemq
+  - fcrepo-camel
+  - fcrepo-service-camel
+  - islandora-http-client
+  - islandora-indexing-fcrepo
+  - islandora-connector-derivative
+
+alpaca_settings:
+  - pid: ca.islandora.alpaca.http.client
+    settings:
+      token.value: islandora
+  - pid: ca.islandora.alpaca.indexing.fcrepo
+    settings:
+      error.maxRedeliveries: 10
+      file.external.stream: broker:queue:islandora-indexing-fcrepo-file-external
+      file.delete.stream: broker:queue:islandora-indexing-fcrepo-file-delete
+      media.stream: broker:queue:islandora-indexing-fcrepo-media
+      milliner.baseUrl: http://10.0.0.16/milliner/
+      node.delete.stream: broker:queue:islandora-indexing-fcrepo-delete
+      node.stream: broker:queue:islandora-indexing-fcrepo-content
+
+alpaca_blueprint_settings:
+  - pid: ca.islandora.alpaca.connector.ocr
+    in_stream: broker:queue:islandora-connector-ocr
+    derivative_service_url: http://10.0.0.16/hypercube/
+    error_max_redeliveries: 5
+    camel_context_id: IslandoraConnectorOCR
+  - pid: ca.islandora.alpaca.connector.houdini
+    in_stream: broker:queue:islandora-connector-houdini
+    derivative_service_url: http://10.0.0.16/houdini/convert
+    error_max_redeliveries: 5
+    camel_context_id: IslandoraConnectorHoudini
+  - pid: ca.islandora.alpaca.connector.homarus
+    in_stream: broker:queue:islandora-connector-homarus
+    derivative_service_url: http://10.0.0.16/homarus/convert
+    error_max_redeliveries: 5
+    camel_context_id: IslandoraConnectorHomarus
+  - pid: ca.islandora.alpaca.connector.fits
+    in_stream: broker:queue:islandora-connector-fits
+    derivative_service_url: http://10.0.0.16/crayfits
+    error_max_redeliveries: 5
+    camel_context_id: IslandoraConnectorFits

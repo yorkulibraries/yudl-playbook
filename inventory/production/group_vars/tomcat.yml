@@ -26,20 +26,25 @@ tomcat8_users:
       - manager-gui
 
 # For production use either "jdbc-mysql" or "jdbc-postgresql"
-#fcrepo_persistence: file-simple
 fcrepo_persistence: jdbc-mysql
+
+# Set fcrepo directory structure
+fcrepo_data_dir: "/tank/data/fcrepo"
+fcrepo_binary_directory: "{{ fcrepo_data_dir }}/binaries"
+fcrepo_object_directory: "{{ fcrepo_data_dir }}/objects"
+fcrepo_allowed_external_content:
+  - "https://gamma.library.yorku.ca/"
+  - "http://beta.library.yorku.ca/"
+  - "http://10.0.0.16"
+  - "http://10.0.0.17"
+  - "https://10.0.0.17"
+  - "https://digital.library.yorku.ca"
 
 # Used for mysql or postgres object persistence.
 fcrepo_db_name: fcrepo
 fcrepo_db_user: fcrepo
 fcrepo_db_host: "127.0.0.1"
 fcrepo_db_port: "3306"
-fcrepo_data_dir: "{{ fcrepo_home_dir }}/fcrepo4-data"
-fcrepo_binary_directory: "{{ fcrepo_data_dir}}/binaries"
-fcrepo_object_directory: "{{ fcrepo_data_dir}}/objects"
-fcrepo_allowed_external_content:
-  - http://localhost:8000/
-fcrepo_allowed_external_content_file: "{{ fcrepo_config_dir }}/allowed-external-content.txt"
 
 tomcat8_java_opts:
   - -Djava.awt.headless=true
@@ -56,7 +61,6 @@ tomcat8_java_opts:
   - -Dfcrepo.activemq.configuration=file://{{ fcrepo_config_dir }}/activemq.xml
   - -Dfcrepo.spring.configuration=file://{{ fcrepo_home_dir }}/configs/fcrepo-config.xml
   - -Dfcrepo.external.content.allowed={{ fcrepo_allowed_external_content_file }}
-  - -Dcantaloupe.config={{ cantaloupe_symlink }}/cantaloupe.properties
   - -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
 
 fcrepo_syn_tomcat_home: "{{ tomcat8_home }}"
@@ -79,22 +83,3 @@ fcrepo_syn_tokens:
 fcrepo_version: "5.1.1"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"
-
-cantaloupe_deploy_war: yes
-cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
-cantaloupe_user: tomcat
-cantaloupe_group: tomcat
-cantaloupe_admin_enabled: "true"
-cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
-cantaloupe_log_application_ConsoleAppender_enabled: "false"
-cantaloupe_log_application_FileAppender_enabled: "true"
-cantaloupe_log_application_FileAppender_pathname: "{{ cantaloupe_log_path }}/application.log"
-cantaloupe_log_access_FileAppender_enabled: "true"
-cantaloupe_log_access_FileAppender_pathname: "{{ cantaloupe_log_path }}/access.log"
-cantaloupe_FilesystemResolver_BasicLookupStrategy_path_prefix: /var/www/html/drupal/web/
-cantaloupe_processor_jp2: OpenJpegProcessor
-cantaloupe_cache_source: FilesystemCache
-cantaloupe_cache_derivative: FilesystemCache
-cantaloupe_create_FilesystemCache_dir: yes
-cantaloupe_resolver_static: HttpSource
-cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: ""

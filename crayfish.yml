@@ -7,8 +7,7 @@
     php_version: "7.4"
 
   roles:
-    - name: geerlingguy.repo-remi
-      when: ansible_os_family == "RedHat"
+    - Islandora-Devops.grok
     - geerlingguy.apache
     - geerlingguy.php-versions
     - geerlingguy.php

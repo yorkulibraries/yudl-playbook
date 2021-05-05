@@ -1,0 +1,82 @@
+---
+
+drupal_build_composer_project: true
+drupal_composer_install_dir: /var/www/html/drupal
+drupal_core_owner: "{{ ansible_user }}"
+drupal_composer_dependencies:
+  - "zaporylie/composer-drupal-optimizations:^1.1"
+  - "drupal/devel:^4.0"
+  - "drupal/core-dev:^9.1"
+  - "drush/drush:^10.3"
+  - "drupal/rdfui:^1.0-beta1"
+  - "drupal/restui:^1.16"
+  - "drupal/search_api_solr:^4.1"
+  - "drupal/facets:^1.6"
+  - "drupal/content_browser:^1.0@alpha"
+  - "drupal/matomo:^1.7"
+  - "drupal/pdf:1.x-dev"
+  - "drupal/admin_toolbar:^2.0"
+  - "drupal/rest_oai_pmh:^1.0@beta"
+  - "drupal/transliterate_filenames:^1.3"
+  - "easyrdf/easyrdf:^1.1"
+  - "drupal/features:^3.11"
+  - "drupal/jwt:^1.0@beta"
+  - "drupal/flysystem:^2.0@alpha"
+  - "drupal/context:^4.0@beta"
+  - "yorkulibraries/yudl8_defaults:dev-8.x-1.x"
+  - "islandora-rdm/islandora_fits:dev-8.x-1.x"
+  - "drupal/ldap:^4.0@alpha"
+drupal_composer_project_package: "drupal/recommended-project:^9.1"
+drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
+drupal_core_path: "{{ drupal_composer_install_dir }}/web"
+drupal_db_user: drupal8
+drupal_db_name: drupal8
+drupal_db_backend: "{{ claw_db }}"
+drupal_db_host: "127.0.0.1"
+drupal_domain: "gamma.library.yorku.ca"
+drupal_site_name: "York University Digital Library"
+drupal_install_profile: standard
+drupal_account_name: admin
+drupal_enable_modules:
+  - rdf
+  - responsive_image
+  - syslog
+  - serialization
+  - basic_auth
+  - rest
+  - restui
+  - devel
+  - search_api_solr
+  - search_api_solr_defaults
+  - facets
+  - content_browser
+  - matomo
+  - pdf
+  - admin_toolbar
+  - transliterate_filenames
+  - islandora_defaults
+  - controlled_access_terms_defaults
+  - islandora_defaults
+  - islandora_fits
+  - islandora_breadcrumbs
+  - islandora_iiif
+  - islandora_oaipmh
+  - islandora_search
+  - ldap_authentication
+  - ldap_user
+drupal_trusted_hosts:
+  - ^localhost$
+  - "gamma.library.yorku.ca"
+  - "beta.library.yorku.ca"
+drupal_trusted_hosts_file: "{{ drupal_core_path }}/sites/default/settings.php"
+drupal_public_filesystem: "{{ drupal_core_path }}/sites/default/files"
+drupal_external_libraries_directory: "{{ drupal_core_path }}/libraries"
+fedora_base_url: "http://10.0.0.16:8080/fcrepo/rest/"
+drupal_jsonld_remove_format: true
+drupal_gemini_pseudo_bundles:
+  - islandora_object:node
+  - image:media
+  - file:media
+  - audio:media
+  - video:media
+openseadragon_composer_item: "islandora/openseadragon:dev-8.x-1.x"

@@ -12,4 +12,3 @@ php_date_timezone: "America/Toronto"
 php_memory_limit: 1G
 
 riprap_rest_endpoint: 'http://localhost:8000/api/fixity'
-riprap_gemini_rest_endpoint: 'http://localhost:8000/gemini'

@@ -27,27 +27,45 @@
       command: certbot --apache certonly --agree-tos --email "{{ certbot_admin_email }}" --noninteractive -d "{{ drupal_domain }}"
       when: env == "staging" or env == "production"
 
-    - name: Add https config
+    - name: Add STAGING https config
       template:
         src: omega.islandora-le-ssl.conf.j2
         dest: "{{ apache_conf_path }}/sites-available/islandora-le-ssl.conf"
         owner: root
         group: root
         mode: 0644
-      when: env == "staging" or env == "production"
+      when: env == "staging"
 
-    - name: Add omega http config
+    - name: Add STAGING http config
       template:
         src: omega.islandora.conf.j2
         dest: "{{ apache_conf_path }}/sites-available/islandora.conf"
         owner: root
         group: root
         mode: 0644
-      when: env == "staging" or env == "production"
+      when: env == "staging"
+
+    - name: Add PRODUCTION https config
+      template:
+        src: gamma.islandora-le-ssl.conf.j2
+        dest: "{{ apache_conf_path }}/sites-available/islandora-le-ssl.conf"
+        owner: root
+        group: root
+        mode: 0644
+      when: env == "production"
+
+    - name: Add PRODUCTION http config
+      template:
+        src: gamma.islandora.conf.j2
+        dest: "{{ apache_conf_path }}/sites-available/islandora.conf"
+        owner: root
+        group: root
+        mode: 0644
+      when: env == "production"
 
     - name: Enable https site
       command: a2ensite islandora-le-ssl.conf
-      when: env == "staging" or env == "production"
+      when: env == "production"
 
     - name: Start Apache
       service:

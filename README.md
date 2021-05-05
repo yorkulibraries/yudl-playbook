@@ -15,11 +15,12 @@ This is an Ansible playbook for Islandora 8 for York University Libraries. It is
 ### STAGING
 
 1. `ansible-galaxy install -r requirements.yml`
-2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/focal64" --extra-vars "ansible_sudo_pass=somepassword" --extra-vars"env=staging"`
+2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/focal64" --extra-vars "ansible_sudo_pass=somepassword" --extra-vars "env=staging"`
 
 ### PRODUCTION
 
-Detailed installation and usage instructions can be found on the [official installation documentation for Islandora 8](https://islandora.github.io/documentation/installation/playbook/).
+1. `ansible-galaxy install -r requirements.yml`
+2. `ansible-playbook --ask-vault-pass -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" --extra-vars "env=production"`
 
 ## Connect
 
@@ -45,6 +46,8 @@ You can connect to the machine via the browser at [https://omega.library.yorku.c
 
 #### PRODUCTION
 
+You can connect to the machine via the browser at [https://gamma.library.yorku.ca](https://gamma.library.yorku.ca).
+
 ### Fedora
 
 #### DEV
@@ -54,7 +57,13 @@ The Fedora 5 REST API can be accessed at [http://localhost:8080/fcrepo/rest](htt
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 
 #### STAGING
+
 The Fedora 5 REST API can be accessed at [http://omega.library.yorku.ca:8080/fcrepo/rest](http://omega.library.yorku.ca:8080/fcrepo/rest). 
+Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
+
+#### PRODUCTION
+
+The Fedora 5 REST API can be accessed at [http://beta.library.yorku.ca:8080/fcrepo/rest](http://beta.library.yorku.ca:8080/fcrepo/rest).
 
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 
@@ -69,6 +78,8 @@ You can access the Solr administration UI at http://localhost:8983/solr/
 You can access the Solr administration UI at http://omega.library.yorku.ca:8983/solr/
 
 #### PRODUCTION
+
+You can access the Solr administration UI at http://gamma.library.yorku.ca:8983/solr/
 
 ### ActiveMQ
 
@@ -86,6 +97,8 @@ You can access the ActiveMQ administrative interface at: http://localhost:8161/a
 You can access the ActiveMQ administrative interface at: http://omega.library.yorku.ca:8161/admin
 
 #### PRODUCTION
+
+You can access the ActiveMQ administrative interface at: http://beta.library.yorku.ca:8161/admin
 
 ### Cantaloupe
 
@@ -106,6 +119,10 @@ You can access the IIIF interface at: http://omega.library.yorku.ca:8080/cantalo
 
 #### PRODUCTION
 
+You can access the Cantaloupe admin interface at: http://gamma.library.yorku.ca:8080/cantaloupe/admin
+
+You can access the IIIF interface at: http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
+
 ### JWT
 
 Islandora 8 uses JWT for authentication across the stack. Crayfish microservices, Fedora, and Drupal all use them. 
@@ -114,22 +131,6 @@ the following header in HTTP requests:
 
   * `Authorization: Bearer islandora`
   
-### BlazeGraph (Bigdata)
-
-#### DEV
-
-You can access the BlazeGraph interface at: http://localhost:8080/bigdata/
-
-You have to select the islandora namespace in the [namespaces tab](http://localhost:8080/bigdata/#namespaces) before you can execute queries.
-
-#### STAGING
-
-You can access the BlazeGraph interface at: http://omega.library.yorku.ca:8080/bigdata/
-
-You have to select the islandora namespace in the [namespaces tab](http://localhost:8080/bigdata/#namespaces) before you can execute queries.
-
-#### PRODUCTION
-
 ### FITS
 
 #### DEV
@@ -141,3 +142,5 @@ You can access the FITS Web Service at http://localhost:8080/fits/
 You can access the FITS Web Service at http://omega.library.yorku.ca:8080/fits/
 
 #### PRODUCTION
+
+You can access the FITS Web Service at http://beta.library.yorku.ca:8080/fits/

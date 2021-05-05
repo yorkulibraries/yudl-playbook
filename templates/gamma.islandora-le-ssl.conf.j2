@@ -1,0 +1,40 @@
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+  ServerName gamma.library.yorku.ca
+  DocumentRoot "/var/www/html/drupal/web"
+  ErrorLog "/var/log/apache2/yudl8-staging-error.log"
+  CustomLog "/var/log/apache2/yudl8-staging-access.log" combined
+
+  RequestHeader set X-Forwarded-Proto HTTPS
+  RequestHeader set X-Forwarded-Port 443
+  RequestHeader set X-Forwarded-Path /
+
+  <Directory "/var/www/html/drupal/web">
+    AllowOverride All
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+
+  Include /etc/letsencrypt/options-ssl-apache.conf
+  SSLCertificateFile /etc/letsencrypt/live/gamma.library.yorku.ca/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/gamma.library.yorku.ca/privkey.pem
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
+  AllowEncodedSlashes NoDecode
+
+  ProxyPass /cantaloupe/iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2 nocanon
+  ProxyPassReverse /cantaloupe/iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
+  ProxyPass /iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2 nocanon
+  ProxyPassReverse /iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
+  ProxyPassReverseCookiePath /cantaloupe/iiif/2 /iiif/2
+  ProxyPassReverseCookieDomain /cantaloupe/iiif/2 gamma.library.yorku.ca
+  ProxyPreserveHost on
+</VirtualHost>
+</IfModule>
