@@ -18,11 +18,11 @@
       force: yes
     when: env == "production"
 
-  - name: Set symlink directory ownership # noqa 301
+  - name: Set symlink directory ownership # noqa 302 305
     shell: chown -hR www-data:www-data "{{ drupal_core_path }}"/sites/default/files
     when: env == "production"
 
-  - name: Set symlink directory permissions # noqa 301
+  - name: Set symlink directory permissions # noqa 302 305
     shell: chmod -R 0775 "{{ drupal_core_path }}"/sites/default/files
     when: env == "production"
 
