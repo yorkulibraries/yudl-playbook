@@ -35,4 +35,4 @@
     - perms_fix
     - Islandora-Devops.drupal-openseadragon
     - webserver_app
-    - Islandora-Devops.riprap
+      #    - Islandora-Devops.riprap
