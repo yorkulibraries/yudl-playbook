@@ -38,7 +38,7 @@ fcrepo_db_host: "127.0.0.1"
 fcrepo_db_port: "3306"
 fcrepo_allowed_external_content:
   - http://localhost:8000/
-fcrepo_allowed_external_content_file: "{{ fcrepo_config_dir }}/allowed-external-content.txt"
+fcrepo_allowed_external_content_file: "{{ fcrepo_home_dir }}/allowed-external-content.txt"
 
 fcrepo_syn_tomcat_home: "{{ tomcat8_home }}"
 fcrepo_syn_default_public_key_path: "{{ fcrepo_syn_tomcat_home }}/conf/public.key"
