@@ -52,7 +52,7 @@ You can connect to the machine via the browser at [https://gamma.library.yorku.c
 
 #### DEV
 
-The Fedora 5 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).
+The Fedora 6 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).
 
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 

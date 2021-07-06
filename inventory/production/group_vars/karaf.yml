@@ -4,7 +4,7 @@ karaf_jms_brokerUrl: localhost
 
 # Comment in to build Alpaca from source
 alpaca_from_source: yes
-alpaca_version: no-gemini
+alpaca_version: dev
 alpaca_clone_directory: /opt/alpaca
 alpaca_karaf_repos:
   - mvn:org.apache.camel.karaf/apache-camel/2.20.4/xml/features
