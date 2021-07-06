@@ -36,30 +36,9 @@ fcrepo_db_name: fcrepo
 fcrepo_db_user: fcrepo
 fcrepo_db_host: "127.0.0.1"
 fcrepo_db_port: "3306"
-fcrepo_data_dir: "{{ fcrepo_home_dir }}/fcrepo4-data"
-fcrepo_binary_directory: "{{ fcrepo_data_dir}}/binaries"
-fcrepo_object_directory: "{{ fcrepo_data_dir}}/objects"
 fcrepo_allowed_external_content:
   - http://localhost:8000/
 fcrepo_allowed_external_content_file: "{{ fcrepo_config_dir }}/allowed-external-content.txt"
-
-tomcat8_java_opts:
-  - -Djava.awt.headless=true
-  - -Dfile.encoding=UTF-8
-  - -server
-  - -Xms512m
-  - -Xmx1024m
-  - -XX:NewSize=256m
-  - -XX:MaxNewSize=256m
-  - -XX:PermSize=256m
-  - -XX:MaxPermSize=256m
-  - -Dfcrepo.home={{ fcrepo_home_dir }}
-  - -Dfcrepo.modeshape.configuration=file://{{ fcrepo_home_dir }}/configs/repository.json
-  - -Dfcrepo.activemq.configuration=file://{{ fcrepo_config_dir }}/activemq.xml
-  - -Dfcrepo.spring.configuration=file://{{ fcrepo_home_dir }}/configs/fcrepo-config.xml
-  - -Dfcrepo.external.content.allowed={{ fcrepo_allowed_external_content_file }}
-  - -Dcantaloupe.config={{ cantaloupe_symlink }}/cantaloupe.properties
-  - -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
 
 fcrepo_syn_tomcat_home: "{{ tomcat8_home }}"
 fcrepo_syn_default_public_key_path: "{{ fcrepo_syn_tomcat_home }}/conf/public.key"
@@ -78,7 +57,7 @@ fcrepo_syn_tokens:
       - fedoraAdmin
     token: "{{ islandora_syn_token }}"
 
-fcrepo_version: "5.1.1"
+fcrepo_version: "6.0.0"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"
 fcrepo_syn_folder: /opt/syn

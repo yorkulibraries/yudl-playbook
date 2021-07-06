@@ -8,7 +8,7 @@
     - role: geerlingguy.java
       when: "ansible_os_family == 'Debian'"
       java_packages:
-        - openjdk-8-jdk
+        - openjdk-11-jdk
     - Islandora-Devops.tomcat8
     - geerlingguy.solr
     - Islandora-Devops.grok
