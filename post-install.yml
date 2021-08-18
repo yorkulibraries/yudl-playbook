@@ -47,6 +47,10 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.site mail {{ certbot_admin_email }}"
       when: env == "staging" or env == "production"
 
+    - name: Set update notifications  email
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset update.settings notification.emails {{ certbot_admin_email }}"
+      when: env == "staging" or env == "production"
+
     - name: Set admin only account creation # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset user.settings register admin_only"
 
