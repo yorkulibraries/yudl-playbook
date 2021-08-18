@@ -47,7 +47,7 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.site mail {{ certbot_admin_email }}"
       when: env == "staging" or env == "production"
 
-    - name: Set update notifications  email
+    - name: Set update notifications email # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset update.settings notification.emails {{ certbot_admin_email }}"
       when: env == "staging" or env == "production"
 
