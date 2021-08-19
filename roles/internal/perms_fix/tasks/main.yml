@@ -33,10 +33,3 @@
       owner: "{{ webserver_app_user }}"
       group: "{{ webserver_app_user }}"
       mode: '1777'
-
-  - name: Set permissions on libraries so we don't get a FORBIDDEN error for pdf.js
-    file:
-      directory: "{{ drupal_core_path }}/libraries"
-      owner: "{{ webserver_app_user }}"
-      group: "{{ webserver_app_user }}"
-      mode: '1755'

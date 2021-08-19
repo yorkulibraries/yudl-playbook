@@ -135,6 +135,15 @@
     creates: "{{ drupal_external_libraries_directory }}/pdf.js/build"
     remote_src: yes
 
+- name: Set permissions on libraries so we don't get a FORBIDDEN error for pdf.js
+  file:
+    path: "{{ drupal_core_path }}/libraries"
+    state: directory
+    recurse: yes
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: '1755'
+
 - name: Add project's /vendor/bin to $PATH (ubuntu)
   lineinfile:
     path: ~/.profile
