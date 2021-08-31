@@ -26,6 +26,13 @@ drupal_composer_dependencies:
   - "islandora/controlled_access_terms:dev-8.x-1.x"
   - "yorkulibraries/yudl8_defaults:dev-8.x-1.x"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
+  - "drupal/paragraphs:^1.12"
+  - "drupal/bootstrap_barrio:^5.5"
+  - "drupal/simple_sitemap:^3.10"
+  - "drupal/pathauto:^1.8"
+  - "drupal/views_bulk_operations:^4.0"
+  - "drupal/views_bulk_edit:^2.6"
+  - "mjordan/islandora_repository_reports:dev-main"
 drupal_composer_project_package: "drupal/recommended-project:^9.1"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
@@ -62,6 +69,12 @@ drupal_enable_modules:
   - islandora_iiif
   - islandora_oaipmh
   - islandora_search
+  - paragraphs
+  - simple_sitemap
+  - pathauto
+  - views_bulk_operations
+  - views_bulk_edit
+  - islandora_repository_reports
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"

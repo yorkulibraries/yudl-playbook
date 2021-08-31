@@ -74,6 +74,12 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} urol administrator {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
 
+    - name: Enable Bootstrap Barrio subtheme # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} theme:enable bootstrap_barrio_subtheme"
+
+    - name: Set Bootstrap Barrio subtheme as default theme # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.theme default bootstrap_barrio_subtheme"
+
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
             groups={{ webserver_app_user }}
