@@ -1,3 +1,37 @@
+---
+
+tomcat8_home: /var/lib/tomcat9
+
+tomcat8_packages:
+  - tomcat9
+tomcat8_admin_packages:
+  - tomcat9-admin
+
+tomcat_service_name: tomcat9
+
+tomcat8_server_user: tomcat
+tomcat8_server_group: tomcat
+tomcat8_user_home: /home/tomcat
+
+tomcat8_users:
+  - username: islandora
+    password: "{{ islandora_tomcat_password }}"
+    roles:
+      - manager-gui
+
+tomcat8_java_opts:
+  - -Djava.awt.headless=true
+  - -Dfile.encoding=UTF-8
+  - -server
+  - -Xms512m
+  - -Xmx1024m
+  - -XX:NewSize=256m
+  - -XX:MaxNewSize=256m
+  - -XX:PermSize=256m
+  - -XX:MaxPermSize=256m
+  - -Dcantaloupe.config={{ cantaloupe_symlink }}/cantaloupe.properties
+  - -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
+
 solr_cores:
   - ISLANDORA
 solr_install_path: /opt/solr
@@ -5,3 +39,43 @@ solr_version: "7.7.3"
 solr_mirror: "https://mirror.oceanmeat.tech"
 solr_user: solr
 solr_instance_conf_path: "/var/solr/data/{{ solr_cores[0] }}/conf"
+
+cantaloupe_deploy_war: yes
+cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
+cantaloupe_user: tomcat
+cantaloupe_group: tomcat
+cantaloupe_admin_enabled: "true"
+cantaloupe_admin_username: admin
+cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
+cantaloupe_log_application_ConsoleAppender_enabled: "false"
+cantaloupe_log_application_FileAppender_enabled: "true"
+cantaloupe_log_application_FileAppender_pathname: "{{ cantaloupe_log_path }}/application.log"
+cantaloupe_log_access_FileAppender_enabled: "true"
+cantaloupe_log_access_FileAppender_pathname: "{{ cantaloupe_log_path }}/access.log"
+cantaloupe_log_error_FileAppender_enabled: "true"
+cantaloupe_log_error_FileAppender_pathname: "{{ cantaloupe_log_path }}/error.log"
+cantaloupe_FilesystemResolver_BasicLookupStrategy_path_prefix: /var/www/html/drupal/web/
+cantaloupe_processor_avi: FfmpegProcessor
+cantaloupe_processor_bmp: OpenJpegProcessor
+cantaloupe_processor_dcm: ImageMagickProcessor
+cantaloupe_processor_flv: FfmpegProcessor
+cantaloupe_processor_gif: ImageMagickProcessor
+cantaloupe_processor_jp2: KakaduDemoProcessor
+cantaloupe_processor_jpg: ImageMagickProcessor
+cantaloupe_processor_mov: FfmpegProcessor
+cantaloupe_processor_mp4: FfmpegProcessor
+cantaloupe_processor_mpg: FfmpegProcessor
+cantaloupe_processor_pdf: PdfBoxProcessor
+cantaloupe_processor_png: ImageMagickProcessor
+cantaloupe_processor_tif: OpenJpegProcessor
+cantaloupe_processor_webm: FfmpegProcessor
+cantaloupe_processor_webp: ImageMagickProcessor
+cantaloupe_cache_source: FilesystemCache
+cantaloupe_cache_derivative: FilesystemCache
+cantaloupe_create_FilesystemCache_dir: yes
+cantaloupe_resolver_static: HttpSource
+cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: ""
+cantaloupe_processor_selection_strategy: ManualSelectionStrategy
+cantaloupe_processor_stream_retrieval_strategy: CacheStrategy
+cantaloupe_processor_fallback_retrieval_strategy: CacheStrategy
+cantaloupe_KakaduProcessor_path_to_binaries: /opt/kakadu

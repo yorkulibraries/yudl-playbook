@@ -5,6 +5,7 @@ fcrepo_syn_user: tomcat
 fits_user: tomcat
 fits_group: tomcat
 fits_log_path: /var/log/tomcat9
+fits_install_symlink: /opt/fits
 
 tomcat8_home: /var/lib/tomcat9
 
@@ -59,25 +60,8 @@ fcrepo_syn_tokens:
 fcrepo_version: "6.0.0"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"
+fcrepo_syn_folder: /opt/syn
 
-cantaloupe_deploy_war: yes
-cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
-cantaloupe_user: tomcat
-cantaloupe_group: tomcat
-cantaloupe_admin_enabled: "true"
-cantaloupe_admin_username: admin
-cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
-cantaloupe_log_application_ConsoleAppender_enabled: "false"
-cantaloupe_log_application_FileAppender_enabled: "true"
-cantaloupe_log_application_FileAppender_pathname: "{{ cantaloupe_log_path }}/application.log"
-cantaloupe_log_access_FileAppender_enabled: "true"
-cantaloupe_log_access_FileAppender_pathname: "{{ cantaloupe_log_path }}/access.log"
-cantaloupe_log_error_FileAppender_enabled: "true"
-cantaloupe_log_error_FileAppender_pathname: "{{ cantaloupe_log_path }}/error.log"
-cantaloupe_FilesystemResolver_BasicLookupStrategy_path_prefix: /var/www/html/drupal/web/
-cantaloupe_processor_jp2: OpenJpegProcessor
-cantaloupe_cache_source: FilesystemCache
-cantaloupe_cache_derivative: FilesystemCache
-cantaloupe_create_FilesystemCache_dir: yes
-cantaloupe_resolver_static: HttpSource
-cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: ""
+cantaloupe_log_path: /var/log/cantaloupe
+cantaloupe_symlink: /opt/cantaloupe
+cantaloupe_FilesystemCache_pathname: /var/cache/cantaloupe
