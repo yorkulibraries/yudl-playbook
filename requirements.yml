@@ -56,7 +56,7 @@
   name: Islandora-Devops.crayfish
   version: yul
 
-- src: https://github.com/Islandora-Devops/ansible-role-drupal-openseadragon
+- src: https://github.com/yorkulibraries/ansible-role-drupal-openseadragon
   name: Islandora-Devops.drupal-openseadragon
   version: main
 
@@ -84,7 +84,7 @@
   name: Islandora-Devops.karaf
   version: yul
 
-- src: https://github.com/Islandora-Devops/ansible-role-keymaster
+- src: https://github.com/yorkulibraries/ansible-role-keymaster
   name: Islandora-Devops.keymaster
   version: main
 
