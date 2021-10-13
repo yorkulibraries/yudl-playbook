@@ -23,7 +23,7 @@ drupal_composer_dependencies:
   - "drupal/jwt:^1.0@beta"
   - "drupal/flysystem:^2.0@alpha"
   - "drupal/context:^4.0@beta"
-  - "yorkulibraries/yudl8_defaults:dev-8.x-1.x"
+  - "yorkulibraries/yudl8_defaults:2.x-dev"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/ldap:^4.0@alpha"
   - "drupal/paragraphs:^1.12"
@@ -94,4 +94,4 @@ drupal_gemini_pseudo_bundles:
   - file:media
   - audio:media
   - video:media
-openseadragon_composer_item: "islandora/openseadragon:dev-8.x-1.x"
+openseadragon_composer_item: "islandora/openseadragon:2.x-dev"
