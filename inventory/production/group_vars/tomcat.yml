@@ -31,9 +31,14 @@ fcrepo_persistence: jdbc-mysql
 # Set fcrepo directory structure
 fcrepo_home_dir: "/tank/data/fcrepo"
 fcrepo_allowed_external_content:
-  - "https://gamma.library.yorku.ca/"
-  - "http://beta.library.yorku.ca/"
+  - "https://gamma.library.yorku.ca"
+  - "http://beta.library.yorku.ca"
   - "http://10.0.0.16"
+  - "https://10.0.0.16"
+  - "http://130.63.180.16"
+  - "https://130.63.180.16"
+  - "http://130.63.180.17"
+  - "https://130.63.180.17"
   - "http://10.0.0.17"
   - "https://10.0.0.17"
   - "https://digital.library.yorku.ca"
