@@ -1,0 +1,25 @@
+fcrepo_version: 6.0.0
+fcrepo_user: "{{ tomcat8_server_user }}"
+fcrepo_war_path: "{{ tomcat8_home }}/webapps/fcrepo.war"
+fcrepo_home_dir: /opt/fcrepo
+fcrepo_activemq_template: activemq.xml.j2
+fcrepo_activemq_broker_url: "tcp://localhost:61616"
+
+# Used for mysql or postgres object persistence. Please change the password locally!
+fcrepo_db_name: fcrepo
+fcrepo_db_user: fcrepo
+fcrepo_db_password: fcrepo
+fcrepo_db_host: "127.0.0.1"
+fcrepo_db_port: "3306"
+# user that has database create and user add privs.
+fcrepo_db_root_user: "root"
+fcrepo_db_root_password: "islandora"
+
+# External content paths can be directories or urls,
+# and they MUST end in /
+fcrepo_allowed_external_content:
+  - http://localhost:8000/
+
+fcrepo_allowed_external_content_file: "{{ fcrepo_home_dir }}/configs/allowed-external-content.txt"
+
+fcrepo_auth_header_name:

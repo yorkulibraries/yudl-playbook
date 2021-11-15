@@ -1,0 +1,16 @@
+- name: Copy fedora activemq configuration
+  template:
+    src: "{{ fcrepo_activemq_template }}"
+    dest: "{{ fcrepo_home_dir }}/configs/activemq.xml"
+    owner: "{{ fcrepo_user }}"
+    group: "{{ fcrepo_user }}"
+  notify: restart tomcat9
+
+# ADDED by dbernstein
+- name: Template out allowed external content paths
+  template:
+    src: allowed-external-content.txt.j2
+    dest: "{{ fcrepo_home_dir }}/configs/allowed-external-content.txt"
+    owner: "{{ fcrepo_user }}"
+    group: "{{ fcrepo_user }}"
+  notify: restart tomcat9

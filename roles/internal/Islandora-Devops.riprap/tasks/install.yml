@@ -1,0 +1,106 @@
+- name: Check for existing microservice
+  stat:
+    path: "{{ riprap_home }}/riprap/vendor"
+  register: riprap
+
+- name: Get Riprap microservice from GitHub
+  git:
+    repo: https://github.com/mjordan/riprap.git
+    dest: "{{ riprap_home }}/riprap"
+    version: main
+    force: yes
+  when: not riprap.stat.exists
+
+- name: Change Riprap directory ownership, group and permissions
+  file:
+    path: "{{ riprap_home }}/riprap"
+    owner:  "{{ webserver_app_user }}"
+    group:  "{{ webserver_app_user }}"
+    mode: 0755
+    recurse: True
+
+- name: Composer install Riprap microservice
+  composer:
+    command: install
+    working_dir: "{{ riprap_home }}/riprap"
+  ignore_errors: yes
+  when: not riprap.stat.exists
+  become: true
+  become_user:  "{{ webserver_app_user }}"
+
+- name: Open permissions on Riprap cache
+  file:
+    path: "{{ riprap_home }}/riprap/var/cache"
+    owner:  "{{ webserver_app_user }}"
+    group:  "{{ webserver_app_user }}"
+    mode: 0744
+    recurse: True
+
+- name: Edit .env file
+  lineinfile:
+    path: "{{ riprap_home }}/riprap/.env"
+    regexp: 'DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db'
+    line: 'DATABASE_URL=mysql://{{ drupal_db_user }}:{{ drupal_db_password }}@127.0.0.1:3306/{{ drupal_db_name }}'
+
+- name: Create target directory
+  file:
+    path: "{{ private_file_dir }}/riprap_config"
+    state: directory
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: 0744
+  become: yes
+
+- name: Install Riprap config file
+  template:
+    src: "riprap_config.j2"
+    dest: "{{ private_file_dir }}/riprap_config/islandora_riprap_config.yml"
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: 0744
+  become: true
+  become_user: root
+
+- name: Install Drupal Islandora Riprap module from GitHub
+  git:
+    repo: https://github.com/mjordan/islandora_riprap.git
+    dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap"
+    version: main
+    force: yes
+
+- name: Copy monolog config
+  template:
+    src: monolog.yaml.j2
+    dest: "{{ riprap_home }}/riprap/config/packages/dev/monolog.yaml"
+    mode: 0744
+
+- name: Enable JSON:API module (not currently enabled by default) # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en jsonapi"
+
+- name: Enable Riprap Drupal module # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_riprap"
+
+- name: Set Riprap rest endpoint # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings riprap_rest_endpoint {{ riprap_rest_endpoint }} -y"
+
+- name: Set default content type # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings fixity_content_type {{ default_data_type }} -y"
+
+- name: Set login username # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings user_name {{ drupal_account_name }} -y"
+
+- name: Set login password # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings user_pass {{ drupal_account_pass }} -y"
+
+- name: Create daily cron job
+  cron:
+    name: "update fixity"
+    minute: "{{ riprap_cron_minute }}"
+    hour: "{{ riprap_cron_hour }}"
+    day: "{{ riprap_cron_day }}"
+    job: "php {{ riprap_home }}/riprap/bin/console app:riprap:check_fixity --settings={{ private_file_dir }}/riprap_config/islandora_riprap_config.yml"
+
+- name: restart apache
+  service:
+    name: apache2
+    state: restarted

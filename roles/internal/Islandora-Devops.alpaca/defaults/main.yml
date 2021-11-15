@@ -1,0 +1,69 @@
+---
+
+alpaca_from_source: no
+alpaca_version: main
+alpaca_clone_directory: /opt/alpaca
+
+alpaca_karaf_repos:
+  - mvn:org.apache.camel.karaf/apache-camel/2.20.4/xml/features
+  - mvn:org.apache.activemq/activemq-karaf/5.15.0/xml/features
+  - mvn:ca.islandora.alpaca/islandora-karaf/1.0.1/xml/features
+
+alpaca_features:
+  - fcrepo-service-activemq
+  - fcrepo-camel
+  - fcrepo-service-camel
+  - islandora-http-client
+  - islandora-indexing-fcrepo
+  - islandora-connector-derivative
+
+alpaca_karaf_dir: /opt/karaf
+alpaca_karaf_etc_dir: "{{ alpaca_karaf_dir }}/etc"
+alpaca_karaf_deploy_dir: "{{ alpaca_karaf_dir }}/deploy"
+alpaca_karaf_user: karaf
+alpaca_local_mvn_path: /opt/maven/repo
+
+alpaca_milliner_base_url: http://localhost:8000/milliner
+alpaca_houdini_base_url: http://localhost:8000/houdini
+alpaca_homarus_base_url: http://localhost:8000/homarus
+alpaca_fits_base_url: http://localhost:8000/crayfits
+
+alpaca_settings:
+  - pid: ca.islandora.alpaca.http.client
+    settings:
+      token.value: islandora
+  - pid: ca.islandora.alpaca.indexing.fcrepo
+    settings:
+      error.maxRedeliveries: 5
+      timeout_length: 10000
+      node.stream: broker:queue:islandora-indexing-fcrepo-content
+      node.delete.stream: broker:queue:islandora-indexing-fcrepo-delete
+      media.stream: broker:queue:islandora-indexing-fcrepo-media
+      file.delete.stream: broker:queue:islandora-indexing-fcrepo-file-delete
+      milliner.baseUrl: "{{ alpaca_milliner_base_url }}"
+
+alpaca_blueprint_settings:
+  - pid: ca.islandora.alpaca.connector.ocr
+    in_stream: broker:queue:islandora-connector-ocr
+    derivative_service_url: http://localhost:8000/hypercube
+    error_max_redeliveries: 5
+    timeout_length: 10000
+    camel_context_id: IslandoraConnectorOCR
+  - pid: ca.islandora.alpaca.connector.houdini
+    in_stream: broker:queue:islandora-connector-houdini
+    derivative_service_url: "{{ alpaca_houdini_base_url }}/convert"
+    error_max_redeliveries: 5
+    timeout_length: 10000
+    camel_context_id: IslandoraConnectorHoudini
+  - pid: ca.islandora.alpaca.connector.homarus
+    in_stream: broker:queue:islandora-connector-homarus
+    derivative_service_url: "{{ alpaca_homarus_base_url }}/convert"
+    error_max_redeliveries: 5
+    timeout_length: 10000
+    camel_context_id: IslandoraConnectorHomarus
+  - pid: ca.islandora.alpaca.connector.fits
+    in_stream: broker:queue:islandora-connector-fits
+    derivative_service_url: "{{ alpaca_fits_base_url }}"
+    error_max_redeliveries: 5
+    timeout_length: 10000
+    camel_context_id: IslandoraConnectorFits

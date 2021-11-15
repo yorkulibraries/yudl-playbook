@@ -29,7 +29,7 @@
   version: 1.4.3
 
 - src: geerlingguy.solr
-  version: 4.2.1
+  version: 5.2.0
 
 - src: geerlingguy.java
   version: 1.10.0
@@ -39,55 +39,3 @@
 
 - src: geerlingguy.drush
   version: 3.1.1
-
-- src: https://github.com/yorkulibraries/ansible-role-activemq
-  name: Islandora-Devops.activemq
-  version: omega
-
-- src: https://github.com/yorkulibraries/ansible-role-alpaca
-  name: Islandora-Devops.alpaca
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-cantaloupe
-  name: Islandora-Devops.cantaloupe
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-crayfish
-  name: Islandora-Devops.crayfish
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-drupal-openseadragon
-  name: Islandora-Devops.drupal-openseadragon
-  version: main
-
-- src: https://github.com/yorkulibraries/ansible-role-fcrepo
-  name: Islandora-Devops.fcrepo
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-fcrepo-syn
-  name: Islandora-Devops.fcrepo-syn
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-tomcat8
-  name: Islandora-Devops.tomcat8
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-fits
-  name: Islandora-Devops.fits
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-grok
-  name: Islandora-Devops.grok
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-karaf
-  name: Islandora-Devops.karaf
-  version: yul
-
-- src: https://github.com/yorkulibraries/ansible-role-keymaster
-  name: Islandora-Devops.keymaster
-  version: main
-
-- src: https://github.com/yorkulibraries/ansible-role-riprap
-  name: Islandora-Devops.riprap
-  version: yul

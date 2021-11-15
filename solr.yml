@@ -16,6 +16,10 @@
 
   tasks:
 
+    - name: ldconfig kakadu
+      command: "ldconfig /opt/kakadu/lib/Linux-x86-64"
+      when: env == "production"
+
     - name: Make tmp dir for solr config
       file:
         path: /tmp/solr_config

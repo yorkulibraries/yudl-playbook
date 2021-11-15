@@ -1,0 +1,24 @@
+---
+
+# Include OS specific variables
+- name: include OS specific variables
+  include_vars: "vars/{{ ansible_os_family }}.yml"
+
+- include: install.yml
+  tags:
+    - riprap
+    - riprap-install
+
+- include: configure_dirs.yml
+  tags:
+    - riprap
+
+- include: database_config.yml
+  tags:
+    - riprap
+    - database
+
+- include: apache_config.yml
+  tags:
+    - riprap
+    - apache

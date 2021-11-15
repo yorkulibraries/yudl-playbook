@@ -1,0 +1,37 @@
+###########################################################################
+# This file is managed by Ansible
+###########################################################################
+
+####################
+# General settings #
+####################
+
+fixity_algorithm: sha256
+
+# Absolute or relative to the Riprap application directory.
+failures_log_path: '{{ crayfish_log_directory }}/riprap_failed_events.log'
+
+###########
+# Plugins #
+###########
+
+plugins.fetchresourcelist: ['PluginFetchResourceListFromDrupalView']
+drupal_baseurl: '{{ crayfish_drupal_base_url }}'
+drupal_user: '{{ drupal_account_name }}'
+drupal_password: '{{ drupal_account_pass }}'
+# This should use the same hostname/IP address as is used for FCREPO in Islandora's configuration.
+# Otherwise, the file URIs may not match up.
+fedora_baseurl: '{{ crayfish_fedora_base_url }}'
+# Absolute or relative to the Riprap application directory.
+views_pager_data_file_path: '{{ riprap_home }}/riprap/var/fetchresourcelist.from.drupal.pager.txt'
+
+# Required. Non-standard or custom media need to have the fieldname they use to contain the file added to this list.
+drupal_file_fieldnames: ['field_media_audio', 'field_media_document', 'field_media_extracted_text', 'field_media_file', 'field_media_image', 'field_media_video_file']
+
+plugins.fetchdigest: PluginFetchDigestFromFedoraAPI
+fedoraapi_method: HEAD
+fedoraapi_digest_header_leader_pattern: "^.+="
+
+plugins.persist: PluginPersistToDatabase
+
+plugins.postcheck: ['PluginPostCheckCopyFailures']

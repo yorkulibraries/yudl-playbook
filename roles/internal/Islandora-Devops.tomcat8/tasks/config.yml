@@ -1,0 +1,55 @@
+---
+
+- name: Creates Cantaloupe directory
+  file:
+    path: /opt/cantaloupe
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
+
+- name: Creates Fits directory
+  file:
+    path: /opt/fits
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
+
+- name: Creates Cantaloupe cache directory
+  file:
+    path: /var/cache/cantaloupe
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
+
+- name: Creates Fits directory
+  file:
+    path: /var/log/cantaloupe
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
+
+- name: Template systemd Tomcat9 service
+  template:
+    src: tomcat9.service.j2
+    dest: /etc/systemd/system/tomcat9.service
+  when: env == "staging" or env == "dev"
+
+- name: Template systemd Tomcat9 service (beta)
+  template:
+    src: tomcat9.beta.service.j2
+    dest: /etc/systemd/system/tomcat9.service
+  when:  "'beta' in inventory_hostname"
+
+- name: Template systemd Tomcat9 service (gamma)
+  template:
+    src: tomcat9.gamma.service.j2
+    dest: /etc/systemd/system/tomcat9.service
+  when: "'gamma' in inventory_hostname"
+
+- name: Reload systemd services
+  command: "systemctl daemon-reload"
+

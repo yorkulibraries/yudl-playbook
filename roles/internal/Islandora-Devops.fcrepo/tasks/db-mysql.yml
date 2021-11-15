@@ -1,0 +1,15 @@
+---
+
+- name: Create Fedora DB (mysql)
+  mysql_db:
+    name: "{{ fcrepo_db_name }}"
+    state: present
+  register: fcrepo_db_exists
+
+- name: Create Fedora DB User (mysql)
+  mysql_user:
+    name: "{{ fcrepo_db_user }}"
+    password: "{{ fcrepo_db_password }}"
+    priv: "{{fcrepo_db_name}}.*:ALL"
+    host: "%"
+    state: present
