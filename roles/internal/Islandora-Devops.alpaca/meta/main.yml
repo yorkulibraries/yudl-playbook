@@ -17,7 +17,6 @@ galaxy_info:
     - islandora
     - CLAW
     - camel
-    - karaf
     - server
     - installer
 dependencies: []

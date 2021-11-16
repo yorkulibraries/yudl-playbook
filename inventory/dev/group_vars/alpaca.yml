@@ -1,0 +1,6 @@
+---
+
+alpaca_from_source: yes
+alpaca_version: one-app
+alpaca_clone_directory: /opt/alpaca
+alpaca_log_level: INFO

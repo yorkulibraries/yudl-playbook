@@ -2,7 +2,7 @@
 
 default ansible_host=omega.library.yorku.ca ansible_port=22 ansible_ssh_private_key_file='/home/nruest/.ssh/id_rsa' ansible_user='nruest'
 
-[karaf]
+[alpaca]
 default
 
 [database]

@@ -1,0 +1,7 @@
+---
+
+- hosts: alpaca
+  become: yes
+
+  roles:
+    - Islandora-Devops.alpaca

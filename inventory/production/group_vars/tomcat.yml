@@ -66,6 +66,6 @@ fcrepo_syn_tokens:
       - fedoraAdmin
     token: "{{ islandora_syn_token }}"
 
-fcrepo_version: "6.0.0"
+fcrepo_version: "6.1.0"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"

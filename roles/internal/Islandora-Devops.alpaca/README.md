@@ -24,12 +24,6 @@ Where to clone Alpaca to:
 alpaca_clone_directory: /opt/alpaca
 ```
 
-Karaf repo:
-```
-alpaca_karaf_repos:
-  - mvn:ca.islandora.alpaca/islandora-karaf/LATEST/xml/features
-```
-
 Which features to install:
 ```
 alpaca_features:
@@ -37,26 +31,6 @@ alpaca_features:
   - islandora-connector-broadcast
   - islandora-indexing-triplestore
   - islandora-indexing-fcrepo
-```
-
-Where Karaf is:
-```
-alpaca_karaf_dir: /opt/karaf
-```
-
-Where the Karaf configuration files are:
-```
-alpaca_karaf_etc_dir: "{{ alpaca_karaf_dir }}/etc"
-```
-
-Karaf user:
-```
-alpaca_karaf_user: karaf
-```
-
-Local path for maven repository:
-```
-alpaca_local_mvn_path: /opt/maven/repo
 ```
 
 Configuration settings:
@@ -72,10 +46,6 @@ alpaca_settings:
       triplestore.baseUrl: http://localhost:8080/bigdata/namespace/kb/sparql
 ```
 
-## Dependencies
-
-* Apache Karaf
-  
 ## Example Playbook
 
     - hosts: webservers

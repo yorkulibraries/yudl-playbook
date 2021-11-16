@@ -7,16 +7,6 @@ crayfish_services:
   - Homarus
   - Recast
 
-# Temporary to allow Silex/Symfony 4 differences
-crayfish_silex_services:
-  - Milliner
-  - Hypercube
-  - Homarus
-  - Recast
-
-crayfish_symfony_services:
-  - Houdini
-
 crayfish_install_dir: /var/www/html/Crayfish
 
 crayfish_syn_token: islandora
@@ -28,7 +18,7 @@ crayfish_fedora_base_url: http://localhost:8080/fcrepo/rest
 
 # Houdini default config
 crayfish_houdini_log_file: /var/log/islandora/houdini.log
-crayfish_houdini_log_level: DEBUG
+crayfish_houdini_log_level: INFO
 
 crayfish_houdini_jwt_enabled: TRUE
 crayfish_houdini_jwt_config: "{{ crayfish_install_dir }}/syn-settings.xml"
@@ -47,7 +37,7 @@ crayfish_houdini_executable_config:
 
 # Hypercube default config
 crayfish_hypercube_log_file: /var/log/islandora/hypercube.log
-crayfish_hypercube_log_level: DEBUG
+crayfish_hypercube_log_level: INFO
 
 crayfish_hypercube_jwt_enabled: TRUE
 crayfish_hypercube_jwt_config: "{{ crayfish_install_dir }}/syn-settings.xml"
@@ -58,7 +48,7 @@ crayfish_hypercube_pdftotext_executable: pdftotext
 
 # Milliner default config
 crayfish_milliner_log_file: /var/log/islandora/milliner.log
-crayfish_milliner_log_level: DEBUG
+crayfish_milliner_log_level: INFO
 
 crayfish_milliner_jwt_enabled: TRUE
 crayfish_milliner_jwt_config: "{{ crayfish_install_dir }}/syn-settings.xml"
@@ -69,6 +59,7 @@ crayfish_milliner_fedora_base_url: "{{ crayfish_fedora_base_url }}"
 crayfish_milliner_drupal_base_url: "{{ crayfish_drupal_base_url }}"
 crayfish_milliner_modified_date_predicate: http://schema.org/dateModified
 crayfish_milliner_strip_format_jsonld: true
+crayfish_milliner_is_fedora_6: true
 
 # OS Dependent variables set in vars can be overridden here
 # crayfish_user: www-data
@@ -82,7 +73,7 @@ php_packages_extra:
 
 # homarus
 crayfish_homarus_log_file: /var/log/islandora/homarus.log
-crayfish_homarus_log_level: DEBUG
+crayfish_homarus_log_level: INFO
 
 crayfish_homarus_jwt_enabled: TRUE
 crayfish_homarus_jwt_config: "{{ crayfish_install_dir }}/syn-settings.xml"
@@ -91,30 +82,29 @@ crayfish_homarus_fedora_base_url: "{{ crayfish_fedora_base_url }}"
 
 crayfish_homarus_executable_config:
   executable: ffmpeg
-  mime_types:
+  formats:
     valid:
-      - video/mp4
-      - video/x-msvideo
-      - video/ogg
-      - audio/x-wav
-      - audio/mpeg
-      - audio/aac
-      - image/jpeg
-    default: video/mp4
-  mime_to_format:
-    valid:
-      - video/mp4_mp4
-      - video/x-msvideo_avi
-      - video/ogg_ogg
-      - audio/x-wav_wav
-      - audio/mpeg_mp3
-      - audio/aac_m4a
-      - image/jpeg_image2pipe
-    default: mp4
+      - mimetype: video/mp4
+        format: mp4
+      - mimetype: video/x-msvideo
+        format: avi
+      - mimetype: video/ogg
+        format: ogg
+      - mimetype: audio/x-wav
+        format: wav
+      - mimetype: audio/mpeg
+        format: mp3
+      - mimetype: audio/aac
+        format: m4a
+      - mimetype: image/jpeg
+        format: image2pipe
+    default:
+      mimetype: video/mp4
+      format: mp4
 
 # recast
 crayfish_recast_log_file: /var/log/islandora/recast.log
-crayfish_recast_log_level: DEBUG
+crayfish_recast_log_level: INFO
 
 crayfish_recast_jwt_enabled: TRUE
 crayfish_recast_jwt_config: "{{ crayfish_install_dir }}/syn-settings.xml"
