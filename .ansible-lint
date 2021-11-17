@@ -1,9 +1,0 @@
-parseable: true
-quiet: true
-use_default_rules: true
-verbosity: 0
-exclude_paths:
-  -  'roles/external'
-skip_list:
-  - '204'
-  - '401'

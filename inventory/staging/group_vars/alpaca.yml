@@ -43,7 +43,7 @@ alpaca_derivative_connectors:
   - name: ocr
     enabled: true
     in_stream: queue:islandora-connector-ocr
-    service_url: "{{ alpaca_houdini_base_url }}/hypercube"
+    service_url: "{{ alpaca_hypercube_base_url }}"
     concurrent-consumers: -1
     max-consumers: -1
   - name: houdini

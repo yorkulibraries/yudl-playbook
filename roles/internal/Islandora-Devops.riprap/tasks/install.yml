@@ -23,7 +23,7 @@
   composer:
     command: install
     working_dir: "{{ riprap_home }}/riprap"
-  ignore_errors: yes
+  #ignore_errors: yes
   when: not riprap.stat.exists
   become: true
   become_user:  "{{ webserver_app_user }}"

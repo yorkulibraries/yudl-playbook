@@ -1,5 +1,5 @@
 ---
-crayfish_version_tag: dev
+crayfish_version_tag: issue-1224
 crayfish_db: "{{ claw_db }}"
 
 crayfish_fedora_base_url: "http://10.0.0.16:8080/fcrepo/rest"
