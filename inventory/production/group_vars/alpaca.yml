@@ -21,7 +21,7 @@ alpaca_error_maxRedeliveries: 5
 alpaca_jms_baseUrl: tcp://localhost:61616
 alpaca_jms_username:
 alpaca_jms_password:
-alpaca_jms_connections: 10
+alpaca_jms_connections: 40
 
 alpaca_request_configurer_enabled: false
 alpaca_request_configurer_request_timeout: -1

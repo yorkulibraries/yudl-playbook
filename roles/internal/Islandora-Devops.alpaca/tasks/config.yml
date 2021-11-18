@@ -29,18 +29,15 @@
     group: "{{ alpaca_group }}"
     state: link
 
-- name: Make log directory
-  file:
-    path: "{{ alpaca_clone_directory }}/logs"
-    state: directory
-    owner: "{{ alpaca_user }}"
-    group: "{{ alpaca_group }}"
-
 - name: Make startup executable
   file:
     path: "{{ alpaca_clone_directory }}/startup.sh"
     state: touch
     mode: u+rwx,g+rwx,o+rx
 
-- name: Start service
-  command: service alpaca start
+- name: Reload systemd and start Alpaca
+  systemd:
+    daemon-reload: yes
+    enabled: yes
+    state: restarted
+    name: alpaca
