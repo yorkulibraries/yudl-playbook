@@ -121,13 +121,5 @@
         mode: 0755
       when: env == "staging" or env == "production"
 
-    - name: Download Islandora Workbench Integration module
-      git:
-        repo: https://github.com/mjordan/islandora_workbench_integration.git
-        dest: "{{ drupal_core_path }}/modules/contrib/islandora_workbench_integration"
-
-    - name: Enable Islandora Workbench Integration module # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_workbench_integration"
-
     - name: Clear cache # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"
