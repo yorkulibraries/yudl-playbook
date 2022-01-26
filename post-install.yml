@@ -96,7 +96,7 @@
 
     - name: Chown islandora_defaults feature
       file:
-        dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults"
+        dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"

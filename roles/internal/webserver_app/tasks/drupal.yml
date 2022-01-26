@@ -64,7 +64,7 @@
 - name: Copy ldap_authentication.settings.yml
   template:
     src: "ldap_authentication.settings.yml.j2"
-    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_authentication.settings.yml"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_authentication.settings.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
@@ -73,7 +73,7 @@
 - name: Copy ldap_servers.server.pydirectory.yml
   template:
     src: "ldap_servers.server.pydirectory.yml.j2"
-    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_servers.server.pydirectory.yml"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_servers.server.pydirectory.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
@@ -82,7 +82,7 @@
 - name: Copy ldap_servers.settings.yml
   template:
     src: "ldap_servers.settings.yml.j2"
-    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_servers.settings.yml"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_servers.settings.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
@@ -91,7 +91,7 @@
 - name: Copy ldap_user.settings.yml
   template:
     src: "ldap_user.settings.yml.j2"
-    dest: "{{ drupal_core_path }}/modules/contrib/yudl8_defaults/config/install/ldap_user.settings.yml"
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_user.settings.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
