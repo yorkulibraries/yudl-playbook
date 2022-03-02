@@ -10,6 +10,32 @@
 
   tasks:
 
+    - name: Get YUDL Barrio Subtheme
+      git:
+        repo: https://github.com/yorkulibraries/yudl_barrio_subtheme.git
+        dest: "{{ drupal_core_path }}/themes/contrib/yudl_barrio_subtheme"
+        version: main
+        force: yes
+
+    - name: Get YUDL Customizations Module
+      git:
+        repo: https://github.com/yorkulibraries/yudl_customizations.git
+        dest: "{{ drupal_core_path }}/modules/custom/yudl_customizations"
+        version: main
+        force: yes
+
+    - name: Enable Bootstrap Barrio subtheme # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} theme:enable yudl_barrio_subtheme"
+
+    - name: Set Bootstrap Barrio subtheme as default theme # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.theme default yudl_barrio_subtheme"
+
+    - name: Enable YU Branding # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} pm:enable yu_branding"
+
+    - name: Import Header and Footer block settings # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cim --partial --source=themes/contrib/yudl_barrio_subtheme/config/settings"
+
     - name: Add admin to fedoraAdmin role # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
@@ -73,12 +99,6 @@
     - name: Add admin users to admin role # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} urol administrator {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
-
-    - name: Enable Bootstrap Barrio subtheme # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} theme:enable bootstrap_barrio_subtheme"
-
-    - name: Set Bootstrap Barrio subtheme as default theme # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.theme default bootstrap_barrio_subtheme"
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}

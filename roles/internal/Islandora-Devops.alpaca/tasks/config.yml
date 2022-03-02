@@ -35,6 +35,10 @@
     state: touch
     mode: u+rwx,g+rwx,o+rx
 
+- name: Pause while things sort themselves out
+  pause:
+    seconds: 15
+
 - name: Reload systemd and start Alpaca
   systemd:
     daemon-reload: yes
