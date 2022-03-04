@@ -123,6 +123,24 @@
         mode: 0775
         recurse: yes
 
+    - name: Chown yudl_customizations
+      file:
+        dest: "{{ drupal_core_path }}/modules/custom/yudl_customizations"
+        state: directory
+        owner: "{{ webserver_app_user }}"
+        group: "{{ webserver_app_user }}"
+        mode: 0775
+        recurse: yes
+
+    - name: Chown yudl_barrio_subtheme
+      file:
+        dest: "{{ drupal_core_path }}/themes/contrib/yudl_barrio_subtheme"
+        state: directory
+        owner: "{{ webserver_app_user }}"
+        group: "{{ webserver_app_user }}"
+        mode: 0775
+        recurse: yes
+
     - name: Chown controlled access terms default configuration
       file:
         dest: "{{ drupal_core_path }}/modules/contrib/controlled_access_terms/modules/controlled_access_terms_defaults"
