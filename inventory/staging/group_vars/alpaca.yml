@@ -1,10 +1,11 @@
 ---
 
-alpaca_from_source: yes
-alpaca_version: 2.x
+alpaca_from_source: no
+alpaca_version: 2.0.0
 alpaca_clone_directory: /opt/alpaca
 alpaca_log_level: INFO
-alpaca_jar_path: "{{ alpaca_clone_directory }}/islandora-alpaca-app/build/libs/islandora-alpaca-app-2.1.0-all.jar"
+alpaca_jar_path: "{{ alpaca_clone_directory }}/islandora-alpaca-app-{{ alpaca_version }}-all.jar"
+alpaca_log_level: INFO
 
 alpaca_user: tomcat
 alpaca_group: tomcat
@@ -21,7 +22,7 @@ alpaca_error_maxRedeliveries: 5
 alpaca_jms_baseUrl: tcp://localhost:61616
 alpaca_jms_username:
 alpaca_jms_password:
-alpaca_jms_connections: 10
+alpaca_jms_connections: 40
 
 alpaca_request_configurer_enabled: false
 alpaca_request_configurer_request_timeout: -1
