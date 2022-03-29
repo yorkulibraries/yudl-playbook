@@ -89,6 +89,9 @@
 - name: Set login password # noqa 301
   command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings user_pass {{ drupal_account_pass }} -y"
 
+- name: Enable Riprap Islandora Repository Reports # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_repository_reports_riprap"
+
 - name: Create daily cron job
   cron:
     name: "update fixity"
