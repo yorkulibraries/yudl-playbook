@@ -13,6 +13,8 @@ crayfish_syn_token: islandora
 
 crayfish_log_directory: /var/log/islandora
 
+crayfish_webserver_app_user: www-data
+
 crayfish_drupal_base_url: http://localhost:8000
 crayfish_fedora_base_url: http://localhost:8080/fcrepo/rest
 

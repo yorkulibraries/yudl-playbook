@@ -46,6 +46,14 @@
     group: "{{ crayfish_user }}"
     mode: "urwx,gr,o-rwx"
 
+- name: Set permissions on Crayfish directory
+  file:
+    path: "{{ crayfish_install_dir }}"
+    state: directory
+    owner: "{{ crayfish_user }}"
+    group: "{{ crayfish_user }}"
+    recurse: true
+
 - name: Install crayfish httpd config file
   template:
     src: "httpd/{{ item }}.conf.j2"

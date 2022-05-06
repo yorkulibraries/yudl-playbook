@@ -46,7 +46,7 @@ cantaloupe_user: tomcat
 cantaloupe_group: tomcat
 cantaloupe_admin_enabled: "true"
 cantaloupe_admin_username: admin
-cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/local/bin
+cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/bin
 cantaloupe_log_application_ConsoleAppender_enabled: "false"
 cantaloupe_log_application_FileAppender_enabled: "true"
 cantaloupe_log_application_FileAppender_pathname: "{{ cantaloupe_log_path }}/application.log"
