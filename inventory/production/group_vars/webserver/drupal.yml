@@ -84,6 +84,7 @@ drupal_enable_modules:
   - islandora_repository_reports_activemq
   - search_api_autocomplete
   - search_api_solr_autocomplete
+  - geolocation_leaflet
 drupal_trusted_hosts:
   - ^localhost$
   - "gamma.library.yorku.ca"
