@@ -17,19 +17,7 @@ islandora_extra_ubuntu_packages:
   - multitail
   - silversearcher-ag
   - sendmail
-
-islandora_extra_centos_packages:
-  - wget
-  - curl
-  - tree
-  - zsh
-  - unzip
-  - vim
-  - make
-  - automake
-  - gcc
-  - gcc-c++
-  - kernel-devel
+  - acl
 
 islandora_jwt_expiry: "1 week"
 

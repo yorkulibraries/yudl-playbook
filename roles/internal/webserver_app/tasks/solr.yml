@@ -16,5 +16,5 @@
 
 - name: Create Solr config.zip
   command:
-    cmd: "{{ drush_path }} --root {{ drupal_core_path }} -y solr-gsc default_solr_server solr_config.zip 7.1" # noqa 301
+    cmd: "{{ drush_path }} --root {{ drupal_core_path }} -y solr-gsc default_solr_server solr_config.zip {{ solr_version }}" # noqa 301
     chdir: "{{ drupal_core_path }}"
