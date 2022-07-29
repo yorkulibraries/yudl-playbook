@@ -21,7 +21,7 @@ $vagrantUser = "vagrant"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
-    v.name = "Islandora 8 Ansible"
+    v.name = "YUDL Ansible"
   end
 
   config.vm.hostname = $hostname
