@@ -24,6 +24,7 @@ drupal_composer_dependencies:
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
   - "drupal/flysystem:^2@beta"
+  - "drupal/group:^1.4"
   - "islandora/islandora:*"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
@@ -90,6 +91,7 @@ drupal_enable_modules:
   - geolocation_leaflet
   - config_translation
   - locale
+  - group
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"

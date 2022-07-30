@@ -24,6 +24,7 @@ drupal_composer_dependencies:
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
   - "drupal/flysystem:^2@beta"
+  - "drupal/group:^1.4"
   - "islandora/islandora:*"
   - "drupal/authorization:^1.0@beta"
   - "--with-all-dependencies drupal/ldap:^4.0@alpha"
@@ -91,6 +92,7 @@ drupal_enable_modules:
   - geolocation_leaflet
   - config_translation
   - locale
+  - group
 drupal_trusted_hosts:
   - ^localhost$
   - "gamma.library.yorku.ca"
