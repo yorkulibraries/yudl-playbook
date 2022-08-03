@@ -5,3 +5,9 @@ crayfish_db: "{{ claw_db }}"
 crayfish_fedora_base_url: "http://{{ hostvars[groups['tomcat'][0]].ansible_host }}:8080/fcrepo/rest"
 crayfish_drupal_base_url: "http://{{ hostvars[groups['webserver'][0]].ansible_host }}:{{ apache_listen_port }}"
 crayfish_log_directory: "/var/log/islandora"
+
+crayfish_houdini_log_level: ERROR
+crayfish_hypercube_log_level: ERROR
+crayfish_milliner_log_level: ERROR
+crayfish_homarus_log_level: ERROR
+crayfish_recast_log_level: ERROR

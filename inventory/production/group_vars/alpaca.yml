@@ -5,7 +5,6 @@ alpaca_version: 2.0.0
 alpaca_clone_directory: /opt/alpaca
 alpaca_log_level: INFO
 alpaca_jar_path: "{{ alpaca_clone_directory }}/islandora-alpaca-app-{{ alpaca_version }}-all.jar"
-alpaca_log_level: INFO
 
 alpaca_user: tomcat
 alpaca_group: tomcat
@@ -29,7 +28,7 @@ alpaca_request_configurer_request_timeout: -1
 alpaca_request_configurer_connection_timeout: -1
 alpaca_request_configurer_socket_timeout: -1
 
-alpaca_fcrepo_enabled: true
+alpaca_fcrepo_enabled: "true"
 alpaca_fcrepo_milliner_baseUrl: "{{ alpaca_milliner_base_url }}"
 alpaca_fcrepo_node: queue:islandora-indexing-fcrepo-content
 alpaca_fcrepo_node_delete: queue:islandora-indexing-fcrepo-delete

@@ -6,10 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.require_version ">= 2.0.1"
 
-$cpus   = ENV.fetch("ISLANDORA_VAGRANT_CPUS", "1")
-$memory = ENV.fetch("ISLANDORA_VAGRANT_MEMORY", "4096")
-$hostname = ENV.fetch("ISLANDORA_VAGRANT_HOSTNAME", "islandora8")
-$virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "Islandora 8")
+$cpus   = ENV.fetch("ISLANDORA_VAGRANT_CPUS", "4")
+$memory = ENV.fetch("ISLANDORA_VAGRANT_MEMORY", "6156")
+$hostname = ENV.fetch("ISLANDORA_VAGRANT_HOSTNAME", "yudl-dev")
+$virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "YUDL DEV")
 
 # Available boxes are 'islandora/8', ubuntu/bionic64' and 'centos/7'
 # Use 'ubuntu/bionic64' or 'centos/7' to build a dev environment from scratch.

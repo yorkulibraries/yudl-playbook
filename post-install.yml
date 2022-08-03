@@ -9,7 +9,6 @@
     vagrant_user: "vagrant"
 
   tasks:
-
     - name: Get YUDL Barrio Subtheme
       git:
         repo: https://github.com/yorkulibraries/yudl_barrio_subtheme.git
