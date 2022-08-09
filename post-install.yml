@@ -9,6 +9,16 @@
     vagrant_user: "vagrant"
 
   tasks:
+    - name: Get Islandora PREMIS
+      git:
+        repo: https://github.com/mjordan/islandora_premis.git
+        dest: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
+        version: 8.x-1.x
+        force: yes
+
+    - name: Enable Islandora PREMIS # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} en -y islandora_premis"
+
     - name: Get YUDL Barrio Subtheme
       git:
         repo: https://github.com/yorkulibraries/yudl_barrio_subtheme.git
