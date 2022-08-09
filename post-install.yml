@@ -11,13 +11,13 @@
   tasks:
     - name: Get Islandora PREMIS
       git:
-        repo: https://github.com/mjordan/islandora_premis.git
+        repo: https://github.com/yorkulibraries/islandora_premis.git
         dest: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
-        version: 8.x-1.x
+        version: wsod
         force: yes
 
     - name: Enable Islandora PREMIS # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} en -y islandora_premis"
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_premis"
 
     - name: Get YUDL Barrio Subtheme
       git:
