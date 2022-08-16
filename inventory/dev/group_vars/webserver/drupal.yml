@@ -1,5 +1,4 @@
 ---
-
 composer_version: "2.1.14"
 composer_version_branch: ""
 composer_keep_updated: no
@@ -21,7 +20,12 @@ drupal_composer_dependencies:
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
   - "drupal/flysystem:^2@beta"
+  - "drupal/jquery_ui_accordion:^1.1"
+  - "drupal/typed_data:^1.0@beta"
   - "drupal/group:^1.4"
+  - "drupal/groupmedia:^2.0@alpha"
+  - "drupal/group_permissions:^1.0@alpha"
+  - "--with-all-dependencies drupal/rules:^3.0@alpha"
   - "islandora/islandora:^2.4"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
@@ -84,7 +88,12 @@ drupal_enable_modules:
   - geolocation_leaflet
   - config_translation
   - locale
+  - jquery_ui_accordion
   - group
+  - gnode
+  - rules
+  - group_permissions
+  - groupmedia
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"

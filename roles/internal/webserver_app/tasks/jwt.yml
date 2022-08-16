@@ -34,6 +34,19 @@
     - key.key.islandora_rsa_key.yml
   register: drupal_jwt_config
 
+###
+# Install this here since we run into a composer wanting stable over dev issue.
+- name: Get Islandora Group
+  git:
+    repo: https://github.com/digitalutsc/islandora_group.git
+    dest: "{{ drupal_core_path }}/modules/contrib/islandora_group"
+    version: 1.2.x
+    force: yes
+
+- name: Enable Islandora Group # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_group"
+###
+
 - name: Enable Bartik
   command: "{{ drush_path }} --root {{ drupal_core_path }} theme:enable bartik -y"
 

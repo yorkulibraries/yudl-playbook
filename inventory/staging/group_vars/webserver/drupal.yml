@@ -20,8 +20,12 @@ drupal_composer_dependencies:
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
   - "drupal/flysystem:^2@beta"
-  - "drupal/group:^1.4"
   - "drupal/jquery_ui_accordion:^1.1"
+  - "drupal/typed_data:^1.0@beta"
+  - "drupal/group:^1.4"
+  - "drupal/groupmedia:^2.0@alpha"
+  - "drupal/group_permissions:^1.0@alpha"
+  - "--with-all-dependencies drupal/rules:^3.0@alpha"
   - "islandora/islandora:^2.4"
   - "drupal/authorization:^1.0@beta"
   - "--with-all-dependencies drupal/ldap:^4.0@alpha"
@@ -88,8 +92,12 @@ drupal_enable_modules:
   - geolocation_leaflet
   - config_translation
   - locale
-  - group
   - jquery_ui_accordion
+  - group
+  - gnode
+  - rules
+  - group_permissions
+  - groupmedia
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"
