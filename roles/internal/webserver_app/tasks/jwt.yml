@@ -34,6 +34,16 @@
     - key.key.islandora_rsa_key.yml
   register: drupal_jwt_config
 
+- name: Get YUDL Groups
+  git:
+    repo: https://github.com/yorkulibraries/yudl_groups.git
+    dest: "{{ drupal_core_path }}/modules/contrib/yudl_groups"
+    version: main
+    force: yes
+
+- name: Enable YUDL Groupa # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
+
 ###
 # Install this here since we run into a composer wanting stable over dev issue.
 - name: Get Islandora Group

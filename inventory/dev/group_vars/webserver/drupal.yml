@@ -22,6 +22,7 @@ drupal_composer_dependencies:
   - "drupal/flysystem:^2@beta"
   - "drupal/jquery_ui_accordion:^1.1"
   - "drupal/typed_data:^1.0@beta"
+  - "drupal/default_content:^2.0@alpha"
   - "drupal/group:^1.4"
   - "drupal/groupmedia:^2.0@alpha"
   - "drupal/group_permissions:^1.0@alpha"
@@ -94,6 +95,7 @@ drupal_enable_modules:
   - rules
   - group_permissions
   - groupmedia
+  - default_content
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
