@@ -32,7 +32,6 @@ drupal_composer_dependencies:
   - "--with-all-dependencies drupal/ldap:^4.0@alpha"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
-  - "drupal/paragraphs:^1.12"
   - "drupal/bootstrap_barrio:^5.5"
   - "drupal/simple_sitemap:^3.10"
   - "drupal/pathauto:^1.8"
@@ -76,7 +75,6 @@ drupal_enable_modules:
   - islandora_search
   - ldap_authentication
   - ldap_user
-  - paragraphs
   - simple_sitemap
   - pathauto
   - views_bulk_operations

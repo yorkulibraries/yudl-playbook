@@ -30,7 +30,6 @@ drupal_composer_dependencies:
   - "islandora/islandora:^2.4"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
-  - "drupal/paragraphs:^1.12"
   - "drupal/bootstrap_barrio:^5.5"
   - "drupal/simple_sitemap:^3.10"
   - "drupal/pathauto:^1.8"
@@ -72,7 +71,6 @@ drupal_enable_modules:
   - islandora_iiif
   - islandora_oaipmh
   - islandora_search
-  - paragraphs
   - simple_sitemap
   - pathauto
   - views_bulk_operations
