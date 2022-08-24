@@ -108,6 +108,9 @@
     - name: Islandora Groups configuration # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config node-type-access-fields.islandora_object field_access_terms"
 
+    - nmae: Add mov to video formats # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset field.field.media.video.field_media_video_file settings.file_extensions 'mp4 mov'"
+
     - name: Set site email # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.site mail {{ certbot_admin_email }}"
       when: env == "staging" or env == "production"
