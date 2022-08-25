@@ -5,10 +5,10 @@ webserver_app: yes
 openseadragon_iiiv_set_var: yes
 openseadragon_iiiv_server: "https://omega.library.yorku.ca/cantaloupe/iiif/2"
 
-php_upload_max_filesize: 4G
-php_post_max_size: 4G
-php_max_input_time: 100
-php_max_execution_time: 100
+php_upload_max_filesize: 100G
+php_post_max_size: 100G
+php_max_input_time: 1000
+php_max_execution_time: 1000
 php_date_timezone: "America/Toronto"
 php_memory_limit: 4G
 
@@ -21,6 +21,6 @@ certbot_certs:
 
 riprap_rest_endpoint: 'https://omega.library.yorku.ca/api/fixity'
 
-crayfish_fedora_base_url: "http://10.0.0.16:8080/fcrepo/rest"
-crayfish_drupal_base_url: "https://gamma.library.yorku.ca"
+crayfish_fedora_base_url: "http://10.0.0.126:8080/fcrepo/rest"
+crayfish_drupal_base_url: "https://omega.library.yorku.ca"
 crayfish_log_directory: "/var/log/islandora"
