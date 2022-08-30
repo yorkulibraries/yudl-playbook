@@ -18,6 +18,7 @@ islandora_extra_ubuntu_packages:
   - silversearcher-ag
   - sendmail
   - acl
+  - libopenjp2-tools
 
 islandora_jwt_expiry: "1 week"
 

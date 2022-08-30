@@ -20,7 +20,7 @@ Environment="JAVA_OPTS=${JAVA_OPTS} -Djava.awt.headless=true -Dfile.encoding=UTF
 Environment="CATALINA_HOME=/usr/share/tomcat9"
 Environment="CATALINA_BASE=/var/lib/tomcat9"
 Environment="CATALINA_TMPDIR=/tmp"
-Environment="CATALINA_OPTS=-Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -Dfits.home=/opt/fits -Dfcrepo.home=/tank/data/fcrepo -Dfcrepo.activemq.configuration=file:///tank/data/fcrepo/configs/activemq.xml -Dfcrepo.velocity.runtime.log=/var/log/tomcat9/velocity.log -Dfcrepo.autoversioning.enabled=false -Dfcrepo.storage=ocfl-fs -Dfcrepo.activemq.directory=file:///tank/data/fcrepo/Activemq -Dfcrepo.external.content.allowed=/tank/data/fcrepo/configs/allowed-external-content.txt -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
+Environment="CATALINA_OPTS=-Xms512m -Xmx4112m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -Dfits.home=/opt/fits -Dfcrepo.home=/tank/data/fcrepo -Dfcrepo.activemq.configuration=file:///tank/data/fcrepo/configs/activemq.xml -Dfcrepo.velocity.runtime.log=/var/log/tomcat9/velocity.log -Dfcrepo.autoversioning.enabled=false -Dfcrepo.storage=ocfl-fs -Dfcrepo.activemq.directory=file:///tank/data/fcrepo/Activemq -Dfcrepo.external.content.allowed=/tank/data/fcrepo/configs/allowed-external-content.txt -Dfcrepo.log=WARN -Dfcrepo.log.kernel=ERROR -Dfcrepo.log.http.commons=ERROR -Dfcrepo.log.jms=ERROR -Dfcrepo.log.http.api=ERROR -Dfcrepo.session.timeout=2700000 -Dfcrepo.event.threads=20 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
 
 # Lifecycle
 Type=simple

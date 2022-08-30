@@ -58,7 +58,6 @@ log4j.appender.CONSOLE.layout.ConversionPattern=%d${date-pattern} - %5p - %c{1}:
 log4j.appender.FILE=org.apache.log4j.RollingFileAppender
 # The following path is specific to Tomcat. Modify for another server or destination locations.
 log4j.appender.FILE.File={{ fits_log_path }}/fits-service.log
-#log4j.appender.FILE.File=./fits-service.log
 log4j.appender.FILE.Threshold=INFO
 log4j.appender.FILE.Append=true
 log4j.appender.FILE.MaxFileSize=10MB

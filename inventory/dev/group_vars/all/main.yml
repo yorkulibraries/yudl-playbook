@@ -17,6 +17,7 @@ islandora_extra_ubuntu_packages:
   - multitail
   - silversearcher-ag
   - acl
+  - libopenjp2-tools
 
 islandora_jwt_expiry: "+7 days"
 

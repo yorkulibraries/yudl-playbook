@@ -40,6 +40,7 @@ drupal_composer_dependencies:
   - "drupal/search_api_autocomplete"
   - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
+  - "drupal/cookies:^1.1"
 drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -98,6 +99,7 @@ drupal_enable_modules:
   - group_permissions
   - groupmedia
   - default_content
+  - cookies
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"
