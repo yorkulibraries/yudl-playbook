@@ -39,6 +39,16 @@ drupal_composer_dependencies:
   - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
   - "drupal/cookies:^1.1"
+  - "drupal/views_block_area:^1.0@beta"
+  - "drupal/metatag:^1.21"
+  - "drupal/file_download_link:^2.0"
+  - "drupal/term_condition:^2.0"
+  - "drupal/addtoany:^1.16"
+  - "drupal/twig_tweak:^3.1"
+  - "drupal/block_class:^2.0"
+  - "drupal/ds:^3.13"
+  - "drupal/oembed_providers:^2.1"
+  - "drupal/fontawesome:^2.23"
 drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -96,6 +106,22 @@ drupal_enable_modules:
   - groupmedia
   - default_content
   - cookies
+  - views_block_area
+  - metatag
+  - layout_builder
+  - layout_discovery
+  - media_library
+  - admin_toolbar_tools
+  - admin_toolbar_links_access_filter
+  - file_download_link
+  - term_condition
+  - addtoany
+  - twig_tweak
+  - block_class
+  - ds
+  - oembed_providers
+  - fontawesome
+  - facets_summary
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
