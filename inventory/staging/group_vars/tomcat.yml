@@ -6,6 +6,9 @@ fits_user: tomcat
 fits_group: tomcat
 fits_log_path: /var/log/tomcat9
 fits_install_symlink: /opt/fits
+fits_max_upload_file_size_MB: 75000
+fits_max_request_size_MB: 75000
+fit_max_in_memory_file_size_MB: 4
 
 tomcat8_home: /var/lib/tomcat9
 

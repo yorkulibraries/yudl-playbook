@@ -21,4 +21,9 @@
   template:
     src: log4j.properties.j2
     dest: "{{ tomcat8_home }}/webapps/fits/WEB-INF/classes/log4j.properties"
+
+- name: Configure FITS web service max upload size
+  template:
+    src: fits-service.properties.j2
+    dest: "{{ tomcat8_home }}/webapps/fits/WEB-INF/classes/fits-service.properties"
   notify: restart tomcat9

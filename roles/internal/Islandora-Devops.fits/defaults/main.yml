@@ -13,3 +13,6 @@ fits_zip_md5sum: "md5: 4a5f22ee878ec93a0d2c7f5e1cf505ed"
 fits_ws_md5sum: "md5: 230af06449b3a219041f0466f3d45494"
 webserver_app_user: "{% if ansible_os_family == 'RedHat' %}apache{% else %}www-data{% endif %}"
 vagrant_user: "vagrant"
+fits_max_upload_file_size_MB: 2000
+fits_max_request_size_MB: 2000
+fit_max_in_memory_file_size_MB: 4
