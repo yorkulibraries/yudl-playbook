@@ -7,6 +7,15 @@ This is an Ansible playbook for Islandora 8 for York University Libraries. It is
 
 ## Use
 
+### System Resources
+
+By default the virtual machine that is built uses 4GB of RAM. Your host machine will need to be able to support the additional memory use. You can override the CPU and RAM allocation by creating `ISLANDORA_VAGRANT_CPUS` and `ISLANDORA_VAGRANT_MEMORY` environment variables and setting the values. For example, on an Ubuntu host you could add to `~/.bashrc`:
+
+```bash
+export ISLANDORA_VAGRANT_CPUS=4
+export ISLANDORA_VAGRANT_MEMORY=5040
+```
+
 ### DEV
 
 1. `ansible-galaxy install -r requirements.yml`
