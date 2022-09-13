@@ -13,5 +13,3 @@
   roles:
     - role: geerlingguy.mysql
       when: claw_db == 'mysql'
-    - role: geerlingguy.postgresql
-      when: claw_db == 'pgsql'

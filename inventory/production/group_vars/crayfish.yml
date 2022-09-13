@@ -12,6 +12,7 @@ php_max_input_time: 1000
 php_max_execution_time: 1000
 php_date_timezone: "America/Toronto"
 php_memory_limit: 4G
+php_default_socket_timeout: 2700
 
 fits_log_path: /var/log/tomcat9
 

@@ -49,6 +49,7 @@ drupal_composer_dependencies:
   - "drupal/ds:^3.13"
   - "drupal/oembed_providers:^2.1"
   - "drupal/fontawesome:^2.23"
+    #  - "drupal/views_natural_sort:^2.0@alpha"
 drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -122,6 +123,7 @@ drupal_enable_modules:
   - oembed_providers
   - fontawesome
   - facets_summary
+    #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"

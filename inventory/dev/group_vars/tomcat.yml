@@ -82,7 +82,7 @@ cantaloupe_processor_jp2: OpenJpegProcessor
 cantaloupe_cache_source: FilesystemCache
 cantaloupe_cache_derivative: FilesystemCache
 cantaloupe_create_FilesystemCache_dir: yes
-cantaloupe_resolver_static: HttpSource
+cantaloupe_resolver_static: HttpSource2
 cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: ""
 cantaloupe_symlink: /opt/cantaloupe
 cantaloupe_log_path: /var/log/cantaloupe

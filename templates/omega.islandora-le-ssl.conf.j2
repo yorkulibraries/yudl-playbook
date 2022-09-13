@@ -2,8 +2,8 @@
 <VirtualHost *:443>
   ServerName omega.library.yorku.ca
   DocumentRoot "/var/www/html/drupal/web"
-  ErrorLog "/var/log/apache2/yudl8-staging-error.log"
-  CustomLog "/var/log/apache2/yudl8-staging-access.log" combined
+  ErrorLog "/var/log/apache2/yudl-staging-error.log"
+  CustomLog "/var/log/apache2/yudl-staging-access.log" combined
 
   RequestHeader set X-Forwarded-Proto HTTPS
   RequestHeader set X-Forwarded-Port 443

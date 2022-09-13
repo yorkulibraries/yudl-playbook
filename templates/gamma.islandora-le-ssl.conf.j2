@@ -2,8 +2,8 @@
 <VirtualHost *:443>
   ServerName gamma.library.yorku.ca
   DocumentRoot "/var/www/html/drupal/web"
-  ErrorLog "/var/log/apache2/yudl8-production-error.log"
-  CustomLog "/var/log/apache2/yudl8-production-access.log" combined
+  ErrorLog "/var/log/apache2/yudl-production-error.log"
+  CustomLog "/var/log/apache2/yudl-production-access.log" combined
 
   RequestHeader set X-Forwarded-Proto HTTPS
   RequestHeader set X-Forwarded-Port 443
@@ -20,7 +20,6 @@
   SSLCertificateKeyFile /etc/letsencrypt/live/gamma.library.yorku.ca/privkey.pem
 
   ProxyRequests Off
-  ProxyPreserveHost On
 
   <Proxy *>
     Order deny,allow
@@ -35,6 +34,6 @@
   ProxyPassReverse /iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
   ProxyPassReverseCookiePath /cantaloupe/iiif/2 /iiif/2
   ProxyPassReverseCookieDomain /cantaloupe/iiif/2 gamma.library.yorku.ca
-  ProxyPreserveHost on
+  ProxyPreserveHost On
 </VirtualHost>
 </IfModule>

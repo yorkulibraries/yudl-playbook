@@ -72,7 +72,7 @@ cantaloupe_processor_webp: ImageMagickProcessor
 cantaloupe_cache_source: FilesystemCache
 cantaloupe_cache_derivative: FilesystemCache
 cantaloupe_create_FilesystemCache_dir: yes
-cantaloupe_resolver_static: HttpSource
+cantaloupe_resolver_static: HttpSource2
 cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: ""
 cantaloupe_processor_selection_strategy: ManualSelectionStrategy
 cantaloupe_processor_stream_retrieval_strategy: CacheStrategy

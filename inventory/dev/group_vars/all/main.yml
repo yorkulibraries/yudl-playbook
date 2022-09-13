@@ -21,8 +21,6 @@ islandora_extra_ubuntu_packages:
 
 islandora_jwt_expiry: "+7 days"
 
-postgresql_user: postgres
-
 mysql_users:
   - name: "{{ drupal_db_user }}"
     host: "%"
