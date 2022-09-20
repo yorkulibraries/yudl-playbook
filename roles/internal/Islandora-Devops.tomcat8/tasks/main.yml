@@ -11,7 +11,7 @@
     - tomcat8
     - tomcat8-install
 
-- include: config.yml
+- include: "config.yml"
   static: no
   tags:
     - tomcat8
