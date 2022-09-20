@@ -203,3 +203,9 @@
 
     - name: Clear cache # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"
+
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+      when: env == "staging" or env == "production"

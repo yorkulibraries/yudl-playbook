@@ -65,7 +65,7 @@
 
     - name: Enable https site
       command: a2ensite islandora-le-ssl.conf
-      when: env == "production"
+      when: env == "staging" or env == "production"
 
     - name: Start Apache
       service:
