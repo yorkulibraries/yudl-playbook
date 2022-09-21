@@ -17,11 +17,20 @@
     version: "{{ crayfish_version_tag }}"
     force: yes
 
+- name: Set permissions on Crayfish directory
+  file:
+    path: "{{ crayfish_install_dir }}"
+    state: directory
+    owner: "{{ crayfish_user }}"
+    group: "{{ crayfish_user }}"
+    recurse: true
+
 - name: Build crayfish code including dependencies
   composer:
     command: install
     working_dir: "{{ crayfish_install_dir }}/{{ item }}"
   with_items: "{{ crayfish_services }}"
+  become_user: "{{ crayfish_user }}"
 
 - name: Get SSL keys
   include_role:
@@ -45,14 +54,6 @@
     owner: "{{ crayfish_user }}"
     group: "{{ crayfish_user }}"
     mode: "urwx,gr,o-rwx"
-
-- name: Set permissions on Crayfish directory
-  file:
-    path: "{{ crayfish_install_dir }}"
-    state: directory
-    owner: "{{ crayfish_user }}"
-    group: "{{ crayfish_user }}"
-    recurse: true
 
 - name: Install crayfish httpd config file
   template:
