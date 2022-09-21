@@ -6,8 +6,8 @@ openseadragon_iiiv_server: "http://{{ hostvars[groups['tomcat'][0]].ansible_host
 
 php_upload_max_filesize: 1G
 php_post_max_size: 1G
-php_max_input_time: 100
-php_max_execution_time: 100
+php_max_input_time: 1000
+php_max_execution_time: 1000
 php_date_timezone: "America/Toronto"
 php_memory_limit: 1G
 
