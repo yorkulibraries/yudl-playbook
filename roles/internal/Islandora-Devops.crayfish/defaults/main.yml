@@ -86,6 +86,8 @@ crayfish_homarus_executable_config:
   executable: ffmpeg
   formats:
     valid:
+      - mimetype: vide/quicktime
+        format: mov
       - mimetype: video/mp4
         format: mp4
       - mimetype: video/x-msvideo
