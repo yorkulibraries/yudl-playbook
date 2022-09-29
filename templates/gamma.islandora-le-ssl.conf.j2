@@ -27,6 +27,7 @@
   </Proxy>
 
   AllowEncodedSlashes NoDecode
+  ProxyPreserveHost On
 
   ProxyPass /cantaloupe/iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2 nocanon
   ProxyPassReverse /cantaloupe/iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
@@ -34,6 +35,5 @@
   ProxyPassReverse /iiif/2 http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
   ProxyPassReverseCookiePath /cantaloupe/iiif/2 /iiif/2
   ProxyPassReverseCookieDomain /cantaloupe/iiif/2 gamma.library.yorku.ca
-  ProxyPreserveHost On
 </VirtualHost>
 </IfModule>

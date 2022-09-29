@@ -51,7 +51,7 @@ cantaloupe_AzureStorageCache_object_key_prefix:
 cantaloupe_FilesystemResolver_BasicLookupStrategy_path_prefix: /var/www/html/drupal/web/
 cantaloupe_FilesystemResolver_BasicLookupStrategy_path_suffix:
 cantaloupe_HeapCache_persist: "true"
-cantaloupe_HeapCache_target_size: 20G
+cantaloupe_HeapCache_target_size: 100G
 cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix:
 cantaloupe_HttpResolver_auth_basic_secret:
 cantaloupe_HttpResolver_auth_basic_username:
@@ -128,7 +128,7 @@ cantaloupe_overlays_BasicStrategy_string_stroke_width:
 cantaloupe_overlays_BasicStrategy_type:
 cantaloupe_overlays_strategy:
 cantaloupe_processor_avi: FfmpegProcessor
-cantaloupe_processor_bmp: OpenJpegProcessor
+cantaloupe_processor_bmp: ImageMagickProcessor
 cantaloupe_processor_dcm: ImageMagickProcessor
 cantaloupe_processor_fallback_retrieval_strategy: CacheStrategy
 cantaloupe_processor_flv: FfmpegProcessor
@@ -143,7 +143,7 @@ cantaloupe_processor_pdf: PdfBoxProcessor
 cantaloupe_processor_png: ImageMagickProcessor
 cantaloupe_processor_selection_strategy: ManualSelectionStrategy
 cantaloupe_processor_stream_retrieval_strategy: CacheStrategy
-cantaloupe_processor_tif: KakaduDemoProcessor
+cantaloupe_processor_tif: ImageMagickProcessor
 cantaloupe_processor_tif_compression:
 cantaloupe_processor_webm: FfmpegProcessor
 cantaloupe_processor_webp: ImageMagickProcessor

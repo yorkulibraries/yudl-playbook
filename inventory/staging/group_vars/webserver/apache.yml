@@ -5,7 +5,7 @@ apache_create_vhosts: true
 apache_vhosts_filename: "islandora.conf"
 apache_remove_default_vhost: true
 apache_vhosts:
-  - servername: "omega.library.yorku.ca"
+  - servername: "{{ hostvars[groups['webserver'][0]].ansible_host }}"
     documentroot: "/var/www/html/drupal/web"
     allow_override: All
     options: -Indexes +FollowSymLinks

@@ -19,6 +19,10 @@ islandora_extra_ubuntu_packages:
   - sendmail
   - acl
   - libopenjp2-tools
+  - ffmpeg
+  - imagemagick
+  - graphicsmagick
+  - libturbojpeg-dev
 
 islandora_jwt_expiry: "1 week"
 

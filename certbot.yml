@@ -4,6 +4,15 @@
   become: yes
 
   tasks:
+    - name: Turn off Apache listening on IP6
+      template:
+        src: ports.conf.j2
+        dest: "{{ apache_conf_path }}/ports.conf"
+        owner: root
+        group: root
+        mode: 0644
+      when: "'gamma' in inventory_hostname"
+
     - name: Install certbot snap
       snap:
         name: certbot

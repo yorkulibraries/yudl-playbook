@@ -28,3 +28,18 @@
     path: "{{ cantaloupe_log_path }}"
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
+
+- name: Setup libjpeg-turbo library
+  file:
+    state: directory
+    path: /opt/libjpeg-turbo/lib/
+    owner: "{{ cantaloupe_user }}"
+    group: "{{ cantaloupe_group }}"
+
+- name: Setup libjpeg-turbo library symlink
+  file:
+    state: link
+    src: /usr/lib/x86_64-linux-gnu/libturbojpeg.so
+    dest: /opt/libjpeg-turbo/lib/libturbojpeg.so
+    owner: "{{ cantaloupe_user }}"
+    group: "{{ cantaloupe_group }}"

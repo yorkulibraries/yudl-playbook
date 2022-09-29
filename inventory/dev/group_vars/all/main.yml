@@ -18,6 +18,10 @@ islandora_extra_ubuntu_packages:
   - silversearcher-ag
   - acl
   - libopenjp2-tools
+  - ffmpeg
+  - imagemagick
+  - graphicsmagick
+  - libturbojpeg-dev
 
 islandora_jwt_expiry: "+7 days"
 
