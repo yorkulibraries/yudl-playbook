@@ -1,4 +1,4 @@
-- name: Build site for FITS microservice
+- name: Create Apache config for CrayFits
   blockinfile:
     path: "{{ httpd_conf_directory }}/conf-available/CrayFits.conf"
     create: yes
@@ -11,13 +11,13 @@
         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
       </Directory>
 
-- name: Enable FITS site
+- name: Enable CrayFits site
   file:
     src: "{{ httpd_conf_directory }}/conf-available/CrayFits.conf"
     dest: "{{ httpd_conf_directory_enabled}}/CrayFits.conf"
     state: link
 
-- name: Change owner on html dir
+- name: Set ownership on CrayFits home
   file:
     path: "{{ crayfits_home }}"
     owner: "{{ webserver_app_user }}"
@@ -32,51 +32,28 @@
   when:
     - crayfits_home + '/CrayFits' not in __git_config_global_safe_dir.stdout_lines
 
-- name: Install FITS Microservice from Github
+- name: Get CrayFits from Github
   git:
     repo: https://github.com/roblib/CrayFits.git
     dest: "{{ crayfits_home }}/CrayFits"
     force: yes
 
-- name: Clean Directory (Failure okay)
-  file:
-    path: "{{ crayfits_home }}/CrayFits/vendor/symfony/monolog-bundle"
-  with_items:
-    - absent
-    - directory
-  ignore_errors: yes
-
 - name: Change CrayFits directory ownership, group and permissions
   file:
     path: "{{ crayfits_home }}/CrayFits"
+    state: directory
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: '0755'
-    recurse: True
+    recurse: true
 
-- name: Open file for logging
-  file:
-    path: "{{ crayfits_home }}/CrayFits/var"
-    owner: "{{ webserver_app_user }}"
-    group: "{{ webserver_app_user }}"
-    mode: '0777'
-    recurse: True
+- name: Run Composer on CrayFits
+  composer:
+    command: install
+    working_dir: "{{ crayfits_home }}/CrayFits"
+  become_user: "{{ crayfish_user }}"
+
 
 - name: restart apache
   service:
     name: "{{ apache_service }}"
     state: restarted
-
-- name: Check for Existing microservice
-  stat:
-    path: "{{ crayfits_home }}/CrayFits/vendor"
-  register: crayfits
-
-- name: Run Composer On Fits Microservice
-  composer:
-    command: update
-    working_dir: "{{ crayfits_home }}/CrayFits"
-  ignore_errors: yes
-  when: crayfits.stat.exists == False
-  become: true
-
