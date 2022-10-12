@@ -34,8 +34,9 @@
 
 - name: Get CrayFits from Github
   git:
-    repo: https://github.com/roblib/CrayFits.git
+    repo: https://github.com/yorkulibraries/CrayFits.git
     dest: "{{ crayfits_home }}/CrayFits"
+    version: no-flysystem
     force: yes
 
 - name: Change CrayFits directory ownership, group and permissions
