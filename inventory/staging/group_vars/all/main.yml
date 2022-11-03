@@ -16,7 +16,6 @@ islandora_extra_ubuntu_packages:
   - python3-mysqldb
   - multitail
   - silversearcher-ag
-  - sendmail
   - acl
   - libopenjp2-tools
   - ffmpeg
