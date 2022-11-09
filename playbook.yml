@@ -11,3 +11,4 @@
 - import_playbook: certbot.yml
 - import_playbook: alpaca.yml
 - import_playbook: post-install.yml
+- import_playbook: install-york-theme.yml
