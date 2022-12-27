@@ -1,9 +1,5 @@
 ---
 
-- name: Add ImageMagick repo (apt)
-  apt_repository:
-    repo: 'ppa:lyrasis/imagemagick-jp2'
-
 - name: Install requisite packages
   package:
     name: "{{ item }}"
@@ -40,7 +36,7 @@
 
 - name: Install auth config
   template:
-    src: "syn-settings.xml.jp2"
+    src: "syn-settings.xml.j2"
     dest: "{{ crayfish_install_dir }}/syn-settings.xml"
 
 - name: Configure crayfish code (Symfony)
