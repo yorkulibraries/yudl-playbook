@@ -2,10 +2,10 @@
   version: 2.1.0
 
 - src: geerlingguy.apache
-  version: 3.0.0
+  version: 3.3.0
 
 - src: geerlingguy.php-versions
-  version: 4.1.0
+  version: 5.0.0
 
 - src: geerlingguy.php
   version: 4.8.0
@@ -23,7 +23,7 @@
   version: 5.4.1
 
 - src: geerlingguy.java
-  version: 1.10.0
+  version: 2.2.0
 
 - src: geerlingguy.drupal
   version: 4.3.0
