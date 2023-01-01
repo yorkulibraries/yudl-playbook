@@ -1,0 +1,9 @@
+task: create
+host: {{ crayfish_drupal_base_url }}
+username: admin
+password: {{ drupal_account_pass }}
+input_dir: /opt/workbench/configs
+input_csv: 'https://docs.google.com/spreadsheets/d/14X-rQ-Hz3lN6l_KTkBwnzxVICkFbgLV3XQoIO1r6JM8/edit?usp=sharing'
+log_file_path: /opt/workbench/logs/collections.log
+google_sheets_gid: 0
+nodes_only: true

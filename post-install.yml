@@ -19,6 +19,28 @@
     - name: Enable Islandora PREMIS # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_premis"
 
+    - name: Get Islandora Workbench
+      git:
+        repo: https://github.com/mjordan/islandora_workbench.git
+        dest: "/opt/islandora_workbench"
+        version: main
+        force: yes
+
+    - name: Install Islandora Workbench dependencies
+      shell: "cd /opt/islandora_workbench; python setup.py install"
+
+    - name: Create workbench env
+      file:
+        path: "/opt/workbench/{{ item }}"
+        state: directory
+      with_items: ["configs", "logs"]
+
+    - name: Get YUDL collections workbench configs
+      template:
+        src: "yudl-collections-{{ item }}.yml"
+        dest: /opt/workbench/configs
+      with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
+
     - name: Add admin to fedoraAdmin role # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
@@ -186,3 +208,7 @@
         name: apache2
         state: restarted
       when: env == "staging" or env == "production"
+
+    - name: Add YUDL Collections
+      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
+      with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
