@@ -9,7 +9,7 @@
     vagrant_user: "vagrant"
 
   tasks:
-    
+
     - name: Get york_drupal_theme
       git:
         repo: https://github.com/yorkulibraries/york_drupal_theme.git
@@ -34,6 +34,6 @@
 
     - name: Import york_drupal_theme additional settings
       command: "drush --root={{ drupal_core_path }} cim -y --partial --source=themes/custom/york_drupal_theme/config/settings"
-    
+
     - name: Clear cache
       command: "drush --root={{ drupal_core_path }} -y cr"
