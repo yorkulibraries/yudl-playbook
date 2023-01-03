@@ -1,11 +1,10 @@
 ---
 
-grok_version_tag: v3.1.0
-
 php_packages_extra:
-  - libapache2-mod-php7.4
-  - php7.4-mysql
-  - php7.4-pgsql
-  - php7.4-gd
-  - php7.4-ldap
-  - php7.4-uploadprogress
+  - "libapache2-mod-php{{ php_version }}"
+  - "php{{ php_version }}-mysql"
+  - "php{{ php_version }}-pgsql"
+  - "php{{ php_version }}-gd"
+  - "php{{ php_version }}-ldap"
+  - "php{{ php_version }}-uploadprogress"
+  - "php{{ php_version }}-xml"

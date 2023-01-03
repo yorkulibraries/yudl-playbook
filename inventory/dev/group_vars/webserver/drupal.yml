@@ -15,7 +15,7 @@ drupal_composer_dependencies:
   - "drupal/matomo:^1.19"
   - "drupal/pdf:^1.1"
   - "drupal/admin_toolbar:^3.1"
-  - "drupal/rest_oai_pmh:^2.0@beta"
+    #  - "drupal/rest_oai_pmh:^2.0@beta"
   - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
@@ -83,7 +83,7 @@ drupal_enable_modules:
   - islandora_fits
   - islandora_breadcrumbs
   - islandora_iiif
-  - islandora_oaipmh
+    #  - islandora_oaipmh
   - islandora_search
   - simple_sitemap
   - pathauto
@@ -93,7 +93,7 @@ drupal_enable_modules:
   - islandora_workbench_integration
   - islandora_mirador
   - islandora_repository_reports_log
-  - islandora_repository_reports_oai_usage
+    #  - islandora_repository_reports_oai_usage
   - islandora_repository_reports_matomo
   - islandora_repository_reports_activemq
   - search_api_autocomplete
