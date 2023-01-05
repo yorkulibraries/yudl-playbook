@@ -4,10 +4,10 @@
 
   vars:
     crayfish_version_tag: "dev"
-    php_version: "8.1"
+    php_version: "8.0"
     php_packages_extra:
-      - libapache2-mod-php8.1
-      - php8.1-mysql
+      - libapache2-mod-php8.0
+      - php8.0-mysql
 
   roles:
     - geerlingguy.apache
