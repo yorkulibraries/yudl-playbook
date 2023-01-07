@@ -98,7 +98,7 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_fits_tags"
 
     - name: Run York migration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_defaults_00_tags,islandora_defaults_01_rights,islandora_defaults_02_languages,islandora_defaults_03_physical_form,islandora_defaults_04_genre,islandora_defaults_05_continent,islandora_defaults_06_country,islandora_defaults_07_province,islandora_defaults_08_city_section,islandora_defaults_09_corporate_body,islandora_defaults_10_person,islandora_defaults_11_city,islandora_defaults_12_county,islandora_defaults_13_region,islandora_defaults_15_access"
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_defaults_00_tags,islandora_defaults_01_rights,islandora_defaults_02_languages,islandora_defaults_03_physical_form,islandora_defaults_04_genre,islandora_defaults_05_continent,islandora_defaults_06_country,islandora_defaults_07_province,islandora_defaults_08_city_section,islandora_defaults_09_corporate_body,islandora_defaults_10_person,islandora_defaults_11_city,islandora_defaults_12_county,islandora_defaults_13_region,islandora_defaults_15_access,islandora_defaults_16_subjects"
 
     - name: Islandora Groups configuration # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config restricted islandora_access"
