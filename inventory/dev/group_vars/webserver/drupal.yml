@@ -26,7 +26,6 @@ drupal_composer_dependencies:
   - "drupal/group:^1.4"
   - "drupal/groupmedia:^2.0@alpha"
   - "drupal/group_permissions:^1.0@alpha"
-  - "drupal/title_field_for_manage_display:^2.0"
   - "--with-all-dependencies drupal/rules:^3.0@alpha"
   - "islandora/islandora:^2.4"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
@@ -125,7 +124,6 @@ drupal_enable_modules:
   - oembed_providers
   - fontawesome
   - facets_summary
-  - title_field_for_manage_display
     #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$
