@@ -14,7 +14,7 @@
       git:
         repo: https://github.com/yorkulibraries/york_drupal_theme.git
         dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
-        version: main
+        version: member-block-fix
         force: yes
 
     - name: Chown york_drupal_theme
@@ -31,9 +31,6 @@
 
     - name: Set york_drupal_theme default
       command: "drush --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
-
-    - name: Import york_drupal_theme additional settings
-      command: "drush --root={{ drupal_core_path }} cim -y --partial --source=themes/custom/york_drupal_theme/config/settings"
 
     - name: Clear cache
       command: "drush --root={{ drupal_core_path }} -y cr"
