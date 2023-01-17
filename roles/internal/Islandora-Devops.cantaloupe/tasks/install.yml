@@ -1,5 +1,29 @@
 ---
 
+- name: Kakaku home
+  file:
+    path: "/opt/kakadu"
+    owner: "{{ cantaloupe_user }}"
+    group: "{{ cantaloupe_group }}"
+    recurse: yes
+    state: directory
+
+- name: Get Kakadu
+  unarchive:
+    remote_src: yes
+    src: http://alpha.library.yorku.ca/kakadu.tar.gz
+    dest: /opt/kakadu
+    owner: "{{ cantaloupe_user }}"
+    group: "{{ cantaloupe_group }}"
+
+- name: Kakaku libraries (ldconfig)
+  template:
+    src: ldconfig.kakadu.conf
+    dest: /etc/ld.so.conf.d/kakadu.conf
+
+- name: Update ldconfig
+  command: "ldconfig"
+
 - name: Install Cantaloupe
   unarchive:
     remote_src: yes
