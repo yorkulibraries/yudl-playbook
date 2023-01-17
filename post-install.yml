@@ -187,24 +187,6 @@
         mode: 0775
         recurse: yes
 
-    - name: Chown yudl_customizations
-      file:
-        dest: "{{ drupal_core_path }}/modules/custom/yudl_customizations"
-        state: directory
-        owner: "{{ webserver_app_user }}"
-        group: "{{ webserver_app_user }}"
-        mode: 0775
-        recurse: yes
-
-    - name: Chown yudl_barrio_subtheme
-      file:
-        dest: "{{ drupal_core_path }}/themes/contrib/yudl_barrio_subtheme"
-        state: directory
-        owner: "{{ webserver_app_user }}"
-        group: "{{ webserver_app_user }}"
-        mode: 0775
-        recurse: yes
-
     - name: Chown controlled access terms default configuration
       file:
         dest: "{{ drupal_core_path }}/modules/contrib/controlled_access_terms/modules/controlled_access_terms_defaults"
@@ -231,6 +213,19 @@
         name: apache2
         state: restarted
       when: env == "staging" or env == "production"
+
+    - name: Get YUDL Default Content
+      git:
+        repo: https://github.com/yorkulibraries/yudl_default_content.git
+        dest: "{{ drupal_core_path }}/modules/contrib/yudl_default_content"
+        version: main
+        force: yes
+
+    - name: Enable YUDL Default Content # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_default_content"
+
+    - name: Set YUDL front page
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
 
     - name: Add YUDL collections via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
