@@ -5,9 +5,9 @@
 
 - name: Get Riprap microservice from GitHub
   git:
-    repo: https://github.com/nigelgbanks/riprap.git
+    repo: https://github.com/mjordan/riprap.git
     dest: "{{ riprap_home }}/riprap"
-    version: upgrade-php
+    version: main
     force: yes
   when: not riprap.stat.exists
 
