@@ -26,7 +26,7 @@ islandora_extra_ubuntu_packages:
 islandora_jwt_expiry: "1 week"
 
 # Used by both the webserver and crayfish role for CentOS.
-php_enablerepo: "remi-php74"
+php_enablerepo: "remi-php80"
 php_packages_state: "latest"
 
 apache_mods_enabled:
