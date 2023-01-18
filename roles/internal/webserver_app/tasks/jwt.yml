@@ -57,9 +57,6 @@
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_group"
 ###
 
-- name: Enable Bartik
-  command: "{{ drush_path }} --root {{ drupal_core_path }} theme:enable bartik -y"
-
 - name: Import JWT Config Into Drupal # noqa 503
   command: "{{ drush_path }} --root {{ drupal_core_path }} config-import -y --partial --source={{ webserver_app_jwt_config_path }}"
   when: drupal_jwt_config.changed is defined and drupal_jwt_config.changed
