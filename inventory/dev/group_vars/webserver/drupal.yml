@@ -16,6 +16,8 @@ drupal_composer_dependencies:
   - "drupal/pdf:^1.1"
   - "drupal/admin_toolbar:^3.1"
     #- "drupal/rest_oai_pmh:^2.0@beta"
+  - "drupal/rdf:^2.1"
+  - "drupal/hal:^1.0"
   - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
@@ -50,6 +52,7 @@ drupal_composer_dependencies:
   - "drupal/ds:^3.13"
   - "drupal/oembed_providers:^2.1"
   - "drupal/fontawesome:^2.24"
+  - "drupal/views_data_export:^1.2"
     #  - "drupal/views_natural_sort:^2.0@alpha"
 drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
@@ -62,6 +65,7 @@ drupal_site_name: "YUDL DEV"
 drupal_install_profile: standard
 drupal_account_name: admin
 drupal_enable_modules:
+  - hal
   - rdf
   - responsive_image
   - syslog
@@ -124,6 +128,7 @@ drupal_enable_modules:
   - oembed_providers
   - fontawesome
   - facets_summary
+  - views_data_export
     #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$
