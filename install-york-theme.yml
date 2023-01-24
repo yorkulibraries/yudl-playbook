@@ -14,7 +14,7 @@
       git:
         repo: https://github.com/yorkulibraries/york_drupal_theme.git
         dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
-        version: member-block-fix
+        version: main
         force: yes
 
     - name: Chown york_drupal_theme
