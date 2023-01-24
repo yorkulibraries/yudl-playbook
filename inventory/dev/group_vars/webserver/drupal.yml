@@ -7,22 +7,22 @@ drupal_composer_install_dir: /var/www/html/drupal
 drupal_composer_project_options: "--prefer-dist --no-interaction"
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
-  - "drupal/devel:^4.0"
+  - "drupal/devel:^5.0"
   - "drush/drush:^10.3"
-  - "drupal/restui:^1.20"
+  - "drupal/restui:^1.21"
   - "drupal/search_api_solr:^4.2"
   - "drupal/facets:^2"
-    #- "drupal/matomo:^1.19"
+  - "drupal/matomo:^1.21"
   - "drupal/pdf:^1.1"
-  - "drupal/admin_toolbar:^3.1"
-    #- "drupal/rest_oai_pmh:^2.0@beta"
+  - "drupal/admin_toolbar:^3.3"
+  - "drupal/rest_oai_pmh:^2.0@beta"
   - "drupal/rdf:^2.1"
   - "drupal/hal:^1.0"
   - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
-  - "drupal/context:^4.0@beta"
+  - "drupal/context:^4.1"
   - "drupal/flysystem:^2@beta"
-  - "drupal/jquery_ui_accordion:^1.1"
+  - "drupal/jquery_ui_accordion:^2.0"
   - "drupal/typed_data:^1.0@beta"
   - "drupal/default_content:^2.0@alpha"
   - "drupal/group:^1.4"
@@ -30,31 +30,30 @@ drupal_composer_dependencies:
   - "drupal/group_permissions:^1.0@alpha"
   - "--with-all-dependencies drupal/rules:^3.0@alpha"
   - "islandora/islandora:^2.4"
-  - "--with-all-dependencies yorkulibraries/yudl_defaults:matomo-tmp-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
+  - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora/islandora_mirador:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/bootstrap_barrio:^5.5"
-  - "drupal/simple_sitemap:^3.10"
+  - "drupal/simple_sitemap:^4.1"
   - "drupal/pathauto:^1.8"
-  - "drupal/views_bulk_operations:^4.0"
-  - "drupal/views_bulk_edit:^2.7"
-  - "drupal/search_api_autocomplete"
+  - "drupal/views_bulk_operations:^4.2"
+  - "drupal/views_bulk_edit:^2.8"
+  - "drupal/search_api_autocomplete:^1.7"
   - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
-  - "drupal/cookies:^1.1"
+  - "drupal/cookies:^1.2"
   - "drupal/views_block_area:^1.0@beta"
-  - "drupal/metatag:^1.21"
-  - "drupal/file_download_link:^2.0"
+  - "drupal/metatag:^1.22"
   - "drupal/term_condition:^2.0"
-  - "drupal/addtoany:^1.16"
-  - "drupal/twig_tweak:^3.1"
+  - "drupal/addtoany:^2.0"
+  - "drupal/twig_tweak:^3.2"
   - "drupal/block_class:^2.0"
-  - "drupal/ds:^3.13"
+  - "drupal/ds:^3.15"
   - "drupal/oembed_providers:^2.1"
   - "drupal/fontawesome:^2.24"
   - "drupal/views_data_export:^1.2"
     #  - "drupal/views_natural_sort:^2.0@alpha"
-drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
+drupal_composer_project_package: "drupal/recommended-project:^9.5@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
 drupal_db_name: drupal
@@ -73,6 +72,7 @@ drupal_enable_modules:
   - basic_auth
   - rest
   - restui
+  - rest_oai_pmh
   - devel
   - search_api_solr
   - facets
@@ -86,7 +86,6 @@ drupal_enable_modules:
   - islandora_fits
   - islandora_breadcrumbs
   - islandora_iiif
-    #- islandora_oaipmh
   - islandora_search
   - simple_sitemap
   - pathauto
@@ -96,8 +95,8 @@ drupal_enable_modules:
   - islandora_workbench_integration
   - islandora_mirador
   - islandora_repository_reports_log
-    #- islandora_repository_reports_oai_usage
-    #- islandora_repository_reports_matomo
+  - islandora_repository_reports_oai_usage
+  - islandora_repository_reports_matomo
   - islandora_repository_reports_activemq
   - search_api_autocomplete
   - search_api_solr_autocomplete
@@ -119,7 +118,6 @@ drupal_enable_modules:
   - media_library
   - admin_toolbar_tools
   - admin_toolbar_links_access_filter
-  - file_download_link
   - term_condition
   - addtoany
   - twig_tweak
