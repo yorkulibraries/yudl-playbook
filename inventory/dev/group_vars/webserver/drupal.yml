@@ -76,7 +76,7 @@ drupal_enable_modules:
   - devel
   - search_api_solr
   - facets
-    #- matomo
+  - matomo
   - pdf
   - admin_toolbar
   - transliterate_filenames
