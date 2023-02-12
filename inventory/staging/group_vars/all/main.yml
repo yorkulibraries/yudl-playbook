@@ -19,7 +19,6 @@ islandora_extra_ubuntu_packages:
   - acl
   - libopenjp2-tools
   - ffmpeg
-  - imagemagick
   - graphicsmagick
   - libturbojpeg-dev
 

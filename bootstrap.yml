@@ -40,3 +40,20 @@
         state: present
       with_items: "{{ islandora_extra_ubuntu_packages }}"
       when: ansible_os_family == "Debian"
+
+    - name: Get Imagemagick
+      git:
+        repo: https://github.com/ImageMagick/ImageMagick.git
+        dest: /opt/imagemagick
+        version: 7.1.0-61
+        force: yes
+
+    - name: Configure ImageMagick
+      command: "./configure --disable-shared --with-jp2=yes --with-openjp2=yes --with-png=yes"
+      args:
+        chdir: "/opt/imagemagick"
+
+    - name: Make and install ImageMagick
+      shell: "make -j {{ ansible_processor_vcpus }}  && make install && ldconfig"
+      args:
+        chdir: "/opt/imagemagick"

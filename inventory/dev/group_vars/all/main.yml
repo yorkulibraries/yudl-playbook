@@ -18,8 +18,21 @@ islandora_extra_ubuntu_packages:
   - silversearcher-ag
   - acl
   - libopenjp2-tools
+  - libopenjp2-7
+  - libopenjp2-7-dev
+  - libjpeg62-dev
+  - libtiff-dev
+  - libpng-dev
+  - libwebp-dev
+  - librsvg2-dev
+  - libjpeg-dev
+  - libjpeg-turbo8-dev
+  - libjpeg8-dev
+  - libtiff5-dev
+  - libtiffxx5
+  - libexif-dev
+  - zlib1g-dev
   - ffmpeg
-  - imagemagick
   - graphicsmagick
   - libturbojpeg-dev
 
