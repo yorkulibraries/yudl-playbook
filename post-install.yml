@@ -94,6 +94,15 @@
     - name: Set iiif manifest view # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings manifest_view iiif_manifest"
 
+    - name: Set OpenSeadragon reference strip  # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.showReferenceStrip true"
+
+    - name: Set OpenSeadragon viewport  # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveViewport true"
+
+    - name: Set OpenSeadragon overlays  # noqa 301
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveOverlays true"
+
     - name: Run Islandora migration # noqa 301
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_tags"
 
