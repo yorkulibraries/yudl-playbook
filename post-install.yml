@@ -12,6 +12,13 @@
     - name: Set MySQL transaction isolation level #https://www.drupal.org/docs/system-requirements/setting-the-mysql-transaction-isolation-level
       command: "mysql -u root drupal -e 'SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED'"
 
+    - name: Get jquery-ui-slider-pips
+      git:
+        repo: https://github.com/simeydotme/jQuery-ui-Slider-Pips.git
+        dest: "{{ drupal_core_path }}/libraries/jquery-ui-slider-pips"
+        version: master
+        force: yes
+
     - name: Get Islandora PREMIS
       git:
         repo: https://github.com/mjordan/islandora_premis.git

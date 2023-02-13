@@ -33,4 +33,4 @@
       command: "drush --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
 
     - name: Clear cache
-      command: "drush --root={{ drupal_core_path }} -y cr"
+      command: "drush --root={{ drupal_core_path }} cr"
