@@ -70,8 +70,7 @@ crayfish_milliner_is_fedora_6: true
 #   - ImageMagick
 
 php_packages_extra:
-  - php7.0-mysql
-  - php7.0-pgsql
+  - php8.0-mysql
 
 # homarus
 crayfish_homarus_log_file: /var/log/islandora/homarus.log

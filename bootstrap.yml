@@ -54,6 +54,6 @@
         chdir: "/opt/imagemagick"
 
     - name: Make and install ImageMagick
-      shell: "make -j {{ ansible_processor_vcpus }}  && make install && ldconfig"
+      shell: "make -j {{ ansible_processor_vcpus }} && make install && ldconfig"
       args:
         chdir: "/opt/imagemagick"

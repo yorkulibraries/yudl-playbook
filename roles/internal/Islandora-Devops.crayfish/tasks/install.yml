@@ -21,6 +21,14 @@
     group: "{{ crayfish_user }}"
     recurse: true
 
+- name: symfony/flex
+  composer:
+    command: config
+    arguments: "--no-plugins allow-plugins.symfony/flex true"
+    working_dir: "{{ crayfish_install_dir }}/{{ item }}"
+  with_items: "{{ crayfish_services }}"
+  become_user: "{{ crayfish_user }}"
+
 - name: Build crayfish code including dependencies
   composer:
     command: install

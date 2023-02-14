@@ -253,4 +253,4 @@
     - name: Add sample objects via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
       with_items: ["paged", "single"]
-      when: env != "staging" or env != "production"
+      when: not env == "production"
