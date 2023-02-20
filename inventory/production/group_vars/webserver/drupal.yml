@@ -56,6 +56,7 @@ drupal_composer_dependencies:
   - "drupal/views_data_export:^1.2"
   - "drupal/jquery_ui_slider:^2.0"
   - "drupal/jquery_ui_touch_punch:^1.1"
+  - "yorkulibraries/yudl_customizations:1.x-dev"
 drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -134,6 +135,7 @@ drupal_enable_modules:
   - views_data_export
   - jquery_ui_slider
   - facets_range_widget
+  - yudl_search
 drupal_trusted_hosts:
   - "gamma.library.yorku.ca"
   - "beta.library.yorku.ca"
