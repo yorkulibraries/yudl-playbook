@@ -16,6 +16,8 @@ drupal_composer_dependencies:
   - "drupal/pdf:^1.1"
   - "drupal/admin_toolbar:^3.1"
   - "drupal/rest_oai_pmh:^2.0@beta"
+  - "drupal/rdf:^2.1"
+  - "drupal/hal:^1.0"
   - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.0@beta"
@@ -44,7 +46,6 @@ drupal_composer_dependencies:
   - "drupal/cookies:^1.1"
   - "drupal/views_block_area:^1.0@beta"
   - "drupal/metatag:^1.21"
-  - "drupal/file_download_link:^2.0"
   - "drupal/term_condition:^2.0"
   - "drupal/addtoany:^1.16"
   - "drupal/twig_tweak:^3.1"
@@ -52,9 +53,12 @@ drupal_composer_dependencies:
   - "drupal/ds:^3.13"
   - "drupal/oembed_providers:^2.1"
   - "drupal/fontawesome:^2.24"
+  - "drupal/views_data_export:^1.2"
   - "drupal/jquery_ui_slider:^2.0"
   - "drupal/jquery_ui_touch_punch:^1.1"
-drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
+  - "yorkulibraries/yudl_customizations:1.x-dev"
+    #  - "drupal/views_natural_sort:^2.0@alpha"
+drupal_composer_project_package: "drupal/recommended-project:^9.5@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
 drupal_db_name: drupal
@@ -65,6 +69,7 @@ drupal_site_name: "York University Digital Library"
 drupal_install_profile: standard
 drupal_account_name: admin
 drupal_enable_modules:
+  - hal
   - rdf
   - responsive_image
   - syslog
@@ -72,6 +77,7 @@ drupal_enable_modules:
   - basic_auth
   - rest
   - restui
+  - rest_oai_pmh
   - devel
   - search_api_solr
   - facets
@@ -85,7 +91,6 @@ drupal_enable_modules:
   - islandora_fits
   - islandora_breadcrumbs
   - islandora_iiif
-  - islandora_oaipmh
   - islandora_search
   - ldap_authentication
   - ldap_user
@@ -120,7 +125,6 @@ drupal_enable_modules:
   - media_library
   - admin_toolbar_tools
   - admin_toolbar_links_access_filter
-  - file_download_link
   - term_condition
   - addtoany
   - twig_tweak
@@ -129,8 +133,11 @@ drupal_enable_modules:
   - oembed_providers
   - fontawesome
   - facets_summary
+  - views_data_export
   - jquery_ui_slider
   - facets_range_widget
+  - yudl_search
+    #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$
   - "omega.library.yorku.ca"
