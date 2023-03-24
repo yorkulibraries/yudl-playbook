@@ -50,7 +50,7 @@
   git:
     repo: https://github.com/digitalutsc/islandora_group.git
     dest: "{{ drupal_core_path }}/modules/contrib/islandora_group"
-    version: 1.2.x
+    version: 0c7a09d98fb9604e97bffe356517060172102771
     force: yes
 
 - name: Enable Islandora Group # noqa 301
