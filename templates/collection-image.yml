@@ -1,0 +1,9 @@
+task: add_media
+host: {{ crayfish_drupal_base_url }}
+username: admin
+password: {{ drupal_account_pass }}
+input_dir: /opt/workbench/data/single
+input_csv: 'https://docs.google.com/spreadsheets/d/1V_wP7tEKEp44F--rCTQ148K3y9X-YIZBCOysGjJWyEI/edit?usp=sharing'
+google_sheets_gid: 146628695
+media_use_tid: 6
+log_file_path: /opt/workbench/logs/collection-image.log
