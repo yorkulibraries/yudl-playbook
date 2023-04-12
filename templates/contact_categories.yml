@@ -1,0 +1,8 @@
+task: create_terms
+host: {{ crayfish_drupal_base_url }}
+username: admin
+password: {{ drupal_account_pass }}
+input_csv: 'https://docs.google.com/spreadsheets/d/1V_wP7tEKEp44F--rCTQ148K3y9X-YIZBCOysGjJWyEI/edit?usp=sharing'
+google_sheets_gid: 1880901706
+log_file_path: /opt/workbench/logs/contact_categories.log
+vocab_id: contact_categories
