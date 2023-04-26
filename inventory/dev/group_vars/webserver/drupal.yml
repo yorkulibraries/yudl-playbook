@@ -135,6 +135,7 @@ drupal_enable_modules:
   - facets_range_widget
   - yudl_search
   - views_field_view
+  - yudl_blocks
     #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$
