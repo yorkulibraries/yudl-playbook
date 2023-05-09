@@ -57,3 +57,11 @@
       shell: "make -j {{ ansible_processor_vcpus }} && make install && ldconfig"
       args:
         chdir: "/opt/imagemagick"
+
+    - name: Redis setup
+      shell: 'curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg; echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list'
+
+    - name: Install Redis
+      package:
+        name: redis
+        state: present

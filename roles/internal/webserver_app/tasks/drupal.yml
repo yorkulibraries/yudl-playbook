@@ -1,5 +1,8 @@
 ---
 
+- name: Add Drupal Redis Service
+  shell: "cp /var/www/html/drupal/web/modules/contrib/redis/example.services.yml /var/www/html/drupal/web/sites/default/redis.services.yml"
+
 - name: Trusted Host Settings
   blockinfile:
     state: present
@@ -17,6 +20,11 @@
           ],
         ],
       ];
+      $settings['redis.connection']['interface'] = 'Predis';
+      $settings['redis.connection']['host'] = 'localhost';
+      $settings['redis.connection']['port'] = '6379';
+      $settings['cache']['default'] = 'cache.backend.redis';
+      $settings['container_yamls'][] = 'sites/default/redis.services.yml';
     path: "{{ drupal_trusted_hosts_file }}"
     marker: // {mark} ANSIBLE MANAGED BLOCK
 
