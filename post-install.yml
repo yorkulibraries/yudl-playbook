@@ -252,5 +252,5 @@
 
     - name: Add sample objects via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
-      with_items: ["paged", "single", "collection-image", "contact_categories"]
+      with_items: ["single", "collection-image", "contact_categories"]
       when: not env == "production"
