@@ -45,7 +45,7 @@ drupal_composer_dependencies:
   - "drupal/views_block_area:^1.0@beta"
   - "drupal/metatag:^1.22"
   - "drupal/term_condition:^2.0"
-    #- "drupal/addtoany:^2.0"
+  - "drupal/addtoany:^2.0"
   - "drupal/twig_tweak:^3.2"
   - "drupal/block_class:^2.0"
   - "drupal/ds:^3.15"
@@ -125,7 +125,7 @@ drupal_enable_modules:
   - admin_toolbar_tools
   - admin_toolbar_links_access_filter
   - term_condition
-    #- addtoany
+  - addtoany
   - twig_tweak
   - block_class
   - ds
