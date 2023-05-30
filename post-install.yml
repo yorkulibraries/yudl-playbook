@@ -33,7 +33,7 @@
       git:
         repo: https://github.com/mjordan/islandora_workbench.git
         dest: "/opt/islandora_workbench"
-        version: main
+        version: ad6c9546d785d296a0b12695231b36a1dae994a5
         force: yes
 
     - name: Install Islandora Workbench dependencies
