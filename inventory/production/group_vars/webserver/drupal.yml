@@ -31,7 +31,7 @@ drupal_composer_dependencies:
   - "--with-all-dependencies drupal/rules:^3.0@alpha"
   - "islandora/islandora:^2.4"
   - "drupal/authorization:^1.0@beta"
-  - "--with-all-dependencies drupal/ldap:^4.0@alpha"
+  - "--with-all-dependencies drupal/ldap:^4.3"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora/islandora_mirador:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
@@ -60,7 +60,7 @@ drupal_composer_dependencies:
   - "drupal/views_field_view:^1.0@beta"
   - "predis/predis"
   - "drupal/redis"
-drupal_composer_project_package: "drupal/recommended-project:^9.1@stable"
+drupal_composer_project_package: "drupal/recommended-project:^9.5@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
 drupal_db_name: drupal
