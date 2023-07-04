@@ -7,3 +7,4 @@ php_packages_extra:
   - "php{{ php_version }}-ldap"
   - "php{{ php_version }}-uploadprogress"
   - "php{{ php_version }}-xml"
+  - "php{{ php_version }}-curl"
