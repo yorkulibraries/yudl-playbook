@@ -48,13 +48,23 @@
 # Install this here since we run into a composer wanting stable over dev issue.
 - name: Get Islandora Group
   git:
-    repo: https://github.com/digitalutsc/islandora_group.git
+    repo: https://github.com/yorkulibraries/islandora_group.git
     dest: "{{ drupal_core_path }}/modules/contrib/islandora_group"
-    version: 0c7a09d98fb9604e97bffe356517060172102771
+    version: 2.x
     force: yes
 
 - name: Enable Islandora Group # noqa 301
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_group"
+
+- name: Get Group Solr
+  git:
+    repo: https://github.com/yorkulibraries/group_solr.git
+    dest: "{{ drupal_core_path }}/modules/contrib/group_solr"
+    version: main
+    force: yes
+
+- name: Enable Group Solr # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en group_solr"
 ###
 
 - name: Import JWT Config Into Drupal # noqa 503
