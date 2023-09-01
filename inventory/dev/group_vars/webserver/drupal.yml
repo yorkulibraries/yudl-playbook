@@ -59,6 +59,7 @@ drupal_composer_dependencies:
   - "drupal/views_field_view:^1.0@beta"
   - "predis/predis"
   - "drupal/redis"
+  - "drupal/views_infinite_scroll:^2.0"
     #  - "drupal/views_natural_sort:^2.0@alpha"
 drupal_composer_project_package: "drupal/recommended-project:^9.5@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
@@ -141,6 +142,7 @@ drupal_enable_modules:
   - yudl_blocks
   - redis
   - flexible_permissions
+  - views_infinite_scroll
     #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$
