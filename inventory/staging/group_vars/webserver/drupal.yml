@@ -24,10 +24,11 @@ drupal_composer_dependencies:
   - "drupal/flysystem:^2.1@RC"
   - "drupal/jquery_ui_accordion:^2.0"
   - "drupal/typed_data:^1.0@beta"
-  - "drupal/default_content:^2.0@alpha"
-  - "drupal/group:^1.4"
-  - "drupal/groupmedia:^2.0@alpha"
-  - "drupal/group_permissions:^1.0@alpha"
+  - "drupal/default_content:^2.0.x-dev@dev"
+  - "drupal/group:^2.0"
+  - "drupal/groupmedia:^3.0"
+  - "drupal/group_permissions:^2.0@alpha"
+  - "drupal/flexible_permissions:^1.0"
   - "--with-all-dependencies drupal/rules:^3.0@alpha"
   - "islandora/islandora:^2.4"
   - "drupal/authorization:^1.0@beta"
@@ -144,6 +145,7 @@ drupal_enable_modules:
   - views_field_view
   - yudl_blocks
   - redis
+  - flexible_permissions
   - views_infinite_scroll
     #  - views_natural_sort
 drupal_trusted_hosts:
