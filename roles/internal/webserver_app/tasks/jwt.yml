@@ -41,8 +41,8 @@
     version: main
     force: yes
 
-      #- name: Enable YUDL Groups # noqa 301
-      #  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
+- name: Enable YUDL Groups # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
 
 ###
 # Install this here since we run into a composer wanting stable over dev issue.
