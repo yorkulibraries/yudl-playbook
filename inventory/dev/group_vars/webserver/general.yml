@@ -10,5 +10,3 @@ php_max_input_time: 1000
 php_max_execution_time: 1000
 php_date_timezone: "America/Toronto"
 php_memory_limit: 1G
-
-riprap_rest_endpoint: 'http://localhost:8000/api/fixity'

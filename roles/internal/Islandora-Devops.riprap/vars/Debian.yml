@@ -1,5 +1,0 @@
----
-
-webserver_app_user: www-data
-httpd_conf_directory: /etc/apache2
-httpd_conf_directory_enabled: "{{httpd_conf_directory}}/conf-enabled"

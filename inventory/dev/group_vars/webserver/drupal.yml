@@ -60,6 +60,7 @@ drupal_composer_dependencies:
   - "predis/predis"
   - "drupal/redis"
   - "drupal/views_infinite_scroll:^2.0"
+  - "discoverygarden/dgi_fixity:^1.1"
     #  - "drupal/views_natural_sort:^2.0@alpha"
 drupal_composer_project_package: "drupal/recommended-project:^9.5@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
@@ -143,6 +144,7 @@ drupal_enable_modules:
   - redis
   - flexible_permissions
   - views_infinite_scroll
+  - dgi_fixity
     #  - views_natural_sort
 drupal_trusted_hosts:
   - ^localhost$

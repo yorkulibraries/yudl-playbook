@@ -19,8 +19,6 @@ certbot_certs:
   - domains:
     - gamma.library.yorku.ca
 
-riprap_rest_endpoint: 'http://localhost/api/fixity'
-
 crayfish_fedora_base_url: "http://10.0.0.16:8080/fcrepo/rest"
 crayfish_drupal_base_url: "https://gamma.library.yorku.ca"
 crayfish_log_directory: "/var/log/islandora"
