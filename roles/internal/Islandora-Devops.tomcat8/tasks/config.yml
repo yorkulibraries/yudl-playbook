@@ -36,7 +36,7 @@
   template:
     src: tomcat9.service.j2
     dest: /etc/systemd/system/tomcat9.service
-  when: env == "staging" or env == "dev"
+  when: env == "dev"
 
 - name: Template systemd Tomcat9 service (beta)
   template:

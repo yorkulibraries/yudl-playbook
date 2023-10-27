@@ -21,11 +21,6 @@ export ISLANDORA_VAGRANT_MEMORY=5040
 1. `ansible-galaxy install -r requirements.yml`
 2. `vagrant up`
 
-### STAGING
-
-1. `ansible-galaxy install -r requirements.yml`
-2. `ansible-playbook --ask-vault-pass -i inventory/staging playbook.yml -e "islandora_distro=ubuntu/focal64" --extra-vars "ansible_sudo_pass=somepassword" --extra-vars "env=staging"`
-
 ### PRODUCTION
 
 1. `ansible-galaxy install -r requirements.yml`
@@ -49,10 +44,6 @@ The default Drupal login details are:
 
 You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
 
-#### STAGING
-
-You can connect to the machine via the browser at [https://omega.library.yorku.ca](https://omega.library.yorku.ca).
-
 #### PRODUCTION
 
 You can connect to the machine via the browser at [https://gamma.library.yorku.ca](https://gamma.library.yorku.ca).
@@ -63,11 +54,6 @@ You can connect to the machine via the browser at [https://gamma.library.yorku.c
 
 The Fedora 6 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).
 
-Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
-
-#### STAGING
-
-The Fedora 5 REST API can be accessed at [http://omega.library.yorku.ca:8080/fcrepo/rest](http://omega.library.yorku.ca:8080/fcrepo/rest). 
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 
 #### PRODUCTION
@@ -81,10 +67,6 @@ Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [J
 #### DEV
 
 You can access the Solr administration UI at http://localhost:8983/solr/
-
-#### STAGING
-
-You can access the Solr administration UI at http://omega.library.yorku.ca:8983/solr/
 
 #### PRODUCTION
 
@@ -101,10 +83,6 @@ The default ActiveMQ login details are:
 
 You can access the ActiveMQ administrative interface at: http://localhost:8161/admin
 
-#### STAGING
-
-You can access the ActiveMQ administrative interface at: http://omega.library.yorku.ca:8161/admin
-
 #### PRODUCTION
 
 You can access the ActiveMQ administrative interface at: http://beta.library.yorku.ca:8161/admin
@@ -119,12 +97,6 @@ You can access the Cantaloupe admin interface at: http://localhost:8080/cantalou
   * password: islandora
 
 You can access the IIIF interface at: http://localhost:8080/cantaloupe/iiif/2/
-
-#### STAGING
-
-You can access the Cantaloupe admin interface at: http://omega.library.yorku.ca:8080/cantaloupe/admin
-
-You can access the IIIF interface at: http://omega.library.yorku.ca:8080/cantaloupe/iiif/2
 
 #### PRODUCTION
 
@@ -145,10 +117,6 @@ the following header in HTTP requests:
 #### DEV
 
 You can access the FITS Web Service at http://localhost:8080/fits/
-
-#### STAGING
-
-You can access the FITS Web Service at http://omega.library.yorku.ca:8080/fits/
 
 #### PRODUCTION
 

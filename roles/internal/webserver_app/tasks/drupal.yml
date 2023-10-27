@@ -57,7 +57,7 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
-  when: env == "staging" or env == "production"
+  when: env == "production"
 
 - name: Copy ldap_servers.server.pydirectory.yml
   template:
@@ -66,7 +66,7 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
-  when: env == "staging" or env == "production"
+  when: env == "production"
 
 - name: Copy ldap_servers.settings.yml
   template:
@@ -75,7 +75,7 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
-  when: env == "staging" or env == "production"
+  when: env == "production"
 
 - name: Copy ldap_user.settings.yml
   template:
@@ -84,7 +84,7 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: 0440
-  when: env == "staging" or env == "production"
+  when: env == "production"
 
 - name: Import features # noqa 301
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults,islandora_search"

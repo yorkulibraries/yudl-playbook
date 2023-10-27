@@ -17,42 +17,24 @@
       snap:
         name: certbot
         classic: yes
-      when: env == "staging" or env == "production"
+      when: env == "production"
 
     - name: Symlink certbot executable
       file:
         src: /snap/bin/certbot
         dest: /usr/bin/certbot
         state: link
-      when: env == "staging" or env == "production"
+      when: env == "production"
 
     - name: Stop Apache to install certificates
       service:
         name: apache2
         state: stopped
-      when: env == "staging" or env == "production"
+      when: env == "production"
 
     - name: Certbot setup
       command: certbot --apache certonly --agree-tos --email "{{ certbot_admin_email }}" --noninteractive -d "{{ drupal_domain }}"
-      when: env == "staging" or env == "production"
-
-    - name: Add STAGING https config
-      template:
-        src: omega.islandora-le-ssl.conf.j2
-        dest: "{{ apache_conf_path }}/sites-available/islandora-le-ssl.conf"
-        owner: root
-        group: root
-        mode: 0644
-      when: env == "staging"
-
-    - name: Add STAGING http config
-      template:
-        src: omega.islandora.conf.j2
-        dest: "{{ apache_conf_path }}/sites-available/islandora.conf"
-        owner: root
-        group: root
-        mode: 0644
-      when: env == "staging"
+      when: env == "production"
 
     - name: Add PRODUCTION https config
       template:
@@ -74,10 +56,10 @@
 
     - name: Enable https site
       command: a2ensite islandora-le-ssl.conf
-      when: env == "staging" or env == "production"
+      when: env == "production"
 
     - name: Start Apache
       service:
         name: apache2
         state: started
-      when: env == "staging" or env == "production"
+      when: env == "production"
