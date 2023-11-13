@@ -1,0 +1,24 @@
+TOMCAT_USER={{tomcat_server_user}}
+TOMCAT_GROUP={{tomcat_server_group}}
+{% if tomcat_java_home is defined %}
+JAVA_HOME="{{tomcat_java_home}}"
+{% endif %}
+JAVA_OPTS="{{tomcat_java_opts|join(' ')}}"
+{% if tomcat_jsp_compiler is defined %}
+JSP_COMPILER="{{tomcat_jsp_compiler}}"
+{% endif %}
+{% if tomcat_tomcat_security is defined %}
+TOMCAT_SECURITY="{{tomcat_tomcat_security}}"
+{% endif %}
+{% if tomcat_logfile_days is defined %}
+LOGFILE_DAYS="{{tomcat_logfile_days}}"
+{% endif %}
+{% if tomcat_logfile_compress is defined %}
+LOGFILE_COMPRESS="{{tomcat_logfile_compress}}"
+{% endif %}
+{% if tomcat_jvm_tmp is defined %}
+JVM_TMP="{{tomcat_jvm_tmp}}"
+{% endif %}
+{% if tomcat_authbind is defined %}
+AUTHBIND="{{tomcat_authbind}}"
+{% endif %}

@@ -2,7 +2,6 @@
 
 An Ansible role that installs the Tomcat Valve [Syn](https://github.com/Islandora-CLAW/Syn) on:
 
-* Centos/RHEL 7.x
 * Ubuntu Xenial
 
 ## Role Variables
@@ -51,9 +50,9 @@ fcrepo_syn_tokens: []
 
 ## Dependencies
 
-* Islandora-Devops.tomcat8
-     * [Github](https://github.com/Islandora-Devops/ansible-role-tomcat8)
-     * [Galaxy](https://galaxy.ansible.com/Islandora-Devops/tomcat8/)
+* Islandora-Devops.tomcat
+     * [Github](https://github.com/Islandora-Devops/ansible-role-tomcat)
+     * [Galaxy](https://galaxy.ansible.com/Islandora-Devops/tomcat/)
   
 ## Example Playbook
 

@@ -1,6 +1,6 @@
 fcrepo_version: 6.0.0
-fcrepo_user: "{{ tomcat8_server_user }}"
-fcrepo_war_path: "{{ tomcat8_home }}/webapps/fcrepo.war"
+fcrepo_user: "{{ tomcat_server_user }}"
+fcrepo_war_path: "{{ tomcat_home }}/webapps/fcrepo.war"
 fcrepo_home_dir: /opt/fcrepo
 fcrepo_activemq_template: activemq.xml.j2
 fcrepo_activemq_broker_url: "tcp://localhost:61616"

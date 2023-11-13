@@ -8,7 +8,7 @@
       when: "ansible_os_family == 'Debian'"
       java_packages:
         - openjdk-11-jdk
-    - Islandora-Devops.tomcat8
+    - Islandora-Devops.tomcat
     - Islandora-Devops.fcrepo
     - Islandora-Devops.fcrepo-syn
     - Islandora-Devops.activemq

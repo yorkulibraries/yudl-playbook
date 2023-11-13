@@ -1,8 +1,7 @@
 # Ansible Role: Cantaloupe
 
-An Ansible role that installs [Cantaloupe](https://github.com/medusa-project/cantaloupe) in a Tomcat 8 servlet container on:
+An Ansible role that installs [Cantaloupe](https://github.com/medusa-project/cantaloupe) in a Tomcat servlet container on:
 
-* Centos/RHEL 7.x
 * Ubuntu Xenial
 
 ## Role Variables
@@ -37,7 +36,7 @@ There are many more options available and documented in the [defaults/main.yml](
 
 ## Dependencies
 
-* A tomcat 8 container like [islandora.tomcat8](https://github.com/Islandora-DevOps/ansible-role-tomcat8)
+* A tomcat container like [islandora.tomcat](https://github.com/Islandora-DevOps/ansible-role-tomcat)
   
 ## Example Playbook
 

@@ -1,0 +1,17 @@
+---
+
+- include: "define-home.yml"
+  tags:
+    - tomcat
+    - tomcat-config
+    - tomcat-install
+
+- include: "install.yml"
+  tags:
+    - tomcat
+    - tomcat-install
+
+- include: "config.yml"
+  tags:
+    - tomcat
+    - tomcat-config

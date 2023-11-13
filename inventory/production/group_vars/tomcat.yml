@@ -9,20 +9,20 @@ fits_max_upload_file_size_MB: 75000
 fits_max_request_size_MB: 75000
 fit_max_in_memory_file_size_MB: 4
 
-tomcat8_home: /var/lib/tomcat9
+tomcat_home: /var/lib/tomcat9
 
-tomcat8_packages:
+tomcat_packages:
   - tomcat9
-tomcat8_admin_packages:
+tomcat_admin_packages:
   - tomcat9-admin
 
 tomcat_service_name: tomcat9
 
-tomcat8_server_user: tomcat
-tomcat8_server_group: tomcat
-tomcat8_user_home: /home/tomcat
+tomcat_server_user: tomcat
+tomcat_server_group: tomcat
+tomcat_user_home: /home/tomcat
 
-tomcat8_users:
+tomcat_users:
   - username: islandora
     password: "{{ islandora_tomcat_password }}"
     roles:
@@ -52,7 +52,7 @@ fcrepo_db_user: fcrepo
 fcrepo_db_host: "127.0.0.1"
 fcrepo_db_port: "3306"
 
-fcrepo_syn_tomcat_home: "{{ tomcat8_home }}"
+fcrepo_syn_tomcat_home: "{{ tomcat_home }}"
 fcrepo_syn_default_public_key_path: "{{ fcrepo_syn_tomcat_home }}/conf/public.key"
 
 fcrepo_syn_sites:

@@ -1,25 +1,25 @@
 ---
 
-tomcat8_home: /var/lib/tomcat9
+tomcat_home: /var/lib/tomcat9
 
-tomcat8_packages:
+tomcat_packages:
   - tomcat9
-tomcat8_admin_packages:
+tomcat_admin_packages:
   - tomcat9-admin
 
 tomcat_service_name: tomcat9
 
-tomcat8_server_user: tomcat
-tomcat8_server_group: tomcat
-tomcat8_user_home: /home/tomcat
+tomcat_server_user: tomcat
+tomcat_server_group: tomcat
+tomcat_user_home: /home/tomcat
 
-tomcat8_users:
+tomcat_users:
   - username: islandora
     password: "{{ islandora_tomcat_password }}"
     roles:
       - manager-gui
 
-tomcat8_java_opts:
+tomcat_java_opts:
   - -Djava.awt.headless=true
   - -Dfile.encoding=UTF-8
   - -server
@@ -86,7 +86,7 @@ cantaloupe_cache_server_worker_enabled: "true"
 cantaloupe_cache_source: FilesystemCache
 cantaloupe_create_FilesystemCache_dir: yes
 cantaloupe_deploy_war: yes
-cantaloupe_deploy_war_path: "{{ tomcat8_home }}/webapps"
+cantaloupe_deploy_war_path: "{{ tomcat_home }}/webapps"
 cantaloupe_endpoint_api_secret:
 cantaloupe_endpoint_api_username:
 cantaloupe_group: tomcat
