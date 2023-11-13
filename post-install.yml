@@ -21,9 +21,9 @@
 
     - name: Get Islandora PREMIS
       git:
-        repo: https://github.com/mjordan/islandora_premis.git
+        repo: https://github.com/ruebot/islandora_premis.git
         dest: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
-        version: 8.x-1.x
+        version: d10
         force: yes
 
     - name: Enable Islandora PREMIS # noqa 301
@@ -263,6 +263,6 @@
       command: >
         /usr/local/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
 
-    - name: Add Creatorss menu item
+    - name: Add Creators menu item
       command: >
         /usr/local/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'

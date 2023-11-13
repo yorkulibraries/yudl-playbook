@@ -38,7 +38,7 @@
   git:
     repo: https://github.com/yorkulibraries/yudl_groups.git
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_groups"
-    version: main
+    version: 1.x
     force: yes
 
 #- name: Enable YUDL Groups # noqa 301
