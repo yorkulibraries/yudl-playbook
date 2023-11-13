@@ -1,9 +1,9 @@
-# Islandora Playbook
+# YUDL Playbook
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
 
 ## Introduction
 
-This is an Ansible playbook for Islandora 8 for York University Libraries. It is based off of the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
+This is a collection of Ansible playbooks to build York University Digital Library. It is based off of the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
 
 ## Use
 
