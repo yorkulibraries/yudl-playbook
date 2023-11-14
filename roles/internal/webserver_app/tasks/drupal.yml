@@ -87,7 +87,7 @@
   when: env == "production"
 
 - name: Import features # noqa 301
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults,islandora_search"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults"
 
 - name: Enable EVA views # noqa 301
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y ven display_media"

@@ -4,7 +4,7 @@ composer_version_branch: ""
 composer_keep_updated: no
 drupal_build_composer_project: true
 drupal_composer_install_dir: /var/www/html/drupal
-drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction "
+drupal_composer_project_options: "--prefer-dist --no-interaction "
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
   - "drupal/devel:^5.1"
@@ -17,7 +17,8 @@ drupal_composer_dependencies:
   - "drupal/admin_toolbar:^3.4"
   - "drupal/rest_oai_pmh:^2.0@beta"
   - "drupal/rdf:^2.1"
-  - "drupal/hal:^1.0"
+  - "drupal/hal:^2.0"
+  - "drupal/config_update:^2.0@alpha"
   - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^5.0@RC"
@@ -59,8 +60,8 @@ drupal_composer_dependencies:
   - "predis/predis"
   - "drupal/redis"
   - "drupal/views_infinite_scroll:^2.0"
-  - "discoverygarden/dgi_fixity:^1.1"
-drupal_composer_project_package: "drupal/recommended-project:^9.5"
+    #- "discoverygarden/dgi_fixity:^1.1"
+drupal_composer_project_package: "drupal/recommended-project:^10.1"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
 drupal_db_name: drupal
@@ -71,77 +72,76 @@ drupal_site_name: "YUDL DEV"
 drupal_install_profile: standard
 drupal_account_name: admin
 drupal_enable_modules:
-  - hal
-  - rdf
-  - responsive_image
-  - syslog
-  - serialization
-  - basic_auth
-  - rest
-  - restui
-  - rest_oai_pmh
-  - devel
-  - search_api_solr
-  - facets
-  - matomo
-  - pdf
+  - addtoany
   - admin_toolbar
-  - transliterate_filenames
-  - islandora_defaults
-  - controlled_access_terms_defaults
-  - islandora_defaults
-  - islandora_fits
-  - islandora_breadcrumbs
-  - islandora_iiif
-  - islandora_search
-  - simple_sitemap
-  - pathauto
-  - views_bulk_operations
-  - views_bulk_edit
-  - islandora_repository_reports
-  - islandora_workbench_integration
-  - islandora_repository_reports_log
-  - islandora_repository_reports_oai_usage
-  - islandora_repository_reports_matomo
-  - islandora_repository_reports_activemq
-  - search_api_autocomplete
-  - search_api_solr_autocomplete
-  - geolocation_leaflet
+  - admin_toolbar_links_access_filter
+  - admin_toolbar_tools
+  - basic_auth
+  - block_class
   - config_translation
-  - locale
-  - jquery_ui_accordion
-  - group
+  - controlled_access_terms_defaults
+  - cookies
+  - default_content
+  - devel
+    #- dgi_fixity
+  - facets
+  - facets_range_widget
+  - facets_summary
+  - flexible_permissions
+  - fontawesome
+  - geolocation_leaflet
   - gnode
-  - rules
+  - group
   - group_permissions
   - groupmedia
-  - default_content
-  - cookies
-  - views_block_area
-  - metatag
+  - hal
+  - islandora_breadcrumbs
+  - islandora_defaults
+  - islandora_defaults
+  - islandora_fits
+  - islandora_iiif
+  - islandora_repository_reports
+  - islandora_repository_reports_activemq
+  - islandora_repository_reports_log
+  - islandora_repository_reports_matomo
+    #- islandora_repository_reports_oai_usage
+  - islandora_workbench_integration
+  - jquery_ui_accordion
+  - jquery_ui_slider
   - layout_builder
   - layout_discovery
+  - locale
+  - matomo
   - media_library
-  - admin_toolbar_tools
-  - admin_toolbar_links_access_filter
-  - term_condition
-  - addtoany
-  - twig_tweak
-  - block_class
+  - metatag
   - oembed_providers
-  - fontawesome
-  - facets_summary
-  - views_data_export
-  - jquery_ui_slider
-  - facets_range_widget
-  - yudl_search
-  - views_field_view
-  - yudl_blocks
+  - pathauto
+  - pdf
+  - rdf
   - redis
-  - flexible_permissions
-  - views_infinite_scroll
-  - dgi_fixity
+  - responsive_image
+  - rest
+  - rest_oai_pmh
+  - restui
+  - rules
+  - search_api_autocomplete
+  - search_api_solr
+  - search_api_solr_autocomplete
+  - serialization
+  - simple_sitemap
+  - syslog
+  - term_condition
+  - transliterate_filenames
+  - twig_tweak
   - upgrade_status
+  - views_block_area
+  - views_bulk_edit
+  - views_bulk_operations
+  - views_data_export
+  - views_field_view
+  - views_infinite_scroll
+  - yudl_blocks
+  - yudl_search
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
