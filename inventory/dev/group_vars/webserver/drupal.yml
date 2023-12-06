@@ -141,6 +141,10 @@ drupal_enable_modules:
   - views_infinite_scroll
   - yudl_blocks
   - yudl_search
+  - metatag_dc
+  - metatag_dc_advanced
+  - metatag_open_graph
+  - metatag_twitter_cards
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
