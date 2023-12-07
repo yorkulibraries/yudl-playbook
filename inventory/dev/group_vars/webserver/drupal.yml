@@ -43,7 +43,7 @@ drupal_composer_dependencies:
   - "drupal/search_api_autocomplete:^1.8"
   - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
-  - "drupal/cookies:^1.2"
+  - "drupal/eu_cookie_compliance:^1.24"
   - "drupal/views_block_area:^1.0@beta"
   - "drupal/metatag:^2.0"
   - "drupal/term_condition:^2.0"
@@ -80,10 +80,10 @@ drupal_enable_modules:
   - block_class
   - config_translation
   - controlled_access_terms_defaults
-  - cookies
   - default_content
   - devel
   - dgi_fixity
+  - eu_cookie_compliance
   - facets
   - facets_range_widget
   - facets_summary

@@ -44,7 +44,7 @@ drupal_composer_dependencies:
   - "drupal/search_api_autocomplete:^1.7"
   - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
-  - "drupal/cookies:^1.2"
+  - "drupal/eu_cookie_compliance:^1.24"
   - "drupal/views_block_area:^1.0@beta"
   - "drupal/metatag:^1.22"
   - "drupal/term_condition:^2.0"
@@ -150,6 +150,7 @@ drupal_enable_modules:
   - metatag_dc_advanced
   - metatag_open_graph
   - metatag_twitter_cards
+  - eu_cookie_compliance
 drupal_trusted_hosts:
   - "gamma.library.yorku.ca"
   - "beta.library.yorku.ca"
