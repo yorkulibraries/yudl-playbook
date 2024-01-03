@@ -1,5 +1,5 @@
 ---
-composer_version: "2.1.14"
+composer_version: "2.2.22"
 composer_version_branch: ""
 composer_keep_updated: no
 drupal_build_composer_project: true
@@ -8,7 +8,7 @@ drupal_composer_project_options: "--prefer-dist --no-interaction "
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
   - "drupal/devel:^5.1"
-  - "drush/drush:^11"
+  - "drush/drush:^12"
   - "drupal/restui:^1.21"
   - "drupal/search_api_solr:^4.3"
   - "drupal/facets:^2.0"

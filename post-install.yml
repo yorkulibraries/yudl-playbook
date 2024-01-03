@@ -257,12 +257,12 @@
 
     - name: Add Locations menu item
       command: >
-        /usr/local/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
+        /var/www/html/drupal/vendor/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
 
     - name: Add Subjects menu item
       command: >
-        /usr/local/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
+        /var/www/html/drupal/vendor/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
 
     - name: Add Creators menu item
       command: >
-        /usr/local/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
+        /var/www/html/drupal/vendor/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'

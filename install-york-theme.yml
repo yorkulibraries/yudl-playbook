@@ -27,10 +27,10 @@
         recurse: yes
 
     - name: Enable york_drupal_theme
-      command: "drush --root={{ drupal_core_path }} -y theme:enable york_drupal_theme"
+      command: "/var/www/html/drupal/vendor/bin/drush --root={{ drupal_core_path }} -y theme:enable york_drupal_theme"
 
     - name: Set york_drupal_theme default
-      command: "drush --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
+      command: "/var/www/html/drupal/vendor/bin/drush --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
 
     - name: Clear cache
-      command: "drush --root={{ drupal_core_path }} cr"
+      command: "/var/www/html/drupal/vendor/bin/drush --root={{ drupal_core_path }} cr"
