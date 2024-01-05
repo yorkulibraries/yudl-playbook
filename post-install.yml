@@ -9,6 +9,18 @@
     vagrant_user: "vagrant"
 
   tasks:
+    - name: Remove Drush Launcher version of Drush
+      file:
+        path: /usr/local/bin/drush
+        state: absent
+
+    - name: Use Drupal version of Drush
+      file:
+        path: /usr/local/bin/drush
+        src: /var/www/html/drupal/vendor/bin/drush
+        state: link
+        force: yes
+
     - name: Set MySQL transaction isolation level #https://www.drupal.org/docs/system-requirements/setting-the-mysql-transaction-isolation-level
       command: "mysql -u root drupal -e 'SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED'"
 
