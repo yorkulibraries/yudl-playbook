@@ -30,9 +30,10 @@ drupal_composer_dependencies:
   - "drupal/groupmedia:^4.0"
   - "drupal/group_permissions:^2.0@alpha"
   - "drupal/flexible_permissions:^1.0"
-  - "drupal/upgrade_status:^4.0"
+  - "drupal/features:^3"
+  - "--with-all-dependencies drupal/upgrade_status:^4.0"
   - "--with-all-dependencies drupal/rules:^3.0@alpha"
-  - "islandora/islandora:^2.9"
+  - "islandora/islandora:^2"
   - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/bootstrap_barrio:^5.5"
@@ -87,6 +88,7 @@ drupal_enable_modules:
   - facets
   - facets_range_widget
   - facets_summary
+  - features
   - flexible_permissions
   - fontawesome
   - geolocation_leaflet

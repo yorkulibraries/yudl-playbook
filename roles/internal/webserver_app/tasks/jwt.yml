@@ -70,3 +70,6 @@
 - name: Import JWT Config Into Drupal # noqa 503
   command: "{{ drush_path }} --root {{ drupal_core_path }} config-import -y --partial --source={{ webserver_app_jwt_config_path }}"
   when: drupal_jwt_config.changed is defined and drupal_jwt_config.changed
+
+- name: Import YUDL features moved to optional # noqa 301
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y cim --partial --source=/var/www/html/drupal/web/modules/contrib/yudl_defaults/config/optional"
