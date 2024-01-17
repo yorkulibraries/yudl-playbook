@@ -22,7 +22,7 @@ drupal_composer_dependencies:
   - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^5.0@RC"
-  - "drupal/flysystem:^2.1@RC"
+  - "drupal/flysystem:^2.2@alpha"
   - "drupal/jquery_ui_accordion:^2.0"
   - "drupal/typed_data:^1.0@beta"
   - "drupal/default_content:^2.0@alpha"
