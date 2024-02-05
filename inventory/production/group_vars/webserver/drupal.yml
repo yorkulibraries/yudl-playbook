@@ -18,7 +18,6 @@ drupal_composer_dependencies:
   - "drupal/rest_oai_pmh:^2.0@beta"
   - "drupal/rdf:^2.1"
   - "drupal/hal:^1.0"
-  - "drupal/transliterate_filenames:^2.0"
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^4.1"
   - "drupal/flysystem:^2.2@alpha"
@@ -34,7 +33,7 @@ drupal_composer_dependencies:
   - "islandora/islandora:^2"
   - "drupal/authorization:^1.0@beta"
   - "--with-all-dependencies drupal/ldap:^4.3"
-  - "--with-all-dependencies yorkulibraries/yudl_defaults:2.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
+  - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
   - "islandora/islandora_mirador:^2"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/bootstrap_barrio:^5.5"
@@ -89,7 +88,6 @@ drupal_enable_modules:
   - matomo
   - pdf
   - admin_toolbar
-  - transliterate_filenames
   - islandora_defaults
   - controlled_access_terms_defaults
   - islandora_defaults
