@@ -4,12 +4,12 @@
   set_fact: openseadragon_drush_path="{{ drush_path }}"
   when: drush_path != ''
 
-- include: install.yml
+- include_tasks: install.yml
   tags:
     - openseadragon
     - openseadragon-install
 
-- include: config.yml
+- include_tasks: config.yml
   tags:
     - openseadragon
     - openseadragon-config

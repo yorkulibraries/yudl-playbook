@@ -1,17 +1,17 @@
 ---
 
-- include: "define-home.yml"
+- include_tasks: "define-home.yml"
   tags:
     - tomcat
     - tomcat-config
     - tomcat-install
 
-- include: "install.yml"
+- include_tasks: "install.yml"
   tags:
     - tomcat
     - tomcat-install
 
-- include: "config.yml"
+- include_tasks: "config.yml"
   tags:
     - tomcat
     - tomcat-config

@@ -58,7 +58,7 @@
     state: directory
     owner: "{{ crayfish_user }}"
     group: "{{ crayfish_user }}"
-    mode: "urwx,gr,o-rwx"
+    mode: 0775
 
 - name: Install crayfish httpd config file
   template:

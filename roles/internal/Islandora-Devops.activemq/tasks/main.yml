@@ -1,12 +1,11 @@
 ---
 
-- include: user.yml
+- include_tasks: user.yml
   tags:
     - activemq
     - activemq-user
 
-- include: install.yml
+- include_tasks: install.yml
   tags:
     - activemq
     - activemq-install
-

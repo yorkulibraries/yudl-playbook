@@ -17,7 +17,7 @@
   version: 2.1.0
 
 - src: geerlingguy.mysql
-  version: 3.5.1
+  version: 4.3.4
 
 - src: geerlingguy.solr
   version: 5.4.1

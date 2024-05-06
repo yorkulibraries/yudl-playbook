@@ -1,16 +1,16 @@
-- include: install.yml
+- include_tasks: install.yml
   tags:
     - fcrepo
     - fcrepo-install
 
-- include: db-mysql.yml
+- include_tasks: db-mysql.yml
   when: fcrepo_persistence == 'jdbc-mysql'
   tags:
     - fedora
     - fedora-install
     - fedora-db
 
-- include: config.yml
+- include_tasks: config.yml
   tags:
     - fcrepo
     - fcrepo-config
