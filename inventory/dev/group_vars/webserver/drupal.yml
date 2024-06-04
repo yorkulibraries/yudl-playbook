@@ -60,7 +60,7 @@ drupal_composer_dependencies:
   - "predis/predis"
   - "drupal/redis"
   - "drupal/views_infinite_scroll:^2.0"
-  - "discoverygarden/dgi_fixity:^1.1"
+  - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.2"
 drupal_composer_project_package: "drupal/recommended-project:^10.1"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
