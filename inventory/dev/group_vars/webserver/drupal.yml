@@ -4,16 +4,16 @@ composer_version_branch: ""
 composer_keep_updated: no
 drupal_build_composer_project: true
 drupal_composer_install_dir: /var/www/html/drupal
-drupal_composer_project_options: "--prefer-dist --no-interaction "
+drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
-  - "drupal/devel:^5.1"
+  - "drupal/devel:^5.2"
   - "drush/drush:^12"
   - "drupal/restui:^1.21"
   - "drupal/search_api_solr:^4.3"
   - "drupal/facets:^2.0"
   - "drupal/matomo:^1.22"
-  - "drupal/pdf:^1.1"
+  - "drupal/pdf:^1.2"
   - "drupal/admin_toolbar:^3.4"
   - "drupal/rest_oai_pmh:^2.0@beta"
   - "drupal/rdf:^2.1"
@@ -22,18 +22,17 @@ drupal_composer_dependencies:
   - "easyrdf/easyrdf:^1.1"
   - "drupal/context:^5.0@RC"
   - "drupal/flysystem:^2.2@alpha"
-  - "drupal/jquery_ui_accordion:^2.0"
+  - "drupal/jquery_ui_accordion:^2.1"
   - "drupal/typed_data:^1.0@beta"
   - "drupal/default_content:^2.0@alpha"
   - "drupal/group:^3.2"
   - "drupal/groupmedia:^4.0"
   - "drupal/group_permissions:^2.0@alpha"
-  - "drupal/flexible_permissions:^1.0"
-  - "drupal/features:^3"
-  - "--with-all-dependencies drupal/upgrade_status:^4.0"
-  - "--with-all-dependencies drupal/rules:^3.0@alpha"
-  - "islandora/islandora:^2"
-  - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev islandora/openseadragon:^2 islandora/controlled_access_terms:^2"
+  - "drupal/flexible_permissions:^1.1"
+  - "drupal/features:^3.14"
+  - "--with-all-dependencies drupal/upgrade_status:^4.3"
+  - "drupal/islandora:^2"
+  - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev drupal/openseadragon:^2.2 drupal/controlled_access_terms:^2.4"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/bootstrap_barrio:^5.5"
   - "drupal/simple_sitemap:^4.1"
@@ -48,12 +47,12 @@ drupal_composer_dependencies:
   - "drupal/metatag:^2.0"
   - "drupal/term_condition:^2.0"
   - "drupal/addtoany:^2.0"
-  - "drupal/twig_tweak:^3.2"
+  - "drupal/twig_tweak:^3.3"
   - "drupal/block_class:^2.0"
   - "drupal/oembed_providers:^2.1"
   - "drupal/fontawesome:^2.26"
   - "drupal/views_data_export:^1.4"
-  - "drupal/jquery_ui_slider:^2.0"
+  - "drupal/jquery_ui_slider:^2.1"
   - "drupal/jquery_ui_touch_punch:^1.1"
   - "yorkulibraries/yudl_customizations:1.x-dev"
   - "drupal/views_field_view:^1.0@beta"
@@ -78,6 +77,8 @@ drupal_enable_modules:
   - admin_toolbar_tools
   - basic_auth
   - block_class
+  - context
+  - context_ui
   - config_translation
   - controlled_access_terms_defaults
   - default_content
@@ -123,7 +124,6 @@ drupal_enable_modules:
   - rest
   - rest_oai_pmh
   - restui
-  - rules
   - search_api_autocomplete
   - search_api_solr
   - search_api_solr_autocomplete
@@ -160,4 +160,4 @@ drupal_gemini_pseudo_bundles:
   - file:media
   - audio:media
   - video:media
-openseadragon_composer_item: "islandora/openseadragon:2.x-dev"
+openseadragon_composer_item: "drupal/openseadragon:^2.2"
