@@ -11,7 +11,7 @@
 - name: Get Kakadu
   unarchive:
     remote_src: yes
-    src: http://alpha.library.yorku.ca/kakadu.tar.gz
+    src: https://alpha.library.yorku.ca/kakadu.tar.gz
     dest: /opt/kakadu
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"

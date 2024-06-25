@@ -80,7 +80,7 @@
     - name: Get sample data
       unarchive:
         remote_src: yes
-        src: http://alpha.library.yorku.ca/sample-data.zip
+        src: https://alpha.library.yorku.ca/sample-data.zip
         owner: "{{ vagrant_user }}"
         group: "{{ vagrant_user }}"
         dest: /opt/workbench/data

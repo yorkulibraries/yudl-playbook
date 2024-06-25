@@ -60,6 +60,7 @@ drupal_composer_dependencies:
   - "drupal/redis"
   - "drupal/views_infinite_scroll:^2.0"
   - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.2"
+  - "discoverygarden/dgi_actions"
 drupal_composer_project_package: "drupal/recommended-project:^10.1"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -145,6 +146,8 @@ drupal_enable_modules:
   - metatag_dc_advanced
   - metatag_open_graph
   - metatag_twitter_cards
+  - dgi_actions
+  - dgi_actions_handle
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
