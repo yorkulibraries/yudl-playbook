@@ -48,6 +48,13 @@
         version: ad6c9546d785d296a0b12695231b36a1dae994a5
         force: yes
 
+    - name: Ensure ruamel.yaml.clib<=0.2.6 is in install_requires
+      lineinfile:
+        path: /opt/islandora_workbench/setup.py
+        insertafter: 'install_requires=\['
+        line: '        "ruamel.yaml.clib<=0.2.6",'
+        state: present
+
     - name: Install Islandora Workbench dependencies
       shell: "cd /opt/islandora_workbench; python setup.py install"
 

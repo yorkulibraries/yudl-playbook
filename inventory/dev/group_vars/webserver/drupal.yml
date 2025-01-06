@@ -28,7 +28,6 @@ drupal_composer_dependencies:
   - "drupal/group:^3.2"
   - "drupal/groupmedia:^4.0"
   - "drupal/group_permissions:^2.0@alpha"
-  - "drupal/flexible_permissions:^1.1"
   - "drupal/features:^3.14"
   - "--with-all-dependencies drupal/upgrade_status:^4.3"
   - "drupal/islandora:^2"
@@ -90,7 +89,6 @@ drupal_enable_modules:
   - facets_range_widget
   - facets_summary
   - features
-  - flexible_permissions
   - fontawesome
   - geolocation_leaflet
   - gnode
