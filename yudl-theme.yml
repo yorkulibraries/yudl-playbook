@@ -1,0 +1,44 @@
+---
+
+- name: Setup, configure, and install YUDL Drupal Theme
+  hosts: webserver
+  become: true
+
+  # add some vars here so we can run with --start-at-task if desired
+  vars:
+    webserver_app_user: "www-data"
+    vagrant_user: "vagrant"
+    drush_path: "/var/www/html/drupal/vendor/bin/drush"
+
+  tasks:
+
+    - name: Check if yudl_drupal_theme exists
+      stat:
+        path: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+      register: york_drupal_theme_exists
+
+    - name: Get york_drupal_theme
+      git:
+        repo: https://github.com/yorkulibraries/york_drupal_theme.git
+        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+        version: main
+        force: true
+      when: not york_drupal_theme_exists.stat.exists
+
+    - name: Chown york_drupal_theme
+      file:
+        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+        state: directory
+        owner: "{{ webserver_app_user }}"
+        group: "{{ webserver_app_user }}"
+        mode: "0775"
+        recurse: true
+
+    - name: Enable york_drupal_theme
+      command: "{{ drush_path }} --root={{ drupal_core_path }} -y theme:enable york_drupal_theme"
+
+    - name: Set york_drupal_theme default
+      command: "{{ drush_path }} --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
+
+    - name: Clear cache
+      command: "{{ drush_path }} --root={{ drupal_core_path }} -y cr"

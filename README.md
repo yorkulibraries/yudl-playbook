@@ -3,13 +3,19 @@
 
 ## Introduction
 
-This is a collection of Ansible playbooks to build York University Digital Library. It is based off of the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
+This is a collection of [Ansible](https://github.com/ansible/ansible) playbooks to build York University Digital Library. It is based off of the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
+
+This repository contains a collection of [Ansible](https://github.com/ansible/ansible) playbooks used to build York University Digital Library. It is based on the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
 
 ## Use
 
 ### System Resources
 
-By default the virtual machine that is built uses 4GB of RAM. Your host machine will need to be able to support the additional memory use. You can override the CPU and RAM allocation by creating `ISLANDORA_VAGRANT_CPUS` and `ISLANDORA_VAGRANT_MEMORY` environment variables and setting the values. For example, on an Ubuntu host you could add to `~/.bashrc`:
+By default, the virtual machine is allocated **4GB of RAM**. Ensure your host machine has enough available memory to support this.
+
+You can override the **CPU** and **RAM** allocation by setting the `ISLANDORA_VAGRANT_CPUS` and `ISLANDORA_VAGRANT_MEMORY` environment variables.
+
+For example, on an **Ubuntu host**, you can add the following lines to `~/.bashrc`:
 
 ```bash
 export ISLANDORA_VAGRANT_CPUS=4
@@ -30,7 +36,7 @@ export ISLANDORA_VAGRANT_MEMORY=5040
 
 ### Drupal
 
-#### DEV
+You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
 
 The default Drupal login details are:
 
@@ -42,39 +48,17 @@ The default Drupal login details are:
   * username: drupal8
   * password: islandora
 
-You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
-
-#### PRODUCTION
-
-You can connect to the machine via the browser at [https://gamma.library.yorku.ca](https://gamma.library.yorku.ca).
-
 ### Fedora
 
-#### DEV
-
-The Fedora 6 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).
-
-Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
-
-#### PRODUCTION
-
-The Fedora 5 REST API can be accessed at [http://beta.library.yorku.ca:8080/fcrepo/rest](http://beta.library.yorku.ca:8080/fcrepo/rest).
+The Fedora REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).
 
 Authentication is done via [Syn](https://github.com/Islandora-CLAW/Syn) using [JWT](https://jwt.io) tokens.
 
 ### Solr
 
-#### DEV
-
 You can access the Solr administration UI at http://localhost:8983/solr/
 
-#### PRODUCTION
-
-You can access the Solr administration UI at http://gamma.library.yorku.ca:8983/solr/
-
 ### ActiveMQ
-
-#### DEV
 
 The default ActiveMQ login details are:
 
@@ -83,13 +67,7 @@ The default ActiveMQ login details are:
 
 You can access the ActiveMQ administrative interface at: http://localhost:8161/admin
 
-#### PRODUCTION
-
-You can access the ActiveMQ administrative interface at: http://beta.library.yorku.ca:8161/admin
-
 ### Cantaloupe
-
-#### DEV
 
 You can access the Cantaloupe admin interface at: http://localhost:8080/cantaloupe/admin
 
@@ -98,15 +76,9 @@ You can access the Cantaloupe admin interface at: http://localhost:8080/cantalou
 
 You can access the IIIF interface at: http://localhost:8080/cantaloupe/iiif/2/
 
-#### PRODUCTION
-
-You can access the Cantaloupe admin interface at: http://gamma.library.yorku.ca:8080/cantaloupe/admin
-
-You can access the IIIF interface at: http://gamma.library.yorku.ca:8080/cantaloupe/iiif/2
-
 ### JWT
 
-Islandora 8 uses JWT for authentication across the stack. Crayfish microservices, Fedora, and Drupal all use them. 
+Islandora uses JWT for authentication across the stack. Crayfish microservices, Fedora, and Drupal all use them. 
 Crayfish and Fedora have been set up to use a default token of `islandora` to make testing easier. To use it, just set
 the following header in HTTP requests:
 
@@ -114,10 +86,15 @@ the following header in HTTP requests:
   
 ### FITS
 
-#### DEV
-
 You can access the FITS Web Service at http://localhost:8080/fits/
 
-#### PRODUCTION
+## Base Box
 
-You can access the FITS Web Service at http://beta.library.yorku.ca:8080/fits/
+### Building the base box:
+
+```bash
+YUDL_BUILD_BASE=true; vagrant up                  # Create a yudl base box off an Ubuntu base box.
+vagrant package --output yudl-base.box            # Shut down the base box VM and export it.
+```
+
+The base box can be versioned and released via [HashiCorp](https://portal.cloud.hashicorp.com/vagrant/discover/yorkulibraries/yudl-base).

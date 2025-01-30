@@ -1,12 +1,14 @@
 ---
 
-- hosts: webserver
-  become: yes
+- name: YUDL specific installation configurations, tweaks, migrations, and adding sample data
+  hosts: webserver
+  become: true
 
   # add some vars here so we can run with --start-at-task if desired
   vars:
     webserver_app_user: "www-data"
     vagrant_user: "vagrant"
+    drush_path: "/var/www/html/drupal/vendor/bin/drush"
 
   tasks:
     - name: Remove Drush Launcher version of Drush
@@ -19,34 +21,75 @@
         path: /usr/local/bin/drush
         src: /var/www/html/drupal/vendor/bin/drush
         state: link
-        force: yes
+        force: false
+
+    - name: Get current MySQL transaction isolation level
+      mysql_query:
+        query: "SELECT @@GLOBAL.transaction_isolation"
+        login_user: root
+        login_db: drupal
+      register: mysql_isolation_level
+      changed_when: false
+
+    - name: Set mysql_transaction_isolation_level fact
+      set_fact:
+        mysql_transaction_isolation_level: "{{ mysql_isolation_level.query_result[0][0]['@@GLOBAL.transaction_isolation'] }}"
 
     - name: Set MySQL transaction isolation level #https://www.drupal.org/docs/system-requirements/setting-the-mysql-transaction-isolation-level
-      command: "mysql -u root drupal -e 'SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED'"
+      mysql_query:
+        query: "SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED"
+        login_user: root
+        login_db: drupal
+      when: mysql_transaction_isolation_level != 'READ-COMMITTED'
+
+    - name: Check if jquery-ui-slider-pips exists
+      stat:
+        path: "{{ drupal_core_path }}/libraries/jquery-ui-slider-pips"
+      register: jquery_ui_slider_pips_exists
 
     - name: Get jquery-ui-slider-pips
       git:
         repo: https://github.com/simeydotme/jQuery-ui-Slider-Pips.git
         dest: "{{ drupal_core_path }}/libraries/jquery-ui-slider-pips"
         version: master
-        force: yes
+        force: false
+      when: not jquery_ui_slider_pips_exists.stat.exists
+
+    - name: Check if Islandora PREMIS exists
+      stat:
+        path: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
+      register: islandora_premis_exists
 
     - name: Get Islandora PREMIS
       git:
         repo: https://github.com/ruebot/islandora_premis.git
         dest: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
         version: d10
-        force: yes
+        force: false
+      when: not islandora_premis_exists.stat.exists
 
-    - name: Enable Islandora PREMIS # noqa 301
+    - name: Check if a module is enabled
+      command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=json"
+      register: modules_enabled
+      changed_when: false
+
+    - name: Enable Islandora PREMIS
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_premis"
+      when: >
+        'islandora_premis' not in (modules_enabled.stdout | from_json)
+
+    - name: Check if Islandora Workbench exists
+      stat:
+        path: "/opt/islandora_workbench"
+      register: islandora_workbench_exists
 
     - name: Get Islandora Workbench
       git:
         repo: https://github.com/mjordan/islandora_workbench.git
         dest: "/opt/islandora_workbench"
         version: ad6c9546d785d296a0b12695231b36a1dae994a5
-        force: yes
+        force: false
+      when: not islandora_workbench_exists.stat.exists
 
     - name: Ensure ruamel.yaml.clib<=0.2.6 is in install_requires
       lineinfile:
@@ -55,15 +98,21 @@
         line: '        "ruamel.yaml.clib<=0.2.6",'
         state: present
 
+    - name: Check if Islandora Workbench dependencies have been installed
+      stat:
+        path: "/opt/islandora_workbench/dist"
+      register: islandora_workbench_dependencies
+
     - name: Install Islandora Workbench dependencies
       shell: "cd /opt/islandora_workbench; python setup.py install"
+      when: not islandora_workbench_dependencies.stat.exists
 
     - name: Create workbench env
       file:
         path: "/opt/workbench/{{ item }}"
         owner: "{{ vagrant_user }}"
         group: "{{ vagrant_user }}"
-        recurse: yes
+        recurse: true
         state: directory
       with_items: ["configs", "logs", "data"]
 
@@ -86,119 +135,104 @@
 
     - name: Get sample data
       unarchive:
-        remote_src: yes
+        remote_src: true
         src: https://alpha.library.yorku.ca/sample-data.zip
         owner: "{{ vagrant_user }}"
         group: "{{ vagrant_user }}"
         dest: /opt/workbench/data
       when: env != "production"
 
-    - name: Add admin to fedoraAdmin role # noqa 301
+    - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
     # Set jsonld module to strip ?_format=jsonld
-    - name: Set JSONLD Config # noqa 301
+    - name: Set JSONLD Config
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml jsonld.settings remove_jsonld_format {{ drupal_jsonld_remove_format }}"
 
-    - name: Set broker_url (PRODUCTION) # noqa 301
+    - name: Set broker_url (PRODUCTION)
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings broker_url 'tcp://10.0.0.16:61613'"
       when: env == "production"
 
-    - name: Set JWT Expiry # noqa 301
+    - name: Set JWT Expiry
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings jwt_expiry '{{ islandora_jwt_expiry }}'"
 
-    - name: Set pseudo field bundles # noqa 301
+    - name: Set pseudo field bundles
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora.settings gemini_pseudo_bundles.{{ item.0 }} {{ item.1 }}"
       with_indexed_items: "{{ drupal_gemini_pseudo_bundles }}"
 
-    - name: Set media urls # noqa 301
+    - name: Set media urls
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml media.settings standalone_url true"
 
-    - name: Set iiif url # noqa 301
+    - name: Set iiif url
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora_iiif.settings iiif_server {{ openseadragon_iiiv_server }}"
 
-    - name: Set iiif manifest view # noqa 301
+    - name: Set iiif manifest view
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings manifest_view iiif_manifest"
 
-    - name: Set OpenSeadragon reference strip  # noqa 301
+    - name: Set OpenSeadragon reference strip
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.showReferenceStrip true"
 
-    - name: Set OpenSeadragon viewport  # noqa 301
+    - name: Set OpenSeadragon viewport
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveViewport true"
 
-    - name: Set OpenSeadragon overlays  # noqa 301
+    - name: Set OpenSeadragon overlays
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveOverlays true"
 
-    - name: Run Islandora migration # noqa 301
+    - name: Run Islandora migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_tags"
 
-    - name: Run Islandora FITS migration # noqa 301
+    - name: Run Islandora FITS migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_fits_tags"
 
-    - name: Run York migration # noqa 301
+    - name: Run York migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_defaults_00_tags,islandora_defaults_01_rights,islandora_defaults_02_access,islandora_defaults_03_languages,islandora_defaults_04_physical_form,islandora_defaults_05_genre,islandora_defaults_06_continent,islandora_defaults_07_country,islandora_defaults_08_province,islandora_defaults_09_region,islandora_defaults_10_county,islandora_defaults_11_city,islandora_defaults_12_city_section,islandora_defaults_13_corporate_body,islandora_defaults_14_person,islandora_defaults_15_subjects"
 
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config restricted islandora_access"
+    - name: Configure Islandora Groups
+      command: >
+        {{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config {{ item.key }} {{ item.value }}
+      loop:
+        - {key: "restricted", value: "islandora_access"}
+        - {key: "york_university", value: "islandora_access"}
+        - {key: "media-type-access-fields.audio", value: "field_access_terms"}
+        - {key: "media-type-access-fields.document", value: "field_access_terms"}
+        - {key: "media-type-access-fields.extracted_text", value: "field_access_terms"}
+        - {key: "media-type-access-fields.file", value: "field_access_terms"}
+        - {key: "media-type-access-fields.image", value: "field_access_terms"}
+        - {key: "media-type-access-fields.remote_video", value: "field_access_terms"}
+        - {key: "media-type-access-fields.video", value: "field_access_terms"}
+        - {key: "node-type-access-fields.islandora_object", value: "field_access_terms"}
 
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config york_university islandora_access"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.audio field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.document field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.extracted_text field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.file field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.image field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.remote_video field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config media-type-access-fields.video field_access_terms"
-
-    - name: Islandora Groups configuration # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config node-type-access-fields.islandora_object field_access_terms"
-
-    - name: Add mov to video formats # noqa 301
+    - name: Add mov to video formats
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset field.field.media.video.field_media_video_file settings.file_extensions 'mp4 mov'"
 
-    - name: Set site email # noqa 301
+    - name: Set site email
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.site mail {{ certbot_admin_email }}"
       when: env == "production"
 
-    - name: Set update notifications email # noqa 301
+    - name: Set update notifications email
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset update.settings notification.emails {{ certbot_admin_email }}"
       when: env == "production"
 
-    - name: Set admin only account creation # noqa 301
+    - name: Set admin only account creation
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset user.settings register admin_only"
 
-    - name: Add admin users # noqa 301
+    - name: Add admin users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
 
-    - name: Add islandora admin users # noqa 301
+    - name: Add islandora admin users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
 
-    - name: Add islandora creator users # noqa 301
+    - name: Add islandora creator users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
 
-    - name: Add past islandora creators # noqa 301
+    - name: Add past islandora creators
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
 
-    - name: Add admin users to admin role # noqa 301
+    - name: Add admin users to admin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} urol administrator {{ item }}"
       loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
 
@@ -213,17 +247,17 @@
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
-        mode: 0775
-        recurse: yes
+        mode: "0775"
+        recurse: true
 
-    - name: Chown islandora_defaults feature
+    - name: Chown yudl_defaults feature
       file:
         dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
-        mode: 0775
-        recurse: yes
+        mode: "0775"
+        recurse: true
 
     - name: Chown controlled access terms default configuration
       file:
@@ -231,8 +265,8 @@
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
-        mode: 0775
-        recurse: yes
+        mode: "0775"
+        recurse: true
 
     - name: Apply patched LDAP library https://www.drupal.org/project/ldap/issues/3151284
       template:
@@ -240,11 +274,8 @@
         dest: "/var/www/html/drupal/vendor/grahl/ldap/Adapter/ExtLdap/Connection.php"
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
-        mode: 0755
+        mode: "0755"
       when: env == "production"
-
-    - name: Clear cache # noqa 301
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"
 
     - name: Restart Apache
       service:
@@ -252,14 +283,20 @@
         state: restarted
       when: env == "production"
 
+    - name: Check if YUDL Default Content exists
+      stat:
+        path: "{{ drupal_core_path }}/modules/contrib/yudl_default_content"
+      register: yudl_default_content_exists
+
     - name: Get YUDL Default Content
       git:
         repo: https://github.com/yorkulibraries/yudl_default_content.git
         dest: "{{ drupal_core_path }}/modules/contrib/yudl_default_content"
         version: main
-        force: yes
+        force: false
+      when: not yudl_default_content_exists.stat.exists
 
-    - name: Enable YUDL Default Content # noqa 301
+    - name: Enable YUDL Default Content
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_default_content"
 
     - name: Set YUDL front page
@@ -276,12 +313,12 @@
 
     - name: Add Locations menu item
       command: >
-        /var/www/html/drupal/vendor/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
 
     - name: Add Subjects menu item
       command: >
-        /var/www/html/drupal/vendor/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
 
     - name: Add Creators menu item
       command: >
-        /var/www/html/drupal/vendor/bin/drush --root=/var/www/html/drupal/web ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
+         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'

@@ -1,35 +1,46 @@
 ---
 
-  - name: Move existing files sites/default/files
-    shell: mv "{{ drupal_core_path }}"/sites/default/files/* /tank/data/drupal/files
+  - name: Check if files directory is already moved
+    stat:
+      path: /tank/data/drupal/files
+    register: files_dir
     when: env == "production"
 
-  - name: Remove sites/default/files # noqa 301
+  - name: Move existing files sites/default/files
+    command: rsync -a --remove-source-files "{{ drupal_core_path }}"/sites/default/files/* /tank/data/drupal/files
+    when: env == "production"and not files_dir.stat.exists
+
+  - name: Remove sites/default/files
     file:
       path: "{{ drupal_core_path }}/sites/default/files"
       state: absent
-    when: env == "production"
+    when: env == "production" and not files_dir.stat.exists
 
-  - name: Link PRODUCTION Drupal files directory # noqa 301
+  - name: Check if the symlink exists
+    stat:
+      path: "{{ drupal_core_path }}/sites/default/files"
+    register: files_symlink
+
+  - name: Link PRODUCTION Drupal files directory
     file:
       src: /tank/data/drupal/files
       dest: "{{ drupal_core_path }}/sites/default/files"
       state: link
-      force: yes
+    when: env == "production" and not files_symlink.stat.islnk
+
+  - name: Ensure symlink ownership and permissions
+    file:
+      path: "{{ drupal_core_path }}/sites/default/files"
+      owner: "{{ webserver_app_user }}"
+      group: "{{ webserver_app_user }}"
+      mode: "0775"
+      state: directory
     when: env == "production"
 
-  - name: Set symlink directory ownership # noqa 302 305
-    shell: chown -hR www-data:www-data "{{ drupal_core_path }}"/sites/default/files
-    when: env == "production"
-
-  - name: Set symlink directory permissions # noqa 302 305
-    shell: chmod -R 0775 "{{ drupal_core_path }}"/sites/default/files
-    when: env == "production"
-
-  - name: Edit permissions for default.services.yml
+  - name: Ensure correct permissions for default.services.yml
     file:
       state: directory
       path: "{{ drupal_core_path }}/sites/default"
       owner: "{{ webserver_app_user }}"
       group: "{{ webserver_app_user }}"
-      mode: '1777'
+      mode: "1777"

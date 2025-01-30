@@ -1,4 +1,6 @@
-- name: Parse Fcrepo version to pure semantic
+---
+
+- name: Parse fcrepo version to pure semantic
   set_fact:
     fcrepo_parsed_version: "{{ fcrepo_version | regex_replace('^([0-9]+)\\.([0-9]+)\\.([0-9]+)', '\\1.\\2.\\3') }}"
 
@@ -8,6 +10,7 @@
     dest: "{{ fcrepo_war_path }}"
     owner: "{{ fcrepo_user }}"
     group: "{{ fcrepo_user }}"
+    force: no
   when: fcrepo_parsed_version is version_compare("5.0.0", ">=")
 
 - name: Create fcrepo home directory
@@ -17,7 +20,7 @@
     owner: "{{ fcrepo_user }}"
     group: "{{ fcrepo_user }}"
 
-- name: Install python dependencies
+- name: Install Python dependencies
   apt:
     pkg:
       - python3-psycopg2

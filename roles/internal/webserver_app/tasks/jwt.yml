@@ -6,7 +6,7 @@
     path: "{{ webserver_app_jwt_key_path }}"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0740
+    mode: "0740"
 
 - name: Get SSL keys
   include_role:
@@ -20,7 +20,7 @@
     path: "{{ webserver_app_jwt_config_path }}"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0740
+    mode: "0740"
 
 - name: Copy Templated Drupal JWT Configuration
   template:
@@ -28,7 +28,7 @@
     dest: "{{ webserver_app_jwt_config_path }}/{{ item }}"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0740
+    mode: "0740"
   with_items:
     - jwt.config.yml
     - key.key.islandora_rsa_key.yml
@@ -39,10 +39,17 @@
     repo: https://github.com/yorkulibraries/yudl_groups.git
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_groups"
     version: 2.x
-    force: yes
 
-- name: Enable YUDL Groups # noqa 301
+- name: Gather list of installed modules
+  command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
+  register: installed_modules
+  changed_when: false
+
+- name: Enable YUDL Groups
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
+  when: >
+    'yudl_groups' not in (installed_modules.stdout | from_json) or
+    "(installed_modules.stdout|from_json).yudl_groups.status != 'Enabled'"
 
 ###
 # Install this here since we run into a composer wanting stable over dev issue.
@@ -51,25 +58,29 @@
     repo: https://github.com/digitalutsc/islandora_group.git
     dest: "{{ drupal_core_path }}/modules/contrib/islandora_group"
     version: 2.x
-    force: yes
 
-- name: Enable Islandora Group # noqa 301
+- name: Enable Islandora Group
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_group"
+  when: >
+    'islandora_group' not in (installed_modules.stdout | from_json) or
+    "(installed_modules.stdout|from_json).islandora_group.status != 'Enabled'"
 
 - name: Get Group Solr
   git:
     repo: https://github.com/yorkulibraries/group_solr.git
     dest: "{{ drupal_core_path }}/modules/contrib/group_solr"
     version: main
-    force: yes
 
-- name: Enable Group Solr # noqa 301
+- name: Enable Group Solr
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en group_solr"
+  when: >
+    'group_solr' not in (installed_modules.stdout | from_json) or
+    "(installed_modules.stdout|from_json).group_solr.status != 'Enabled'"
 ###
 
-- name: Import JWT Config Into Drupal # noqa 503
+- name: Import JWT Config Into Drupal
   command: "{{ drush_path }} --root {{ drupal_core_path }} config-import -y --partial --source={{ webserver_app_jwt_config_path }}"
   when: drupal_jwt_config.changed is defined and drupal_jwt_config.changed
 
-- name: Import YUDL features moved to optional # noqa 301
+- name: Import YUDL features moved to optional
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y cim --partial --source=/var/www/html/drupal/web/modules/contrib/yudl_defaults/config/optional"

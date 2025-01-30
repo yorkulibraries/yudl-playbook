@@ -1,14 +1,19 @@
 ---
 
-- name: Clone CLAW Alpaca
+- name: Clone Alpaca
   git:
     repo: https://github.com/islandora/Alpaca.git
     dest: "{{ alpaca_clone_directory }}"
     version: "{{ alpaca_version }}"
   register: alpaca_git
 
+- name: Check if Alpaca jar exists
+  stat:
+    path: "{{ alpaca_clone_directory }}/build/libs/Alpaca-{{ alpaca_version }}.jar"
+  register: alpaca_jar
+
 - name: Install Alpaca via Gradle
   command: ./gradlew build shadowJar
   args:
     chdir: "{{ alpaca_clone_directory }}"
-  when: alpaca_git.changed
+  when: alpaca_git.changed or not alpaca_jar.stat.exists

@@ -1,7 +1,8 @@
 ---
 
-- hosts: crayfish
-  become: yes
+- name: Setup, configure, and install Crayfish
+  hosts: crayfish
+  become: true
 
   vars:
     php_version: "8.1"

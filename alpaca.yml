@@ -1,7 +1,8 @@
 ---
 
-- hosts: alpaca
-  become: yes
+- name: Setup, configure, and install Alpaca
+  hosts: alpaca
+  become: true
 
   roles:
     - Islandora-Devops.alpaca

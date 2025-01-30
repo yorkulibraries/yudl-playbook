@@ -1,6 +1,6 @@
 ---
 
-- name: Kakaku home
+- name: Create Kakaku home
   file:
     path: "/opt/kakadu"
     owner: "{{ cantaloupe_user }}"
@@ -15,6 +15,7 @@
     dest: /opt/kakadu
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
+    creates: /opt/kakadu
 
 - name: Kakaku libraries (ldconfig)
   template:
@@ -22,7 +23,7 @@
     dest: /etc/ld.so.conf.d/kakadu.conf
 
 - name: Update ldconfig
-  command: "ldconfig"
+  command: ldconfig
 
 - name: Install Cantaloupe
   unarchive:

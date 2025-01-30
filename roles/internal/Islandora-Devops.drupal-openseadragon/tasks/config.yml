@@ -1,18 +1,27 @@
 ---
 
 - name: Check if modules are enabled
-  shell: "{{ openseadragon_drush_path }} --root {{ openseadragon_composer_root }}/web pm-list --format=json"
+  command: "{{ openseadragon_drush_path }} --root {{ openseadragon_composer_root }}/web pml --format=json"
   register: openseadragon_enable_module_status
-  changed_when: False
-  check_mode: no
+  changed_when: false
+  check_mode: false
 
-- name: Enable modules
-  shell: "{{ openseadragon_drush_path }} --root {{ openseadragon_composer_root }}/web -y en openseadragon"
-  when: (openseadragon_enable_module_status.stdout|from_json).openseadragon.status != 'Enabled'
+- name: Validate openseadragon_enable_module_status output
+  fail:
+    msg: "Failed to parse module status output as JSON."
+  when: >
+    openseadragon_enable_module_status.stdout is not defined or
+    openseadragon_enable_module_status.stdout|from_json is undefined
+
+- name: Enable openseadragon module
+  command: "{{ openseadragon_drush_path }} --root {{ openseadragon_composer_root }}/web -y en openseadragon"
+  when: >
+    openseadragon_enable_module_status.stdout is defined and
+    (openseadragon_enable_module_status.stdout|from_json).openseadragon.status != 'Enabled'
 
 - name: Copy openseadragon library definition to correct location.
   copy:
-    remote_src: yes
+    remote_src: true
     src: "{{ openseadragon_composer_root }}/web/modules/contrib/openseadragon/openseadragon.json"
     dest: "{{ openseadragon_composer_root }}/web/sites/{{ item }}/files/library-definitions"
   with_items: "{{ openseadragon_sites }}"
@@ -29,6 +38,6 @@
   command:
     "{{ openseadragon_drush_path }} --root {{ openseadragon_composer_root }}/web cset openseadragon.settings iiif_server {{ openseadragon_iiiv_server }} --yes"
   when: >
-    not openseadragon_iiiv_status.skipped|default(false) and
+    openseadragon_iiiv_status.stdout is defined and
     (openseadragon_iiiv_status.rc == 1 or
     (openseadragon_iiiv_status.stdout|from_json)['openseadragon.settings:iiif_server'] != openseadragon_iiiv_server)

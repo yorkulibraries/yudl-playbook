@@ -1,20 +1,30 @@
 ---
 
-# Only tasks related to configuring search_api_solr are put here
-# Solr server configuration should go into the Solr playbook: https://github.com/Islandora-Devops/claw-playbook/blob/dev/solr.yml
+- name: Check current Solr server host
+  command: "{{ drush_path }} --root {{ drupal_core_path }} config-get search_api.server.default_solr_server backend_config.connector_config.host"
+  register: current_search_api_host
+  changed_when: false
+
 - name: Set default Solr server host from hostvars
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set search_api.server.default_solr_server backend_config.connector_config.host {{ hostvars[groups['solr'][0]].ansible_host  }}"
-  register: set_search_api_config_host
-  changed_when: "'Do you want to update' in set_search_api_config.stdout"
-  ignore_errors: yes
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set search_api.server.default_solr_server backend_config.connector_config.host {{ hostvars[groups['solr'][0]].ansible_host }}"
+  when: current_search_api_host.stdout != hostvars[groups['solr'][0]].ansible_host
+
+- name: Check current Solr server core
+  command: "{{ drush_path }} --root {{ drupal_core_path }} config-get search_api.server.default_solr_server backend_config.connector_config.core"
+  register: current_search_api_core
+  changed_when: false
 
 - name: Set default Solr server to point to first core
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set search_api.server.default_solr_server backend_config.connector_config.core {{ solr_cores[0] }}"
-  register: set_search_api_config_core
-  changed_when: "'Do you want to update' in set_search_api_config.stdout"
-  ignore_errors: yes
+  when: current_search_api_core.stdout != solr_cores[0]
+
+- name: Check if solr_config.zip exists
+  stat:
+    path: "{{ drupal_core_path }}/solr_config.zip"
+  register: solr_config_zip
 
 - name: Create Solr config.zip
   command:
-    cmd: "{{ drush_path }} --root {{ drupal_core_path }} -y solr-gsc default_solr_server solr_config.zip {{ solr_version }}" # noqa 301
+    cmd: "{{ drush_path }} --root {{ drupal_core_path }} -y solr-gsc default_solr_server solr_config.zip {{ solr_version }}"
     chdir: "{{ drupal_core_path }}"
+  when: not solr_config_zip.stat.exists

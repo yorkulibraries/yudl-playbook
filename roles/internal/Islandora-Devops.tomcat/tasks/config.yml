@@ -1,12 +1,23 @@
 ---
 
+- name: Check if Cantaloupe directory exists
+  stat:
+    path: /opt/cantaloupe
+  register: cantaloupe_dir
+
 - name: Creates Cantaloupe directory
   file:
     path: /opt/cantaloupe
     state: directory
     owner: tomcat
     group: tomcat
-    mode: 2775
+    mode: "2775"
+  when: not cantaloupe_dir.stat.exists
+
+- name: Check if Fits directory exists
+  stat:
+    path: /opt/fits
+  register: fits_dir
 
 - name: Creates Fits directory
   file:
@@ -14,7 +25,13 @@
     state: directory
     owner: tomcat
     group: tomcat
-    mode: 2775
+    mode: "2775"
+  when: not fits_dir.stat.exists
+
+- name: Check if Cantaloupe cache directory exists
+  stat:
+    path: /var/cache/cantaloupe
+  register: cantaloupe_cache_dir
 
 - name: Creates Cantaloupe cache directory
   file:
@@ -22,15 +39,22 @@
     state: directory
     owner: tomcat
     group: tomcat
-    mode: 2775
+    mode: "2775"
+  when: not cantaloupe_cache_dir.stat.exists
 
-- name: Creates Fits directory
+- name: Check if Cantaloupe log directory exists
+  stat:
+    path: /var/log/cantaloupe
+  register: cantaloupe_log_dir
+
+- name: Creates Cantaloupe log directory
   file:
     path: /var/log/cantaloupe
     state: directory
     owner: tomcat
     group: tomcat
-    mode: 2775
+    mode: "2775"
+  when: not cantaloupe_log_dir.stat.exists
 
 - name: Template systemd Tomcat9 service
   template:
@@ -42,7 +66,7 @@
   template:
     src: tomcat9.beta.service.j2
     dest: /etc/systemd/system/tomcat9.service
-  when:  "'beta' in inventory_hostname"
+  when: "'beta' in inventory_hostname"
 
 - name: Template systemd Tomcat9 service (gamma)
   template:
@@ -52,4 +76,3 @@
 
 - name: Reload systemd services
   command: "systemctl daemon-reload"
-

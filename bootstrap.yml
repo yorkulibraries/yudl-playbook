@@ -1,67 +1,84 @@
 ---
 
-- name: bootstrap
+- name: Bootstrap setup
   hosts: all
-  become: yes
+  become: true
   gather_facts: false
 
   tasks:
-    # python isn't installed by default on ubuntu so we need
-    # to do that with the raw command before
-    - name: install python
-      raw: test -e /usr/bin/python || (apt-get update; apt-get install -y python-is-python3;)
-      register: output
-      changed_when:
-        - output.stdout|length > 0
-        - output.stdout != "\r\n"
+    # Python isn't installed by default on ubuntu so we need
+    # to do that with the raw command before.
+    - name: Ensure Python is installed
+      package:
+        name: python-is-python3
+        state: present
       when: islandora_distro|default('') is match("ubuntu/")
 
-    # Manually gather facts once python is installed
-    - name: gather facts
+    # Manually gather facts once Python is installed.
+    - name: Gather facts
       setup:
 
-    # Include OS specific variables (like PHP stuff)
-    - name: include OS specific variables
-      include_vars: "vars/{{ ansible_os_family }}.yml"
+    # Include OS specific variables.
+    - name: Include OS specific variables
+      include_vars:
+        file: "vars/{{ ansible_os_family }}.yml"
 
-    # also need to make sure aptitude is installed for the apt
+    - name: Get Ubuntu distribution codename
+      command: lsb_release -cs
+      register: lsb_release_result
+      changed_when: false
+
+    # We need to make sure aptitude is installed for the apt
     # commands in ansible.
-    - name: install aptitude
+    - name: Ensure aptitude is installed.
       apt:
         name: aptitude
         state: present
-        update_cache: yes
+        update_cache: true
       when: ansible_os_family == "Debian"
 
-    # install some packages we would like on every server
-    - name: install extra packages ubuntu
+    # Install some packages we would like on every server.
+    - name: Ensure extra packages are installed
       package:
         name: "{{ item }}"
         state: present
-      with_items: "{{ islandora_extra_ubuntu_packages }}"
+      loop: "{{ islandora_extra_ubuntu_packages }}"
       when: ansible_os_family == "Debian"
 
-    - name: Get Imagemagick
+    - name: Check if ImageMagick is already installed
+      stat:
+        path: /usr/local/bin/magick
+      register: imagemagick_installed
+
+    - name: Clone ImageMagick git repo
       git:
         repo: https://github.com/ImageMagick/ImageMagick.git
         dest: /opt/imagemagick
         version: 7.1.0-61
-        force: yes
+      when: not imagemagick_installed.stat.exists
+
+    - name: Check if Makefile exists
+      stat:
+        path: /opt/imagemagick/Makefile
+      register: imagemagick_makefile
+      when: not imagemagick_installed.stat.exists
 
     - name: Configure ImageMagick
       command: "./configure --disable-shared --with-jp2=yes --with-openjp2=yes --with-png=yes"
       args:
         chdir: "/opt/imagemagick"
+      when: >
+        not imagemagick_installed.stat.exists and
+        (imagemagick_makefile is defined and not imagemagick_makefile.stat.exists)
 
     - name: Make and install ImageMagick
       shell: "make -j {{ ansible_processor_vcpus }} && make install && ldconfig"
       args:
         chdir: "/opt/imagemagick"
+      when: not imagemagick_installed.stat.exists
 
-    - name: Redis setup
-      shell: 'curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg; echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list'
-
-    - name: Install Redis
+    - name: Ensure Redis is installed
       package:
-        name: redis
+        name: redis-server
         state: present
+      when: "'gamma' in inventory_hostname or ansible_virtualization_type == 'virtualbox'"

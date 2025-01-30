@@ -6,7 +6,9 @@
     dest: "{{ tomcat_home }}/webapps/fits.war"
     owner: "{{ fits_user }}"
     group: "{{ fits_group }}"
-    checksum: "{{fits_ws_md5sum}}"
+    checksum: "{{  fits_ws_md5sum  }}"
+    force: no
   retries: 5
   register: result
   until: result is succeeded
+  changed_when: result.changed

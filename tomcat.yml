@@ -1,7 +1,8 @@
 ---
 
-- hosts: tomcat
-  become: yes
+- name: Setup, configure, and install Tomcat, fcrepo, ActiveMQ, and FITS
+  hosts: tomcat
+  become: true
 
   roles:
     - role: geerlingguy.java

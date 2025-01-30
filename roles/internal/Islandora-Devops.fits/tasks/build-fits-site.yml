@@ -1,3 +1,5 @@
+---
+
 - name: Create Apache config for CrayFits
   blockinfile:
     path: "{{ httpd_conf_directory }}/conf-available/CrayFits.conf"
@@ -22,10 +24,13 @@
     path: "{{ crayfits_home }}"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
+    state: directory
 
 - name: "Get git config global safe directories dir"
-  shell: "git config --global --get-all safe.directory || echo ''"
+  command: "git config --global --get-all safe.directory"
   register: "__git_config_global_safe_dir"
+  changed_when: false
+  ignore_errors: true
 
 - name: "Set Fixity source directory as git safe dir"
   command: "git config --global --add safe.directory {{ crayfits_home }}/CrayFits"
@@ -37,7 +42,8 @@
     repo: https://github.com/yorkulibraries/CrayFits.git
     dest: "{{ crayfits_home }}/CrayFits"
     version: no-flysystem
-    force: yes
+    update: true
+    force: false
 
 - name: Change CrayFits directory ownership, group and permissions
   file:
@@ -54,7 +60,7 @@
   become_user: "{{ crayfish_user }}"
 
 
-- name: restart apache
+- name: Reload Apache
   service:
     name: "{{ apache_service }}"
-    state: restarted
+    state: reloaded

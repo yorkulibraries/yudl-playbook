@@ -1,9 +1,28 @@
 ---
 
-- hosts: webserver
-  become: yes
+- name: Setup, configure, and install Apache, PHP, git, composer, drush, Drupal, and OpenSeadragon
+  hosts: webserver
+  become: true
 
   pre_tasks:
+    - name: Check if Drush is already installed
+      stat:
+        path: /var/www/html/drupal/vendor/bin/drush
+      register: drush_installed
+
+    - name: Check if Drupal Redis Service is already setup
+      stat:
+        path: /var/www/html/drupal/web/sites/default/redis.services.yml
+      register: drupal_redis_services
+
+    - name: Validate required variables
+      assert:
+        that:
+          - drupal_db_name is defined
+          - drupal_db_user is defined
+          - drupal_db_password is defined
+        fail_msg: "One or more required variables (drupal_db_name, drupal_db_user, drupal_db_password) are missing."
+
     - name: Create Drupal DB (mysql)
       mysql_db:
         name: "{{ drupal_db_name }}"
@@ -23,15 +42,28 @@
   environment:
     COMPOSER_MEMORY_LIMIT: -1
 
+  handlers:
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Restart PHP-FPM
+      service:
+        name: php-fpm
+        state: restarted
+
   roles:
     - geerlingguy.apache
     - geerlingguy.php-versions
     - geerlingguy.php
     - geerlingguy.php-mysql
     - geerlingguy.git
-    - geerlingguy.composer
+    - role: geerlingguy.composer
+      when: not drush_installed.stat.exists
     - geerlingguy.drush
-    - geerlingguy.drupal
+    - role: geerlingguy.drupal
+      when: not drupal_redis_services.stat.exists
     - perms_fix
     - Islandora-Devops.drupal-openseadragon
     - webserver_app

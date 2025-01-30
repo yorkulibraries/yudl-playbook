@@ -1,7 +1,18 @@
 ---
 
+- name: Ensure /var/www/html exists
+  file:
+    path: /var/www/html
+    state: directory
+    mode: "0755"
+
+- name: Check if index.html exists
+  stat:
+    path: /var/www/html/index.html
+  register: index_html
+
 - name: Torch the default index.html
   file:
     state: absent
     path: /var/www/html/index.html
-
+  when: index_html.stat.exists

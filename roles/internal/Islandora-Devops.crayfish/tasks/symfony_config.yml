@@ -5,7 +5,10 @@
 - name: Verify/Create Symfony config directories
   file:
     state: directory
-    dest: '{{ crayfish_install_dir }}/{{ crayfish_loop }}/config/{{ item_path.path }}'
+    path: '{{ crayfish_install_dir }}/{{ crayfish_loop }}/config/{{ item_path.path }}'
+    mode: "0755"
+    owner: "{{ crayfish_user }}"
+    group: "{{ crayfish_user }}"
   with_filetree: '../templates/{{ crayfish_loop }}'
   loop_control:
     loop_var: 'item_path'
@@ -14,7 +17,10 @@
 - name: Template Symfony config files
   template:
     src: '{{ item_path.src }}'
-    dest: '{{ crayfish_install_dir }}/{{ crayfish_loop }}/config/{% if item_path.path.endswith(".j2") %}{{ item_path.path[:-3] }}{% else %}{{ item_path.path }}{% endif %}'
+    dest: '{{ crayfish_install_dir }}/{{ crayfish_loop }}/config/{{ item_path.path | regex_replace(".j2$", "") }}'
+    mode: "0644"
+    owner: "{{ crayfish_user }}"
+    group: "{{ crayfish_user }}"
   with_filetree: '../templates/{{ crayfish_loop }}'
   loop_control:
     loop_var: item_path

@@ -1,7 +1,19 @@
 ---
 
+- name: Set drush_path if not defined
+  set_fact:
+    drush_path: "{{ drush_path | default('/var/www/html/drupal/vendor/bin/drush') }}"
+
+- name: Fail if drush_path is not defined
+  fail:
+    msg: "The 'drush_path' variable is not defined. Please provide a valid path to Drush."
+  when: drush_path is not defined
+
 - name: Add Drupal Redis Service
-  shell: "cp /var/www/html/drupal/web/modules/contrib/redis/example.services.yml /var/www/html/drupal/web/sites/default/redis.services.yml"
+  copy:
+    src: /var/www/html/drupal/web/modules/contrib/redis/example.services.yml
+    dest: /var/www/html/drupal/web/sites/default/redis.services.yml
+    remote_src: true
 
 - name: Trusted Host Settings
   blockinfile:
@@ -28,19 +40,23 @@
     path: "{{ drupal_trusted_hosts_file }}"
     marker: // {mark} ANSIBLE MANAGED BLOCK
 
+- name: Gather list of installed modules
+  command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
+  register: installed_modules
+  changed_when: false
+
 - name: Uninstall core search module
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y pm-uninstall search"
-  register: uninstall_search
-  changed_when: "'successfully uninstalled' in uninstall_search.stdout"
+  when: "(installed_modules.stdout|from_json).search.status == 'Enabled'"
 
 - name: Set permissions on the public files directory
   file:
-    recurse: yes
+    recurse: true
     state: directory
     path: "{{ drupal_public_filesystem }}"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0775
+    mode: "0775"
 
 - name: Create drupal configs directory.
   file:
@@ -48,7 +64,7 @@
     path: "{{ webserver_app_drupal_config_path }}"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0744
+    mode: "0744"
 
 - name: Copy ldap_authentication.settings.yml
   template:
@@ -56,7 +72,7 @@
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_authentication.settings.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0440
+    mode: "0440"
   when: env == "production"
 
 - name: Copy ldap_servers.server.pydirectory.yml
@@ -65,7 +81,7 @@
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_servers.server.pydirectory.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0440
+    mode: "0440"
   when: env == "production"
 
 - name: Copy ldap_servers.settings.yml
@@ -74,7 +90,7 @@
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_servers.settings.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0440
+    mode: "0440"
   when: env == "production"
 
 - name: Copy ldap_user.settings.yml
@@ -83,37 +99,52 @@
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults/config/install/ldap_user.settings.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: 0440
+    mode: "0440"
   when: env == "production"
 
-- name: Import features # noqa 301
+- name: Check if features are already imported
+  command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
+  register: imported_features
+  changed_when: false
+  ignore_errors: true
+
+- name: Import features
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults"
+  when: >
+    (features_imported is defined and
+    ('islandora_core_feature' not in features_imported or
+     'islandora_defaults' not in features_imported))
 
-- name: Enable EVA views # noqa 301
+- name: Check if EVA views are enabled
+  command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
+  register: enabled_modules
+  changed_when: false
+
+- name: Enable EVA views
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y ven display_media"
+  when: "(installed_modules.stdout|from_json).eva.status != 'Enabled'"
 
-# pdf.js library
-- name: ensure pdf.js directory exists
+- name: Ensure pdf.js directory exists
   file:
     path: "{{ drupal_external_libraries_directory }}/pdf.js"
     state: directory
-    mode: 0754
+    mode: "0754"
 
 - name: Unarchive pdf.js library
   unarchive:
     src: "https://github.com/mozilla/pdf.js/releases/download/v2.14.305/pdfjs-2.14.305-dist.zip"
     dest: "{{ drupal_external_libraries_directory }}/pdf.js"
     creates: "{{ drupal_external_libraries_directory }}/pdf.js/build"
-    remote_src: yes
+    remote_src: true
 
 - name: Set permissions on libraries so we don't get a FORBIDDEN error for pdf.js
   file:
     path: "{{ drupal_core_path }}/libraries"
     state: directory
-    recurse: yes
+    recurse: true
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-    mode: '1755'
+    mode: "1755"
 
 - name: Add project's /vendor/bin to $PATH (ubuntu)
   lineinfile:

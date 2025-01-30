@@ -1,3 +1,12 @@
+---
+
+- name: Ensure fcrepo configs directory exists
+  file:
+    path: "{{ fcrepo_home_dir }}/configs"
+    state: directory
+    owner: "{{ fcrepo_user }}"
+    group: "{{ fcrepo_user }}"
+
 - name: Copy fedora activemq configuration
   template:
     src: "{{ fcrepo_activemq_template }}"

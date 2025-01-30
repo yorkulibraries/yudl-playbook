@@ -16,18 +16,29 @@ $virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "Y
 # Use 'islandora/8' if you just want to download a ready to run VM.
 $vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "ubuntu/focal64")
 
+# Build the base box, defaults to install a machine with the existing one.
+$buildBaseBox=ENV.fetch("YUDL_BUILD_BASE", "false").to_s.downcase == "true"
+
 # vagrant is the main user
 $vagrantUser = "vagrant"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
-    v.name = "YUDL Ansible"
+    if $buildBaseBox
+      v.name = "YUDL Base Box"
+    else
+      v.name = "YUDL Dev Sandbox"
+    end
   end
 
   config.vm.hostname = $hostname
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = $vagrantBox
+  if $buildBaseBox
+    config.vm.box = $vagrantBox
+  else
+    config.vm.box = "yorkulibraries/yudl-base"
+  end
 
   # Configure home directory
   home_dir = "/home/" + $vagrantUser
@@ -66,6 +77,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
       ansible.extra_vars = {
         "islandora_distro" => $vagrantBox,
+        "yudl_build_base_box" => $buildBaseBox,
         "env" => "dev"
       }
     end

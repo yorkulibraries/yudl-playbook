@@ -7,7 +7,9 @@
 - name: Define tomcat_home
   set_fact:
     tomcat_home: "{{ __tomcat_home }}"
-  when: tomcat_home is not defined
+  when:
+    - tomcat_home is not defined
+    - __tomcat_home is defined
 
 - name: Define tomcat_version
   set_fact:

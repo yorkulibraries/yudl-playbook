@@ -6,12 +6,32 @@
     state: present
   with_items: "{{ crayfish_packages }}"
 
+- name: Ensure Crayfish directory exists and has correct ownership
+  file:
+    path: "{{ crayfish_install_dir }}"
+    state: directory
+    owner: "{{ crayfish_user }}"
+    group: "{{ crayfish_user }}"
+    mode: "0755"
+  become: true
+
 - name: Install crayfish code
   git:
     repo: https://github.com/yorkulibraries/Crayfish.git
     dest: "{{ crayfish_install_dir }}"
     version: "{{ crayfish_version_tag }}"
-    force: yes
+    force: true
+  become: true
+  become_user: "{{ crayfish_user }}"
+
+- name: Add Crayfish directory to Git's safe directory list
+  command: >
+    git config --local --add safe.directory {{ crayfish_install_dir }}
+  args:
+    chdir: "{{ crayfish_install_dir }}"
+  become: true
+  become_user: "{{ crayfish_user }}"
+  when: crayfish_install_dir is defined
 
 - name: Set permissions on Crayfish directory
   file:
@@ -58,7 +78,7 @@
     state: directory
     owner: "{{ crayfish_user }}"
     group: "{{ crayfish_user }}"
-    mode: 0775
+    mode: "0775"
 
 - name: Install crayfish httpd config file
   template:

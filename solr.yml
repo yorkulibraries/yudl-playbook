@@ -1,7 +1,8 @@
 ---
 
-- hosts: solr
-  become: yes
+- name: Setup, configure, and install Solr
+  hosts: solr
+  become: true
   any_errors_fatal: true
 
   roles:
@@ -15,41 +16,48 @@
 
   tasks:
 
+    - name: Check if Kakadu library path is in ldconfig cache
+      command: ldconfig -p | grep /opt/kakadu/lib/Linux-x86-64
+      register: ldconfig_check
+      changed_when: false
+      ignore_errors: true
+      when: env == "production"
+
     - name: ldconfig kakadu
       command: "ldconfig /opt/kakadu/lib/Linux-x86-64"
-      when: env == "production"
+      when: env == "production" and ldconfig_check.rc != 0
 
     - name: Make tmp dir for solr config
       file:
         path: /tmp/solr_config
         state: directory
-        mode: 0700
+        mode: "0700"
       tags: solr
 
-    - name: Unarchive solr config
+    - name: Unarchive Solr config
       unarchive:
         src: http://{{ hostvars[groups['webserver'][0]].ansible_host }}:{{ apache_listen_port }}/solr_config.zip
         dest: /tmp/solr_config
-        remote_src: yes
+        remote_src: true
       tags: solr
 
-    - name: Get solr config files to copy
+    - name: Get Solr config files to copy
       command: "find /tmp/solr_config -type f"
       register: files_to_copy
       changed_when: false
       until: files_to_copy is not failed
       retries: 5
-      ignore_errors: yes
+      ignore_errors: true
       tags: solr
 
-    - name: Copy solr config files
+    - name: Copy Solr config files
       copy:
         src: "{{ item }}"
         dest: "{{ solr_instance_conf_path }}"
         owner: "{{ solr_user }}"
         group: "{{ solr_user }}"
-        mode: 0744
-        remote_src: True
+        mode: "0744"
+        remote_src: true
       with_items:
         - "{{ files_to_copy.stdout_lines }}"
       tags: solr
@@ -68,15 +76,15 @@
       uri:
         url: http://{{ hostvars[groups['solr'][0]].ansible_host  }}:8983/solr/{{ solr_cores[0] }}/select?q=warm
         method: GET
-        return_content: yes
-        status_code: [200,412]
+        return_content: true
+        status_code: [200, 412]
       register: solr_webpage
       until: solr_webpage.status == 200
       retries: 20
       delay: 3
       tags: solr
 
-    - name: tomcat9 restart tomcat9
+    - name: Restart tomcat9
       service:
         name: tomcat9
         state: restarted

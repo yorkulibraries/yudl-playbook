@@ -1,8 +1,15 @@
 ---
 
-- name: create cantaloupe cache dir
+- name: Check if Cantaloupe cache directory exists
+  stat:
+    path: "{{ cantaloupe_FilesystemCache_pathname }}"
+  register: cantaloupe_cache_dir
+
+- name: Create cantaloupe cache dir
   file:
     state: directory
     path: "{{ cantaloupe_FilesystemCache_pathname }}"
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
+    mode: "0755"
+  when: not cantaloupe_cache_dir.stat.exists

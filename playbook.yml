@@ -1,14 +1,33 @@
 ---
 
 - import_playbook: bootstrap.yml
+  when: yudl_build_base_box | bool or env == "production"
   tags:
     - bootstrap
+
 - import_playbook: database.yml
+  when: yudl_build_base_box | bool or env == "production"
+
 - import_playbook: webserver.yml
+  when: yudl_build_base_box | bool or env == "production"
+
 - import_playbook: crayfish.yml
+  when: yudl_build_base_box | bool or env == "production"
+
 - import_playbook: solr.yml
+  when: yudl_build_base_box | bool or env == "production"
+
 - import_playbook: tomcat.yml
+  when: yudl_build_base_box | bool or env == "production"
+
 - import_playbook: certbot.yml
+  when: yudl_build_base_box | bool or env == "production"
+
 - import_playbook: alpaca.yml
-- import_playbook: post-install.yml
-- import_playbook: install-york-theme.yml
+  when: yudl_build_base_box | bool or env == "production"
+
+- import_playbook: yudl-configuration.yml
+  when: not yudl_build_base_box | bool or env == "production"
+
+- import_playbook: yudl-theme.yml
+  when: not yudl_build_base_box | bool or env == "production"

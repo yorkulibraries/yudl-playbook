@@ -1,10 +1,16 @@
 ---
 
 - name: Use drush_path if defined
-  set_fact: openseadragon_drush_path="{{ drush_path }}"
-  when: drush_path != ''
+  set_fact: openseadragon_drush_path="{{ drush_path | default(openseadragon_drush_path) }}"
+  when: drush_path | default('') != ''
+
+- name: Check if OpenSeadragon is already installed
+  stat:
+    path: "{{ openseadragon_composer_root }}/web/modules/contrib/openseadragon"
+  register: openseadragon_installed
 
 - include_tasks: install.yml
+  when: not openseadragon_installed.stat.exists
   tags:
     - openseadragon
     - openseadragon-install
