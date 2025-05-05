@@ -37,7 +37,7 @@
         state: present
 
   vars:
-    php_version: "8.1"
+    php_version: "8.3"
 
   environment:
     COMPOSER_MEMORY_LIMIT: -1
