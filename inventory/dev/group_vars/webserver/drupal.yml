@@ -61,6 +61,9 @@ drupal_composer_dependencies:
   - "drupal/views_infinite_scroll:^2.0"
   - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.2"
   - "discoverygarden/dgi_actions"
+  - "drupal/eca:^2.1"
+  - "drupal/group_action:^1.2"
+  - "drupal/bpmn_io:^2.0"
 drupal_composer_project_package: "drupal/recommended-project:^10.1"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -147,6 +150,12 @@ drupal_enable_modules:
   - metatag_twitter_cards
   - dgi_actions
   - dgi_actions_handle
+  - group_action
+  - eca
+  - eca_base
+  - bpmn_io
+  - eca_user
+  - eca_misc
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
