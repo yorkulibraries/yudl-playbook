@@ -59,7 +59,7 @@ drupal_composer_dependencies:
   - "predis/predis"
   - "drupal/redis"
   - "drupal/views_infinite_scroll:^2.0"
-  - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.2"
+  - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.4"
   - "discoverygarden/dgi_actions"
   - "drupal/eca:^2.1"
   - "drupal/group_action:^1.2"
