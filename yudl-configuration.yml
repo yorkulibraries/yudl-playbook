@@ -91,6 +91,32 @@
         force: false
       when: not islandora_workbench_exists.stat.exists
 
+    - name: Replace requests_cache with pinned version
+      replace:
+        path: /opt/islandora_workbench/setup.py
+        regexp: '"requests_cache"'
+        replace: '"requests_cache<1.0"'
+
+    - name: Replace typing-extensions with pinned version
+      replace:
+        path: /opt/islandora_workbench/setup.py
+        regexp: '"typing-extensions"'
+        replace: '"typing-extensions<4.6.0"'
+
+    - name: Add cattrs with pinned version
+      lineinfile:
+        path: /opt/islandora_workbench/setup.py
+        insertafter: '        "typing-extensions<4.6.0",'
+        line: '        "cattrs<23.1",'
+        state: present
+
+    - name: Add exceptiongroup with pinned version
+      lineinfile:
+        path: /opt/islandora_workbench/setup.py
+        insertafter: '        "typing-extensions<4.6.0",'
+        line: '        "exceptiongroup<1.1.0",'
+        state: present
+
     - name: Ensure ruamel.yaml.clib<=0.2.6 is in install_requires
       lineinfile:
         path: /opt/islandora_workbench/setup.py
