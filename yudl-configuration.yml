@@ -330,3 +330,21 @@
     - name: Add Creators menu item
       command: >
          {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
+
+    - name: Check if Islandora Mirador is already installed with composer
+      stat:
+        path: "/var/www/html/drupal/web/modules/contrib/islandora_mirador"
+      register: islandora_mirador_installed
+
+    - name: Install Islandora Mirador
+      composer:
+        command: require
+        arguments: "drupal/islandora_mirador"
+        working_dir: "/var/www/html/drupal"
+      when: not islandora_mirador_installed.stat.exists
+
+    - name: Enable Islandora Mirador
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_mirador"
+
+    - name: Import Islandora Mirador tags
+      command: "{{ drush_path }} --root {{ drupal_core_path }} migrate:import islandora_mirador_tags"

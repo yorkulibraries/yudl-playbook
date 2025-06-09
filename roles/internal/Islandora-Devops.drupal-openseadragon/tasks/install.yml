@@ -10,7 +10,7 @@
 
 - name: Check if OpenSeadragon is already installed with composer
   stat:
-    path: "{{ openseadragon_composer_root }}/vendor/openseadragon"
+    path: "{{ openseadragon_composer_root }}/web/modules/contrib/openseadragon"
   register: openseadragon_composer_installed
 
 - name: Install OpenSeadragon with composer
