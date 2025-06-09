@@ -55,28 +55,10 @@
         force: false
       when: not jquery_ui_slider_pips_exists.stat.exists
 
-    - name: Check if Islandora PREMIS exists
-      stat:
-        path: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
-      register: islandora_premis_exists
-
-    - name: Get Islandora PREMIS
-      git:
-        repo: https://github.com/ruebot/islandora_premis.git
-        dest: "{{ drupal_core_path }}/modules/contrib/islandora_premis"
-        version: d10
-        force: false
-      when: not islandora_premis_exists.stat.exists
-
     - name: Check if a module is enabled
       command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=json"
       register: modules_enabled
       changed_when: false
-
-    - name: Enable Islandora PREMIS
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_premis"
-      when: >
-        'islandora_premis' not in (modules_enabled.stdout | from_json)
 
     - name: Check if Islandora Workbench exists
       stat:
