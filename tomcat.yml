@@ -4,6 +4,9 @@
   hosts: tomcat
   become: true
 
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
   roles:
     - role: geerlingguy.java
       when: "ansible_os_family == 'Debian'"

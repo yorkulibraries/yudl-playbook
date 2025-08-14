@@ -8,5 +8,5 @@ media_use_tid: 3|5
 log_file_path: /opt/workbench/logs/sample-paged.log
 paged_content_sequence_seprator: "-"
 paged_content_from_directories: true
-paged_content_page_model_tid: 15
+paged_content_page_model_tid: "15"
 delete_tmp_upload: true

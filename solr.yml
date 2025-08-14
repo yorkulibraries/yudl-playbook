@@ -5,6 +5,9 @@
   become: true
   any_errors_fatal: true
 
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
   roles:
     - role: geerlingguy.java
       when: "ansible_os_family == 'Debian'"
@@ -84,8 +87,8 @@
       delay: 3
       tags: solr
 
-    - name: Restart tomcat9
+    - name: Restart tomcat10
       service:
-        name: tomcat9
+        name: tomcat10
         state: restarted
       when: "'gamma' in inventory_hostname"

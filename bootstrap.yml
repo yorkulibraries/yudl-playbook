@@ -6,13 +6,13 @@
   gather_facts: false
 
   vars:
-    ansible_python_interpreter: /usr/bin/python
+    ansible_python_interpreter: /usr/bin/python3
 
   tasks:
     # Python isn't installed by default on ubuntu so we need
     # to do that with the raw command before.
     - name: Ensure Python is installed
-      raw: "test -e /usr/bin/python || (apt update; apt install -y python-is-python3;)"
+      raw: "test -e /usr/bin/python || (apt update; apt install -y python3;)"
       register: output
       changed_when:
         - output.stdout != ""

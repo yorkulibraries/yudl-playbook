@@ -9,6 +9,7 @@
     webserver_app_user: "www-data"
     vagrant_user: "vagrant"
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
+    ansible_python_interpreter: /usr/bin/python3
 
   tasks:
     - name: Remove Drush Launcher version of Drush
@@ -69,51 +70,29 @@
       git:
         repo: https://github.com/mjordan/islandora_workbench.git
         dest: "/opt/islandora_workbench"
-        version: ad6c9546d785d296a0b12695231b36a1dae994a5
+        version: main
         force: false
       when: not islandora_workbench_exists.stat.exists
 
-    - name: Replace requests_cache with pinned version
-      replace:
-        path: /opt/islandora_workbench/setup.py
-        regexp: '"requests_cache"'
-        replace: '"requests_cache<1.0"'
-
-    - name: Replace typing-extensions with pinned version
-      replace:
-        path: /opt/islandora_workbench/setup.py
-        regexp: '"typing-extensions"'
-        replace: '"typing-extensions<4.6.0"'
-
-    - name: Add cattrs with pinned version
-      lineinfile:
-        path: /opt/islandora_workbench/setup.py
-        insertafter: '        "typing-extensions<4.6.0",'
-        line: '        "cattrs<23.1",'
-        state: present
-
-    - name: Add exceptiongroup with pinned version
-      lineinfile:
-        path: /opt/islandora_workbench/setup.py
-        insertafter: '        "typing-extensions<4.6.0",'
-        line: '        "exceptiongroup<1.1.0",'
-        state: present
-
-    - name: Ensure ruamel.yaml.clib<=0.2.6 is in install_requires
-      lineinfile:
-        path: /opt/islandora_workbench/setup.py
-        insertafter: 'install_requires=\['
-        line: '        "ruamel.yaml.clib<=0.2.6",'
-        state: present
-
-    - name: Check if Islandora Workbench dependencies have been installed
+    - name: Check if Islandora Workbench venv exists
       stat:
-        path: "/opt/islandora_workbench/dist"
-      register: islandora_workbench_dependencies
+        path: "/opt/islandora_workbench/venv"
+      register: islandora_workbench_venv
 
-    - name: Install Islandora Workbench dependencies
-      shell: "cd /opt/islandora_workbench; python setup.py install"
-      when: not islandora_workbench_dependencies.stat.exists
+    - name: Ensure venv is installed
+      package:
+        name: python3-venv
+        state: present
+
+    - name: Create virtual environment for Islandora Workbench
+      command: python3 -m venv /opt/islandora_workbench/venv
+      when: not islandora_workbench_venv.stat.exists
+
+    - name: Install Islandora Workbench into venv
+      command: /opt/islandora_workbench/venv/bin/pip install .
+      args:
+        chdir: /opt/islandora_workbench
+      when: not islandora_workbench_venv.stat.exists
 
     - name: Create workbench env
       file:
@@ -311,12 +290,12 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
 
     - name: Add YUDL collections via islandora workbench
-      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
+      command: "/opt/islandora_workbench/venv/bin/python /opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
       with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
 
     - name: Add sample objects via islandora workbench
-      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
-      with_items: ["paged", "single", "collection-image", "contact_categories"]
+      command: "/opt/islandora_workbench/venv/bin/python /opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
+      with_items: ["single", "paged", "collection-image", "contact_categories"]
       when: not env == "production"
 
     - name: Add Locations menu item

@@ -6,6 +6,7 @@
 
   vars:
     php_version: "8.3"
+    ansible_python_interpreter: /usr/bin/python3
 
   roles:
     - geerlingguy.apache

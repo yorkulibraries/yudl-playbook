@@ -5,14 +5,14 @@
     path: "{{ tomcat_home }}/conf/catalina.properties"
     regexp: "^fits.home="
     line: "fits.home={{ fits_install_symlink }}"
-  notify: restart tomcat9
+  notify: restart tomcat10
 
 - name: Set shared.loader in catalina.properties
   lineinfile:
     path: "{{ tomcat_home }}/conf/catalina.properties"
     regexp: "^shared.loader="
     line: 'shared.loader=${fits.home}/lib/*.jar'
-  notify: restart tomcat9
+  notify: restart tomcat10
 
 - name: Check if FITS has finished coming back up
   stat:
@@ -34,4 +34,4 @@
   template:
     src: fits-service.properties.j2
     dest: "{{ tomcat_home }}/webapps/fits/WEB-INF/classes/fits-service.properties"
-  notify: restart tomcat9
+  notify: restart tomcat10

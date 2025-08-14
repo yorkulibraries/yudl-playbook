@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -f "/usr/libexec/tomcat9/tomcat-locate-java.sh" ]; then
-  . /usr/libexec/tomcat9/tomcat-locate-java.sh
+if [ -f "/usr/libexec/tomcat10/tomcat-locate-java.sh" ]; then
+  . /usr/libexec/tomcat10/tomcat-locate-java.sh
 fi
 if [ -z "$JAVA_HOME" ]; then
   echo "Cannot locate JAVA, please define JAVA_HOME."

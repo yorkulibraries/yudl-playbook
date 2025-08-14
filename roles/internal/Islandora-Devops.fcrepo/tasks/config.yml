@@ -13,7 +13,7 @@
     dest: "{{ fcrepo_home_dir }}/configs/activemq.xml"
     owner: "{{ fcrepo_user }}"
     group: "{{ fcrepo_user }}"
-  notify: restart tomcat9
+  notify: restart tomcat10
 
 # ADDED by dbernstein
 - name: Template out allowed external content paths
@@ -22,4 +22,4 @@
     dest: "{{ fcrepo_home_dir }}/configs/allowed-external-content.txt"
     owner: "{{ fcrepo_user }}"
     group: "{{ fcrepo_user }}"
-  notify: restart tomcat9
+  notify: restart tomcat10

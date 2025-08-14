@@ -3,14 +3,14 @@
 - name: Gather service facts
   service_facts:
 
-- name: Install tomcat9
+- name: Install tomcat10
   apt:
     name: "{{ item }}"
     state: present
     cache_valid_time: 3600
   with_items: "{{ tomcat_packages }}"
 
-- name: Install tomcat9 admin
+- name: Install tomcat10 admin
   apt:
     name: "{{ item }}"
     state: present
@@ -18,10 +18,10 @@
   with_items: "{{ tomcat_admin_packages }}"
   when: tomcat_admin_install
 
-- name: Start tomcat9
+- name: Start tomcat10
   service:
-    name: tomcat9
+    name: tomcat10
     state: started
   when: >
-    'tomcat9.service' in ansible_facts.services and
-    not ansible_facts.services['tomcat9.service'].state == 'running'
+    'tomcat10.service' in ansible_facts.services and
+    not ansible_facts.services['tomcat10.service'].state == 'running'

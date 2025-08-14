@@ -56,22 +56,22 @@
     mode: "2775"
   when: not cantaloupe_log_dir.stat.exists
 
-- name: Template systemd Tomcat9 service
+- name: Template systemd Tomcat10 service
   template:
-    src: tomcat9.service.j2
-    dest: /etc/systemd/system/tomcat9.service
+    src: tomcat10.service.j2
+    dest: /etc/systemd/system/tomcat10.service
   when: env == "dev"
 
 - name: Template systemd Tomcat9 service (beta)
   template:
-    src: tomcat9.beta.service.j2
-    dest: /etc/systemd/system/tomcat9.service
+    src: tomcat10.beta.service.j2
+    dest: /etc/systemd/system/tomcat10.service
   when: "'beta' in inventory_hostname"
 
 - name: Template systemd Tomcat9 service (gamma)
   template:
-    src: tomcat9.gamma.service.j2
-    dest: /etc/systemd/system/tomcat9.service
+    src: tomcat10.gamma.service.j2
+    dest: /etc/systemd/system/tomcat10.service
   when: "'gamma' in inventory_hostname"
 
 - name: Reload systemd services

@@ -4,21 +4,21 @@ fcrepo_syn_user: tomcat
 
 fits_user: tomcat
 fits_group: tomcat
-fits_log_path: /var/log/tomcat9
+fits_log_path: /var/log/tomcat10
 fits_install_symlink: /opt/fits
 fits_max_upload_file_size_MB: 4000
 fits_max_request_size_MB: 4000
 fit_max_in_memory_file_size_MB: 4
 
-tomcat_home: /var/lib/tomcat9
+tomcat_home: /var/lib/tomcat10
 
 tomcat_packages:
-  - tomcat9
+  - tomcat10
   - libopenjp2-tools
 tomcat_admin_packages:
-  - tomcat9-admin
+  - tomcat10-admin
 
-tomcat_service_name: tomcat9
+tomcat_service_name: tomcat10
 
 tomcat_server_user: tomcat
 tomcat_server_group: tomcat

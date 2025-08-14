@@ -98,3 +98,9 @@ vagrant package --output yudl-base.box            # Shut down the base box VM an
 ```
 
 The base box can be versioned and released via [HashiCorp](https://portal.cloud.hashicorp.com/vagrant/discover/yorkulibraries/yudl-base).
+
+### Testing a base box:
+
+```bash
+export YUDL_LOCAL_BASE_BOX=redmine-4201.box; YUDL_BUILD_BASE=false; vagrant up
+```

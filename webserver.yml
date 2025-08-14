@@ -38,6 +38,7 @@
 
   vars:
     php_version: "8.3"
+    ansible_python_interpreter: /usr/bin/python3
 
   environment:
     COMPOSER_MEMORY_LIMIT: -1

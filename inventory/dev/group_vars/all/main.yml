@@ -1,7 +1,7 @@
 ---
 
 # Change selinux status to permissive
-disable_selinux: yes
+disable_selinux: true
 
 islandora_extra_ubuntu_packages:
   - wget
@@ -29,7 +29,7 @@ islandora_extra_ubuntu_packages:
   - libjpeg-turbo8-dev
   - libjpeg8-dev
   - libtiff5-dev
-  - libtiffxx5
+  - libtiffxx6
   - libexif-dev
   - zlib1g-dev
   - ffmpeg

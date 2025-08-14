@@ -14,10 +14,13 @@ $virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "Y
 # Available boxes are 'islandora/8', ubuntu/bionic64' and 'centos/7'
 # Use 'ubuntu/bionic64' or 'centos/7' to build a dev environment from scratch.
 # Use 'islandora/8' if you just want to download a ready to run VM.
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "ubuntu/jammy64")
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "cloud-image/ubuntu-24.04")
 
 # Build the base box, defaults to install a machine with the existing one.
 $buildBaseBox=ENV.fetch("YUDL_BUILD_BASE", "false").to_s.downcase == "true"
+
+# Use local box for testing.
+$localBaseBox = ENV.fetch("YUDL_LOCAL_BASE_BOX", "")
 
 # vagrant is the main user
 $vagrantUser = "vagrant"
@@ -37,7 +40,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if $buildBaseBox
     config.vm.box = $vagrantBox
   else
-    config.vm.box = "yorkulibraries/yudl-base"
+    if !$localBaseBox.empty?
+      # Use local box file.
+      config.vm.box = "yudl-base-local"
+      config.vm.box_url = "file://#{$localBaseBox}"
+    else
+      config.vm.box = "yorkulibraries/yudl-base"
+    end
   end
 
   # Configure home directory
