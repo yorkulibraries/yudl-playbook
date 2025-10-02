@@ -1,0 +1,4 @@
+scyllaridae_version_tag: 1.0.0
+
+scyllaridae_install_dir: /opt/scyllaridae
+scyllaridae_log_directory: /var/log/islandora

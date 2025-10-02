@@ -1,0 +1,38 @@
+---
+
+- name: Template property and service file
+  template:
+    src: "{{ item }}"
+    dest: "{{ scyllaridae_install_dir }}/{% if item.endswith('.j2') %}{{ item[:-3] }}{% else %}{{ item }}{% endif %}"
+  with_items:
+    - "scyllaridae.yml.j2"
+    - "scyllaridae.service.j2"
+
+- name: Check if service file has changed
+  stat:
+    path: /etc/systemd/system/scyllaridae.service
+  register: scyllaridae_service_stat
+
+- name: Set scyllaridae_service_changed fact
+  set_fact:
+    scyllaridae_service_changed: "{{ not scyllaridae_service_stat.stat.exists or scyllaridae_service_stat.stat.mtime < ansible_date_time.epoch | float }}"
+
+- name: Link service file
+  file:
+    src: "{{ scyllaridae_install_dir }}/scyllaridae.service"
+    dest: "/etc/systemd/system/alpaca.service"
+    owner: "{{ alpaca_user }}"
+    group: "{{ alpaca_group }}"
+    state: link
+
+- name: Pause while things sort themselves out
+  pause:
+    seconds: 15
+
+- name: Reload systemd and start scyllaridae
+  systemd:
+    daemon-reload: true
+    enabled: true
+    state: restarted
+    name: scyllaridae
+  when: scyllaridae_service_changed

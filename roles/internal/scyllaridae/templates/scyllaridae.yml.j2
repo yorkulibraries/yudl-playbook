@@ -1,0 +1,30 @@
+# Example configuration
+allowedMimeTypes:
+  - "image/*"
+  - "application/pdf"
+
+cmdByMimeType:
+  "image/*":
+    cmd: "convert"
+    args:
+      - "-"
+      - "-thumbnail"
+      - "300x300>"
+      - "-quality"
+      - "80"
+      - "jpg:-"
+
+  "application/pdf":
+    cmd: "convert"
+    args:
+      - "-density"
+      - "150"
+      - "pdf:-[0]"
+      - "-thumbnail"
+      - "300x300>"
+      - "jpg:-"
+
+  default:
+    cmd: "echo"
+    args:
+      - "Unsupported file type"

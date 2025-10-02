@@ -1,0 +1,28 @@
+[Unit]
+Description=scyllaridae File Processing Service
+Documentation=https://lehigh-university-libraries.github.io/scyllaridae/
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=scyllaridae
+Group=scyllaridae
+WorkingDirectory={{ scyllaridae_install_dir }}
+ExecStart={{ scyllaridae_install_dir }}/scyllaridae
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+Restart=always
+RestartSec=5
+
+# Environment variables
+Environment=SCYLLARIDAE_PORT=8080
+Environment=SCYLLARIDAE_LOG_LEVEL=INFO
+Environment=SCYLLARIDAE_YML_PATH={{scyllaridae_install_dir}}/scyllaridae.yml
+
+# Add additional security settings and Resource limits as desired
+
+[Install]
+WantedBy=multi-user.target
