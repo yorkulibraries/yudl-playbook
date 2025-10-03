@@ -18,8 +18,8 @@ Restart=always
 RestartSec=5
 
 # Environment variables
-Environment=SCYLLARIDAE_PORT=8080
-Environment=SCYLLARIDAE_LOG_LEVEL=INFO
+Environment=SCYLLARIDAE_PORT={{ scyllaridae_port }}
+Environment=SCYLLARIDAE_LOG_LEVEL={{ scyllaridae_log_level }}
 Environment=SCYLLARIDAE_YML_PATH={{scyllaridae_install_dir}}/scyllaridae.yml
 
 # Add additional security settings and Resource limits as desired
