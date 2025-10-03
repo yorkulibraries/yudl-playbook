@@ -20,9 +20,9 @@
 - name: Link service file
   file:
     src: "{{ scyllaridae_install_dir }}/scyllaridae.service"
-    dest: "/etc/systemd/system/alpaca.service"
-    owner: "{{ alpaca_user }}"
-    group: "{{ alpaca_group }}"
+    dest: "/etc/systemd/system/scyllaridae.service"
+    owner: "{{ scyllaridae_user }}"
+    group: "{{ scyllaridae_user }}"
     state: link
 
 - name: Pause while things sort themselves out

@@ -14,7 +14,7 @@
 
 - name: Define scyllaridae_directory
   set_fact:
-    scyllaridae_directory: "{{ __scyllaridae_directory }}"
+    scyllaridae_directory: "{{ scyllaridae_install_dir }}"
   when: scyllaridae_directory is not defined
   tags:
     - scyllaridae
