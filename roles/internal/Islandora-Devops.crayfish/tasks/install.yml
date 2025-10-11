@@ -1,10 +1,5 @@
 ---
 
-- name: Install requisite packages
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ crayfish_packages }}"
 
 - name: Ensure Crayfish directory exists and has correct ownership
   file:

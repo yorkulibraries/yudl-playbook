@@ -8,8 +8,5 @@ crayfish_log_directory: "/var/log/islandora"
 
 fits_log_path: /var/log/tomcat9
 
-crayfish_houdini_log_level: ERROR
-crayfish_hypercube_log_level: ERROR
 crayfish_milliner_log_level: ERROR
-crayfish_homarus_log_level: ERROR
 crayfish_recast_log_level: ERROR
