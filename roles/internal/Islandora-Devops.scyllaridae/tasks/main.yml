@@ -14,6 +14,14 @@
     - scyllaridae
     - scyllaridae-install
 
+- name: Define apache_user
+  set_fact:
+    apache_user: "{{ __apache_user }}"
+  when: apache_user is not defined
+  tags:
+    - scyllaridae
+    - scyllaridae-install
+
 - name: Define OS-specific scyllaridae_packages to install
   set_fact:
     scyllaridae_packages: "{{ __scyllaridae_packages }}"

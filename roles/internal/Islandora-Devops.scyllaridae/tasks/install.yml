@@ -108,6 +108,6 @@
     path: "{{ scyllaridae_log_directory }}"
     state: directory
     owner: "{{ scyllaridae_user }}"
-    group: "{{ scyllaridae_user }}"
+    group: "{{ apache_user }}"
     mode: "0775"
   become: true

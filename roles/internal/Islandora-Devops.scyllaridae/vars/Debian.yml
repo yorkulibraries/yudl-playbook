@@ -1,5 +1,6 @@
 ---
 __scyllaridae_user: scyllaridae
+__apache_user: www-data
 __scyllaridae_packages:
   - tesseract-ocr
   - tesseract-ocr-fra
