@@ -98,3 +98,12 @@ vagrant package --output yudl-base.box            # Shut down the base box VM an
 ```
 
 The base box can be versioned and released via [HashiCorp](https://portal.cloud.hashicorp.com/vagrant/discover/yorkulibraries/yudl-base).
+
+### Using base box locally:
+
+```bash
+YUDL_BUILD_BASE=true; YUDL_BUILD_BASE=true; vagrant up
+vagrant package --output yudl-base.box
+vagrant box add -f yudl-base-local yudl-base.box
+vagrant destroy -f; YUDL_USE_LOCAL_BOX=true; YUDL_BUILD_BASE=false; vagrant up
+```
