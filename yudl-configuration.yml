@@ -291,6 +291,15 @@
         state: restarted
       when: env == "production"
 
+    - name: Add YUDL collections via islandora workbench
+      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
+      with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
+
+    - name: Add sample objects via islandora workbench
+      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
+      with_items: ["paged", "single", "collection-image", "contact_categories"]
+      when: not env == "production"
+
     - name: Check if YUDL Default Content exists
       stat:
         path: "{{ drupal_core_path }}/modules/contrib/yudl_default_content"
@@ -309,15 +318,6 @@
 
     - name: Set YUDL front page
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
-
-    - name: Add YUDL collections via islandora workbench
-      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
-      with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
-
-    - name: Add sample objects via islandora workbench
-      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
-      with_items: ["paged", "single", "collection-image", "contact_categories"]
-      when: not env == "production"
 
     - name: Add Locations menu item
       command: >
