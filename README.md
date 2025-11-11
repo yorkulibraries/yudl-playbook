@@ -27,6 +27,10 @@ export ISLANDORA_VAGRANT_MEMORY=5040
 1. `ansible-galaxy install -r requirements.yml`
 2. `vagrant up`
 
+Depending on whether or not you've built a base box, you may need to explicitly set some environment variables and build the machine like this:
+
+* `vagrant destroy; YUDL_BUILD_BASE=false; YUDL_USE_LOCAL_BOX=FALSE; vagrant box update; YUDL_BUILD_BASE=false vagrant up`
+
 ### PRODUCTION
 
 1. `ansible-galaxy install -r requirements.yml`
