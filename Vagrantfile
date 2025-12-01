@@ -18,6 +18,8 @@ $vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "cloud-image/ubuntu-24.04")
 
 # Build the base box, defaults to install a machine with the existing one.
 $buildBaseBox=ENV.fetch("YUDL_BUILD_BASE", "false").to_s.downcase == "true"
+$useLocalBox = ENV.fetch("YUDL_USE_LOCAL_BOX", "false").to_s.downcase == "true"
+$localBoxName = ENV.fetch("YUDL_LOCAL_BOX_NAME", "yudl-base-local")
 
 # Use local box for testing.
 $localBaseBox = ENV.fetch("YUDL_LOCAL_BASE_BOX", "")
@@ -39,6 +41,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   if $buildBaseBox
     config.vm.box = $vagrantBox
+  elsif $useLocalBox
+    config.vm.box = $localBoxName
   else
     if !$localBaseBox.empty?
       # Use local box file.
@@ -62,6 +66,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 8983, host: 8983 # Solr
   config.vm.network :forwarded_port, guest: 8161, host: 8161 # Activemq
   config.vm.network :forwarded_port, guest: 8081, host: 8081 # API-X
+  config.vm.network :forwarded_port, guest: 8888, host: 8888 # scyllaridae (Hypercube)
+  config.vm.network :forwarded_port, guest: 8889, host: 8889 # scyllaridae (Homarus)
+  config.vm.network :forwarded_port, guest: 8890, host: 8890 # scyllaridae (Houdini)
+  config.vm.network :forwarded_port, guest: 8891, host: 8891 # scyllaridae (Crayfits)
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", $memory]

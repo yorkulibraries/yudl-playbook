@@ -1,0 +1,16 @@
+scyllaridae_version: "5.1.0"
+
+scyllaridae_services:
+  - Crayfits
+  - Hypercube
+  - Homarus
+  - Houdini
+
+# scyllaridae_services_config is now defined in group_vars/all/scyllaridae.yml
+# This allows other roles (like alpaca) to access the same port configuration
+
+scyllaridae_install_dir: /opt/scyllaridae
+
+scyllaridae_log_directory: /var/log/islandora
+
+scyllaridae_log_level: info

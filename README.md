@@ -27,6 +27,10 @@ export ISLANDORA_VAGRANT_MEMORY=5040
 1. `ansible-galaxy install -r requirements.yml`
 2. `vagrant up`
 
+Depending on whether or not you've built a base box, you may need to explicitly set some environment variables and build the machine like this:
+
+* `vagrant destroy; YUDL_BUILD_BASE=false; YUDL_USE_LOCAL_BOX=FALSE; vagrant box update; YUDL_BUILD_BASE=false vagrant up`
+
 ### PRODUCTION
 
 1. `ansible-galaxy install -r requirements.yml`
@@ -99,8 +103,11 @@ vagrant package --output yudl-base.box            # Shut down the base box VM an
 
 The base box can be versioned and released via [HashiCorp](https://portal.cloud.hashicorp.com/vagrant/discover/yorkulibraries/yudl-base).
 
-### Testing a base box:
+### Using base box locally:
 
 ```bash
-export YUDL_LOCAL_BASE_BOX=redmine-4201.box; YUDL_BUILD_BASE=false; vagrant up
+YUDL_BUILD_BASE=true; YUDL_BUILD_BASE=true; vagrant up
+vagrant package --output yudl-base.box
+vagrant box add -f yudl-base-local yudl-base.box
+vagrant destroy -f; YUDL_USE_LOCAL_BOX=true; YUDL_BUILD_BASE=false; vagrant up
 ```
