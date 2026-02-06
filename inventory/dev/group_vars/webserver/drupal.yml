@@ -156,6 +156,7 @@ drupal_enable_modules:
   - bpmn_io
   - eca_user
   - eca_misc
+  - yudl_oembed
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
