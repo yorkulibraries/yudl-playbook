@@ -19,6 +19,7 @@ $vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "ubuntu/jammy64")
 # Build the base box, defaults to install a machine with the existing one.
 $buildBaseBox=ENV.fetch("YUDL_BUILD_BASE", "false").to_s.downcase == "true"
 $useLocalBox = ENV.fetch("YUDL_USE_LOCAL_BOX", "false").to_s.downcase == "true"
+$buildAll = ENV.fetch("YUDL_BUILD_ALL", "false").to_s.downcase == "true"
 $localBoxName = ENV.fetch("YUDL_LOCAL_BOX_NAME", "yudl-base-local")
 
 # vagrant is the main user
@@ -86,6 +87,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.extra_vars = {
         "islandora_distro" => $vagrantBox,
         "yudl_build_base_box" => $buildBaseBox,
+        "yudl_build_all" => $buildAll,
         "env" => "dev"
       }
     end

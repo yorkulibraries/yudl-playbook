@@ -31,6 +31,10 @@ Depending on whether or not you've built a base box, you may need to explicitly 
 
 * `vagrant destroy; YUDL_BUILD_BASE=false; YUDL_USE_LOCAL_BOX=FALSE; vagrant box update; YUDL_BUILD_BASE=false vagrant up`
 
+If you want to build it all:
+
+* `vagrant destroy; YUDL_BUILD_ALL=true; vagrant box update; YUDL_BUILD_ALL=true; vagrant up`
+
 ### PRODUCTION
 
 1. `ansible-galaxy install -r requirements.yml`
