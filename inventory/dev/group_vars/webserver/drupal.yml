@@ -40,7 +40,6 @@ drupal_composer_dependencies:
   - "drupal/views_bulk_operations:^4.2"
   - "drupal/views_bulk_edit:^3.0"
   - "drupal/search_api_autocomplete:^1.8"
-  - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
   - "drupal/eu_cookie_compliance:^1.24"
   - "drupal/views_block_area:^1.0@beta"
@@ -104,7 +103,6 @@ drupal_enable_modules:
   - islandora_defaults
   - islandora_fits
   - islandora_iiif
-  - islandora_repository_reports
   - islandora_repository_reports_activemq
   - islandora_repository_reports_log
   - islandora_repository_reports_matomo
