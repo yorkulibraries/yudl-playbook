@@ -121,7 +121,6 @@ drupal_enable_modules:
   - layout_discovery
   - media_library
   - admin_toolbar_tools
-  - admin_toolbar_links_access_filter
   - term_condition
   - addtoany
   - twig_tweak
