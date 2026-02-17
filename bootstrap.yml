@@ -17,7 +17,10 @@
       changed_when:
         - output.stdout != ""
         - output.stdout != "\r\n"
-      when: "yudl_build_base_box | bool == True and islandora_distro|default('') is match('ubuntu/')"
+      when: >
+        (yudl_build_base_box | bool
+        or yudl_build_all | default(false) | bool)
+        and islandora_distro | default('') is match('ubuntu/')
 
     # Manually gather facts once Python is installed.
     - name: Gather facts

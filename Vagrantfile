@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = $hostname
 
   # Every Vagrant virtual environment requires a box to build off of.
-  if $buildBaseBox
+  if $buildBaseBox or $buildAll
     config.vm.box = $vagrantBox
   elsif $useLocalBox
     config.vm.box = $localBoxName
