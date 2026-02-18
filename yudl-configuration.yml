@@ -224,25 +224,73 @@
     - name: Set admin only account creation
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset user.settings register admin_only"
 
-    - name: Add admin users
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Check if admin users exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ admin_user }}"
+      register: admin_user_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: admin_user
 
-    - name: Add islandora admin users
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Create missing admin users
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ admin_user }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: admin_user
+        index_var: admin_user_index
+      when: admin_user_lookup.results[admin_user_index].rc != 0
+
+    - name: Ensure islandora admin users exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_admin_user }}"
+      register: islandora_admin_user_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_admin_user
 
-    - name: Add islandora creator users
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Create missing islandora admin users
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_admin_user }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_admin_user
+        index_var: islandora_admin_user_index
+      when: islandora_admin_user_lookup.results[islandora_admin_user_index].rc != 0
+
+    - name: Ensure islandora creator users exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_creator_user }}"
+      register: islandora_creator_user_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_creator_user
 
-    - name: Add past islandora creators
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Create missing islandora creator users
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_creator_user }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_creator_user
+        index_var: islandora_creator_user_index
+      when: islandora_creator_user_lookup.results[islandora_creator_user_index].rc != 0
+
+    - name: Ensure past islandora creators exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ past_islandora_creator }}"
+      register: past_islandora_creator_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop_control:
+        loop_var: past_islandora_creator
 
-    - name: Add admin users to admin role
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} urol administrator {{ item }}"
-      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+    - name: Create missing past islandora creators
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ past_islandora_creator }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop_control:
+        loop_var: past_islandora_creator
+        index_var: past_islandora_creator_index
+      when: past_islandora_creator_lookup.results[past_islandora_creator_index].rc != 0
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
