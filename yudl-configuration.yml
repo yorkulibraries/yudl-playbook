@@ -150,6 +150,9 @@
         dest: /opt/workbench/data
       when: env != "production"
 
+    - name: Remove unnecessary view
+      command: "{{ drush_path }} --root {{ drupal_core_path }} config:delete views.view.article_mods_mapping"
+
     - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
 
