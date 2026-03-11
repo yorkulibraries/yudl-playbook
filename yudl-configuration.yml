@@ -322,6 +322,10 @@
     - name: Set YUDL front page
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
 
+    - name: Add Map menu item
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/map"],"menu_name" => "main","weight" => 1])->save();'
+
     - name: Add Locations menu item
       command: >
         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
