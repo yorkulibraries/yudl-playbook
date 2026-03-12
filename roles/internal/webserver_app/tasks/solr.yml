@@ -1,22 +1,24 @@
 ---
 
 - name: Check current Solr server host
-  command: "{{ drush_path }} --root {{ drupal_core_path }} config-get search_api.server.default_solr_server backend_config.connector_config.host"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} config-get search_api.server.default_solr_server backend_config.connector_config.host --format=string"
   register: current_search_api_host
   changed_when: false
+  failed_when: false
 
 - name: Set default Solr server host from hostvars
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set search_api.server.default_solr_server backend_config.connector_config.host {{ hostvars[groups['solr'][0]].ansible_host }}"
-  when: current_search_api_host.stdout != hostvars[groups['solr'][0]].ansible_host
+  when: current_search_api_host.rc != 0 or (current_search_api_host.stdout | trim) != hostvars[groups['solr'][0]].ansible_host
 
 - name: Check current Solr server core
-  command: "{{ drush_path }} --root {{ drupal_core_path }} config-get search_api.server.default_solr_server backend_config.connector_config.core"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} config-get search_api.server.default_solr_server backend_config.connector_config.core --format=string"
   register: current_search_api_core
   changed_when: false
+  failed_when: false
 
 - name: Set default Solr server to point to first core
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y config-set search_api.server.default_solr_server backend_config.connector_config.core {{ solr_cores[0] }}"
-  when: current_search_api_core.stdout != solr_cores[0]
+  when: current_search_api_core.rc != 0 or (current_search_api_core.stdout | trim) != solr_cores[0]
 
 - name: Check if solr_config.zip exists
   stat:

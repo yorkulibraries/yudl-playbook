@@ -20,7 +20,6 @@ islandora_extra_ubuntu_packages:
   - libopenjp2-tools
   - libopenjp2-7
   - libopenjp2-7-dev
-  - libjpeg62-dev
   - libtiff-dev
   - libpng-dev
   - libwebp-dev
@@ -34,7 +33,6 @@ islandora_extra_ubuntu_packages:
   - zlib1g-dev
   - ffmpeg
   - graphicsmagick
-  - libturbojpeg-dev
 
 islandora_jwt_expiry: "1 week"
 

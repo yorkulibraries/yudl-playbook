@@ -43,12 +43,23 @@
       when: ansible_os_family == "Debian"
 
     # Install some packages we would like on every server.
-    - name: Ensure extra packages are installed
-      package:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ islandora_extra_ubuntu_packages }}"
+    - name: Gather installed package facts
+      package_facts:
+        manager: auto
       when: ansible_os_family == "Debian"
+
+    - name: Compute missing extra packages
+      set_fact:
+        missing_islandora_extra_packages: "{{ islandora_extra_ubuntu_packages | difference(ansible_facts.packages.keys() | list) }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure extra packages are installed
+      apt:
+        name: "{{ missing_islandora_extra_packages }}"
+        state: present
+      when:
+        - ansible_os_family == "Debian"
+        - missing_islandora_extra_packages | length > 0
 
     - name: Check if ImageMagick is already installed
       stat:

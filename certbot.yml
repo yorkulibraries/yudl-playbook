@@ -39,7 +39,7 @@
       when: env == "production" and not certbot_certificate_exists.stat.exists
 
     - name: Certbot setup
-      command: certbot --apache certonly --agree-tos --email "{{ certbot_admin_email }}" --noninteractive -d "{{ drupal_domain }}"i
+      command: certbot --apache certonly --agree-tos --email "{{ certbot_admin_email }}" --noninteractive -d "{{ drupal_domain }}"
       args:
         creates: /etc/letsencrypt/live/{{ drupal_domain }}/fullchain.pem
       when: env == "production"

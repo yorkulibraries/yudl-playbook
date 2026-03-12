@@ -14,31 +14,114 @@
 
     - name: Check if yudl_drupal_theme exists
       stat:
-        path: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+        path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
       register: york_drupal_theme_exists
 
-    - name: Get york_drupal_theme
-      git:
-        repo: https://github.com/yorkulibraries/york_drupal_theme.git
-        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
-        version: main
-        force: true
-      when: not york_drupal_theme_exists.stat.exists
+    - name: Check yudl_drupal_theme filesystem type
+      command: "findmnt -n -T {{ drupal_core_path }}/themes/custom/yudl_drupal_theme -o FSTYPE"
+      register: york_theme_fstype
+      changed_when: false
+      failed_when: false
+
+    # - name: Get york_drupal_theme
+    #   git:
+    #     repo: https://github.com/yorkulibraries/york_drupal_theme.git
+    #     dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+    #     version: main
+    #     force: true
+    #   when: not york_drupal_theme_exists.stat.exists
+
+    - name: Sync local york_drupal_theme to server
+      synchronize:
+        src: "{{ playbook_dir }}/../yudl_drupal_theme/"
+        dest: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme/"
+        delete: true
+        recursive: true
+        rsync_opts:
+          - "--exclude=.git"
+          - "--exclude=.github"
+      register: york_theme_sync
+      when: "'vboxsf' not in (york_theme_fstype.stdout_lines | default([]))"
 
     - name: Chown york_drupal_theme
       file:
-        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+        dest: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
         mode: "0775"
         recurse: true
+      when: "'vboxsf' not in (york_theme_fstype.stdout_lines | default([]))"
+
+    - name: Detect existing collection search alter function
+      command: >
+        grep -q "function york_drupal_theme_form_views_exposed_form_alter"
+        "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme/york_drupal_theme.theme"
+      register: collection_search_function_exists
+      changed_when: false
+      failed_when: false
+
+    - name: Remove duplicate collection search snippet block
+      blockinfile:
+        path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme/york_drupal_theme.theme"
+        marker: "/* {mark} YUDL collection search form alter */"
+        state: absent
+      when: collection_search_function_exists.rc == 0
+      register: collection_search_snippet_cleanup
+
+    - name: Apply collection search form alter snippet
+      blockinfile:
+        path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme/york_drupal_theme.theme"
+        marker: "/* {mark} YUDL collection search form alter */"
+        insertafter: EOF
+        block: |
+          /**
+           * Force placeholder/class on collection search exposed form.
+           */
+          function york_drupal_theme_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+            if (!empty($form['#id']) && strpos($form['#id'], 'views-exposed-form-collection-search-block-1') === 0) {
+              if (isset($form['collection_search']) && is_array($form['collection_search'])) {
+                $form['collection_search']['#attributes']['placeholder'] = t('Search York University Digital Library');
+                $form['collection_search']['#attributes']['class'][] = 'form-control';
+                $form['collection_search']['#attributes']['class'][] = 'form-control-lg';
+                $form['collection_search']['#attributes']['class'][] = 'rounded-0';
+              }
+              if (isset($form['actions']['submit']['#attributes']['class'])) {
+                $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+              }
+            }
+          }
+      when: collection_search_function_exists.rc != 0
+      register: collection_search_snippet
+
+    - name: Gather enabled themes
+      command: "{{ drush_path }} --root={{ drupal_core_path }} pml --status=enabled --type=theme --format=json"
+      register: enabled_themes
+      changed_when: false
 
     - name: Enable york_drupal_theme
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y theme:enable york_drupal_theme"
+      when: "'york_drupal_theme' not in (enabled_themes.stdout | from_json)"
+      register: york_theme_enabled
+
+    - name: Read current default theme
+      command: "{{ drush_path }} --root={{ drupal_core_path }} cget system.theme default --format=string"
+      register: current_default_theme
+      changed_when: false
+      failed_when: false
 
     - name: Set york_drupal_theme default
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
+      when: >
+        current_default_theme.rc != 0 or
+        (current_default_theme.stdout | trim) != 'york_drupal_theme'
+      register: york_theme_defaulted
 
-    - name: Clear cache
+    - name: Clear cache when theme state changes
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y cr"
+      when: >
+        (york_theme_sync.changed | default(false)) or
+        (collection_search_snippet_cleanup.changed | default(false)) or
+        (collection_search_snippet.changed | default(false)) or
+        (york_theme_enabled.changed | default(false)) or
+        (york_theme_defaulted.changed | default(false))
