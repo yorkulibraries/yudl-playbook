@@ -33,6 +33,7 @@ islandora_extra_ubuntu_packages:
   - zlib1g-dev
   - ffmpeg
   - graphicsmagick
+  - libturbojpeg-dev
 
 islandora_jwt_expiry: "1 week"
 
