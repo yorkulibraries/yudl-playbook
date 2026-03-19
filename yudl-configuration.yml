@@ -11,17 +11,29 @@
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
 
   tasks:
-    - name: Remove Drush Launcher version of Drush
+    - name: Check current /usr/local/bin/drush target
+      stat:
+        path: /usr/local/bin/drush
+        follow: false
+      register: drush_bin
+
+    - name: Remove non-Drupal drush launcher
       file:
         path: /usr/local/bin/drush
         state: absent
+      when: >
+        drush_bin.stat.exists and
+        (
+          (not drush_bin.stat.islnk) or
+          drush_bin.stat.lnk_source != '/var/www/html/drupal/vendor/bin/drush'
+        )
 
     - name: Use Drupal version of Drush
       file:
         path: /usr/local/bin/drush
         src: /var/www/html/drupal/vendor/bin/drush
         state: link
-        force: false
+        force: true
 
     - name: Get current MySQL transaction isolation level
       mysql_query:
@@ -120,7 +132,6 @@
         path: "/opt/workbench/{{ item }}"
         owner: "{{ vagrant_user }}"
         group: "{{ vagrant_user }}"
-        recurse: true
         state: directory
       with_items: ["configs", "logs", "data"]
 
@@ -141,6 +152,12 @@
       with_items: ["paged", "single", "collection-image", "contact_categories"]
       when: env != "production"
 
+    - name: Check if sample data has already been downloaded
+      stat:
+        path: /opt/workbench/data/.sample_data_downloaded
+      register: sample_data_downloaded
+      when: env != "production"
+
     - name: Get sample data
       unarchive:
         remote_src: true
@@ -148,55 +165,209 @@
         owner: "{{ vagrant_user }}"
         group: "{{ vagrant_user }}"
         dest: /opt/workbench/data
-      when: env != "production"
+      when: env != "production" and not sample_data_downloaded.stat.exists
+
+    - name: Mark sample data as downloaded
+      file:
+        path: /opt/workbench/data/.sample_data_downloaded
+        state: touch
+        owner: "{{ vagrant_user }}"
+        group: "{{ vagrant_user }}"
+        mode: "0644"
+      when: env != "production" and not sample_data_downloaded.stat.exists
+
+    - name: Check admin fedoraAdmin role assignment
+      command: >
+        {{ drush_path }} --root {{ drupal_core_path }} sqlq
+        "SELECT 1 FROM user__roles ur JOIN users_field_data ufd ON ur.entity_id = ufd.uid WHERE ufd.name='admin' AND ur.roles_target_id='fedoraadmin' LIMIT 1;"
+      register: admin_fedoraadmin_role
+      failed_when: false
+      changed_when: false
 
     - name: Remove unnecessary view
       command: "{{ drush_path }} --root {{ drupal_core_path }} config:delete views.view.article_mods_mapping"
 
     - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
+      when: admin_fedoraadmin_role.stdout | trim != '1'
 
     # Set jsonld module to strip ?_format=jsonld
+    - name: Read JSONLD remove_jsonld_format setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget jsonld.settings remove_jsonld_format --format=string"
+      register: jsonld_remove_jsonld_format
+      changed_when: false
+      failed_when: false
+
     - name: Set JSONLD Config
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml jsonld.settings remove_jsonld_format {{ drupal_jsonld_remove_format }}"
+      when: >
+        ((jsonld_remove_jsonld_format.stdout | trim | lower) in ['1', 'true', 'yes', 'on']) !=
+        (drupal_jsonld_remove_format | bool)
+
+    - name: Read broker_url (PRODUCTION)
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget islandora.settings broker_url --format=string"
+      register: islandora_broker_url
+      changed_when: false
+      failed_when: false
+      when: env == "production"
 
     - name: Set broker_url (PRODUCTION)
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings broker_url 'tcp://10.0.0.16:61613'"
-      when: env == "production"
+      when: env == "production" and (islandora_broker_url.stdout | trim) != 'tcp://10.0.0.16:61613'
+
+    - name: Read JWT expiry setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget islandora.settings jwt_expiry --format=string"
+      register: islandora_jwt_expiry_current
+      changed_when: false
+      failed_when: false
 
     - name: Set JWT Expiry
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings jwt_expiry '{{ islandora_jwt_expiry }}'"
+      when: (islandora_jwt_expiry_current.stdout | trim) != (islandora_jwt_expiry | string)
+
+    - name: Read pseudo field bundles
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget islandora.settings gemini_pseudo_bundles.{{ gemini_index }} --format=string"
+      register: gemini_pseudo_bundles_current
+      changed_when: false
+      failed_when: false
+      loop: "{{ drupal_gemini_pseudo_bundles }}"
+      loop_control:
+        index_var: gemini_index
 
     - name: Set pseudo field bundles
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora.settings gemini_pseudo_bundles.{{ item.0 }} {{ item.1 }}"
-      with_indexed_items: "{{ drupal_gemini_pseudo_bundles }}"
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora.settings gemini_pseudo_bundles.{{ gemini_index }} {{ item }}"
+      loop: "{{ drupal_gemini_pseudo_bundles }}"
+      loop_control:
+        index_var: gemini_index
+      when: (gemini_pseudo_bundles_current.results[gemini_index].stdout | trim) != item
+
+    - name: Read media standalone_url setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget media.settings standalone_url --format=string"
+      register: media_standalone_url
+      changed_when: false
+      failed_when: false
 
     - name: Set media urls
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml media.settings standalone_url true"
+      when: (media_standalone_url.stdout | trim | lower) not in ['1', 'true', 'yes']
+
+    - name: Read iiif server setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget islandora_iiif.settings iiif_server --format=string"
+      register: islandora_iiif_server
+      changed_when: false
+      failed_when: false
 
     - name: Set iiif url
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml islandora_iiif.settings iiif_server {{ openseadragon_iiiv_server }}"
+      when: (islandora_iiif_server.stdout | trim) != (openseadragon_iiiv_server | string)
+
+    - name: Read iiif manifest view setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget openseadragon.settings manifest_view --format=string"
+      register: openseadragon_manifest_view
+      changed_when: false
+      failed_when: false
 
     - name: Set iiif manifest view
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings manifest_view iiif_manifest"
+      when: (openseadragon_manifest_view.stdout | trim) != 'iiif_manifest'
+
+    - name: Read OpenSeadragon showReferenceStrip setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget openseadragon.settings viewer_options.showReferenceStrip --format=string"
+      register: openseadragon_show_reference_strip
+      changed_when: false
+      failed_when: false
 
     - name: Set OpenSeadragon reference strip
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.showReferenceStrip true"
+      when: (openseadragon_show_reference_strip.stdout | trim | lower) not in ['1', 'true', 'yes']
+
+    - name: Read OpenSeadragon preserveViewport setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget openseadragon.settings viewer_options.preserveViewport --format=string"
+      register: openseadragon_preserve_viewport
+      changed_when: false
+      failed_when: false
 
     - name: Set OpenSeadragon viewport
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveViewport true"
+      when: (openseadragon_preserve_viewport.stdout | trim | lower) not in ['1', 'true', 'yes']
+
+    - name: Read OpenSeadragon preserveOverlays setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget openseadragon.settings viewer_options.preserveOverlays --format=string"
+      register: openseadragon_preserve_overlays
+      changed_when: false
+      failed_when: false
 
     - name: Set OpenSeadragon overlays
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveOverlays true"
+      when: (openseadragon_preserve_overlays.stdout | trim | lower) not in ['1', 'true', 'yes']
+
+    - name: Check Islandora tag migration marker
+      stat:
+        path: /opt/workbench/.migration_islandora_tags_complete
+      register: migration_islandora_tags_complete
 
     - name: Run Islandora migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_tags"
+      when: not migration_islandora_tags_complete.stat.exists
+
+    - name: Mark Islandora migration complete
+      file:
+        path: /opt/workbench/.migration_islandora_tags_complete
+        state: touch
+        mode: "0644"
+      when: not migration_islandora_tags_complete.stat.exists
+
+    - name: Check Islandora FITS migration marker
+      stat:
+        path: /opt/workbench/.migration_islandora_fits_tags_complete
+      register: migration_islandora_fits_tags_complete
 
     - name: Run Islandora FITS migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_fits_tags"
+      when: not migration_islandora_fits_tags_complete.stat.exists
+
+    - name: Mark Islandora FITS migration complete
+      file:
+        path: /opt/workbench/.migration_islandora_fits_tags_complete
+        state: touch
+        mode: "0644"
+      when: not migration_islandora_fits_tags_complete.stat.exists
+
+    - name: Check York migration marker
+      stat:
+        path: /opt/workbench/.migration_york_defaults_complete
+      register: migration_york_defaults_complete
 
     - name: Run York migration
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} --userid=1 mim islandora_defaults_00_tags,islandora_defaults_01_rights,islandora_defaults_02_access,islandora_defaults_03_languages,islandora_defaults_04_physical_form,islandora_defaults_05_genre,islandora_defaults_06_continent,islandora_defaults_07_country,islandora_defaults_08_province,islandora_defaults_09_region,islandora_defaults_10_county,islandora_defaults_11_city,islandora_defaults_12_city_section,islandora_defaults_13_corporate_body,islandora_defaults_14_person,islandora_defaults_15_subjects"
+      when: not migration_york_defaults_complete.stat.exists
+
+    - name: Mark York migration complete
+      file:
+        path: /opt/workbench/.migration_york_defaults_complete
+        state: touch
+        mode: "0644"
+      when: not migration_york_defaults_complete.stat.exists
+
+    - name: Read Islandora Group config
+      command: >
+        {{ drush_path }} --root {{ drupal_core_path }} -l localhost:{{ apache_listen_port }} cget islandora_group.config {{ item.key }} --format=string
+      register: islandora_group_config_current
+      changed_when: false
+      failed_when: false
+      loop:
+        - {key: "restricted", value: "islandora_access"}
+        - {key: "york_university", value: "islandora_access"}
+        - {key: "media-type-access-fields.audio", value: "field_access_terms"}
+        - {key: "media-type-access-fields.document", value: "field_access_terms"}
+        - {key: "media-type-access-fields.extracted_text", value: "field_access_terms"}
+        - {key: "media-type-access-fields.file", value: "field_access_terms"}
+        - {key: "media-type-access-fields.image", value: "field_access_terms"}
+        - {key: "media-type-access-fields.remote_video", value: "field_access_terms"}
+        - {key: "media-type-access-fields.video", value: "field_access_terms"}
+        - {key: "node-type-access-fields.islandora_object", value: "field_access_terms"}
+      loop_control:
+        index_var: islandora_group_config_index
 
     - name: Configure Islandora Groups
       command: >
@@ -212,40 +383,123 @@
         - {key: "media-type-access-fields.remote_video", value: "field_access_terms"}
         - {key: "media-type-access-fields.video", value: "field_access_terms"}
         - {key: "node-type-access-fields.islandora_object", value: "field_access_terms"}
+      loop_control:
+        index_var: islandora_group_config_index
+      when: (islandora_group_config_current.results[islandora_group_config_index].stdout | trim) != item.value
+
+    - name: Read video file extensions
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -l localhost:{{ apache_listen_port }} cget field.field.media.video.field_media_video_file settings.file_extensions --format=string"
+      register: media_video_file_extensions
+      changed_when: false
+      failed_when: false
 
     - name: Add mov to video formats
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset field.field.media.video.field_media_video_file settings.file_extensions 'mp4 mov'"
+      when: (media_video_file_extensions.stdout | trim) != 'mp4 mov'
+
+    - name: Read site email
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -l localhost:{{ apache_listen_port }} cget system.site mail --format=string"
+      register: system_site_mail
+      changed_when: false
+      failed_when: false
+      when: env == "production"
 
     - name: Set site email
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset system.site mail {{ certbot_admin_email }}"
+      when: >
+        env == "production" and
+        (system_site_mail.stdout | trim) != (certbot_admin_email | string)
+
+    - name: Read update notification emails
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -l localhost:{{ apache_listen_port }} cget update.settings notification.emails --format=string"
+      register: update_notification_emails
+      changed_when: false
+      failed_when: false
       when: env == "production"
 
     - name: Set update notifications email
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset update.settings notification.emails {{ certbot_admin_email }}"
-      when: env == "production"
+      when: >
+        env == "production" and
+        (certbot_admin_email | string) not in (update_notification_emails.stdout | trim)
+
+    - name: Read user registration setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -l localhost:{{ apache_listen_port }} cget user.settings register --format=string"
+      register: user_register_setting
+      changed_when: false
+      failed_when: false
 
     - name: Set admin only account creation
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset user.settings register admin_only"
+      when: (user_register_setting.stdout | trim) != 'admin_only'
 
-    - name: Add admin users
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Check if admin users exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ admin_user }}"
+      register: admin_user_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: admin_user
 
-    - name: Add islandora admin users
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Create missing admin users
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ admin_user }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: admin_user
+        index_var: admin_user_index
+      when: admin_user_lookup.results[admin_user_index].rc != 0
+
+    - name: Ensure islandora admin users exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_admin_user }}"
+      register: islandora_admin_user_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_admin_user
 
-    - name: Add islandora creator users
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Create missing islandora admin users
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_admin_user }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_admin_user
+        index_var: islandora_admin_user_index
+      when: islandora_admin_user_lookup.results[islandora_admin_user_index].rc != 0
+
+    - name: Ensure islandora creator users exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_creator_user }}"
+      register: islandora_creator_user_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_creator_user
 
-    - name: Add past islandora creators
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ item }}"
+    - name: Create missing islandora creator users
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_creator_user }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop_control:
+        loop_var: islandora_creator_user
+        index_var: islandora_creator_user_index
+      when: islandora_creator_user_lookup.results[islandora_creator_user_index].rc != 0
+
+    - name: Ensure past islandora creators exist
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ past_islandora_creator }}"
+      register: past_islandora_creator_lookup
+      failed_when: false
+      changed_when: false
       loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop_control:
+        loop_var: past_islandora_creator
 
-    - name: Add admin users to admin role
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} urol administrator {{ item }}"
-      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+    - name: Create missing past islandora creators
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ past_islandora_creator }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop_control:
+        loop_var: past_islandora_creator
+        index_var: past_islandora_creator_index
+      when: past_islandora_creator_lookup.results[past_islandora_creator_index].rc != 0
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
@@ -261,6 +515,12 @@
         mode: "0775"
         recurse: true
 
+    - name: Check yudl_defaults filesystem type
+      command: "findmnt -n -T {{ drupal_core_path }}/modules/contrib/yudl_defaults -o FSTYPE"
+      register: yudl_defaults_fstype
+      changed_when: false
+      failed_when: false
+
     - name: Chown yudl_defaults feature
       file:
         dest: "{{ drupal_core_path }}/modules/contrib/yudl_defaults"
@@ -269,6 +529,8 @@
         group: "{{ webserver_app_user }}"
         mode: "0775"
         recurse: true
+      when: >
+        'vboxsf' not in (yudl_defaults_fstype.stdout_lines | default([]))
 
     - name: Chown controlled access terms default configuration
       file:
@@ -291,36 +553,81 @@
     - name: Restart Apache
       service:
         name: apache2
-        state: restarted
+        state: started
       when: env == "production"
+
+    - name: Check YUDL collections import marker
+      stat:
+        path: /opt/workbench/.yudl_collections_import_complete
+      register: yudl_collections_import_complete
 
     - name: Add YUDL collections via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
       with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
+      when: not yudl_collections_import_complete.stat.exists
+
+    - name: Mark YUDL collections import complete
+      file:
+        path: /opt/workbench/.yudl_collections_import_complete
+        state: touch
+        mode: "0644"
+      when: not yudl_collections_import_complete.stat.exists
+
+    - name: Check sample objects import marker
+      stat:
+        path: /opt/workbench/.sample_objects_import_complete
+      register: sample_objects_import_complete
+      when: env != "production"
 
     - name: Add sample objects via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
       with_items: ["paged", "single", "collection-image", "contact_categories"]
-      when: not env == "production"
+      when: env != "production" and not sample_objects_import_complete.stat.exists
 
-    - name: Check if YUDL Default Content exists
-      stat:
-        path: "{{ drupal_core_path }}/modules/contrib/yudl_default_content"
-      register: yudl_default_content_exists
+    - name: Mark sample objects import complete
+      file:
+        path: /opt/workbench/.sample_objects_import_complete
+        state: touch
+        mode: "0644"
+      when: env != "production" and not sample_objects_import_complete.stat.exists
 
-    - name: Get YUDL Default Content
+    - name: Ensure YUDL Default Content code is present
       git:
         repo: https://github.com/yorkulibraries/yudl_default_content.git
         dest: "{{ drupal_core_path }}/modules/contrib/yudl_default_content"
         version: main
-        force: false
-      when: not yudl_default_content_exists.stat.exists
+        update: yes
+        force: true
+      register: yudl_default_content_code
+
+    - name: Rebuild Drupal cache after installing YUDL Default Content
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"
+      when: yudl_default_content_code.changed
+
+    - name: Check if YUDL Default Content module is enabled
+      command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=list"
+      register: enabled_modules_after_yudl_default_content
+      changed_when: false
 
     - name: Enable YUDL Default Content
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_default_content"
+      when: "'yudl_default_content' not in (enabled_modules_after_yudl_default_content.stdout_lines | default([]))"
+
+    - name: Read current front page setting
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget system.site page.front --format=string"
+      register: system_site_front_page
+      changed_when: false
+      failed_when: false
 
     - name: Set YUDL front page
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
+      when: (system_site_front_page.stdout | trim) != '/node/1'
+
+    - name: Check if Locations menu item exists
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Locations", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
+      register: locations_menu_item
+      changed_when: false
 
     - name: Add Map menu item
       command: >
@@ -329,14 +636,29 @@
     - name: Add Locations menu item
       command: >
         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
+      when: "'missing' in locations_menu_item.stdout"
+
+    - name: Check if Subjects menu item exists
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Subjects", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
+      register: subjects_menu_item
+      changed_when: false
 
     - name: Add Subjects menu item
       command: >
         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
+      when: "'missing' in subjects_menu_item.stdout"
+
+    - name: Check if Creators menu item exists
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Creators", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
+      register: creators_menu_item
+      changed_when: false
 
     - name: Add Creators menu item
       command: >
          {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
+      when: "'missing' in creators_menu_item.stdout"
 
     - name: Check if Islandora Mirador is already installed with composer
       stat:
@@ -350,8 +672,27 @@
         working_dir: "/var/www/html/drupal"
       when: not islandora_mirador_installed.stat.exists
 
+    - name: Check if Islandora Mirador module is enabled
+      command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=list"
+      register: enabled_modules_after_islandora_mirador
+      changed_when: false
+
     - name: Enable Islandora Mirador
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_mirador"
+      when: "'islandora_mirador' not in (enabled_modules_after_islandora_mirador.stdout_lines | default([]))"
+
+    - name: Check Islandora Mirador tags migration marker
+      stat:
+        path: /opt/workbench/.migration_islandora_mirador_tags_complete
+      register: migration_islandora_mirador_tags_complete
 
     - name: Import Islandora Mirador tags
       command: "{{ drush_path }} --root {{ drupal_core_path }} migrate:import islandora_mirador_tags"
+      when: not migration_islandora_mirador_tags_complete.stat.exists
+
+    - name: Mark Islandora Mirador tags migration complete
+      file:
+        path: /opt/workbench/.migration_islandora_mirador_tags_complete
+        state: touch
+        mode: "0644"
+      when: not migration_islandora_mirador_tags_complete.stat.exists

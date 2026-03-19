@@ -12,33 +12,57 @@
 
   tasks:
 
-    - name: Check if yudl_drupal_theme exists
-      stat:
-        path: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
-      register: york_drupal_theme_exists
-
-    - name: Get york_drupal_theme
-      git:
-        repo: https://github.com/yorkulibraries/york_drupal_theme.git
-        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
-        version: main
-        force: true
-      when: not york_drupal_theme_exists.stat.exists
-
-    - name: Chown york_drupal_theme
+    - name: Ensure york_drupal_theme directory exists
       file:
-        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
+        path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
         mode: "0775"
+
+    - name: Get york_drupal_theme
+      become_user: "{{ webserver_app_user }}"
+      git:
+        repo: https://github.com/yorkulibraries/york_drupal_theme.git
+        dest: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
+        version: main
+        update: true
+      register: york_theme_repo
+
+    - name: Chown york_drupal_theme
+      file:
+        dest: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
+        state: directory
+        owner: "{{ webserver_app_user }}"
+        group: "{{ webserver_app_user }}"
         recurse: true
+
+    - name: Gather enabled themes
+      command: "{{ drush_path }} --root={{ drupal_core_path }} pml --status=enabled --type=theme --format=json"
+      register: enabled_themes
+      changed_when: false
 
     - name: Enable york_drupal_theme
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y theme:enable york_drupal_theme"
+      when: "'york_drupal_theme' not in (enabled_themes.stdout | from_json)"
+      register: york_theme_enabled
+
+    - name: Read current default theme
+      command: "{{ drush_path }} --root={{ drupal_core_path }} cget system.theme default --format=string"
+      register: current_default_theme
+      changed_when: false
+      failed_when: false
 
     - name: Set york_drupal_theme default
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y cset system.theme default york_drupal_theme"
+      when: >
+        current_default_theme.rc != 0 or
+        (current_default_theme.stdout | trim) != 'york_drupal_theme'
+      register: york_theme_defaulted
 
-    - name: Clear cache
+    - name: Clear cache when theme state changes
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y cr"
+      when: >
+        (york_theme_repo.changed | default(false)) or
+        (york_theme_enabled.changed | default(false)) or
+        (york_theme_defaulted.changed | default(false))

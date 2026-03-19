@@ -13,11 +13,6 @@
   args:
     creates: "{{ activemq_install_root }}/activemq"
 
-- name: Remove jetty-realm.properties
-  file:
-    path: "{{ activemq_install_root }}/activemq/conf/jetty-realm.properties"
-    state: absent
-
 - name: Set ActiveMQ admin password
   template:
     src: "jetty-realm.properties.j2"

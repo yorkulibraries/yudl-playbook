@@ -17,10 +17,10 @@
   tasks:
 
     - name: Check if Kakadu library path is in ldconfig cache
-      command: ldconfig -p | grep /opt/kakadu/lib/Linux-x86-64
+      shell: ldconfig -p | grep -q /opt/kakadu/lib/Linux-x86-64
       register: ldconfig_check
       changed_when: false
-      ignore_errors: true
+      failed_when: false
       when: env == "production"
 
     - name: ldconfig kakadu
@@ -39,27 +39,37 @@
         src: http://{{ hostvars[groups['webserver'][0]].ansible_host }}:{{ apache_listen_port }}/solr_config.zip
         dest: /tmp/solr_config
         remote_src: true
+      changed_when: false
       tags: solr
 
     - name: Get Solr config files to copy
-      command: "find /tmp/solr_config -type f"
+      find:
+        paths: /tmp/solr_config
+        file_type: file
       register: files_to_copy
-      changed_when: false
-      until: files_to_copy is not failed
-      retries: 5
-      ignore_errors: true
       tags: solr
 
     - name: Copy Solr config files
       copy:
-        src: "{{ item }}"
+        src: "{{ item.path }}"
         dest: "{{ solr_instance_conf_path }}"
         owner: "{{ solr_user }}"
         group: "{{ solr_user }}"
         mode: "0744"
         remote_src: true
-      with_items:
-        - "{{ files_to_copy.stdout_lines }}"
+      loop: "{{ files_to_copy.files }}"
+      when: item.path | basename != 'solrcore.properties'
+      tags: solr
+
+    - name: Copy solrcore.properties if missing
+      copy:
+        src: /tmp/solr_config/solrcore.properties
+        dest: "{{ solr_instance_conf_path }}/solrcore.properties"
+        owner: "{{ solr_user }}"
+        group: "{{ solr_user }}"
+        mode: "0744"
+        remote_src: true
+        force: false
       tags: solr
 
     # https://www.drupal.org/project/search_api_solr/issues/3015993
@@ -84,8 +94,10 @@
       delay: 3
       tags: solr
 
-    - name: Restart tomcat9
+    - name: Ensure tomcat9 is running
       service:
         name: tomcat9
-        state: restarted
+        state: started
+        enabled: true
+      changed_when: false
       when: "'gamma' in inventory_hostname"

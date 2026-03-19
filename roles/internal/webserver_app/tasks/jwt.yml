@@ -40,16 +40,14 @@
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_groups"
     version: 2.x
 
-- name: Gather list of installed modules
-  command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
-  register: installed_modules
+- name: Gather list of enabled modules
+  command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=list"
+  register: enabled_modules
   changed_when: false
 
 - name: Enable YUDL Groups
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
-  when: >
-    'yudl_groups' not in (installed_modules.stdout | from_json) or
-    "(installed_modules.stdout|from_json).yudl_groups.status != 'Enabled'"
+  when: "'yudl_groups' not in (enabled_modules.stdout_lines | default([]))"
 
 ###
 # Install this here since we run into a composer wanting stable over dev issue.
@@ -61,9 +59,7 @@
 
 - name: Enable Islandora Group
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_group"
-  when: >
-    'islandora_group' not in (installed_modules.stdout | from_json) or
-    "(installed_modules.stdout|from_json).islandora_group.status != 'Enabled'"
+  when: "'islandora_group' not in (enabled_modules.stdout_lines | default([]))"
 
 - name: Get Group Solr
   git:
@@ -73,14 +69,48 @@
 
 - name: Enable Group Solr
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en group_solr"
-  when: >
-    'group_solr' not in (installed_modules.stdout | from_json) or
-    "(installed_modules.stdout|from_json).group_solr.status != 'Enabled'"
+  when: "'group_solr' not in (enabled_modules.stdout_lines | default([]))"
 ###
 
 - name: Import JWT Config Into Drupal
   command: "{{ drush_path }} --root {{ drupal_core_path }} config-import -y --partial --source={{ webserver_app_jwt_config_path }}"
   when: drupal_jwt_config.changed is defined and drupal_jwt_config.changed
 
+- name: Calculate hash of YUDL optional config source
+  shell: >
+    find /var/www/html/drupal/web/modules/contrib/yudl_defaults/config/optional
+    -type f -name '*.yml' -print0 |
+    sort -z |
+    xargs -0 sha256sum |
+    sha256sum |
+    awk '{print $1}'
+  register: yudl_optional_config_hash
+  changed_when: false
+
+- name: Check optional config hash marker
+  stat:
+    path: /var/www/html/drupal/.yudl_optional_config.sha256
+  register: yudl_optional_config_hash_marker
+
+- name: Read optional config hash marker
+  slurp:
+    path: /var/www/html/drupal/.yudl_optional_config.sha256
+  register: yudl_optional_config_hash_current
+  when: yudl_optional_config_hash_marker.stat.exists
+
+- name: Set current optional config hash fact
+  set_fact:
+    yudl_optional_config_hash_previous: "{{ (yudl_optional_config_hash_current.content | b64decode | trim) if yudl_optional_config_hash_marker.stat.exists else '' }}"
+
 - name: Import YUDL features moved to optional
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y cim --partial --source=/var/www/html/drupal/web/modules/contrib/yudl_defaults/config/optional"
+  when: yudl_optional_config_hash.stdout | trim != yudl_optional_config_hash_previous
+
+- name: Update optional config hash marker
+  copy:
+    dest: /var/www/html/drupal/.yudl_optional_config.sha256
+    content: "{{ yudl_optional_config_hash.stdout | trim }}\n"
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: "0644"
+  when: yudl_optional_config_hash.stdout | trim != yudl_optional_config_hash_previous

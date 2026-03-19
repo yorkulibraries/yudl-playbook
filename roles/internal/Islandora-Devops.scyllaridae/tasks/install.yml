@@ -23,12 +23,20 @@
     mode: "0755"
   become: true
 
+- name: Check if scyllaridae binary exists
+  stat:
+    path: "{{ scyllaridae_install_dir }}/scyllaridae"
+  register: scyllaridae_binary
+  become: true
+
 - name: Download scyllaridae tar
   get_url:
     url: "https://github.com/Islandora/scyllaridae/releases/download/{{ scyllaridae_version }}/scyllaridae_Linux_x86_64.tar.gz"
     dest: "/tmp/scyllaridae-{{ scyllaridae_version }}.tar.gz"
     mode: "0644"
+    force: false
   become: true
+  when: not scyllaridae_binary.stat.exists
 
 - name: Extract scyllaridae binary
   unarchive:
@@ -39,12 +47,14 @@
     group: "{{ scyllaridae_user }}"
     mode: "0755"
   become: true
+  when: not scyllaridae_binary.stat.exists
 
 - name: Clean up downloaded tar
   file:
     path: "/tmp/scyllaridae-{{ scyllaridae_version }}.tar.gz"
     state: absent
   become: true
+  when: not scyllaridae_binary.stat.exists
 
 - name: Create configuration directories for services
   file:
@@ -107,7 +117,7 @@
   file:
     path: "{{ scyllaridae_log_directory }}"
     state: directory
-    owner: "{{ scyllaridae_user }}"
+    owner: "{{ apache_user }}"
     group: "{{ apache_user }}"
     mode: "0775"
   become: true
