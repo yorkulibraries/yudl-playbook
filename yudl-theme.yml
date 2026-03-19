@@ -12,6 +12,14 @@
 
   tasks:
 
+    - name: Ensure york_drupal_theme directory exists
+      file:
+        path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
+        state: directory
+        owner: "{{ webserver_app_user }}"
+        group: "{{ webserver_app_user }}"
+        mode: "0775"
+
     - name: Get york_drupal_theme
       become_user: "{{ webserver_app_user }}"
       git:
