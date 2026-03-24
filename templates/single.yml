@@ -6,6 +6,7 @@ input_dir: /opt/workbench/data/single
 input_csv: 'https://docs.google.com/spreadsheets/d/1V_wP7tEKEp44F--rCTQ148K3y9X-YIZBCOysGjJWyEI/edit?usp=sharing'
 google_sheets_gid: 0
 media_use_tid: 3
+standalone_media_url: true
 id_field: file
 delete_tmp_upload: true
 log_file_path: /opt/workbench/logs/sample.log
