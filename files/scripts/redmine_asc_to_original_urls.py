@@ -16,7 +16,7 @@ from netrc import NetrcParseError, netrc
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin
+from urllib.parse import urlencode, urljoin
 from urllib.request import HTTPBasicAuthHandler, HTTPPasswordMgrWithDefaultRealm, Request, build_opener, urlopen
 
 
@@ -53,6 +53,20 @@ class LinkExtractor(HTMLParser):
 class Issue:
     issue_id: int
     description: str
+    journal_notes: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class IssueSummary:
+    issue_id: int
+    category_name: str | None
+    status_name: str | None
+
+
+@dataclass(frozen=True)
+class IssueStatus:
+    status_id: int
+    name: str
 
 
 class RedmineClient:
@@ -60,23 +74,134 @@ class RedmineClient:
         self.base_url = ensure_trailing_slash(base_url)
         self.api_key = api_key
         self.timeout = timeout
+        self._status_ids_by_name: dict[str, int] | None = None
 
     def get_issue(self, issue_id: int) -> Issue:
         payload = self._request_json(
             "GET",
-            f"{self.base_url}issues/{issue_id}.json",
+            f"{self.base_url}issues/{issue_id}.json?include=journals",
         )
         issue_data = payload.get("issue", {})
         description = issue_data.get("description") or ""
-        return Issue(issue_id=issue_id, description=description)
+        journals = issue_data.get("journals", [])
+        journal_notes: list[str] = []
+        if isinstance(journals, list):
+            for journal in journals:
+                if not isinstance(journal, dict):
+                    continue
+                notes = journal.get("notes")
+                if isinstance(notes, str) and notes:
+                    journal_notes.append(notes)
+        return Issue(
+            issue_id=issue_id,
+            description=description,
+            journal_notes=tuple(journal_notes),
+        )
 
-    def add_comment(self, issue_id: int, note: str) -> None:
+    def update_issue(self, issue_id: int, *, note: str | None = None, status_id: int | None = None) -> None:
+        issue_data: dict[str, object] = {}
+        if note is not None:
+            issue_data["notes"] = note
+        if status_id is not None:
+            issue_data["status_id"] = status_id
+        if not issue_data:
+            return
+
         self._request_json(
             "PUT",
             f"{self.base_url}issues/{issue_id}.json",
-            {"issue": {"notes": note}},
+            {"issue": issue_data},
             expect_json=False,
         )
+
+    def get_status_id(self, status_name: str) -> int:
+        if self._status_ids_by_name is None:
+            self._status_ids_by_name = {}
+            payload = self._request_json(
+                "GET",
+                f"{self.base_url}issue_statuses.json",
+            )
+            statuses = payload.get("issue_statuses", [])
+            if isinstance(statuses, list):
+                for item in statuses:
+                    if not isinstance(item, dict):
+                        continue
+                    status_id = item.get("id")
+                    name = item.get("name")
+                    if isinstance(status_id, int) and isinstance(name, str):
+                        self._status_ids_by_name[name.casefold()] = status_id
+
+        status_id = self._status_ids_by_name.get(status_name.casefold()) if self._status_ids_by_name else None
+        if status_id is None:
+            raise SafeIssueError(
+                "unable to resolve automatically",
+                f"Redmine status {status_name!r} was not found in /issue_statuses.json",
+            )
+        return status_id
+
+    def find_issue_ids(self, *, category_name: str, status_name: str) -> list[int]:
+        normalized_category = category_name.casefold()
+        normalized_status = status_name.casefold()
+        ticket_ids: list[int] = []
+
+        for issue in self.iter_issues():
+            if issue.category_name is None or issue.status_name is None:
+                continue
+            if issue.category_name.casefold() != normalized_category:
+                continue
+            if issue.status_name.casefold() != normalized_status:
+                continue
+            ticket_ids.append(issue.issue_id)
+
+        return ticket_ids
+
+    def iter_issues(self, *, page_size: int = 100) -> Iterable[IssueSummary]:
+        offset = 0
+
+        while True:
+            query = urlencode(
+                {
+                    "status_id": "*",
+                    "limit": page_size,
+                    "offset": offset,
+                }
+            )
+            payload = self._request_json(
+                "GET",
+                f"{self.base_url}issues.json?{query}",
+            )
+            issues_data = payload.get("issues", [])
+            if not isinstance(issues_data, list) or not issues_data:
+                return
+
+            for issue_data in issues_data:
+                if not isinstance(issue_data, dict):
+                    continue
+
+                issue_id = issue_data.get("id")
+                if not isinstance(issue_id, int):
+                    continue
+
+                category = issue_data.get("category")
+                status = issue_data.get("status")
+                category_name = category.get("name") if isinstance(category, dict) else None
+                status_name = status.get("name") if isinstance(status, dict) else None
+                yield IssueSummary(
+                    issue_id=issue_id,
+                    category_name=category_name if isinstance(category_name, str) else None,
+                    status_name=status_name if isinstance(status_name, str) else None,
+                )
+
+            total_count = payload.get("total_count")
+            if not isinstance(total_count, int):
+                if len(issues_data) < page_size:
+                    return
+                offset += len(issues_data)
+                continue
+
+            offset += len(issues_data)
+            if offset >= total_count:
+                return
 
     def _request_json(
         self,
@@ -261,8 +386,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "ticket_ids",
-        nargs="+",
-        help="One or more Redmine issue IDs. Comma-separated values are also accepted.",
+        nargs="*",
+        help="Optional Redmine issue IDs. Comma-separated values are also accepted.",
     )
     parser.add_argument(
         "--redmine-url",
@@ -303,6 +428,21 @@ def build_parser() -> argparse.ArgumentParser:
         help="HTTP timeout in seconds. Default: 30.",
     )
     parser.add_argument(
+        "--category",
+        default=os.getenv("REDMINE_CATEGORY", "ASC"),
+        help="When no ticket IDs are provided, query Redmine for this category name. Default: ASC.",
+    )
+    parser.add_argument(
+        "--status",
+        default=os.getenv("REDMINE_STATUS", "New"),
+        help="When no ticket IDs are provided, query Redmine for this status name. Default: New.",
+    )
+    parser.add_argument(
+        "--post-status",
+        default=os.getenv("REDMINE_POST_STATUS", "Feedback"),
+        help="After posting a comment, update the issue to this status name. Default: Feedback.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print the generated comment instead of updating Redmine.",
@@ -325,11 +465,29 @@ def main(argv: list[str] | None = None) -> int:
     if not args.york_user:
         parser.error("A York API username is required via --york-user or YORK_API_USER.")
 
-    ticket_ids = parse_ticket_ids(args.ticket_ids)
     york_password = resolve_york_password(args)
 
     redmine = RedmineClient(args.redmine_url, args.redmine_api_key, args.timeout)
     york = YorkClient(args.york_url, args.york_user, york_password, args.timeout)
+    post_status_id = redmine.get_status_id(args.post_status)
+
+    if args.ticket_ids:
+        ticket_ids = parse_ticket_ids(args.ticket_ids)
+    else:
+        logging.info(
+            "No ticket IDs provided; querying Redmine for category %s with status %s",
+            args.category,
+            args.status,
+        )
+        ticket_ids = redmine.find_issue_ids(category_name=args.category, status_name=args.status)
+        if not ticket_ids:
+            logging.info(
+                "No Redmine issues found for category %s with status %s",
+                args.category,
+                args.status,
+            )
+            return 0
+        logging.info("Found %s Redmine issue(s) to process", len(ticket_ids))
 
     had_error = False
 
@@ -354,11 +512,14 @@ def main(argv: list[str] | None = None) -> int:
                     had_error = True
 
             note = build_comment(asc_results)
+            if note in issue.journal_notes:
+                logging.info("Issue %s already has the generated comment. Skipping.", ticket_id)
+                continue
             if args.dry_run:
-                print(f"Issue {ticket_id}\n{note}\n")
+                print(f"Issue {ticket_id}\n{note}\nStatus update: {args.post_status}\n")
             else:
-                redmine.add_comment(ticket_id, note)
-                logging.info("Added one comment to issue %s", ticket_id)
+                redmine.update_issue(ticket_id, note=note, status_id=post_status_id)
+                logging.info("Added one comment to issue %s and updated status to %s", ticket_id, args.post_status)
         except Exception as exc:  # noqa: BLE001
             logging.error("Issue %s failed: %s", ticket_id, exc)
             had_error = True
