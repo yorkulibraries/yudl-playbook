@@ -124,7 +124,10 @@ def parse_args():
     parser.add_argument("--drush", default="drush", help="Drush executable")
     parser.add_argument("--site-label", help="Friendly site label used in the Redmine ticket subject")
     parser.add_argument("--subject-prefix", default="Drupal compatible updates available", help="Redmine issue subject prefix")
-    parser.add_argument("--only-module", help="Only process a single module name, for example devel")
+    parser.add_argument(
+        "--only-module",
+        help="Only process a single project name, for example devel or drupal for Drupal core",
+    )
     parser.add_argument("--redmine-url", help="Redmine base URL, for example https://redmine.example.com")
     parser.add_argument("--redmine-project-id", help="Redmine project id or identifier")
     parser.add_argument("--redmine-assignee-id", type=int, help="Redmine assignee user id")
@@ -168,6 +171,23 @@ def classify_projects(report):
     actionable = []
     blocked = []
 
+    core = report.get("core") or {}
+    core_existing = core.get("existing_version")
+    core_recommended = core.get("recommended")
+    if core_recommended and core_recommended != core_existing:
+        actionable.append(
+            {
+                "name": "drupal",
+                "title": "Drupal core",
+                "kind": "core",
+                "existing_version": core_existing,
+                "recommended": core_recommended,
+                "latest_version": core.get("latest_version"),
+                "security_update": False,
+                "compatibility_message": core.get("reason"),
+            }
+        )
+
     for project in sorted(report.get("projects", {}).values(), key=lambda item: item["name"]):
         existing = project.get("existing_version")
         recommended = project.get("recommended")
@@ -181,6 +201,7 @@ def classify_projects(report):
         entry = {
             "name": project["name"],
             "title": project.get("title") or project["name"],
+            "kind": "project",
             "existing_version": existing,
             "recommended": recommended,
             "latest_version": project.get("latest_version"),
@@ -245,10 +266,11 @@ def build_description(report, actionable, blocked, args):
 def build_module_description(report, item, blocked, args):
     site_name = report.get("site_name") or args.site_label or args.site_uri
     core_version = ((report.get("core") or {}).get("existing_version")) or "unknown"
+    item_label = "Drupal core" if item.get("kind") == "core" else "Module"
     lines = [
         f"Drupal update check for {site_name}.",
         "",
-        f"Module: {item['name']}",
+        f"{item_label}: {item['title']}",
         f"Current version: {item['existing_version']}",
         f"Recommended version: {item['recommended']}",
         f"Site URI: {args.site_uri}",
@@ -357,7 +379,7 @@ def main():
         blocked = [item for item in blocked if item["name"] == args.only_module]
 
     if not actionable:
-        print("No compatible Drupal contrib updates found.")
+        print("No compatible Drupal updates found.")
         if blocked:
             print(f"Skipped {len(blocked)} update(s) that require a Drupal core upgrade.")
         return 0
