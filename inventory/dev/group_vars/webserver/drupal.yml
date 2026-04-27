@@ -8,7 +8,7 @@ drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
   - "drupal/devel:<5.5"
-  - "drush/drush:^12"
+  - "drush/drush:^13"
   - "drupal/restui:^1.21"
   - "drupal/search_api_solr:^4.3"
   - "drupal/facets:^2.0"
