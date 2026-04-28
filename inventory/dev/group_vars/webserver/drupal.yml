@@ -16,7 +16,7 @@ drupal_composer_dependencies:
   - "drupal/pdf:^1.2"
   - "drupal/admin_toolbar:^3.4"
   - "drupal/rest_oai_pmh:^2.0@beta"
-  - "drupal/rdf:^2.1"
+  - "drupal/rdf:^3.0@beta"
   - "drupal/hal:^2.0"
   - "drupal/config_update:^2.0@alpha"
   - "easyrdf/easyrdf:^1.1"
