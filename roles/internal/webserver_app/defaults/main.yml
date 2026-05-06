@@ -14,3 +14,11 @@ solr_user: solr
 solr_instance_conf_path: /var/solr/data/{{ solr_cores[0] }}/conf
 
 webserver_document_root: /var/www/html
+
+apache_mpm_event_start_servers: 5
+apache_mpm_event_min_spare_threads: 125
+apache_mpm_event_max_spare_threads: 150
+apache_mpm_event_thread_limit: 25
+apache_mpm_event_threads_per_child: 25
+apache_mpm_event_max_request_workers: 150
+apache_mpm_event_max_connections_per_child: 0

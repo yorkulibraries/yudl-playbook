@@ -9,3 +9,17 @@ apache_vhosts:
     documentroot: "/var/www/html/drupal/web"
     allow_override: All
     options: -Indexes +FollowSymLinks
+
+apache_mods_enabled:
+  - rewrite
+  - proxy
+  - proxy_http
+  - proxy_fcgi
+  - headers
+  - ssl
+  - setenvif
+  - mpm_event
+
+apache_mods_disabled:
+  - "php{{ php_version }}"
+  - mpm_prefork

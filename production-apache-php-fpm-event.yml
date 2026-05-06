@@ -1,0 +1,86 @@
+---
+
+- name: Migrate production Apache from mod_php prefork to PHP-FPM event MPM
+  hosts: webserver
+  become: true
+
+  vars:
+    php_version: "8.3"
+    php_enable_php_fpm: true
+    php_fpm_daemon: "php{{ php_version }}-fpm"
+    php_fpm_listen: "127.0.0.1:9000"
+    apache_conf_path: /etc/apache2
+    apache_server_root: /etc/apache2
+    webserver_app_apache: true
+    webserver_app_drupal: false
+    webserver_app_jwt: false
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+
+  pre_tasks:
+    - name: Ensure this migration only runs on Debian-family systems
+      assert:
+        that:
+          - ansible_os_family == "Debian"
+        fail_msg: "This migration playbook only supports Debian-family Apache layouts."
+
+  roles:
+    - webserver_app
+
+  post_tasks:
+    - name: Apply pending service restarts before verification
+      meta: flush_handlers
+
+    - name: Check Apache configuration syntax
+      command: apache2ctl configtest
+      changed_when: false
+
+    - name: Get loaded Apache modules
+      command: apache2ctl -M
+      register: apache_loaded_modules
+      changed_when: false
+
+    - name: Verify Apache is using event MPM and PHP-FPM proxying
+      assert:
+        that:
+          - "'mpm_event_module' in apache_loaded_modules.stdout"
+          - "'proxy_fcgi_module' in apache_loaded_modules.stdout"
+          - "'php_module' not in apache_loaded_modules.stdout"
+          - "'php7_module' not in apache_loaded_modules.stdout"
+          - "'php8_module' not in apache_loaded_modules.stdout"
+
+    - name: Verify mod_php package is absent
+      command: "dpkg-query -s libapache2-mod-php{{ php_version }}"
+      register: mod_php_package
+      failed_when: false
+      changed_when: false
+
+    - name: Assert mod_php package is absent
+      assert:
+        that:
+          - mod_php_package.rc != 0
+        fail_msg: "libapache2-mod-php{{ php_version }} is still installed."
+
+    - name: Verify PHP-FPM service is active
+      command: "systemctl is-active {{ php_fpm_daemon }}"
+      register: php_fpm_status
+      changed_when: false
+
+    - name: Assert PHP-FPM service is active
+      assert:
+        that:
+          - php_fpm_status.stdout == "active"
+
+    - name: Verify Apache service is active
+      command: systemctl is-active apache2
+      register: apache_status
+      changed_when: false
+
+    - name: Assert Apache service is active
+      assert:
+        that:
+          - apache_status.stdout == "active"

@@ -38,6 +38,7 @@
 
   vars:
     php_version: "8.3"
+    php_enable_php_fpm: true
 
   environment:
     COMPOSER_MEMORY_LIMIT: -1

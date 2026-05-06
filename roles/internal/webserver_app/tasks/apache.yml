@@ -16,3 +16,71 @@
     state: absent
     path: /var/www/html/index.html
   when: index_html.stat.exists
+
+- name: Ensure Apache mod_php package is absent
+  apt:
+    name: "libapache2-mod-php{{ php_version }}"
+    state: absent
+    purge: true
+  when: ansible_os_family == "Debian"
+  notify: Restart Apache
+
+- name: Ensure Apache prefork and mod_php configs are disabled
+  file:
+    path: "{{ apache_conf_path }}/mods-enabled/{{ item }}"
+    state: absent
+  loop:
+    - mpm_prefork.conf
+    - mpm_prefork.load
+    - "php{{ php_version }}.conf"
+    - "php{{ php_version }}.load"
+  when: ansible_os_family == "Debian"
+  notify: Restart Apache
+
+- name: Configure Apache event MPM
+  template:
+    src: mpm_event.conf.j2
+    dest: "{{ apache_conf_path }}/mods-available/mpm_event.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_os_family == "Debian"
+  notify: Restart Apache
+
+- name: Ensure Apache event MPM is enabled
+  file:
+    src: "{{ apache_conf_path }}/mods-available/{{ item }}"
+    dest: "{{ apache_conf_path }}/mods-enabled/{{ item }}"
+    state: link
+    mode: "0644"
+  loop:
+    - mpm_event.conf
+    - mpm_event.load
+  when: ansible_os_family == "Debian"
+  notify: Restart Apache
+
+- name: Ensure Apache PHP-FPM config is enabled
+  template:
+    src: apache-php-fpm.conf.j2
+    dest: "{{ apache_conf_path }}/conf-available/php{{ php_version }}-fpm.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_os_family == "Debian"
+  notify: Restart Apache
+
+- name: Ensure Apache PHP-FPM config symlink is enabled
+  file:
+    src: "{{ apache_conf_path }}/conf-available/php{{ php_version }}-fpm.conf"
+    dest: "{{ apache_conf_path }}/conf-enabled/php{{ php_version }}-fpm.conf"
+    state: link
+    mode: "0644"
+  when: ansible_os_family == "Debian"
+  notify: Restart Apache
+
+- name: Ensure PHP-FPM is started and enabled
+  service:
+    name: "{{ php_fpm_daemon }}"
+    state: started
+    enabled: true
+  when: ansible_os_family == "Debian"
