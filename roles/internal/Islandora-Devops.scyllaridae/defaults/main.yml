@@ -1,4 +1,4 @@
-scyllaridae_version: "5.1.0"
+scyllaridae_version: "5.2.8"
 
 scyllaridae_services:
   - Crayfits
