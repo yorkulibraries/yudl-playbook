@@ -9,6 +9,29 @@
     webserver_app_user: "www-data"
     vagrant_user: "vagrant"
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
+    yudl_manage_vault_users: "{{ env == 'production' }}"
+    yudl_dev_import_users:
+      - uid: 2
+        name: yudl_dev_import_user_2
+      - uid: 3
+        name: yudl_dev_import_user_3
+      - uid: 11
+        name: yudl_dev_import_user_11
+      - uid: 30
+        name: yudl_dev_import_user_30
+    yudl_main_menu_items:
+      - title: Map
+        uri: internal:/explore/map
+        weight: 1
+      - title: Locations
+        uri: internal:/explore/locations/a
+        weight: 3
+      - title: Subjects
+        uri: internal:/explore/subjects/a
+        weight: 4
+      - title: Creators
+        uri: internal:/explore/creators/a
+        weight: 5
 
   tasks:
     - name: Check current /usr/local/bin/drush target
@@ -124,7 +147,7 @@
       register: islandora_workbench_dependencies
 
     - name: Install Islandora Workbench dependencies
-      shell: "cd /opt/islandora_workbench; python setup.py install"
+      shell: "cd /opt/islandora_workbench; python3 setup.py install"
       when: not islandora_workbench_dependencies.stat.exists
 
     - name: Create workbench env
@@ -184,8 +207,15 @@
       failed_when: false
       changed_when: false
 
+    - name: Check unnecessary view
+      command: "{{ drush_path }} --root {{ drupal_core_path }} config:get views.view.article_mods_mapping"
+      register: article_mods_mapping_view
+      failed_when: false
+      changed_when: false
+
     - name: Remove unnecessary view
       command: "{{ drush_path }} --root {{ drupal_core_path }} config:delete views.view.article_mods_mapping"
+      when: article_mods_mapping_view.rc == 0
 
     - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
@@ -438,68 +468,109 @@
       register: admin_user_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: admin_user
 
     - name: Create missing admin users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ admin_user }}"
-      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: admin_user
         index_var: admin_user_index
-      when: admin_user_lookup.results[admin_user_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - admin_user_lookup.results[admin_user_index].rc != 0
 
     - name: Ensure islandora admin users exist
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_admin_user }}"
       register: islandora_admin_user_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_admin_user
 
     - name: Create missing islandora admin users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_admin_user }}"
-      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_admin_user
         index_var: islandora_admin_user_index
-      when: islandora_admin_user_lookup.results[islandora_admin_user_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - islandora_admin_user_lookup.results[islandora_admin_user_index].rc != 0
 
     - name: Ensure islandora creator users exist
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_creator_user }}"
       register: islandora_creator_user_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_creator_user
 
     - name: Create missing islandora creator users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_creator_user }}"
-      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_creator_user
         index_var: islandora_creator_user_index
-      when: islandora_creator_user_lookup.results[islandora_creator_user_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - islandora_creator_user_lookup.results[islandora_creator_user_index].rc != 0
 
     - name: Ensure past islandora creators exist
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ past_islandora_creator }}"
       register: past_islandora_creator_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: past_islandora_creator
 
     - name: Create missing past islandora creators
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ past_islandora_creator }}"
-      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: past_islandora_creator
         index_var: past_islandora_creator_index
-      when: past_islandora_creator_lookup.results[past_islandora_creator_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - past_islandora_creator_lookup.results[past_islandora_creator_index].rc != 0
+
+    - name: Ensure local dev Workbench owner users exist
+      command:
+        argv:
+          - "{{ drush_path }}"
+          - "--root"
+          - "{{ drupal_core_path }}"
+          - "-l"
+          - "localhost:{{ apache_listen_port }}"
+          - "php:eval"
+          - |
+            $uid = (int) {{ item.uid }};
+            $storage = \Drupal::entityTypeManager()->getStorage('user');
+            if (!$storage->load($uid)) {
+              $user = $storage->create([
+                'uid' => $uid,
+                'name' => '{{ item.name }}',
+                'mail' => '{{ item.name }}@example.invalid',
+                'status' => 1,
+              ]);
+              $user->enforceIsNew();
+              $user->save();
+              print "created";
+            }
+            else {
+              print "exists";
+            }
+      loop: "{{ yudl_dev_import_users }}"
+      changed_when: "'created' in dev_import_user_result.stdout"
+      register: dev_import_user_result
+      when:
+        - env != "production"
+        - not (yudl_manage_vault_users | bool)
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
@@ -561,9 +632,27 @@
         path: /opt/workbench/.yudl_collections_import_complete
       register: yudl_collections_import_complete
 
+    - name: Reset YUDL collections Workbench log
+      file:
+        path: /opt/workbench/logs/collections.log
+        state: absent
+      when: not yudl_collections_import_complete.stat.exists
+
     - name: Add YUDL collections via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
       with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
+      when: not yudl_collections_import_complete.stat.exists
+
+    - name: Fail if YUDL collections Workbench logged errors
+      command:
+        argv:
+          - grep
+          - -E
+          - " - ERROR - "
+          - /opt/workbench/logs/collections.log
+      register: yudl_collections_import_errors
+      changed_when: false
+      failed_when: yudl_collections_import_errors.rc != 1
       when: not yudl_collections_import_complete.stat.exists
 
     - name: Mark YUDL collections import complete
@@ -579,9 +668,35 @@
       register: sample_objects_import_complete
       when: env != "production"
 
+    - name: Reset sample objects Workbench logs
+      file:
+        path: "/opt/workbench/logs/{{ item }}"
+        state: absent
+      with_items:
+        - sample-paged.log
+        - sample.log
+        - collection-image.log
+        - contact_categories.log
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
     - name: Add sample objects via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
       with_items: ["paged", "single", "collection-image", "contact_categories"]
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
+    - name: Fail if sample objects Workbench logged errors
+      command:
+        argv:
+          - grep
+          - -E
+          - " - ERROR - "
+          - /opt/workbench/logs/sample-paged.log
+          - /opt/workbench/logs/sample.log
+          - /opt/workbench/logs/collection-image.log
+          - /opt/workbench/logs/contact_categories.log
+      register: sample_objects_import_errors
+      changed_when: false
+      failed_when: sample_objects_import_errors.rc != 1
       when: env != "production" and not sample_objects_import_complete.stat.exists
 
     - name: Mark sample objects import complete
@@ -623,42 +738,66 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
       when: (system_site_front_page.stdout | trim) != '/node/1'
 
-    - name: Check if Locations menu item exists
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Locations", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
-      register: locations_menu_item
-      changed_when: false
+    - name: Ensure YUDL main menu items exist once
+      command:
+        argv:
+          - "{{ drush_path }}"
+          - "--root={{ drupal_core_path }}"
+          - "ev"
+          - |
+            $title = '{{ item.title }}';
+            $uri = '{{ item.uri }}';
+            $weight = (int) {{ item.weight }};
+            $storage = \Drupal::entityTypeManager()->getStorage('menu_link_content');
+            $ids = \Drupal::entityQuery('menu_link_content')
+              ->accessCheck(FALSE)
+              ->condition('menu_name', 'main')
+              ->condition('link.uri', $uri)
+              ->execute();
+            $kept = FALSE;
 
-    - name: Add Map menu item
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/map"],"menu_name" => "main","weight" => 1])->save();'
+            foreach ($storage->loadMultiple($ids) as $link) {
+              if ($link->getTitle() === $title && !$kept) {
+                $changed = FALSE;
+                if ((int) $link->get('weight')->value !== $weight) {
+                  $link->set('weight', $weight);
+                  $changed = TRUE;
+                }
+                if (!$link->isEnabled()) {
+                  $link->set('enabled', TRUE);
+                  $changed = TRUE;
+                }
+                if ($changed) {
+                  $link->save();
+                  print "updated";
+                }
+                $kept = TRUE;
+              }
+              else {
+                $link->delete();
+                print "deleted";
+              }
+            }
 
-    - name: Add Locations menu item
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
-      when: "'missing' in locations_menu_item.stdout"
+            if (!$kept) {
+              \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+                'title' => $title,
+                'link' => ['uri' => $uri],
+                'menu_name' => 'main',
+                'weight' => $weight,
+              ])->save();
+              print "created";
+            }
+      loop: "{{ yudl_main_menu_items }}"
+      register: yudl_main_menu_results
+      changed_when: >
+        'created' in yudl_main_menu_results.stdout or
+        'updated' in yudl_main_menu_results.stdout or
+        'deleted' in yudl_main_menu_results.stdout
 
-    - name: Check if Subjects menu item exists
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Subjects", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
-      register: subjects_menu_item
-      changed_when: false
-
-    - name: Add Subjects menu item
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
-      when: "'missing' in subjects_menu_item.stdout"
-
-    - name: Check if Creators menu item exists
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Creators", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
-      register: creators_menu_item
-      changed_when: false
-
-    - name: Add Creators menu item
-      command: >
-         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
-      when: "'missing' in creators_menu_item.stdout"
+    - name: Rebuild Drupal cache after main menu changes
+      command: "{{ drush_path }} --root={{ drupal_core_path }} -y cr"
+      when: yudl_main_menu_results.changed
 
     - name: Check if Islandora Mirador is already installed with composer
       stat:

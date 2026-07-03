@@ -1,5 +1,15 @@
 scyllaridae_version: "5.2.8"
 
+scyllaridae_release_arch_map:
+  aarch64: arm64
+  arm64: arm64
+  x86_64: x86_64
+
+scyllaridae_file_arch_map:
+  aarch64: "ARM aarch64"
+  arm64: "ARM aarch64"
+  x86_64: "x86-64"
+
 scyllaridae_services:
   - Crayfits
   - Hypercube

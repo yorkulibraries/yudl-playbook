@@ -6,13 +6,13 @@
   gather_facts: false
 
   vars:
-    ansible_python_interpreter: /usr/bin/python
+    ansible_python_interpreter: /usr/bin/python3
 
   tasks:
     # Python isn't installed by default on ubuntu so we need
     # to do that with the raw command before.
     - name: Ensure Python is installed
-      raw: "test -e /usr/bin/python || (apt update; apt install -y python-is-python3;)"
+      raw: "test -e /usr/bin/python3 || (apt update; apt install -y python3;)"
       register: output
       changed_when:
         - output.stdout != ""
@@ -35,6 +35,13 @@
       command: lsb_release -cs
       register: lsb_release_result
       changed_when: false
+
+    - name: Use Noble TIFF C++ package name
+      set_fact:
+        islandora_extra_ubuntu_packages: "{{ islandora_extra_ubuntu_packages | difference(['libtiffxx5']) + ['libtiffxx6'] }}"
+      when:
+        - ansible_distribution == "Ubuntu"
+        - ansible_distribution_release == "noble"
 
     # We need to make sure aptitude is installed for the apt
     # commands in ansible.
@@ -100,4 +107,11 @@
       package:
         name: redis-server
         state: present
-      when: "'gamma' in inventory_hostname or ansible_virtualization_type == 'virtualbox'"
+      when: env == "dev" or 'gamma' in inventory_hostname or ansible_virtualization_type == 'virtualbox'
+
+    - name: Ensure Redis is running
+      service:
+        name: redis-server
+        state: started
+        enabled: true
+      when: env == "dev" or 'gamma' in inventory_hostname or ansible_virtualization_type == 'virtualbox'

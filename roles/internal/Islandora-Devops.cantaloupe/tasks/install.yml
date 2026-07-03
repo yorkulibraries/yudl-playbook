@@ -75,10 +75,15 @@
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
 
+- name: Detect Debian multiarch library directory
+  command: dpkg-architecture -qDEB_HOST_MULTIARCH
+  register: cantaloupe_deb_host_multiarch
+  changed_when: false
+
 - name: Setup libjpeg-turbo library symlink
   file:
     state: link
-    src: /usr/lib/x86_64-linux-gnu/libturbojpeg.so
+    src: "/usr/lib/{{ cantaloupe_deb_host_multiarch.stdout }}/libturbojpeg.so"
     dest: /opt/libjpeg-turbo/lib/libturbojpeg.so
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"

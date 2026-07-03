@@ -9,6 +9,8 @@
     webserver_app_user: "www-data"
     vagrant_user: "vagrant"
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
+    yudl_theme_logo_path: "themes/custom/yudl_drupal_theme/images/YorkULogo_DIGITAL_Hor_RGB-136x30.png"
+    yudl_theme_favicon_path: "themes/custom/yudl_drupal_theme/images/favicon.ico"
 
   tasks:
 
@@ -60,9 +62,33 @@
         (current_default_theme.stdout | trim) != 'york_drupal_theme'
       register: york_theme_defaulted
 
+    - name: Read york_drupal_theme logo path
+      command: "{{ drush_path }} --root={{ drupal_core_path }} cget york_drupal_theme.settings logo.path --format=string"
+      register: york_theme_logo_path
+      changed_when: false
+      failed_when: false
+
+    - name: Set york_drupal_theme logo path
+      command: "{{ drush_path }} --root={{ drupal_core_path }} -y cset york_drupal_theme.settings logo.path {{ yudl_theme_logo_path }}"
+      when: (york_theme_logo_path.stdout | trim) != yudl_theme_logo_path
+      register: york_theme_logo_path_set
+
+    - name: Read york_drupal_theme favicon path
+      command: "{{ drush_path }} --root={{ drupal_core_path }} cget york_drupal_theme.settings favicon.path --format=string"
+      register: york_theme_favicon_path
+      changed_when: false
+      failed_when: false
+
+    - name: Set york_drupal_theme favicon path
+      command: "{{ drush_path }} --root={{ drupal_core_path }} -y cset york_drupal_theme.settings favicon.path {{ yudl_theme_favicon_path }}"
+      when: (york_theme_favicon_path.stdout | trim) != yudl_theme_favicon_path
+      register: york_theme_favicon_path_set
+
     - name: Clear cache when theme state changes
       command: "{{ drush_path }} --root={{ drupal_core_path }} -y cr"
       when: >
         (york_theme_repo.changed | default(false)) or
         (york_theme_enabled.changed | default(false)) or
-        (york_theme_defaulted.changed | default(false))
+        (york_theme_defaulted.changed | default(false)) or
+        (york_theme_logo_path_set.changed | default(false)) or
+        (york_theme_favicon_path_set.changed | default(false))
