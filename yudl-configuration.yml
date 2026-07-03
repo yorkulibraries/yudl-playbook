@@ -19,19 +19,6 @@
         name: yudl_dev_import_user_11
       - uid: 30
         name: yudl_dev_import_user_30
-    yudl_main_menu_items:
-      - title: Map
-        uri: internal:/explore/map
-        weight: 1
-      - title: Locations
-        uri: internal:/explore/locations/a
-        weight: 3
-      - title: Subjects
-        uri: internal:/explore/subjects/a
-        weight: 4
-      - title: Creators
-        uri: internal:/explore/creators/a
-        weight: 5
 
   tasks:
     - name: Check current /usr/local/bin/drush target
@@ -738,66 +725,42 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
       when: (system_site_front_page.stdout | trim) != '/node/1'
 
-    - name: Ensure YUDL main menu items exist once
-      command:
-        argv:
-          - "{{ drush_path }}"
-          - "--root={{ drupal_core_path }}"
-          - "ev"
-          - |
-            $title = '{{ item.title }}';
-            $uri = '{{ item.uri }}';
-            $weight = (int) {{ item.weight }};
-            $storage = \Drupal::entityTypeManager()->getStorage('menu_link_content');
-            $ids = \Drupal::entityQuery('menu_link_content')
-              ->accessCheck(FALSE)
-              ->condition('menu_name', 'main')
-              ->condition('link.uri', $uri)
-              ->execute();
-            $kept = FALSE;
+    - name: Check if Locations menu item exists
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Locations", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
+      register: locations_menu_item
+      changed_when: false
 
-            foreach ($storage->loadMultiple($ids) as $link) {
-              if ($link->getTitle() === $title && !$kept) {
-                $changed = FALSE;
-                if ((int) $link->get('weight')->value !== $weight) {
-                  $link->set('weight', $weight);
-                  $changed = TRUE;
-                }
-                if (!$link->isEnabled()) {
-                  $link->set('enabled', TRUE);
-                  $changed = TRUE;
-                }
-                if ($changed) {
-                  $link->save();
-                  print "updated";
-                }
-                $kept = TRUE;
-              }
-              else {
-                $link->delete();
-                print "deleted";
-              }
-            }
+    - name: Add Map menu item
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/map"],"menu_name" => "main","weight" => 1])->save();'
 
-            if (!$kept) {
-              \Drupal\menu_link_content\Entity\MenuLinkContent::create([
-                'title' => $title,
-                'link' => ['uri' => $uri],
-                'menu_name' => 'main',
-                'weight' => $weight,
-              ])->save();
-              print "created";
-            }
-      loop: "{{ yudl_main_menu_items }}"
-      register: yudl_main_menu_results
-      changed_when: >
-        'created' in yudl_main_menu_results.stdout or
-        'updated' in yudl_main_menu_results.stdout or
-        'deleted' in yudl_main_menu_results.stdout
+    - name: Add Locations menu item
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
+      when: "'missing' in locations_menu_item.stdout"
 
-    - name: Rebuild Drupal cache after main menu changes
-      command: "{{ drush_path }} --root={{ drupal_core_path }} -y cr"
-      when: yudl_main_menu_results.changed
+    - name: Check if Subjects menu item exists
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Subjects", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
+      register: subjects_menu_item
+      changed_when: false
+
+    - name: Add Subjects menu item
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
+      when: "'missing' in subjects_menu_item.stdout"
+
+    - name: Check if Creators menu item exists
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Creators", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
+      register: creators_menu_item
+      changed_when: false
+
+    - name: Add Creators menu item
+      command: >
+         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
+      when: "'missing' in creators_menu_item.stdout"
 
     - name: Check if Islandora Mirador is already installed with composer
       stat:
