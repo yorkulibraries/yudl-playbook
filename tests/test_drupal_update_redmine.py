@@ -115,5 +115,22 @@ class RedminePayloadTests(unittest.TestCase):
         self.assertNotIn("priority_id", payload["issue"])
 
 
+class ClassificationTests(unittest.TestCase):
+    def test_core_security_metadata_marks_core_update_as_security(self):
+        report = {
+            "core": {
+                "existing_version": "10.4.5",
+                "recommended": "10.4.6",
+                "latest_version": "10.4.6",
+                "security_updates": [{"version": "10.4.6"}],
+            },
+            "projects": {},
+        }
+        actionable, blocked = drupal_update_redmine.classify_projects(report)
+        self.assertEqual(blocked, [])
+        self.assertEqual(len(actionable), 1)
+        self.assertTrue(actionable[0]["security_update"])
+
+
 if __name__ == "__main__":
     unittest.main()

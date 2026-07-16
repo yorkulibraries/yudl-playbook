@@ -32,6 +32,18 @@ $payload = [
 ];
 
 foreach ($projects as $name => $project) {
+  $security_updates = [];
+  if (!empty($project['security updates'])) {
+    foreach ($project['security updates'] as $security_update) {
+      $security_updates[] = [
+        'version' => $security_update['version'] ?? NULL,
+        'core_compatible' => $security_update['core_compatible'] ?? NULL,
+        'core_compatibility' => $security_update['core_compatibility'] ?? NULL,
+        'core_compatibility_message' => $security_update['core_compatibility_message'] ?? NULL,
+      ];
+    }
+  }
+
   if ($name === 'drupal') {
     $payload['core'] = [
       'existing_version' => $project['existing_version'] ?? NULL,
@@ -39,6 +51,7 @@ foreach ($projects as $name => $project) {
       'latest_version' => $project['latest_version'] ?? NULL,
       'status' => $project['status'] ?? NULL,
       'reason' => $project['reason'] ?? NULL,
+      'security_updates' => $security_updates,
     ];
     continue;
   }
@@ -59,18 +72,6 @@ foreach ($projects as $name => $project) {
         'core_compatible' => $release['core_compatible'] ?? NULL,
         'core_compatibility' => $release['core_compatibility'] ?? NULL,
         'core_compatibility_message' => $release['core_compatibility_message'] ?? NULL,
-      ];
-    }
-  }
-
-  $security_updates = [];
-  if (!empty($project['security updates'])) {
-    foreach ($project['security updates'] as $security_update) {
-      $security_updates[] = [
-        'version' => $security_update['version'] ?? NULL,
-        'core_compatible' => $security_update['core_compatible'] ?? NULL,
-        'core_compatibility' => $security_update['core_compatibility'] ?? NULL,
-        'core_compatibility_message' => $security_update['core_compatibility_message'] ?? NULL,
       ];
     }
   }
@@ -188,7 +189,7 @@ def classify_projects(report):
                 "existing_version": core_existing,
                 "recommended": core_recommended,
                 "latest_version": core.get("latest_version"),
-                "security_update": False,
+                "security_update": bool(core.get("security_updates")),
                 "compatibility_message": core.get("reason"),
             }
         )
