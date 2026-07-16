@@ -135,6 +135,11 @@ def parse_args():
     parser.add_argument("--redmine-tracker-id", type=int, help="Optional Redmine tracker id")
     parser.add_argument("--redmine-tracker-name", help="Optional Redmine tracker name, for example Support")
     parser.add_argument("--redmine-priority-id", type=int, help="Optional Redmine priority id")
+    parser.add_argument(
+        "--redmine-security-priority-id",
+        type=int,
+        help="Optional Redmine priority id for security updates",
+    )
     parser.add_argument("--redmine-api-key-env", default="REDMINE_API_KEY", help="Environment variable that stores the Redmine API key")
     parser.add_argument("--dry-run", action="store_true", help="Print what would happen without creating a ticket")
     return parser.parse_args()
@@ -348,7 +353,16 @@ def open_issue_exists(base_url, api_key, project_id, subject):
             return None
 
 
-def create_issue(base_url, api_key, subject, description, args, tracker_id=None):
+def select_priority_id(args, updates):
+    has_security_update = any(item.get("security_update", False) for item in updates)
+    if has_security_update and args.redmine_security_priority_id is not None:
+        return args.redmine_security_priority_id
+    return args.redmine_priority_id
+
+
+def create_issue(
+    base_url, api_key, subject, description, args, tracker_id=None, priority_id=None
+):
     issue = {
         "project_id": args.redmine_project_id,
         "subject": subject,
@@ -360,8 +374,8 @@ def create_issue(base_url, api_key, subject, description, args, tracker_id=None)
         issue["parent_issue_id"] = args.redmine_parent_issue_id
     if tracker_id is not None:
         issue["tracker_id"] = tracker_id
-    if args.redmine_priority_id is not None:
-        issue["priority_id"] = args.redmine_priority_id
+    if priority_id is not None:
+        issue["priority_id"] = priority_id
 
     data = redmine_request(base_url, api_key, "POST", "issues.json", {"issue": issue})
     return data.get("issue", {})
