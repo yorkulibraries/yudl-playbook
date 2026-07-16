@@ -444,7 +444,16 @@ def main():
                 print(f"Open Redmine issue already exists for {item['name']}: #{existing['id']}")
                 continue
             description = build_module_description(report, item, blocked, args)
-            issue = create_issue(args.redmine_url, api_key, subject, description, args, tracker_id)
+            priority_id = select_priority_id(args, [item])
+            issue = create_issue(
+                args.redmine_url,
+                api_key,
+                subject,
+                description,
+                args,
+                tracker_id,
+                priority_id,
+            )
             print(f"Created Redmine issue for {item['name']}: #{issue.get('id')}")
             created += 1
         if created == 0:
@@ -456,7 +465,16 @@ def main():
             print(f"Open Redmine issue already exists: #{existing['id']}")
             return 0
 
-        issue = create_issue(args.redmine_url, api_key, subject, description, args, tracker_id)
+        priority_id = select_priority_id(args, actionable)
+        issue = create_issue(
+            args.redmine_url,
+            api_key,
+            subject,
+            description,
+            args,
+            tracker_id,
+            priority_id,
+        )
         print()
         print(f"Created Redmine issue #{issue.get('id')}")
     return 0
