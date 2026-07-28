@@ -45,8 +45,10 @@ ReadWritePaths=/etc/tomcat9/Catalina/
 ReadWritePaths=/var/lib/tomcat9/webapps/
 ReadWritePaths=/var/log/tomcat9/
 ReadWritePaths={{ cantaloupe_log_path }}/
-ReadWritePaths={{ fcrepo_home_dir }}/
-ReadWritePaths={{ fcrepo_syn_folder }}/
+# Fedora is provisioned after this unit is first started. A leading "-" keeps
+# systemd from failing while these paths do not exist yet.
+ReadWritePaths=-{{ fcrepo_home_dir }}/
+ReadWritePaths=-{{ fcrepo_syn_folder }}/
 ReadWritePaths={{ cantaloupe_symlink }}/
 ReadWritePaths={{ fits_install_symlink }}/
 ReadWritePaths={{ cantaloupe_FilesystemCache_pathname }}/

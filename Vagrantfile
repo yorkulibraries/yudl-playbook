@@ -60,8 +60,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure sync directory
   config.vm.synced_folder ".", home_dir + "/islandora"
-  config.vm.synced_folder "../yudl_customizations", home_dir + "/yudl_customizations"
-  config.vm.synced_folder "../islandora_rewrite_drupal_url", home_dir + "/islandora_rewrite_drupal_url"
+#  config.vm.synced_folder "../yudl_customizations", home_dir + "/yudl_customizations"
+#  config.vm.synced_folder "../islandora_rewrite_drupal_url", home_dir + "/islandora_rewrite_drupal_url"
 
   config.vm.network :forwarded_port, guest: 8000, host: 8000 # Apache
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
