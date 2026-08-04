@@ -15,7 +15,7 @@ RequiresMountsFor=/var/log/tomcat9 /var/lib/tomcat9
 [Service]
 
 # Configuration
-Environment="JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64"
+Environment="JAVA_HOME={{ tomcat_java_home }}"
 Environment="JAVA_OPTS=${JAVA_OPTS} -Djava.awt.headless=true -Dfile.encoding=UTF-8"
 Environment="CATALINA_HOME=/usr/share/tomcat9"
 Environment="CATALINA_BASE=/var/lib/tomcat9"
@@ -45,8 +45,10 @@ ReadWritePaths=/etc/tomcat9/Catalina/
 ReadWritePaths=/var/lib/tomcat9/webapps/
 ReadWritePaths=/var/log/tomcat9/
 ReadWritePaths={{ cantaloupe_log_path }}/
-ReadWritePaths={{ fcrepo_home_dir }}/
-ReadWritePaths={{ fcrepo_syn_folder }}/
+# Fedora is provisioned after this unit is first started. A leading "-" keeps
+# systemd from failing while these paths do not exist yet.
+ReadWritePaths=-{{ fcrepo_home_dir }}/
+ReadWritePaths=-{{ fcrepo_syn_folder }}/
 ReadWritePaths={{ cantaloupe_symlink }}/
 ReadWritePaths={{ fits_install_symlink }}/
 ReadWritePaths={{ cantaloupe_FilesystemCache_pathname }}/

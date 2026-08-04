@@ -56,23 +56,37 @@
     mode: "2775"
   when: not cantaloupe_log_dir.stat.exists
 
+- name: Locate Java binary
+  command: readlink -f /usr/bin/java
+  register: tomcat_java_bin
+  changed_when: false
+  when: tomcat_java_home is not defined
+
+- name: Set Tomcat JAVA_HOME
+  set_fact:
+    tomcat_java_home: "{{ tomcat_java_bin.stdout | dirname | dirname }}"
+  when: tomcat_java_home is not defined
+
 - name: Template systemd Tomcat9 service
   template:
     src: tomcat9.service.j2
     dest: /etc/systemd/system/tomcat9.service
   when: env == "dev"
+  notify: restart tomcat9
 
 - name: Template systemd Tomcat9 service (beta)
   template:
     src: tomcat9.beta.service.j2
     dest: /etc/systemd/system/tomcat9.service
   when: "'beta' in inventory_hostname"
+  notify: restart tomcat9
 
 - name: Template systemd Tomcat9 service (gamma)
   template:
     src: tomcat9.gamma.service.j2
     dest: /etc/systemd/system/tomcat9.service
   when: "'gamma' in inventory_hostname"
+  notify: restart tomcat9
 
 - name: Reload systemd services
   command: "systemctl daemon-reload"

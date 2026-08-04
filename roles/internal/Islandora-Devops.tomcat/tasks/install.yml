@@ -18,6 +18,17 @@
   with_items: "{{ tomcat_admin_packages }}"
   when: tomcat_admin_install
 
+- name: Create paths required by the Tomcat systemd sandbox
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ tomcat_server_user }}"
+    group: "{{ tomcat_server_group }}"
+    mode: "0755"
+  loop:
+    - "{{ fcrepo_home_dir }}"
+    - "{{ fcrepo_syn_folder }}"
+
 - name: Start tomcat9
   service:
     name: tomcat9

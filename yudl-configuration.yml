@@ -9,6 +9,16 @@
     webserver_app_user: "www-data"
     vagrant_user: "vagrant"
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
+    yudl_manage_vault_users: "{{ env == 'production' }}"
+    yudl_dev_import_users:
+      - uid: 2
+        name: yudl_dev_import_user_2
+      - uid: 3
+        name: yudl_dev_import_user_3
+      - uid: 11
+        name: yudl_dev_import_user_11
+      - uid: 30
+        name: yudl_dev_import_user_30
 
   tasks:
     - name: Check current /usr/local/bin/drush target
@@ -124,7 +134,7 @@
       register: islandora_workbench_dependencies
 
     - name: Install Islandora Workbench dependencies
-      shell: "cd /opt/islandora_workbench; python setup.py install"
+      shell: "cd /opt/islandora_workbench; python3 setup.py install"
       when: not islandora_workbench_dependencies.stat.exists
 
     - name: Create workbench env
@@ -184,8 +194,15 @@
       failed_when: false
       changed_when: false
 
+    - name: Check unnecessary view
+      command: "{{ drush_path }} --root {{ drupal_core_path }} config:get views.view.article_mods_mapping"
+      register: article_mods_mapping_view
+      failed_when: false
+      changed_when: false
+
     - name: Remove unnecessary view
       command: "{{ drush_path }} --root {{ drupal_core_path }} config:delete views.view.article_mods_mapping"
+      when: article_mods_mapping_view.rc == 0
 
     - name: Add admin to fedoraAdmin role
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y urol fedoraadmin admin"
@@ -438,68 +455,109 @@
       register: admin_user_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: admin_user
 
     - name: Create missing admin users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ admin_user }}"
-      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: admin_user
         index_var: admin_user_index
-      when: admin_user_lookup.results[admin_user_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - admin_user_lookup.results[admin_user_index].rc != 0
 
     - name: Ensure islandora admin users exist
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_admin_user }}"
       register: islandora_admin_user_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_admin_user
 
     - name: Create missing islandora admin users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_admin_user }}"
-      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_admin_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_admin_user
         index_var: islandora_admin_user_index
-      when: islandora_admin_user_lookup.results[islandora_admin_user_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - islandora_admin_user_lookup.results[islandora_admin_user_index].rc != 0
 
     - name: Ensure islandora creator users exist
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ islandora_creator_user }}"
       register: islandora_creator_user_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_creator_user
 
     - name: Create missing islandora creator users
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ islandora_creator_user }}"
-      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_islandora_creator_users').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: islandora_creator_user
         index_var: islandora_creator_user_index
-      when: islandora_creator_user_lookup.results[islandora_creator_user_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - islandora_creator_user_lookup.results[islandora_creator_user_index].rc != 0
 
     - name: Ensure past islandora creators exist
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} uinf {{ past_islandora_creator }}"
       register: past_islandora_creator_lookup
       failed_when: false
       changed_when: false
-      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: past_islandora_creator
 
     - name: Create missing past islandora creators
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} ucrt {{ past_islandora_creator }}"
-      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() }}"
+      loop: "{{ lookup('file', 'templates/list_of_past_islandora_creators').splitlines() if (yudl_manage_vault_users | bool) else [] }}"
       loop_control:
         loop_var: past_islandora_creator
         index_var: past_islandora_creator_index
-      when: past_islandora_creator_lookup.results[past_islandora_creator_index].rc != 0
+      when:
+        - yudl_manage_vault_users | bool
+        - past_islandora_creator_lookup.results[past_islandora_creator_index].rc != 0
+
+    - name: Ensure local dev Workbench owner users exist
+      command:
+        argv:
+          - "{{ drush_path }}"
+          - "--root"
+          - "{{ drupal_core_path }}"
+          - "-l"
+          - "localhost:{{ apache_listen_port }}"
+          - "php:eval"
+          - |
+            $uid = (int) {{ item.uid }};
+            $storage = \Drupal::entityTypeManager()->getStorage('user');
+            if (!$storage->load($uid)) {
+              $user = $storage->create([
+                'uid' => $uid,
+                'name' => '{{ item.name }}',
+                'mail' => '{{ item.name }}@example.invalid',
+                'status' => 1,
+              ]);
+              $user->enforceIsNew();
+              $user->save();
+              print "created";
+            }
+            else {
+              print "exists";
+            }
+      loop: "{{ yudl_dev_import_users }}"
+      changed_when: "'created' in dev_import_user_result.stdout"
+      register: dev_import_user_result
+      when:
+        - env != "production"
+        - not (yudl_manage_vault_users | bool)
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
@@ -561,9 +619,27 @@
         path: /opt/workbench/.yudl_collections_import_complete
       register: yudl_collections_import_complete
 
+    - name: Reset YUDL collections Workbench log
+      file:
+        path: /opt/workbench/logs/collections.log
+        state: absent
+      when: not yudl_collections_import_complete.stat.exists
+
     - name: Add YUDL collections via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
       with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
+      when: not yudl_collections_import_complete.stat.exists
+
+    - name: Fail if YUDL collections Workbench logged errors
+      command:
+        argv:
+          - grep
+          - -E
+          - " - ERROR - "
+          - /opt/workbench/logs/collections.log
+      register: yudl_collections_import_errors
+      changed_when: false
+      failed_when: yudl_collections_import_errors.rc != 1
       when: not yudl_collections_import_complete.stat.exists
 
     - name: Mark YUDL collections import complete
@@ -579,9 +655,35 @@
       register: sample_objects_import_complete
       when: env != "production"
 
+    - name: Reset sample objects Workbench logs
+      file:
+        path: "/opt/workbench/logs/{{ item }}"
+        state: absent
+      with_items:
+        - sample-paged.log
+        - sample.log
+        - collection-image.log
+        - contact_categories.log
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
     - name: Add sample objects via islandora workbench
       command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
       with_items: ["paged", "single", "collection-image", "contact_categories"]
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
+    - name: Fail if sample objects Workbench logged errors
+      command:
+        argv:
+          - grep
+          - -E
+          - " - ERROR - "
+          - /opt/workbench/logs/sample-paged.log
+          - /opt/workbench/logs/sample.log
+          - /opt/workbench/logs/collection-image.log
+          - /opt/workbench/logs/contact_categories.log
+      register: sample_objects_import_errors
+      changed_when: false
+      failed_when: sample_objects_import_errors.rc != 1
       when: env != "production" and not sample_objects_import_complete.stat.exists
 
     - name: Mark sample objects import complete
