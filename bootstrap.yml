@@ -1,5 +1,4 @@
 ---
-
 - name: Bootstrap setup
   hosts: all
   become: true

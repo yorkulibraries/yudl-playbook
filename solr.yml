@@ -1,5 +1,4 @@
 ---
-
 - name: Setup, configure, and install Solr
   hosts: solr
   become: true
@@ -15,7 +14,6 @@
     - Islandora-Devops.cantaloupe
 
   tasks:
-
     - name: Check if Kakadu library path is in ldconfig cache
       shell: ldconfig -p | grep -q /opt/kakadu/lib/Linux-x86-64
       register: ldconfig_check

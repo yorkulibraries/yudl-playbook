@@ -1,5 +1,4 @@
 ---
-
 - name: Setup, configure, and install Crayfish
   hosts: crayfish
   become: true

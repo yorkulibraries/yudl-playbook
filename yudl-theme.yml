@@ -1,5 +1,4 @@
 ---
-
 - name: Setup, configure, and install YUDL Drupal Theme
   hosts: webserver
   become: true
@@ -11,7 +10,6 @@
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
 
   tasks:
-
     - name: Ensure york_drupal_theme directory exists
       file:
         path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"

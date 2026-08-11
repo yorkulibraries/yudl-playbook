@@ -1,5 +1,4 @@
 ---
-
 - name: YUDL specific installation configurations, tweaks, migrations, and adding sample data
   hosts: webserver
   become: true
@@ -373,16 +372,28 @@
       changed_when: false
       failed_when: false
       loop:
-        - {key: "restricted", value: "islandora_access"}
-        - {key: "york_university", value: "islandora_access"}
-        - {key: "media-type-access-fields.audio", value: "field_access_terms"}
-        - {key: "media-type-access-fields.document", value: "field_access_terms"}
-        - {key: "media-type-access-fields.extracted_text", value: "field_access_terms"}
-        - {key: "media-type-access-fields.file", value: "field_access_terms"}
-        - {key: "media-type-access-fields.image", value: "field_access_terms"}
-        - {key: "media-type-access-fields.remote_video", value: "field_access_terms"}
-        - {key: "media-type-access-fields.video", value: "field_access_terms"}
-        - {key: "node-type-access-fields.islandora_object", value: "field_access_terms"}
+        - { key: "restricted", value: "islandora_access" }
+        - { key: "york_university", value: "islandora_access" }
+        - { key: "media-type-access-fields.audio", value: "field_access_terms" }
+        - {
+            key: "media-type-access-fields.document",
+            value: "field_access_terms",
+          }
+        - {
+            key: "media-type-access-fields.extracted_text",
+            value: "field_access_terms",
+          }
+        - { key: "media-type-access-fields.file", value: "field_access_terms" }
+        - { key: "media-type-access-fields.image", value: "field_access_terms" }
+        - {
+            key: "media-type-access-fields.remote_video",
+            value: "field_access_terms",
+          }
+        - { key: "media-type-access-fields.video", value: "field_access_terms" }
+        - {
+            key: "node-type-access-fields.islandora_object",
+            value: "field_access_terms",
+          }
       loop_control:
         index_var: islandora_group_config_index
 
@@ -390,16 +401,28 @@
       command: >
         {{ drush_path }} --root {{ drupal_core_path }} -y -l localhost:{{ apache_listen_port }} cset islandora_group.config {{ item.key }} {{ item.value }}
       loop:
-        - {key: "restricted", value: "islandora_access"}
-        - {key: "york_university", value: "islandora_access"}
-        - {key: "media-type-access-fields.audio", value: "field_access_terms"}
-        - {key: "media-type-access-fields.document", value: "field_access_terms"}
-        - {key: "media-type-access-fields.extracted_text", value: "field_access_terms"}
-        - {key: "media-type-access-fields.file", value: "field_access_terms"}
-        - {key: "media-type-access-fields.image", value: "field_access_terms"}
-        - {key: "media-type-access-fields.remote_video", value: "field_access_terms"}
-        - {key: "media-type-access-fields.video", value: "field_access_terms"}
-        - {key: "node-type-access-fields.islandora_object", value: "field_access_terms"}
+        - { key: "restricted", value: "islandora_access" }
+        - { key: "york_university", value: "islandora_access" }
+        - { key: "media-type-access-fields.audio", value: "field_access_terms" }
+        - {
+            key: "media-type-access-fields.document",
+            value: "field_access_terms",
+          }
+        - {
+            key: "media-type-access-fields.extracted_text",
+            value: "field_access_terms",
+          }
+        - { key: "media-type-access-fields.file", value: "field_access_terms" }
+        - { key: "media-type-access-fields.image", value: "field_access_terms" }
+        - {
+            key: "media-type-access-fields.remote_video",
+            value: "field_access_terms",
+          }
+        - { key: "media-type-access-fields.video", value: "field_access_terms" }
+        - {
+            key: "node-type-access-fields.islandora_object",
+            value: "field_access_terms",
+          }
       loop_control:
         index_var: islandora_group_config_index
       when: (islandora_group_config_current.results[islandora_group_config_index].stdout | trim) != item.value
@@ -561,8 +584,8 @@
 
     - name: Add vagrant user to webserver app user group
       user: name={{ vagrant_user }}
-            groups={{ webserver_app_user }}
-            append=yes
+        groups={{ webserver_app_user }}
+        append=yes
 
     - name: Chown islandora core feature
       file:
@@ -759,7 +782,7 @@
 
     - name: Add Creators menu item
       command: >
-         {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
+        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
       when: "'missing' in creators_menu_item.stdout"
 
     - name: Check if Islandora Mirador is already installed with composer

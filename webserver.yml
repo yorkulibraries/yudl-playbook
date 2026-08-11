@@ -1,5 +1,4 @@
 ---
-
 - name: Setup, configure, and install Apache, PHP, git, composer, drush, Drupal, and OpenSeadragon
   hosts: webserver
   become: true

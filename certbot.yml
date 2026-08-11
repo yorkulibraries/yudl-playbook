@@ -1,5 +1,4 @@
 ---
-
 - name: Setup, configure, and install Certbot
   hosts: webserver
   become: true

@@ -1,5 +1,4 @@
 ---
-
 - name: Setup, configure, and install Alpaca
   hosts: alpaca
   become: true
