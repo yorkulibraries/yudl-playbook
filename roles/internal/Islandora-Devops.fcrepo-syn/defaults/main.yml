@@ -1,7 +1,6 @@
 ---
-
 # Version of Syn to install
-fcrepo_syn_version: 1.1.0
+fcrepo_syn_version: 2.0.1
 
 # Where to store Syn
 fcrepo_syn_folder: /opt/syn

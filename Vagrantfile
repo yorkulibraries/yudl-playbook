@@ -12,12 +12,7 @@ $cpus   = ENV.fetch("ISLANDORA_VAGRANT_CPUS", "4")
 $memory = ENV.fetch("ISLANDORA_VAGRANT_MEMORY", "6156")
 $hostname = ENV.fetch("ISLANDORA_VAGRANT_HOSTNAME", "yudl-dev")
 $virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "YUDL DEV")
-
-# Available boxes are 'islandora/8', 'ubuntu/jammy64', and 'centos/7'.
-# Use an Ubuntu base box to build a dev environment from scratch.
-# Use 'islandora/8' if you just want to download a ready to run VM.
 $vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "bento/ubuntu-24.04")
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", $defaultVagrantBox)
 
 # Build the base box, defaults to install a machine with the existing one.
 $buildBaseBox=ENV.fetch("YUDL_BUILD_BASE", "false").to_s.downcase == "true"
@@ -69,8 +64,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure sync directory
   config.vm.synced_folder ".", home_dir + "/islandora"
-#  config.vm.synced_folder "../yudl_customizations", home_dir + "/yudl_customizations"
-#  config.vm.synced_folder "../islandora_rewrite_drupal_url", home_dir + "/islandora_rewrite_drupal_url"
+  #config.vm.synced_folder "../yudl_customizations", home_dir + "/yudl_customizations"
+  #config.vm.synced_folder "../islandora_rewrite_drupal_url", home_dir + "/islandora_rewrite_drupal_url"
 
   config.vm.network :forwarded_port, guest: 8000, host: 8000 # Apache
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
