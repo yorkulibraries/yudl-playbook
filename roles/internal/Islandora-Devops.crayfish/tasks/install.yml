@@ -15,9 +15,21 @@
     repo: https://github.com/yorkulibraries/Crayfish.git
     dest: "{{ crayfish_install_dir }}"
     version: "{{ crayfish_version_tag }}"
-    force: true
+    force: false
+    update: false
   become: true
   become_user: "{{ crayfish_user }}"
+  register: crayfish_git
+
+- name: Get Crayfish safe.directory entries
+  command: git config --local --get-all safe.directory
+  args:
+    chdir: "{{ crayfish_install_dir }}"
+  become: true
+  become_user: "{{ crayfish_user }}"
+  register: crayfish_safe_dirs
+  changed_when: false
+  failed_when: false
 
 - name: Add Crayfish directory to Git's safe directory list
   command: >
@@ -26,7 +38,9 @@
     chdir: "{{ crayfish_install_dir }}"
   become: true
   become_user: "{{ crayfish_user }}"
-  when: crayfish_install_dir is defined
+  when: >
+    crayfish_install_dir is defined and
+    crayfish_install_dir not in (crayfish_safe_dirs.stdout_lines | default([]))
 
 - name: Set permissions on Crayfish directory
   file:
@@ -45,12 +59,23 @@
   become_user: "{{ crayfish_user }}"
   when: env == "production"
 
+- name: Check if Crayfish vendor autoload files exist
+  stat:
+    path: "{{ crayfish_install_dir }}/{{ item }}/vendor/autoload.php"
+  with_items: "{{ crayfish_services }}"
+  register: crayfish_vendor_autoload
+
 - name: Build crayfish code including dependencies
   composer:
     command: install
     working_dir: "{{ crayfish_install_dir }}/{{ item }}"
   with_items: "{{ crayfish_services }}"
+  loop_control:
+    index_var: crayfish_service_index
   become_user: "{{ crayfish_user }}"
+  when: >
+    crayfish_git.changed or
+    not crayfish_vendor_autoload.results[crayfish_service_index].stat.exists
 
 - name: Get SSL keys
   include_role:
@@ -71,8 +96,8 @@
   file:
     path: "{{ crayfish_log_directory }}"
     state: directory
-    owner: "{{ crayfish_user }}"
-    group: "{{ crayfish_user }}"
+    owner: "{{ crayfish_webserver_app_user }}"
+    group: "{{ crayfish_webserver_app_user }}"
     mode: "0775"
 
 - name: Install crayfish httpd config file

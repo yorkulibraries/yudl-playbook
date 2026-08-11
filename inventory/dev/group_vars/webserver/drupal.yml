@@ -7,8 +7,8 @@ drupal_composer_install_dir: /var/www/html/drupal
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
-  - "drupal/devel:<5.5"
-  - "drush/drush:^12"
+  - "drupal/devel:^5.5"
+  - "drush/drush:^13"
   - "drupal/restui:^1.21"
   - "drupal/search_api_solr:^4.3"
   - "drupal/facets:^2.0"
@@ -16,7 +16,7 @@ drupal_composer_dependencies:
   - "drupal/pdf:^1.2"
   - "drupal/admin_toolbar:^3.4"
   - "drupal/rest_oai_pmh:^2.0@beta"
-  - "drupal/rdf:^2.1"
+  - "drupal/rdf:^3.0@beta"
   - "drupal/hal:^2.0"
   - "drupal/config_update:^2.0@alpha"
   - "easyrdf/easyrdf:^1.1"
@@ -40,17 +40,16 @@ drupal_composer_dependencies:
   - "drupal/views_bulk_operations:^4.2"
   - "drupal/views_bulk_edit:^3.0"
   - "drupal/search_api_autocomplete:^1.8"
-  - "mjordan/islandora_repository_reports:dev-main"
   - "mjordan/islandora_workbench_integration:dev-main"
   - "drupal/eu_cookie_compliance:^1.24"
-  - "drupal/views_block_area:^1.0@beta"
+  - "drupal/views_block_area:^2.0@RC"
   - "drupal/metatag:^2.0"
   - "drupal/term_condition:^2.0"
   - "drupal/addtoany:^2.0"
   - "drupal/twig_tweak:^3.3"
   - "drupal/block_class:^3.0"
   - "drupal/oembed_providers:^2.1"
-  - "drupal/fontawesome:^2.26"
+  - "drupal/fontawesome:^3.0"
   - "drupal/views_data_export:^1.4"
   - "drupal/jquery_ui_slider:^2.1"
   - "drupal/jquery_ui_touch_punch:^1.1"
@@ -61,9 +60,7 @@ drupal_composer_dependencies:
   - "drupal/views_infinite_scroll:^2.0"
   - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.4"
   - "discoverygarden/dgi_actions"
-  - "drupal/eca:^2.1"
   - "drupal/group_action:^1.2"
-  - "drupal/bpmn_io:^2.0"
 drupal_composer_project_package: "drupal/recommended-project:^10.1"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
@@ -77,7 +74,6 @@ drupal_account_name: admin
 drupal_enable_modules:
   - addtoany
   - admin_toolbar
-  - admin_toolbar_links_access_filter
   - admin_toolbar_tools
   - basic_auth
   - block_class
@@ -104,11 +100,6 @@ drupal_enable_modules:
   - islandora_defaults
   - islandora_fits
   - islandora_iiif
-  - islandora_repository_reports
-  - islandora_repository_reports_activemq
-  - islandora_repository_reports_log
-  - islandora_repository_reports_matomo
-    #- islandora_repository_reports_oai_usage
   - islandora_workbench_integration
   - jquery_ui_accordion
   - jquery_ui_slider
@@ -151,11 +142,8 @@ drupal_enable_modules:
   - dgi_actions
   - dgi_actions_handle
   - group_action
-  - eca
-  - eca_base
-  - bpmn_io
-  - eca_user
-  - eca_misc
+  - yudl_oembed
+  - yudl_map
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"

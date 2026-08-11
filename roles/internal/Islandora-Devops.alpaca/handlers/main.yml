@@ -1,0 +1,8 @@
+---
+
+- name: reload systemd and restart alpaca
+  systemd:
+    daemon_reload: true
+    enabled: true
+    state: restarted
+    name: alpaca

@@ -51,7 +51,6 @@
 
 - name: Set permissions on the public files directory
   file:
-    recurse: true
     state: directory
     path: "{{ drupal_public_filesystem }}"
     owner: "{{ webserver_app_user }}"
@@ -111,9 +110,10 @@
 - name: Import features
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults"
   when: >
-    (features_imported is defined and
-    ('islandora_core_feature' not in features_imported or
-     'islandora_defaults' not in features_imported))
+    ('islandora_core_feature' not in (imported_features.stdout|from_json)) or
+    ('islandora_defaults' not in (imported_features.stdout|from_json)) or
+    ((imported_features.stdout|from_json).islandora_core_feature.status != 'Enabled') or
+    ((imported_features.stdout|from_json).islandora_defaults.status != 'Enabled')
 
 - name: Check if EVA views are enabled
   command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
@@ -122,7 +122,7 @@
 
 - name: Enable EVA views
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y ven display_media"
-  when: "(installed_modules.stdout|from_json).eva.status != 'Enabled'"
+  when: "(enabled_modules.stdout|from_json).eva.status != 'Enabled'"
 
 - name: Ensure pdf.js directory exists
   file:
@@ -141,7 +141,6 @@
   file:
     path: "{{ drupal_core_path }}/libraries"
     state: directory
-    recurse: true
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: "1755"

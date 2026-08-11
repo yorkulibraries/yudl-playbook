@@ -6,19 +6,24 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.require_version ">= 2.0.1"
 
+$appleSilicon = RUBY_PLATFORM.include?("darwin") && RbConfig::CONFIG["host_cpu"] == "arm64"
+
 $cpus   = ENV.fetch("ISLANDORA_VAGRANT_CPUS", "4")
 $memory = ENV.fetch("ISLANDORA_VAGRANT_MEMORY", "6156")
 $hostname = ENV.fetch("ISLANDORA_VAGRANT_HOSTNAME", "yudl-dev")
 $virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "YUDL DEV")
 
-# Available boxes are 'islandora/8', ubuntu/bionic64' and 'centos/7'
-# Use 'ubuntu/bionic64' or 'centos/7' to build a dev environment from scratch.
+# Available boxes are 'islandora/8', 'ubuntu/jammy64', and 'centos/7'.
+# Use an Ubuntu base box to build a dev environment from scratch.
 # Use 'islandora/8' if you just want to download a ready to run VM.
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "cloud-image/ubuntu-24.04")
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "bento/ubuntu-24.04")
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", $defaultVagrantBox)
 
 # Build the base box, defaults to install a machine with the existing one.
 $buildBaseBox=ENV.fetch("YUDL_BUILD_BASE", "false").to_s.downcase == "true"
 $useLocalBox = ENV.fetch("YUDL_USE_LOCAL_BOX", "false").to_s.downcase == "true"
+$buildAll = ENV.fetch("YUDL_BUILD_ALL", $appleSilicon ? "true" : "false").to_s.downcase == "true"
+$askVaultPass = ENV.fetch("YUDL_ASK_VAULT_PASS", "false").to_s.downcase == "true"
 $localBoxName = ENV.fetch("YUDL_LOCAL_BOX_NAME", "yudl-base-local")
 
 # Use local box for testing.
@@ -39,10 +44,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = $hostname
 
   # Every Vagrant virtual environment requires a box to build off of.
-  if $buildBaseBox
+  if $buildBaseBox or $buildAll
     config.vm.box = $vagrantBox
   elsif $useLocalBox
     config.vm.box = $localBoxName
+  elsif $appleSilicon
+    config.vm.box = $vagrantBox
   else
     if !$localBaseBox.empty?
       # Use local box file.
@@ -53,11 +60,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  if $appleSilicon
+    config.vm.box_architecture = "arm64"
+  end
+
   # Configure home directory
   home_dir = "/home/" + $vagrantUser
 
   # Configure sync directory
   config.vm.synced_folder ".", home_dir + "/islandora"
+#  config.vm.synced_folder "../yudl_customizations", home_dir + "/yudl_customizations"
+#  config.vm.synced_folder "../islandora_rewrite_drupal_url", home_dir + "/islandora_rewrite_drupal_url"
 
   config.vm.network :forwarded_port, guest: 8000, host: 8000 # Apache
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
@@ -85,9 +98,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.compatibility_mode = "auto"
       ansible.playbook = "playbook.yml"
       ansible.galaxy_role_file = "requirements.yml"
-      ansible.galaxy_command = "ansible-galaxy install --role-file=%{role_file}"
+      ansible.galaxy_command = "ansible-galaxy install --force --role-file=%{role_file}"
       ansible.limit = "all"
-      ansible.raw_arguments = "--ask-vault-pass"
+      ansible.raw_arguments = "--ask-vault-pass" if $askVaultPass
       ansible.inventory_path = "inventory/dev"
       ansible.host_vars = {
         "all" => { "ansible_ssh_user" => $vagrantUser }
@@ -95,6 +108,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.extra_vars = {
         "islandora_distro" => $vagrantBox,
         "yudl_build_base_box" => $buildBaseBox,
+        "yudl_build_all" => $buildAll,
         "env" => "dev"
       }
     end

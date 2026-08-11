@@ -8,7 +8,7 @@
 
   - name: Move existing files sites/default/files
     command: rsync -a --remove-source-files "{{ drupal_core_path }}"/sites/default/files/* /tank/data/drupal/files
-    when: env == "production"and not files_dir.stat.exists
+    when: env == "production" and not files_dir.stat.exists
 
   - name: Remove sites/default/files
     file:

@@ -2,10 +2,5 @@ allowedMimeTypes:
   - "*"
 cmdByMimeType:
   default:
-    cmd: "curl"
-    args:
-      - "-X"
-      - "POST"
-      - "-F"
-      - "datafile=@-"
-      - $CRAYFITS_WEBSERVICE_URI
+    cmd: /opt/scyllaridae/Crayfits/cmd.sh
+    args: []

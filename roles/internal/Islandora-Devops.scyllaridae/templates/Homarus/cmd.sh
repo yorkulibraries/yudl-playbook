@@ -49,8 +49,8 @@ elif [ "$DESTINATION_EXT" = "jpg" ] || [ "$DESTINATION_EXT" = "png" ] ; then
   )
 
   # Add audio visualization for image output from audio input
-  if [[ "$SOURCE_EXT" =~ ^(mp3|wav|flac|aac|ogg|m4a)$ ]]; then
-    cmd+=(-filter_complex "showwavespic=colors=#FFC627" -frames:v 1)
+  if [[ "$SOURCE_EXT" =~ ^(mp3|wav|flac|aac|ogg|m4a|mov)$ ]]; then
+    cmd+=(-filter_complex "showwavespic=colors=#e31837" -frames:v 1)
   fi
 
   cmd+=(

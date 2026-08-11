@@ -20,15 +20,7 @@
     - "alpaca.conf.j2"
     - "alpaca.service.j2"
     - "startup.sh"
-
-- name: Check if service file has changed
-  stat:
-    path: /etc/systemd/system/alpaca.service
-  register: alpaca_service_stat
-
-- name: Set alpaca_service_changed fact
-  set_fact:
-    alpaca_service_changed: "{{ not alpaca_service_stat.stat.exists or alpaca_service_stat.stat.mtime < ansible_date_time.epoch | float }}"
+  notify: reload systemd and restart alpaca
 
 - name: Link service file
   file:
@@ -37,21 +29,17 @@
     owner: "{{ alpaca_user }}"
     group: "{{ alpaca_group }}"
     state: link
+  notify: reload systemd and restart alpaca
 
 - name: Make startup executable
   file:
     path: "{{ alpaca_clone_directory }}/startup.sh"
-    state: touch
+    state: file
     mode: u+rwx,g+rwx,o+rx
+  notify: reload systemd and restart alpaca
 
-- name: Pause while things sort themselves out
-  pause:
-    seconds: 15
-
-- name: Reload systemd and start Alpaca
+- name: Ensure Alpaca is running and enabled
   systemd:
-    daemon-reload: true
     enabled: true
-    state: restarted
+    state: started
     name: alpaca
-  when: alpaca_service_changed

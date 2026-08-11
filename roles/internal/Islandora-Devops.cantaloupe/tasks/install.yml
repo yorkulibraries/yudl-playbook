@@ -24,6 +24,13 @@
 
 - name: Update ldconfig
   command: ldconfig
+  changed_when: false
+
+- name: Check current Cantaloupe path
+  stat:
+    path: "{{ cantaloupe_symlink }}"
+    follow: false
+  register: cantaloupe_path_stat
 
 - name: Install Cantaloupe
   unarchive:
@@ -36,8 +43,14 @@
 
 - name: Remove temporary Canatloupe directory
   file:
-    path: /opt/cantaloupe
+    path: "{{ cantaloupe_symlink }}"
     state: absent
+  when: >
+    cantaloupe_path_stat.stat.exists and
+    (
+      (not cantaloupe_path_stat.stat.islnk) or
+      cantaloupe_path_stat.stat.lnk_source != (cantaloupe_install_root ~ '/cantaloupe-' ~ cantaloupe_version)
+    )
 
 - name: Create Cantaloupe symlink
   file:
@@ -46,6 +59,7 @@
     dest: "{{ cantaloupe_symlink }}"
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
+    force: true
 
 - name: Create Cantaloupe log path
   file:
@@ -61,10 +75,15 @@
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
 
+- name: Detect Debian multiarch library directory
+  command: dpkg-architecture -qDEB_HOST_MULTIARCH
+  register: cantaloupe_deb_host_multiarch
+  changed_when: false
+
 - name: Setup libjpeg-turbo library symlink
   file:
     state: link
-    src: /usr/lib/x86_64-linux-gnu/libturbojpeg.so
+    src: "/usr/lib/{{ cantaloupe_deb_host_multiarch.stdout }}/libturbojpeg.so"
     dest: /opt/libjpeg-turbo/lib/libturbojpeg.so
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
