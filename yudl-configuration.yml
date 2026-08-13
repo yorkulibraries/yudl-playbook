@@ -152,6 +152,13 @@
         dest: /opt/workbench/configs
       with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
 
+    - name: Patch convert_semver_to_number to tolerate dev version suffixes
+      ansible.builtin.replace:
+        path: /opt/islandora_workbench/workbench_utils.py
+        regexp: '^(\s*)int_parts = \[int\(part\) for part in parts\]$'
+        replace: '\1int_parts = [int(re.match(r''\\d+'', part).group()) for part in parts]'
+      when: env != "production"
+
     - name: Get sample data workbench configs
       template:
         src: "{{ item }}.yml"

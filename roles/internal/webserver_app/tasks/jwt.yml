@@ -1,5 +1,4 @@
 ---
-
 - name: Create JWT Key Path
   file:
     state: directory
