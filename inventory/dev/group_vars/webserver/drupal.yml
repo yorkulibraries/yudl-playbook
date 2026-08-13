@@ -32,7 +32,7 @@ drupal_composer_dependencies:
   - "drupal/features:^3.14"
   - "--with-all-dependencies drupal/upgrade_status:^4.3"
   - "drupal/islandora:^2"
-  - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev drupal/openseadragon:^2.2 drupal/controlled_access_terms:^2.4"
+  - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev drupal/openseadragon:^3.0 drupal/controlled_access_terms:^2.4"
   - "islandora-rdm/islandora_fits:dev-8.x-1.x"
   - "drupal/bootstrap_barrio:^5.5"
   - "drupal/simple_sitemap:^4.1"
