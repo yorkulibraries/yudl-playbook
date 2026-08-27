@@ -12,7 +12,7 @@
   tasks:
     - name: Ensure york_drupal_theme directory exists
       file:
-        path: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
+        path: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
@@ -22,14 +22,14 @@
       become_user: "{{ webserver_app_user }}"
       git:
         repo: https://github.com/yorkulibraries/york_drupal_theme.git
-        dest: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
+        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
         version: main
         update: true
       register: york_theme_repo
 
     - name: Chown york_drupal_theme
       file:
-        dest: "{{ drupal_core_path }}/themes/custom/yudl_drupal_theme"
+        dest: "{{ drupal_core_path }}/themes/custom/york_drupal_theme"
         state: directory
         owner: "{{ webserver_app_user }}"
         group: "{{ webserver_app_user }}"
