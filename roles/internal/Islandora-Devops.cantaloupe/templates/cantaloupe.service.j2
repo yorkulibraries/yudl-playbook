@@ -1,0 +1,15 @@
+[Unit]
+Description=Cantaloupe IIIF Image Server
+After=network.target
+[Service]
+User=cantaloupe
+Group=cantaloupe
+Type=simple
+ExecStart=/usr/bin/java -Dcantaloupe.config='{{ cantaloupe_symlink }}/cantaloupe.properties' -Xmx2g -jar '{{ cantaloupe_symlink }}/cantaloupe-{{ cantaloupe_version }}.jar'
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=cantaloupe
+[Install]
+WantedBy=multi-user.target

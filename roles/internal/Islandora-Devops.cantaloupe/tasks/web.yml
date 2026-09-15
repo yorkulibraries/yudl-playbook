@@ -1,10 +1,12 @@
 ---
+- name: Template Cantaloupe service file
+  template:
+    src: "cantaloupe.service.j2"
+    dest: /etc/systemd/system/cantaloupe.service
 
-- name: Install Cantaloupe web service
-  copy:
-    remote_src: yes
-    src: /opt/cantaloupe-{{ cantaloupe_version }}/cantaloupe-{{ cantaloupe_version }}.war
-    dest: "{{ cantaloupe_deploy_war_path }}/{{ cantaloupe_deploy_war_filename }}.war"
-    owner: "{{ cantaloupe_user }}"
-    group: "{{ cantaloupe_group }}"
-    mode: "0644"
+- name: Ensure Cantaloupe is running and enabled
+  systemd:
+    daemon_reload: true
+    enabled: true
+    state: started
+    name: cantaloupe

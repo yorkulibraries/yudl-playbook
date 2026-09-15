@@ -1,4 +1,19 @@
 ---
+- name: Create Cantaloupe system group
+  group:
+    name: "{{ cantaloupe_group }}"
+    system: true
+    state: present
+
+- name: Create Cantaloupe system user
+  user:
+    name: "{{ cantaloupe_user }}"
+    group: "{{ cantaloupe_group }}"
+    system: true
+    state: present
+    shell: /usr/sbin/nologin
+    create_home: false
+
 - name: Check if Cantaloupe directory exists
   stat:
     path: /opt/cantaloupe

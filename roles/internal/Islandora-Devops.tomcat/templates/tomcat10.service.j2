@@ -20,7 +20,7 @@ Environment="JAVA_OPTS=${JAVA_OPTS} -Djava.awt.headless=true -Dfile.encoding=UTF
 Environment="CATALINA_HOME=/usr/share/tomcat10"
 Environment="CATALINA_BASE=/var/lib/tomcat10"
 Environment="CATALINA_TMPDIR=/tmp"
-Environment="CATALINA_OPTS=-Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -Dcantaloupe.config={{ cantaloupe_symlink }}/cantaloupe.properties -Dfits.home={{ fits_install_symlink }} -Dfcrepo.home={{ fcrepo_home_dir }} -Dfcrepo.activemq.configuration=file://{{ fcrepo_home_dir }}/configs/activemq.xml -Dfcrepo.velocity.runtime.log=/var/log/tomcat10/velocity.log -Dfcrepo.autoversioning.enabled=false -Dfcrepo.storage=ocfl-fs -Dfcrepo.activemq.directory=file:///{{ fcrepo_home_dir }}/Activemq -Dfcrepo.external.content.allowed={{ fcrepo_home_dir }}/configs/allowed-external-content.txt -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
+Environment="CATALINA_OPTS=-Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -Dcantaloupe.config={{ cantaloupe_symlink }}/cantaloupe.properties -Dfits.home={{ fits_install_symlink }} -Dfcrepo.home={{ fcrepo_home_dir }} -Dfcrepo.activemq.configuration=file://{{ fcrepo_home_dir }}/configs/activemq.xml -Dfcrepo.velocity.runtime.log=/var/log/tomcat10/velocity.log -Dfcrepo.autoversioning.enabled=false -Dfcrepo.storage=ocfl-fs -Dfcrepo.activemq.directory=file:///{{ fcrepo_home_dir }}/Activemq -Dfcrepo.external.content.allowed={{ fcrepo_home_dir }}/configs/allowed-external-content.txt -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
 
 # Lifecycle
 Type=simple

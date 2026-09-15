@@ -1,16 +1,30 @@
 ---
+- name: Create Cantaloupe system group
+  group:
+    name: "{{ cantaloupe_group }}"
+    system: true
+    state: present
+
+- name: Create Cantaloupe system user
+  user:
+    name: "{{ cantaloupe_user }}"
+    group: "{{ cantaloupe_group }}"
+    system: true
+    state: present
+    shell: /usr/sbin/nologin
+    create_home: false
 
 - name: Create Kakaku home
   file:
     path: "/opt/kakadu"
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
-    recurse: yes
+    recurse: true
     state: directory
 
 - name: Get Kakadu
   unarchive:
-    remote_src: yes
+    remote_src: true
     src: https://alpha.library.yorku.ca/kakadu.tar.gz
     dest: /opt/kakadu
     owner: "{{ cantaloupe_user }}"
@@ -34,7 +48,7 @@
 
 - name: Install Cantaloupe
   unarchive:
-    remote_src: yes
+    remote_src: true
     src: https://github.com/medusa-project/cantaloupe/releases/download/v{{ cantaloupe_version }}/cantaloupe-{{ cantaloupe_version }}.zip
     dest: "{{ cantaloupe_install_root }}"
     owner: "{{ cantaloupe_user }}"

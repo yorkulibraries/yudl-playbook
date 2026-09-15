@@ -1,15 +1,15 @@
 ---
 fits_download_dir: /usr/local/src
-fits_version: 1.5.1
-fits_ws_version: 1.2.1
+fits_version: 1.6.0
+fits_ws_version: 2.1.0
 fits_install_root: /opt
 fits_install_symlink: /opt/fits
 fits_user: tomcat
 fits_group: tomcat
-fits_ws: yes
+fits_ws: true
 fits_src_url: "https://github.com/harvard-lts/fits/releases/download/{{ fits_version }}/fits-{{ fits_version }}.zip"
-fits_zip_md5sum: "md5: 4a5f22ee878ec93a0d2c7f5e1cf505ed"
-fits_ws_md5sum: "md5: 230af06449b3a219041f0466f3d45494"
+fits_zip_md5sum: "md5: fbdf4ebdfd78263109c9a2a49f9e8cde"
+fits_ws_md5sum: "md5: b5f6936734ea2fa9556cdf89224667a3"
 webserver_app_user: "{% if ansible_os_family == 'RedHat' %}apache{% else %}www-data{% endif %}"
 vagrant_user: "vagrant"
 fits_max_upload_file_size_MB: 2000

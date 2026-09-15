@@ -11,7 +11,7 @@
     - role: geerlingguy.java
       when: "ansible_os_family == 'Debian'"
       java_packages:
-        - openjdk-11-jdk
+        - openjdk-17-jdk
     - Islandora-Devops.tomcat
     - geerlingguy.solr
     - Islandora-Devops.cantaloupe

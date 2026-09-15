@@ -1,5 +1,4 @@
 ---
-
 fcrepo_syn_user: tomcat
 
 fits_user: tomcat
@@ -61,15 +60,14 @@ fcrepo_syn_tokens:
       - fedoraAdmin
     token: "{{ islandora_syn_token }}"
 
-fcrepo_version: "6.4.1"
+fcrepo_version: "7.0.0"
 fcrepo_auth_header_name: "X-Islandora"
 fcrepo_syn_auth_header: "X-Islandora"
 fcrepo_syn_folder: /opt/syn
 
-cantaloupe_deploy_war: yes
-cantaloupe_deploy_war_path: "{{ tomcat_home }}/webapps"
-cantaloupe_user: tomcat
-cantaloupe_group: tomcat
+cantaloupe_deploy_war: true
+cantaloupe_user: cantaloupe
+cantaloupe_group: cantaloupe
 cantaloupe_admin_enabled: "true"
 cantaloupe_OpenJpegProcessor_path_to_binaries: /usr/bin
 cantaloupe_log_application_ConsoleAppender_enabled: "false"

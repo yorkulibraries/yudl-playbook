@@ -1,8 +1,6 @@
 # Ansible Role: Cantaloupe
 
-An Ansible role that installs [Cantaloupe](https://github.com/medusa-project/cantaloupe) in a Tomcat servlet container on:
-
-* Ubuntu Xenial
+An Ansible role that installs [Cantaloupe](https://github.com/medusa-project/cantaloupe).
 
 ## Role Variables
 
@@ -22,12 +20,6 @@ cantaloupe_user: cantaloupe
 # Cantaloupe group
 cantaloupe_group: cantaloupe
 
-# Whether to automatically deploy the war file
-cantaloupe_deploy_war: no
-# Where to deploy the war to
-cantaloupe_deploy_war_path: /path/to/tomcat/webapps
-# Name for the deployed war (minus .war), this is the context path
-cantaloupe_deploy_war_filename: cantaloupe
 # Create the filesystem cache directory automatically
 cantaloupe_create_FilesystemCache_dir: no
 ```
@@ -36,7 +28,7 @@ There are many more options available and documented in the [defaults/main.yml](
 
 ## Dependencies
 
-* A tomcat container like [islandora.tomcat](https://github.com/Islandora-DevOps/ansible-role-tomcat)
+* Java
   
 ## Example Playbook
 

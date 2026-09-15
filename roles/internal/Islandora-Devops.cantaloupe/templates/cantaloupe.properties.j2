@@ -13,14 +13,12 @@ temp_pathname = {{ cantaloupe_temp_pathname }}
 http.enabled = {{ cantaloupe_http_enabled }}
 http.host = {{ cantaloupe_http_host }}
 http.port = {{ cantaloupe_http_port }}
-http.http2.enabled = {{ cantaloupe_http2_enabled }}
 
 # !! Configures the HTTPS server. (Standalone mode only.)
 https.enabled = {{ cantaloupe_https_enabled }}
 https.host = {{ cantaloupe_https_host }}
 https.port = {{ cantaloupe_https_port }}
 # Secure HTTP/2 requires Java 9 or later.
-https.http2.enabled = {{ cantaloupe_https2_enabled }}
 
 # !! Available values are `JKS` and `PKCS12`. (Standalone mode only.)
 https.key_store_type = {{ cantaloupe_https_key_store_type }}
@@ -46,12 +44,10 @@ slash_substitute = {{ cantaloupe_slash_substitute }}
 
 # Parses an identifier's scale constraint suffix.
 # This key only applies to versions >= 4.1.9 and < 5.0.
-scale_constraint_suffix.pattern = -(\d+):(\d+)\b
 
 # Converts a scale constraint suffix to its URL format. {n} and {d} are the
 # numerator and denominator, respectively.
 # This key only applies to versions >= 4.1.9 and < 5.0.
-scale_constraint_suffix.format = -{n}:{d}
 
 # Maximum number of pixels to return in a response, to prevent overloading
 # the server. Requests for more pixels than this will receive an error
@@ -78,7 +74,6 @@ delegate_script.pathname = {{ cantaloupe_delegate_script_pathname }}
 
 # Enables the invocation cache, which caches method invocations and return
 # values in memory. See the user manual for more information.
-delegate_script.cache.enabled = {{ cantaloupe_delegate_script_cache_enabled }}
 
 ###########################################################################
 # ENDPOINTS
@@ -93,7 +88,6 @@ endpoint.iiif.2.enabled = {{ cantaloupe_endpoint_iiif_2_enabled }}
 # Controls the response Content-Disposition header for images. Allowed
 # values are `inline`, `attachment`, and `none`. This can be overridden
 # using the ?response-content-disposition query argument.
-endpoint.iiif.content_disposition = {{ cantaloupe_endpoint_iiif_content_disposition }}
 
 # Minimum size that will be used in info.json `sizes` keys.
 endpoint.iiif.min_size = {{ cantaloupe_endpoint_iiif_min_size }}
@@ -104,7 +98,7 @@ endpoint.iiif.min_tile_size = {{ cantaloupe_endpoint_iiif_min_tile_size }}
 
 # If true, requests for sizes other than those contained in an information
 # response will be denied.
-endpoint.iiif.2.restrict_to_sizes = {{ cantaloupe_endpoint_iiif_2_restrict_to_sizes }}
+endpoint.iiif.restrict_to_sizes = {{ cantaloupe_endpoint_iiif_2_restrict_to_sizes }}
 
 # Enables the Control Panel, at /admin.
 endpoint.admin.enabled = {{ cantaloupe_admin_enabled }}
@@ -366,11 +360,9 @@ processor.sharpen = {{ cantaloupe_processor_sharpen }}
 
 # Attempts to copy source image metadata (EXIF, IPTC, XMP) into derivative
 # images. (This is not foolproof; see the user manual.)
-processor.metadata.preserve = {{ cantaloupe_processor_metadata_preserve }}
 
 # Whether to auto-rotate images using the EXIF `Orientation` field.
 # The check for this field can impair performance slightly.
-processor.metadata.respect_orientation = {{ cantaloupe_processor_metadata_respect_orientation }}
 
 # Progressive JPEGs are usually more compact.
 processor.jpg.progressive = {{ cantaloupe_processor_jpg_progressive }}
@@ -412,7 +404,6 @@ FfmpegProcessor.path_to_binaries = {{ cantaloupe_FfmpegProcessor_path_to_binarie
 
 # !! Optional absolute path of the directory containing the GraphicsMagick
 # binary. Overrides the PATH.
-GraphicsMagickProcessor.path_to_binaries = {{ cantaloupe_GraphicsMagickProcessor_path_to_binaries }}
 
 #----------------------------------------
 # ImageMagickProcessor
@@ -420,7 +411,6 @@ GraphicsMagickProcessor.path_to_binaries = {{ cantaloupe_GraphicsMagickProcessor
 
 # !! Optional absolute path of the directory containing the ImageMagick
 # binary. Overrides the PATH.
-ImageMagickProcessor.path_to_binaries = {{ cantaloupe_ImageMagickProcessor_path_to_binaries }}
 
 #----------------------------------------
 # KakaduDemoProcessor
@@ -581,7 +571,6 @@ S3Cache.object_key_prefix = {{ cantaloupe_AmazonS3Cache_object_key_prefix }}
 
 # !! Maximum number of concurrent HTTP connections to AWS. Leave blank to
 # use the default.
-S3Cache.max_connections = {{ cantaloupe_S3Cache_max_connections }}
 
 #----------------------------------------
 # AzureStorageCache
@@ -613,7 +602,7 @@ RedisCache.database = {{ cantaloupe_RedisCache_database }}
 ###########################################################################
 
 # Whether to enable overlays.
-overlays.enabled = {{ cantaloupe_overlays_enabled }}
+overlays.BasicStrategy.enabled = {{ cantaloupe_overlays_enabled }}
 
 # Controls how overlays are configured. `BasicStrategy` will use the
 # `overlays.BasicStrategy.*` keys in this section. `ScriptStrategy` will
@@ -681,7 +670,6 @@ overlays.BasicStrategy.output_height_threshold = {{ cantaloupe_overlays_BasicStr
 ###########################################################################
 
 # See the user manual for information about how redactions work.
-redaction.enabled = {{ cantaloupe_redaction_enabled }}
 
 ###########################################################################
 # LOGGING
