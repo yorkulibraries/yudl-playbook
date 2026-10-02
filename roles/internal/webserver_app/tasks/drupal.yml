@@ -37,6 +37,7 @@
       $settings['redis.connection']['port'] = '6379';
       $settings['cache']['default'] = 'cache.backend.redis';
       $settings['container_yamls'][] = 'sites/default/redis.services.yml';
+      $settings['enable_html5_validation'] = TRUE;
     path: "{{ drupal_trusted_hosts_file }}"
     marker: // {mark} ANSIBLE MANAGED BLOCK
 
