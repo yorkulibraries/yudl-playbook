@@ -1,0 +1,18 @@
+uuid: 0545c554-c3c1-4290-a341-3e0abd4528ec
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.extracted_text
+id: media.extracted_text.changed
+field_name: changed
+entity_type: media
+bundle: extracted_text
+label: Changed
+description: 'The time the media item was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

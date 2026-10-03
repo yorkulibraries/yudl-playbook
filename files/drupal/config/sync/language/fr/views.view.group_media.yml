@@ -1,0 +1,65 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      fields:
+        name:
+          label: 'Nom du média'
+          separator: ', '
+        bundle:
+          label: Type
+          separator: ', '
+        status:
+          label: État
+          separator: ', '
+        uid:
+          label: Éditeur
+          separator: ', '
+        edit_media:
+          label: 'Modifier le média'
+          text: 'Modifier le média'
+        delete_media:
+          text: 'Suppression de média'
+        edit_group_relationship:
+          label: 'Lien vers la modification de la relation de groupe'
+        dropbutton:
+          label: Actions
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        gid:
+          exception:
+            title: Tout
+      filters:
+        status:
+          expose:
+            label: État
+          group_info:
+            label: État
+            group_items:
+              1:
+                title: Publié
+              2:
+                title: 'Non publié'
+        bundle:
+          expose:
+            label: 'Type de média'
+  page_1:
+    display_title: Page
+    display_options:
+      menu:
+        title: Média

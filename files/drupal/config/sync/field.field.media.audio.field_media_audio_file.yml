@@ -1,0 +1,37 @@
+uuid: bbb0010f-176a-4caa-9f65-480fb2bba9fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_audio_file
+    - media.type.audio
+  module:
+    - file
+    - filehash
+  enforced:
+    module:
+      - islandora_core_feature
+third_party_settings:
+  filehash:
+    dedupe: 0
+    dedupe_original: false
+_core:
+  default_config_hash: Dxz-WEngY38KoRu0t1OD9c63Yysfs3GDAf2wndSH408
+id: media.audio.field_media_audio_file
+field_name: field_media_audio_file
+entity_type: media
+bundle: audio
+label: 'Fichier audio'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'mp3 wav aac flac mp2 m4a'
+  max_filesize: ''
+  description_field: false
+field_type: file

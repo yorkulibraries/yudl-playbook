@@ -1,0 +1,52 @@
+uuid: 56289bd5-2e32-4d95-b701-3f4a0369709f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.continent.field_authority_link
+    - field.field.taxonomy_term.continent.field_geo_alt_name
+    - field.field.taxonomy_term.continent.field_geo_broader
+    - field.field.taxonomy_term.continent.field_geo_geolocation
+    - taxonomy.vocabulary.continent
+  module:
+    - controlled_access_terms
+    - text
+_core:
+  default_config_hash: bediSWdMgnmvxpgN84i8Qcdrh9ZtEh_n0XiD5d-q6nI
+id: taxonomy_term.continent.default
+targetEntityType: taxonomy_term
+bundle: continent
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_authority_link:
+    type: authority_formatter_default
+    label: inline
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: _blank
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_geo_alt_name:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  field_geo_broader: true
+  field_geo_geolocation: true
+  langcode: true
+  search_api_excerpt: true

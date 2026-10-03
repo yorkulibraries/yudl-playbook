@@ -1,0 +1,32 @@
+uuid: a9c781b3-d1d3-4dd3-ae98-1d492cae73ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.subjects
+  module:
+    - facets
+    - islandora
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: 5R2fJDpISg-JtBXId3gTaSIUp566V0KP8482HQ5YJnU
+id: subjects
+theme: york_drupal_theme
+region: sidebar_first
+weight: -4
+provider: null
+plugin: 'facet_block:subjects'
+settings:
+  id: 'facet_block:subjects'
+  label: Subjects
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: subjects
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

@@ -1,0 +1,27 @@
+uuid: 91e2f7e0-9ec8-4cd2-bedd-2d0b036e13a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: 5-CaRUCAc5IVfJra073peVtDXEupk_MCFk1JzB4u79I
+id: york_drupal_theme_main_menu
+theme: york_drupal_theme
+region: primary_menu
+weight: -9
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

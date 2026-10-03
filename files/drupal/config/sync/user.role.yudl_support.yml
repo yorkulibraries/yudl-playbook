@@ -1,0 +1,235 @@
+uuid: cf6d1487-1be2-4a97-9a35-4350fe072aeb
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.full_html
+    - media.type.audio
+    - media.type.document
+    - media.type.extracted_text
+    - media.type.file
+    - media.type.fits_technical_metadata
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video
+    - node.type.islandora_object
+    - node.type.page
+    - taxonomy.vocabulary.city
+    - taxonomy.vocabulary.city_section
+    - taxonomy.vocabulary.continent
+    - taxonomy.vocabulary.corporate_body
+    - taxonomy.vocabulary.country
+    - taxonomy.vocabulary.county
+    - taxonomy.vocabulary.family
+    - taxonomy.vocabulary.genre
+    - taxonomy.vocabulary.geo_location
+    - taxonomy.vocabulary.language
+    - taxonomy.vocabulary.person
+    - taxonomy.vocabulary.physical_form
+    - taxonomy.vocabulary.province
+    - taxonomy.vocabulary.region
+    - taxonomy.vocabulary.resource_types
+    - taxonomy.vocabulary.rights
+    - taxonomy.vocabulary.subject
+    - taxonomy.vocabulary.tags
+    - taxonomy.vocabulary.temporal_subjects
+  module:
+    - content_translation
+    - file
+    - file_replace
+    - filter
+    - group
+    - group_permissions
+    - groupmedia
+    - honeypot
+    - islandora
+    - locale
+    - media
+    - node
+    - protected_forms
+    - system
+    - taxonomy
+id: yudl_support
+label: 'YUDL Support'
+weight: 6
+is_admin: null
+permissions:
+  - 'access content'
+  - 'access content overview'
+  - 'access files overview'
+  - 'access group overview'
+  - 'access media overview'
+  - 'access user profiles'
+  - 'administer account settings'
+  - 'administer group'
+  - 'administer groupmedia'
+  - 'administer media'
+  - 'administer users'
+  - 'bypass honeypot protection'
+  - 'bypass node access'
+  - 'bypass protected forms validation'
+  - 'create audio media'
+  - 'create document media'
+  - 'create extracted_text media'
+  - 'create file media'
+  - 'create fits_technical_metadata media'
+  - 'create image media'
+  - 'create islandora_object content'
+  - 'create media'
+  - 'create remote_video media'
+  - 'create terms in city'
+  - 'create terms in city_section'
+  - 'create terms in continent'
+  - 'create terms in corporate_body'
+  - 'create terms in country'
+  - 'create terms in county'
+  - 'create terms in family'
+  - 'create terms in genre'
+  - 'create terms in geo_location'
+  - 'create terms in language'
+  - 'create terms in person'
+  - 'create terms in physical_form'
+  - 'create terms in province'
+  - 'create terms in region'
+  - 'create terms in resource_types'
+  - 'create terms in rights'
+  - 'create terms in subject'
+  - 'create terms in tags'
+  - 'create terms in temporal_subjects'
+  - 'create video media'
+  - 'delete any audio media'
+  - 'delete any audio media revisions'
+  - 'delete any document media'
+  - 'delete any document media revisions'
+  - 'delete any extracted_text media'
+  - 'delete any extracted_text media revisions'
+  - 'delete any file media'
+  - 'delete any file media revisions'
+  - 'delete any fits_technical_metadata media'
+  - 'delete any fits_technical_metadata media revisions'
+  - 'delete any image media'
+  - 'delete any image media revisions'
+  - 'delete any islandora_object content'
+  - 'delete any media'
+  - 'delete any remote_video media'
+  - 'delete any remote_video media revisions'
+  - 'delete any video media'
+  - 'delete any video media revisions'
+  - 'delete media'
+  - 'delete own audio media'
+  - 'delete own document media'
+  - 'delete own extracted_text media'
+  - 'delete own file media'
+  - 'delete own fits_technical_metadata media'
+  - 'delete own image media'
+  - 'delete own islandora_object content'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'delete terms in city'
+  - 'delete terms in city_section'
+  - 'delete terms in continent'
+  - 'delete terms in corporate_body'
+  - 'delete terms in country'
+  - 'delete terms in county'
+  - 'delete terms in family'
+  - 'delete terms in genre'
+  - 'delete terms in geo_location'
+  - 'delete terms in language'
+  - 'delete terms in person'
+  - 'delete terms in physical_form'
+  - 'delete terms in province'
+  - 'delete terms in region'
+  - 'delete terms in resource_types'
+  - 'delete terms in rights'
+  - 'delete terms in subject'
+  - 'delete terms in tags'
+  - 'delete terms in temporal_subjects'
+  - 'edit any audio media'
+  - 'edit any document media'
+  - 'edit any extracted_text media'
+  - 'edit any file media'
+  - 'edit any fits_technical_metadata media'
+  - 'edit any image media'
+  - 'edit any islandora_object content'
+  - 'edit any remote_video media'
+  - 'edit any video media'
+  - 'edit group permission entities'
+  - 'edit own audio media'
+  - 'edit own document media'
+  - 'edit own extracted_text media'
+  - 'edit own file media'
+  - 'edit own fits_technical_metadata media'
+  - 'edit own image media'
+  - 'edit own islandora_object content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'edit terms in continent'
+  - 'edit terms in corporate_body'
+  - 'edit terms in country'
+  - 'edit terms in county'
+  - 'edit terms in family'
+  - 'edit terms in genre'
+  - 'edit terms in geo_location'
+  - 'edit terms in language'
+  - 'edit terms in person'
+  - 'edit terms in physical_form'
+  - 'edit terms in province'
+  - 'edit terms in region'
+  - 'edit terms in resource_types'
+  - 'edit terms in rights'
+  - 'edit terms in subject'
+  - 'edit terms in tags'
+  - 'edit terms in temporal_subjects'
+  - 'manage media'
+  - 'manage members'
+  - 'replace files'
+  - 'revert any audio media revisions'
+  - 'revert any document media revisions'
+  - 'revert any extracted_text media revisions'
+  - 'revert any file media revisions'
+  - 'revert any fits_technical_metadata media revisions'
+  - 'revert any image media revisions'
+  - 'revert any remote_video media revisions'
+  - 'revert any video media revisions'
+  - 'revert islandora_object revisions'
+  - 'translate city taxonomy_term'
+  - 'translate city_section taxonomy_term'
+  - 'translate continent taxonomy_term'
+  - 'translate corporate_body taxonomy_term'
+  - 'translate country taxonomy_term'
+  - 'translate county taxonomy_term'
+  - 'translate family taxonomy_term'
+  - 'translate genre taxonomy_term'
+  - 'translate geo_location taxonomy_term'
+  - 'translate interface'
+  - 'translate islandora_object node'
+  - 'translate language taxonomy_term'
+  - 'translate page node'
+  - 'translate person taxonomy_term'
+  - 'translate physical_form taxonomy_term'
+  - 'translate province taxonomy_term'
+  - 'translate region taxonomy_term'
+  - 'translate resource_types taxonomy_term'
+  - 'translate rights taxonomy_term'
+  - 'translate subject taxonomy_term'
+  - 'update any media'
+  - 'update content translations'
+  - 'update media'
+  - 'use text format basic_html'
+  - 'use text format full_html'
+  - 'view all media revisions'
+  - 'view any audio media revisions'
+  - 'view any document media revisions'
+  - 'view any extracted_text media revisions'
+  - 'view any file media revisions'
+  - 'view any fits_technical_metadata media revisions'
+  - 'view any image media revisions'
+  - 'view any remote_video media revisions'
+  - 'view any video media revisions'
+  - 'view checksums'
+  - 'view islandora_object revisions'
+  - 'view media'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view user email addresses'

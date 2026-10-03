@@ -1,0 +1,29 @@
+uuid: 183afdea-ed31-4ca7-96c6-4f4c9de89bac
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.feedback
+    - field.storage.contact_message.field_category
+    - taxonomy.vocabulary.contact_categories
+id: contact_message.feedback.field_category
+field_name: field_category
+entity_type: contact_message
+bundle: feedback
+label: Category
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      contact_categories: contact_categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

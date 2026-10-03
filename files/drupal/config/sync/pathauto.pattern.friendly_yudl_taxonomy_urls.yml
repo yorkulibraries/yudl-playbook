@@ -1,0 +1,70 @@
+uuid: 42edf901-843c-48a9-9357-e2d1ba051c9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.city
+    - taxonomy.vocabulary.city_section
+    - taxonomy.vocabulary.continent
+    - taxonomy.vocabulary.corporate_body
+    - taxonomy.vocabulary.country
+    - taxonomy.vocabulary.county
+    - taxonomy.vocabulary.family
+    - taxonomy.vocabulary.genre
+    - taxonomy.vocabulary.geo_location
+    - taxonomy.vocabulary.language
+    - taxonomy.vocabulary.person
+    - taxonomy.vocabulary.physical_form
+    - taxonomy.vocabulary.province
+    - taxonomy.vocabulary.region
+    - taxonomy.vocabulary.resource_types
+    - taxonomy.vocabulary.rights
+    - taxonomy.vocabulary.subject
+    - taxonomy.vocabulary.temporal_subjects
+  module:
+    - language
+    - taxonomy
+_core:
+  default_config_hash: 9NhOdEQNV9v34QjIm6dB1hYajGK0t2kIVzo4NmHm-Jc
+id: friendly_yudl_taxonomy_urls
+label: 'Friendly yudl taxonomy urls'
+type: 'canonical_entities:taxonomy_term'
+pattern: '/[term:vocabulary]/[term:name]'
+selection_criteria:
+  2dab87f2-3d1d-4544-a444-c216fe311ea9:
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    bundles:
+      city: city
+      city_section: city_section
+      continent: continent
+      corporate_body: corporate_body
+      country: country
+      county: county
+      family: family
+      genre: genre
+      geo_location: geo_location
+      language: language
+      person: person
+      physical_form: physical_form
+      province: province
+      region: region
+      resource_types: resource_types
+      rights: rights
+      subject: subject
+      temporal_subjects: temporal_subjects
+  c7a3af77-01de-4434-b851-73a984b54129:
+    id: language
+    negate: false
+    context_mapping:
+      language: 'taxonomy_term:langcode:language'
+    langcodes:
+      en: en
+      fr: fr
+selection_logic: and
+weight: -10
+relationships:
+  'taxonomy_term:langcode:language':
+    label: Language

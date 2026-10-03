@@ -1,0 +1,15 @@
+uuid: 6ad278ac-881b-4501-ba5b-682395402d52
+langcode: en
+status: true
+dependencies:
+  config:
+    - dgi_actions.identifier.yudl_handles
+  module:
+    - dgi_actions_handle
+id: mint_a_handle
+label: 'Mint a Handle'
+type: entity
+plugin: dgi_actions_mint_handle
+configuration:
+  identifier_entity: yudl_handles
+  save_entity: false

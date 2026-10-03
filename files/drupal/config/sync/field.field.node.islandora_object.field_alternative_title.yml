@@ -1,0 +1,21 @@
+uuid: 439cc6fa-a7ff-4bb8-8a08-0a62837da3ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_alternative_title
+    - node.type.islandora_object
+_core:
+  default_config_hash: QAZT8nJ3OSBy_zjbAVFp4UB2HEA-5EItEzYsfBFYlsw
+id: node.islandora_object.field_alternative_title
+field_name: field_alternative_title
+entity_type: node
+bundle: islandora_object
+label: 'Alternative Title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

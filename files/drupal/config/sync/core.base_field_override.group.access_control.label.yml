@@ -1,0 +1,18 @@
+uuid: 49039f7d-1893-431a-9ead-253d414bf61e
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+id: group.access_control.label
+field_name: label
+entity_type: group
+bundle: access_control
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

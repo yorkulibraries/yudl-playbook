@@ -1,0 +1,20 @@
+uuid: 1c8c12c6-312a-4186-800b-d4361c23ea7a
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.province
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: c0rI22t57TDFfrCkPaDU-o1Yw0KY-Tmgffyz-vIDyis
+id: taxonomy_term.province
+target_entity_type_id: taxonomy_term
+target_bundle: province
+default_langcode: current_interface
+language_alterable: false

@@ -1,0 +1,20 @@
+uuid: 0e75086e-a4c6-40b2-b481-728c474f0cd7
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.islandora_object
+_core:
+  default_config_hash: vwqJTnii6G9YPWUu4bRG8hZjhF9BC9zziUTkR1163PE
+id: node.islandora_object.created
+field_name: created
+entity_type: node
+bundle: islandora_object
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

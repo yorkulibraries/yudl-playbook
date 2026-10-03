@@ -1,0 +1,49 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      fields:
+        name:
+          separator: ', '
+        name_1:
+          separator: ', '
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        vid:
+          exception:
+            title: Tout
+  block_a_to_z_menu:
+    display_options:
+      fields:
+        name:
+          separator: ', '
+        name_1:
+          separator: ', '
+      arguments:
+        name:
+          exception:
+            title: Tout
+  full_taxonomy_list_page_1:
+    display_options:
+      fields:
+        name:
+          separator: ', '
+        name_1:
+          separator: ', '
+      sorts:
+        name:
+          expose:
+            label: Nom
+      arguments:
+        vid:
+          exception:
+            title: Tout
+        name:
+          exception:
+            title: Tout

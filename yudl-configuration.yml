@@ -9,6 +9,7 @@
     vagrant_user: "vagrant"
     drush_path: "/var/www/html/drupal/vendor/bin/drush"
     yudl_manage_vault_users: "{{ env == 'production' }}"
+    yudl_broker_url: "{{ 'tcp://10.0.0.16:61613' if env == 'production' else 'tcp://127.0.0.1:61613' }}"
     yudl_dev_import_users:
       - uid: 2
         name: yudl_dev_import_user_2
@@ -81,6 +82,13 @@
       register: modules_enabled
       changed_when: false
 
+    - name: Uninstall standard profile modules production doesn't use
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y pm:uninstall {{ item }}"
+      loop:
+        - navigation
+        - announcements_feed
+      when: item in (modules_enabled.stdout | from_json)
+
     - name: Check if Islandora Workbench exists
       stat:
         path: "/opt/islandora_workbench"
@@ -142,7 +150,23 @@
         owner: "{{ vagrant_user }}"
         group: "{{ vagrant_user }}"
         state: directory
-      with_items: ["configs", "logs", "data"]
+      with_items: ["configs", "logs", "data", "csv", "bin"]
+
+    # Workbench CSVs reference parent nodes by PID; workbench_resolve_pids.py
+    # swaps in node IDs right before each run.
+    - name: Get Workbench CSVs
+      copy:
+        src: "{{ playbook_dir }}/files/workbench/"
+        dest: /opt/workbench/csv/
+        owner: "{{ vagrant_user }}"
+        group: "{{ vagrant_user }}"
+        mode: "0644"
+
+    - name: Get Workbench PID resolver
+      copy:
+        src: "{{ playbook_dir }}/files/scripts/workbench_resolve_pids.py"
+        dest: /opt/workbench/bin/workbench_resolve_pids.py
+        mode: "0755"
 
     - name: Get YUDL collections workbench configs
       template:
@@ -157,15 +181,6 @@
         path: /opt/islandora_workbench/workbench_utils.py
         regexp: '^(\s*)int_parts = \[int\(part\) for part in parts\]$'
         replace: '\1int_parts = [int(re.match(r''\\d+'', part).group()) for part in parts]'
-      when: env != "production"
-
-    - name: Get sample data workbench configs
-      template:
-        src: "{{ item }}.yml"
-        owner: "{{ vagrant_user }}"
-        group: "{{ vagrant_user }}"
-        dest: /opt/workbench/configs
-      with_items: ["paged", "single", "collection-image", "contact_categories"]
       when: env != "production"
 
     - name: Check if sample data has already been downloaded
@@ -227,16 +242,16 @@
         ((jsonld_remove_jsonld_format.stdout | trim | lower) in ['1', 'true', 'yes', 'on']) !=
         (drupal_jsonld_remove_format | bool)
 
-    - name: Read broker_url (PRODUCTION)
+    # Production's config has its own broker; dev uses the local ActiveMQ.
+    - name: Read broker_url
       command: "{{ drush_path }} --root {{ drupal_core_path }} cget islandora.settings broker_url --format=string"
       register: islandora_broker_url
       changed_when: false
       failed_when: false
-      when: env == "production"
 
-    - name: Set broker_url (PRODUCTION)
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings broker_url 'tcp://10.0.0.16:61613'"
-      when: env == "production" and (islandora_broker_url.stdout | trim) != 'tcp://10.0.0.16:61613'
+    - name: Set broker_url
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset islandora.settings broker_url '{{ yudl_broker_url }}'"
+      when: (islandora_broker_url.stdout | trim) != yudl_broker_url
 
     - name: Read JWT expiry setting
       command: "{{ drush_path }} --root {{ drupal_core_path }} cget islandora.settings jwt_expiry --format=string"
@@ -324,6 +339,22 @@
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset --input-format=yaml openseadragon.settings viewer_options.preserveOverlays true"
       when: (openseadragon_preserve_overlays.stdout | trim | lower) not in ['1', 'true', 'yes']
 
+    # Term creation order matches production so term IDs line up (production config
+    # filters views by tid, e.g. explore_collections on islandora_models 11 and 19):
+    # Mirador display term (tid 1), islandora_tags, FITS tags, then the York migration.
+    # Production's term 1 is the "Mirador" display hint, created back when islandora_mirador
+    # was installed. Create the same term first so later term IDs match production; the
+    # module itself isn't used.
+    - name: Create Mirador display term
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} ev
+        '$storage = \Drupal::entityTypeManager()->getStorage("taxonomy_term");
+        if ($storage->loadByProperties(["vid" => "islandora_display", "name" => "Mirador"])) { echo "present"; return; }
+        $storage->create(["vid" => "islandora_display", "name" => "Mirador", "description" => "Display using the Mirador viewer",
+        "field_external_uri" => ["uri" => "https://projectmirador.org"]])->save(); echo "created";'
+      register: yudl_mirador_term
+      changed_when: "'created' in yudl_mirador_term.stdout"
+
     - name: Check Islandora tag migration marker
       stat:
         path: /opt/workbench/.migration_islandora_tags_complete
@@ -371,6 +402,20 @@
         state: touch
         mode: "0644"
       when: not migration_york_defaults_complete.stat.exists
+
+    # yudl_groups after the taxonomy migrations (islandora_group creates an access term
+    # per group) but before Workbench (its node must be node 1; see "Set YUDL front page").
+    - name: Check if YUDL Groups is enabled
+      command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=list"
+      register: enabled_modules_before_yudl_groups
+      changed_when: false
+      when: yudl_install_from_config | default(false)
+
+    - name: Enable YUDL Groups
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
+      when:
+        - yudl_install_from_config | default(false)
+        - "'yudl_groups' not in (enabled_modules_before_yudl_groups.stdout_lines | default([]))"
 
     - name: Read Islandora Group config
       command: >
@@ -617,8 +662,9 @@
         group: "{{ webserver_app_user }}"
         mode: "0775"
         recurse: true
-      when: >
-        'vboxsf' not in (yudl_defaults_fstype.stdout_lines | default([]))
+      when:
+        - not (yudl_install_from_config | default(false))
+        - "'vboxsf' not in (yudl_defaults_fstype.stdout_lines | default([]))"
 
     - name: Chown controlled access terms default configuration
       file:
@@ -656,7 +702,10 @@
       when: not yudl_collections_import_complete.stat.exists
 
     - name: Add YUDL collections via islandora workbench
-      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml"
+      shell: >
+        /opt/workbench/bin/workbench_resolve_pids.py --drush {{ drush_path }} --drupal-root {{ drupal_core_path }}
+        /opt/workbench/csv/yudl-collections-{{ item }}.csv /opt/workbench/csv/yudl-collections-{{ item }}.resolved.csv
+        && /opt/islandora_workbench/workbench --config /opt/workbench/configs/yudl-collections-{{ item }}.yml
       with_items: ["00", "01", "02", "03", "04", "06", "07", "08", "09"]
       when: not yudl_collections_import_complete.stat.exists
 
@@ -696,8 +745,44 @@
         - contact_categories.log
       when: env != "production" and not sample_objects_import_complete.stat.exists
 
+    # Workbench sets each page's field_model from this setting without resolving it.
+    - name: Look up Page model term ID
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} sql:query
+        "SELECT tid FROM taxonomy_term_field_data WHERE vid = 'islandora_models' AND name = 'Page' AND default_langcode = 1"
+      register: yudl_page_model_lookup
+      changed_when: false
+      failed_when: not (yudl_page_model_lookup.stdout | trim | regex_search('^[0-9]+$'))
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
+    # Workbench applies media_use_tid as given for multiple values (pages get
+    # Original File and Service File), so use term IDs rather than URIs.
+    - name: Look up media use term IDs
+      command: >
+        {{ drush_path }} --root={{ drupal_core_path }} sql:query
+        "SELECT name, tid FROM taxonomy_term_field_data WHERE vid = 'islandora_media_use' AND default_langcode = 1 AND name IN ('Original File', 'Service File')"
+      register: yudl_media_use_lookup
+      changed_when: false
+      failed_when: yudl_media_use_lookup.stdout_lines | length != 2
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
+    - name: Get sample data workbench configs
+      template:
+        src: "{{ item }}.yml"
+        owner: "{{ vagrant_user }}"
+        group: "{{ vagrant_user }}"
+        dest: /opt/workbench/configs
+      vars:
+        yudl_page_model_tid: "{{ yudl_page_model_lookup.stdout | trim }}"
+        yudl_media_use_tids: "{{ dict(yudl_media_use_lookup.stdout_lines | map('split', '\t') | list) }}"
+      with_items: ["paged", "single", "collection-image", "contact_categories"]
+      when: env != "production" and not sample_objects_import_complete.stat.exists
+
     - name: Add sample objects via islandora workbench
-      command: "/opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml"
+      shell: >
+        /opt/workbench/bin/workbench_resolve_pids.py --drush {{ drush_path }} --drupal-root {{ drupal_core_path }}
+        /opt/workbench/csv/{{ item }}.csv /opt/workbench/csv/{{ item }}.resolved.csv
+        && /opt/islandora_workbench/workbench --config /opt/workbench/configs/{{ item }}.yml
       with_items: ["paged", "single", "collection-image", "contact_categories"]
       when: env != "production" and not sample_objects_import_complete.stat.exists
 
@@ -731,6 +816,8 @@
         update: yes
         force: true
       register: yudl_default_content_code
+      # files/drupal/composer.lock already provides it.
+      when: not (drupal_build_composer | default(false))
 
     - name: Rebuild Drupal cache after installing YUDL Default Content
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cr"
@@ -751,80 +838,61 @@
       changed_when: false
       failed_when: false
 
+    # york_drupal_theme renders the front page from page--node--1.html.twig and links
+    # featured collections by production node IDs, so the front page must be node 1 and
+    # collections must land on production's IDs (yudl_groups' node is 1, Workbench
+    # creates 2-142). TODO: switch the theme to page--front.html.twig with alias links
+    # and the /node/1 search blocks to <front>, then this ordering no longer matters.
     - name: Set YUDL front page
       command: "{{ drush_path }} --root {{ drupal_core_path }} -y cset system.site page.front /node/1"
       when: (system_site_front_page.stdout | trim) != '/node/1'
 
-    - name: Check if Locations menu item exists
+    # Main menu: Home, Collections, Map, Types, Locations, Subjects, Creators.
+    # Collections (weight 1) and Types (weight 3) come from views. Home comes from
+    # the standard profile on production but not with the minimal profile used by
+    # config installs, so check the whole menu tree, not just menu_link_content.
+    - name: Get main menu link titles
       command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Locations", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
-      register: locations_menu_item
+        {{ drush_path }} --root={{ drupal_core_path }} ev
+        '$tree = \Drupal::menuTree()->load("main", new \Drupal\Core\Menu\MenuTreeParameters());
+        echo json_encode(array_values(array_map(fn($e) => (string) $e->link->getTitle(), $tree)));'
+      register: main_menu_titles
       changed_when: false
 
-    - name: Add Map menu item
+    - name: Add main menu items
       command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/map"],"menu_name" => "main","weight" => 1])->save();'
+        {{ drush_path }} --root={{ drupal_core_path }} ev
+        '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "{{ item.title }}", "link" => ["uri" => "{{ item.uri }}"], "menu_name" => "main", "weight" => {{ item.weight }}])->save();'
+      loop:
+        - { title: Home, uri: "internal:/", weight: 0 }
+        - { title: Map, uri: "internal:/explore/map", weight: 2 }
+        - { title: Locations, uri: "internal:/explore/locations/a", weight: 4 }
+        - { title: Subjects, uri: "internal:/explore/subjects/a", weight: 5 }
+        - { title: Creators, uri: "internal:/explore/creators/a", weight: 6 }
+      when: item.title not in (main_menu_titles.stdout | from_json)
 
-    - name: Add Locations menu item
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Locations","link" => ["uri" => "internal:/explore/locations/a"],"menu_name" => "main","weight" => 3])->save();'
-      when: "'missing' in locations_menu_item.stdout"
-
-    - name: Check if Subjects menu item exists
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Subjects", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
-      register: subjects_menu_item
+    # Older islandora_fits releases shipped this field; current ones don't, so
+    # take it from the production config export.
+    - name: Check FITS Technical metadata source field
+      command: "{{ drush_path }} --root {{ drupal_core_path }} cget field.field.media.fits_technical_metadata.field_media_file id"
+      register: fits_source_field
       changed_when: false
+      failed_when: false
+      when: env != "production"
 
-    - name: Add Subjects menu item
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Subjects","link" => ["uri" => "internal:/explore/subjects/a"],"menu_name" => "main","weight" => 4])->save();'
-      when: "'missing' in subjects_menu_item.stdout"
-
-    - name: Check if Creators menu item exists
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '$links = \Drupal::entityTypeManager()->getStorage("menu_link_content")->loadByProperties(["title" => "Creators", "menu_name" => "main"]); echo empty($links) ? "missing" : "present";'
-      register: creators_menu_item
-      changed_when: false
-
-    - name: Add Creators menu item
-      command: >
-        {{ drush_path }} --root={{ drupal_core_path }} ev '\Drupal\menu_link_content\Entity\MenuLinkContent::create(["title" => "Creators","link" => ["uri" => "internal:/explore/creators/a"],"menu_name" => "main","weight" => 5])->save();'
-      when: "'missing' in creators_menu_item.stdout"
-
-    - name: Check if Islandora Mirador is already installed with composer
-      stat:
-        path: "/var/www/html/drupal/web/modules/contrib/islandora_mirador"
-      register: islandora_mirador_installed
-
-    - name: Install Islandora Mirador
-      composer:
-        command: require
-        arguments: "drupal/islandora_mirador"
-        working_dir: "/var/www/html/drupal"
-      when: not islandora_mirador_installed.stat.exists
-
-    - name: Check if Islandora Mirador module is enabled
-      command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=list"
-      register: enabled_modules_after_islandora_mirador
-      changed_when: false
-
-    - name: Enable Islandora Mirador
-      command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_mirador"
-      when: "'islandora_mirador' not in (enabled_modules_after_islandora_mirador.stdout_lines | default([]))"
-
-    - name: Check Islandora Mirador tags migration marker
-      stat:
-        path: /opt/workbench/.migration_islandora_mirador_tags_complete
-      register: migration_islandora_mirador_tags_complete
-
-    - name: Import Islandora Mirador tags
-      command: "{{ drush_path }} --root {{ drupal_core_path }} migrate:import islandora_mirador_tags"
-      when: not migration_islandora_mirador_tags_complete.stat.exists
-
-    - name: Mark Islandora Mirador tags migration complete
-      file:
-        path: /opt/workbench/.migration_islandora_mirador_tags_complete
-        state: touch
+    - name: Stage FITS Technical metadata source field config
+      copy:
+        src: "{{ playbook_dir }}/files/drupal/config/sync/field.field.media.fits_technical_metadata.field_media_file.yml"
+        dest: /tmp/yudl-fits-config/
         mode: "0644"
-      when: not migration_islandora_mirador_tags_complete.stat.exists
+      when: env != "production" and fits_source_field.rc != 0
+
+    - name: Import FITS Technical metadata source field
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y cim --partial --source=/tmp/yudl-fits-config"
+      when: env != "production" and fits_source_field.rc != 0
+
+    - name: Apply pending database updates
+      command: "{{ drush_path }} --root {{ drupal_core_path }} -y updatedb"
+      register: drupal_updatedb
+      changed_when: "'No pending updates' not in (drupal_updatedb.stdout + drupal_updatedb.stderr)"
+      when: env != "production"

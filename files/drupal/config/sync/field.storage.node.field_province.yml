@@ -1,0 +1,26 @@
+uuid: 963f6913-26ea-4816-a53f-5edd5fd2f820
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - taxonomy
+third_party_settings:
+  field_permissions:
+    permission_type: public
+_core:
+  default_config_hash: T5RCPWwnEOYT_eoGtJqPLVv3ltXUTnQvgmiw2AdvpaQ
+id: node.field_province
+field_name: field_province
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

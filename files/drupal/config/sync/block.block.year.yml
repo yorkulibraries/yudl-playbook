@@ -1,0 +1,32 @@
+uuid: d80a4dba-b24c-4f2e-9cc6-542d33604190
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.year
+  module:
+    - facets
+    - islandora
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: 6d3iAfEOXKWeFAhviKZ8fDWpTrmjrizTF0Bd57iYPC0
+id: year
+theme: york_drupal_theme
+region: sidebar_first
+weight: -11
+provider: null
+plugin: 'facet_block:year'
+settings:
+  id: 'facet_block:year'
+  label: Year
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: year
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

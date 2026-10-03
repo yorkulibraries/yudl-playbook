@@ -1,0 +1,31 @@
+uuid: 9aaaab1a-a04a-42a5-b586-870bd0656a78
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rights
+    - node.type.islandora_object
+    - taxonomy.vocabulary.rights
+_core:
+  default_config_hash: SpSjGZCq63T5uqaxJePYawEPflVWHspIVT5obr6jezc
+id: node.islandora_object.field_rights
+field_name: field_rights
+entity_type: node
+bundle: islandora_object
+label: 'Rights Statement'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      rights: rights
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,38 @@
+_core:
+  default_config_hash: kQ8YGGHdgSH2NP5GJ9UVJ7vhH6rlJEUSoMTbgA5tEdQ
+all:
+  - language_interface
+  - language_content
+  - language_url
+configurable:
+  - language_interface
+negotiation:
+  language_content:
+    enabled:
+      language-interface: 0
+    method_weights:
+      language-session: -20
+      language-interface: -19
+      language-browser: -18
+      language-content-entity: -17
+      language-url: -16
+      language-user: -15
+      language-selected: -14
+  language_url:
+    enabled:
+      language-url: 0
+      language-url-fallback: 1
+  language_interface:
+    enabled:
+      language-session: -20
+      language-url: -19
+      language-user-admin: -18
+      language-user: -15
+      language-selected: -14
+    method_weights:
+      language-url: -19
+      language-session: -20
+      language-user-admin: -18
+      language-browser: -17
+      language-user: -15
+      language-selected: -14

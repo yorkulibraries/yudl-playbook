@@ -1,0 +1,14 @@
+uuid: 3a483ee9-d2cd-417c-880d-55be30d63544
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.york_university
+  module:
+    - user
+id: user_remove_role_action.york_university
+label: 'Remove the York University role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: york_university

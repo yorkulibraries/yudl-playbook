@@ -1,0 +1,14 @@
+uuid: 07153631-781c-4f29-a958-b4fa5b2bd6a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.yudl_support
+  module:
+    - user
+id: user_remove_role_action.yudl_support
+label: 'Remove the YUDL Support role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: yudl_support

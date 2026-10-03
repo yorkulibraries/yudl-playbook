@@ -1,0 +1,33 @@
+uuid: b825dd22-58da-4942-b161-da3024209dcf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_access_terms
+    - node.type.islandora_object
+    - taxonomy.vocabulary.islandora_access
+  enforced:
+    module: {  }
+_core:
+  default_config_hash: bxdvVF5ex2stzftf8k4q-FcAOHcefS7mz8lKm1MitYU
+id: node.islandora_object.field_access_terms
+field_name: field_access_terms
+entity_type: node
+bundle: islandora_object
+label: 'Access Control'
+description: 'Terms that define who has access to view/edit this resource.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      islandora_access: islandora_access
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

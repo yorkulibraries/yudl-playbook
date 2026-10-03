@@ -1,0 +1,32 @@
+uuid: b2e25939-bd44-4df9-9196-d0c394860b42
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.genre
+  module:
+    - facets
+    - islandora
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: Cag4WYAsRiTrvWpoFsnA88JfLRkzVa_HBNOREe1BC68
+id: genre
+theme: york_drupal_theme
+region: sidebar_first
+weight: -8
+provider: null
+plugin: 'facet_block:genre'
+settings:
+  id: 'facet_block:genre'
+  label: Genre
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: genre
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

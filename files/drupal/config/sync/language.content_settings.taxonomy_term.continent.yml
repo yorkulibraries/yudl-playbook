@@ -1,0 +1,20 @@
+uuid: ec9cec0a-b247-490a-b53f-ddf9b2b9a422
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.continent
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: t-I4z5b8et1yyoHhut_jp62u_RMEAFz_e7VIExCs6X4
+id: taxonomy_term.continent
+target_entity_type_id: taxonomy_term
+target_bundle: continent
+default_langcode: current_interface
+language_alterable: false

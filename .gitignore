@@ -7,3 +7,4 @@ roles/external
 .project
 .ansible
 .multipass/
+__pycache__/

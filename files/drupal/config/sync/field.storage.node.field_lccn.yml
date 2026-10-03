@@ -1,0 +1,27 @@
+uuid: d3d2c712-01a8-42f2-8256-7675c72014d5
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: public
+_core:
+  default_config_hash: Unj06P6INDBmpSSv8R7zctsJ_t8fxWnR4fY940c2Ao8
+id: node.field_lccn
+field_name: field_lccn
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

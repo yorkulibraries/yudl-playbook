@@ -1,0 +1,67 @@
+uuid: a8fd3255-9122-414a-93f6-2148c6d875d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.collection_search
+  module:
+    - islandora
+    - views
+    - yudl_blocks
+  enforced:
+    module: {  }
+_core:
+  default_config_hash: o6t92bG7-E1So--vKpAFMqnYDei_adPgyVeleoHeOF0
+label: Collection
+name: collection
+group: Display
+description: 'Display block of children'
+requireAllConditions: false
+disabled: false
+conditions:
+  node_has_term:
+    id: node_has_term
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    uri: 'http://purl.org/dc/dcmitype/Collection'
+    logic: and
+reactions:
+  blocks:
+    id: blocks
+    blocks:
+      4376d333-386d-408d-9998-72f104600e84:
+        uuid: 4376d333-386d-408d-9998-72f104600e84
+        id: 'views_block:collection_search-block_1'
+        label: ''
+        provider: views
+        label_display: visible
+        region: content
+        weight: '0'
+        custom_id: views_block_collection_search_block_1
+        theme: york_drupal_theme
+        css_class: ''
+        unique: 0
+        context_id: collection
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+      b0221fbc-ff0e-4720-9340-152cd71abde4:
+        uuid: b0221fbc-ff0e-4720-9340-152cd71abde4
+        id: yudl_collection_info_block
+        label: 'About this collection'
+        provider: yudl_blocks
+        label_display: visible
+        region: content
+        weight: '-1'
+        custom_id: yudl_collection_info_block
+        theme: york_drupal_theme
+        css_class: ''
+        unique: 0
+        context_id: collection
+        context_mapping: {  }
+        third_party_settings: {  }
+    include_default_blocks: 1
+    saved: false
+weight: 1

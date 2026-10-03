@@ -1,0 +1,18 @@
+uuid: b2ce7839-4b4e-4c5b-af29-6eec48e619e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-1d0c5c8d1860c12da
+id: group_relationship.access_control-1d0c5c8d1860c12da.created
+field_name: created
+entity_type: group_relationship
+bundle: access_control-1d0c5c8d1860c12da
+label: 'Created on'
+description: 'The time that the group relationship was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

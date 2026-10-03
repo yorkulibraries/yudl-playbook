@@ -1,0 +1,32 @@
+display:
+  default:
+    display_title: 'Par défaut'
+    display_options:
+      fields:
+        name:
+          separator: ', '
+        name_1:
+          separator: ', '
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+  block_1:
+    display_title: Bloc
+    display_options:
+      arguments:
+        name:
+          exception:
+            title: Tout
+  page_1:
+    display_title: Page
+    display_options:
+      arguments:
+        name:
+          exception:
+            title: Tout
+      menu:
+        title: Auteurs

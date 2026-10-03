@@ -1,0 +1,15 @@
+uuid: 4de482d2-8d47-4906-a64c-2f924a5b5bee
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+    - user.role.authenticated
+id: access_control-outsider
+label: Outsider
+weight: -101
+admin: false
+scope: outsider
+global_role: authenticated
+group_type: access_control
+permissions: {  }

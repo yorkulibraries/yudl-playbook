@@ -8,14 +8,16 @@
     recurse: yes
     state: directory
 
+# The tarball's top-level directory is kakadu/, so extract into /opt. Check for the
+# binary, not the directory: the task above always creates /opt/kakadu.
 - name: Get Kakadu
   unarchive:
     remote_src: yes
     src: https://alpha.library.yorku.ca/kakadu.tar.gz
-    dest: /opt/kakadu
+    dest: /opt
     owner: "{{ cantaloupe_user }}"
     group: "{{ cantaloupe_group }}"
-    creates: /opt/kakadu
+    creates: /opt/kakadu/kdu_expand
 
 - name: Kakaku libraries (ldconfig)
   template:

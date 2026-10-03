@@ -1,0 +1,36 @@
+uuid: d1b28cb2-8ecd-4f28-9715-ded0f9d373a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.islandora_object
+  module:
+    - language
+    - node
+_core:
+  default_config_hash: XwDTetlOZtTf2k9gCRJSlFI9STtpndi8n7GP7HIf9co
+id: friendly_yudl_object_urls
+label: 'Friendly yudl object urls'
+type: 'canonical_entities:node'
+pattern: '/[node:field_member_of]/[node:title]'
+selection_criteria:
+  a9cf12d5-ace1-4ec0-af90-7b0c85775487:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      islandora_object: islandora_object
+  6901738f-9756-4ac3-879f-6248b982bc4d:
+    id: language
+    negate: false
+    context_mapping:
+      language: 'node:langcode:language'
+    langcodes:
+      en: en
+      fr: fr
+selection_logic: and
+weight: -10
+relationships:
+  'node:langcode:language':
+    label: Language

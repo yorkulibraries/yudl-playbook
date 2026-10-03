@@ -1,0 +1,18 @@
+uuid: e7172692-3f66-4062-8a90-04df4d22b901
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.contact_categories
+id: taxonomy_term.contact_categories.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: contact_categories
+label: Changed
+description: 'The time that the term was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

@@ -1,0 +1,59 @@
+display:
+  default:
+    display_title: 'Par défaut'
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Filtrer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+          tags:
+            previous: ‹‹
+            next: ››
+      fields:
+        fixity_check_bulk_form:
+          action_title: Action
+        file_1:
+          separator: ', '
+        state:
+          label: État
+          separator: ', '
+        performed:
+          settings:
+            future_format: 'Dans @interval'
+            past_format: 'Il y a @interval'
+          separator: ', '
+        periodic:
+          separator: ', '
+        operations:
+          label: "Liens d'actions"
+      filters:
+        filename:
+          expose:
+            label: 'Nom du fichier'
+        state:
+          expose:
+            label: État
+          group_info:
+            label: État
+            group_items:
+              2:
+                title: Échec
+        performed:
+          group_info:
+            group_items:
+              1:
+                title: Vrai
+              2:
+                title: Faux
+      title: État
+  fixity_checks:
+    display_title: Page

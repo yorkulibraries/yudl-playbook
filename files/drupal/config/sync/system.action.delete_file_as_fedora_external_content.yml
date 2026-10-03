@@ -1,0 +1,15 @@
+uuid: daaa6b6a-12e5-4e9f-b26e-4d420244d2bd
+langcode: en
+status: true
+dependencies:
+  module:
+    - islandora
+_core:
+  default_config_hash: mkXeO-0MzpCcCdc1TU7Zgj4KM9Bf_MxuKOikV8-qn6g
+id: delete_file_as_fedora_external_content
+label: 'Delete File as Fedora External Content'
+type: file
+plugin: emit_file_event
+configuration:
+  queue: islandora-indexing-fcrepo-delete
+  event: Delete

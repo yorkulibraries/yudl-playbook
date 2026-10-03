@@ -1,0 +1,18 @@
+uuid: f9ff3cc4-7ed7-4162-9a90-225847f20499
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-group_media-image
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: group_relationship.access_control-group_media-image
+target_entity_type_id: group_relationship
+target_bundle: access_control-group_media-image
+default_langcode: site_default
+language_alterable: false

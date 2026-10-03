@@ -1,0 +1,31 @@
+uuid: c4477d4c-abfa-44a6-a1bd-fa8cc5d65870
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_continent
+    - node.type.islandora_object
+    - taxonomy.vocabulary.continent
+_core:
+  default_config_hash: h0GNVe97410u0KKsr0LKtcFXsqkyUdFvZ1nyby5k4vw
+id: node.islandora_object.field_continent
+field_name: field_continent
+entity_type: node
+bundle: islandora_object
+label: Continent
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      continent: continent
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

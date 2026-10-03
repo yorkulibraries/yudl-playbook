@@ -1,0 +1,18 @@
+uuid: b51ccd9e-a8af-45b1-9649-ece6adfa39a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-b46d5f39e98b2e6c5
+id: group_relationship.access_control-b46d5f39e98b2e6c5.changed
+field_name: changed
+entity_type: group_relationship
+bundle: access_control-b46d5f39e98b2e6c5
+label: 'Changed on'
+description: 'The time that the group relationship was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

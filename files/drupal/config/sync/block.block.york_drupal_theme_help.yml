@@ -1,0 +1,22 @@
+uuid: 5660f1fc-6f4c-46bd-a66c-11876fc4ccd9
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: KOqtsnjRK_sK8l0cje8XAsZ3viT3NUKUT4pZoa-qYXI
+id: york_drupal_theme_help
+theme: york_drupal_theme
+region: content
+weight: -5
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

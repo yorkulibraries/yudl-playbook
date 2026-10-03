@@ -1,0 +1,125 @@
+vid,name,authority,field_authority_link,lat,long
+county,Abitibi,geonames,http://sws.geonames.org/5881929,48.56688,-77.99953
+county,Abitibi-Témiscamingue,geonames,http://sws.geonames.org/5881941,48.10018,-77.7828
+county,Alexander,geonames,http://sws.geonames.org/5883398,50.48331,-96.05056
+county,Algoma District,geonames,http://sws.geonames.org/5883638,47.88364,-84.42406
+county,Armstrong,geonames,http://sws.geonames.org/5887047,50.66671,-97.45068
+county,Arthur,geonames,http://sws.geonames.org/5887357,49.16692,-101.00028
+county,Bedfordshire,geonames,http://sws.geonames.org/2656044,52,-0.5
+county,Bifort,geonames,http://sws.geonames.org/5899475,50.83331,-97.16737
+county,Braives,geonames,http://sws.geonames.org/2801148,50.61723,5.13508
+county,Brant,geonames,http://sws.geonames.org/5907982,43.1668,-80.33297
+county,Brazeau County,geonames,http://sws.geonames.org/5908165,53.1779,-115.22159
+county,Bristol,geonames,http://sws.geonames.org/3333134,51.45,-2.6
+county,Brokenhead,geonames,http://sws.geonames.org/5909350,50.0781,-96.49999
+county,Bruce County,geonames,http://sws.geonames.org/5910071,44.50009,-81.24974
+county,Buckinghamshire,geonames,http://sws.geonames.org/2654408,51.75,-0.75
+county,Cameron,geonames,http://sws.geonames.org/5913766,49.4167,-100.58419
+county,Cape Breton,geonames,http://sws.geonames.org/5915565,46.00014,-60.31516
+county,Capitale-Nationale,geonames,http://sws.geonames.org/6691319,47.376,-71.12337
+county,Carleton,geonames,http://sws.geonames.org/8581623,45.41858,-75.69717
+county,Carter,geonames,http://sws.geonames.org/5917773,49.88311,-97.67649
+county,Chatham-Kent,geonames,http://sws.geonames.org/5920450,42.40009,-82.1831
+county,Cochrane District,geonames,http://sws.geonames.org/5924616,50.00022,-82.99979
+county,Cook County,geonames,http://sws.geonames.org/4888671,41.8954,-87.64616
+county,County Antrim,geonames,http://sws.geonames.org/2657254,55,-6.16667
+county,Cumberland,geonames,http://sws.geonames.org/5933880,45.75015,-64.16543
+county,Davidson County,geonames,http://sws.geonames.org/4617305,36.17069,-86.77753
+county,Devon,geonames,http://sws.geonames.org/11609025,50.7512,-3.81027
+county,Muskoka District Municipality,geonames,http://sws.geonames.org/6084939,45.16681,-79.49964
+county,Dufferin County,geonames,http://sws.geonames.org/5943542,44.0834,-80.24968
+county,Durham County (U.K.),geonames,http://sws.geonames.org/2650629,54.7768,-1.57575
+county,Durham Regional Municipality,geonames,http://sws.geonames.org/5944369,44.20012,-78.99957
+county,East Sussex,geonames,http://sws.geonames.org/2650328,50.91667,0.33333
+county,Elgin County,geonames,http://sws.geonames.org/5947587,42.50009,-81.66647
+county,Essex County (U.K.),geonames,http://sws.geonames.org/11609034,51.78449,0.57449
+county,Essex County (Ont.),geonames,http://sws.geonames.org/5949533,42.16678,-82.83313
+county,Ethelbert,geonames,http://sws.geonames.org/5950217,51.5292,-100.49397
+county,Frontenac County,geonames,http://sws.geonames.org/5958506,44.66682,-76.74941
+county,Fulton County,geonames,http://sws.geonames.org/4196508,33.79025,-84.46702
+county,Gladstone,geonames,http://sws.geonames.org/5961655,50.22583,-98.95078
+county,Glarus,geonames,http://sws.geonames.org/6458747,47.0167,9.05889
+county,Gloucestershire,geonames,http://sws.geonames.org/2648402,51.83333,-2.16667
+county,Greater London,geonames,http://sws.geonames.org/2648110,51.5,-0.16667
+county,Grey (Man.),geonames,http://sws.geonames.org/5966926,49.71111,-98.07573
+county,Grey County,geonames,http://sws.geonames.org/5966925,44.33339,-80.74972
+county,Haldimand-Norfolk Regional Municipality,geonames,http://sws.geonames.org/5969093,42.98341,-79.86633
+county,Haliburton,geonames,http://sws.geonames.org/5969392,45.16682,-78.49955
+county,Halifax,geonames,http://sws.geonames.org/5969424,44.86685,-63.71541
+county,Halton Regional Municipality,geonames,http://sws.geonames.org/5969719,43.50011,-79.88294
+county,Hamilton Division,,,,
+county,Hamilton-Wentworth,geonames,http://sws.geonames.org/5969784,43.25521,-79.93103
+county,Hastings,,,,
+county,Hastings County,geonames,http://sws.geonames.org/5971841,44.75013,-77.66619
+county,Huron,,,,
+county,Huron County,geonames,http://sws.geonames.org/5978829,43.66679,-81.49977
+county,Kenora District,geonames,http://sws.geonames.org/5991054,54.00015,-87.99992
+county,King County,geonames,http://sws.geonames.org/5799783,47.49084,-121.83583
+county,Lambton County,geonames,http://sws.geonames.org/6049019,42.75008,-82.08311
+county,Lanark County,geonames,http://sws.geonames.org/6049130,45.08341,-76.33269
+county,Lennox and Addington County,geonames,http://sws.geonames.org/6052311,44.50012,-76.99944
+county,Lincolnshire,geonames,http://sws.geonames.org/11609040,53.18439,-0.27857
+county,Los Angeles,geonames,http://sws.geonames.org/5368381,34.19801,-118.26102
+county,Lunenburg County,geonames,http://sws.geonames.org/6062070,44.43345,-64.59877
+county,Mackenzie,geonames,http://sws.geonames.org/6153332,58.68989,-117.04606
+county,Middlesex County,geonames,http://sws.geonames.org/6073256,43.00009,-81.41646
+county,Montcalm,geonames,http://sws.geonames.org/6076808,49.16499,-97.34008
+county,Mossey River,geonames,http://sws.geonames.org/6079284,51.66671,-100.00084
+county,Niagara,geonames,http://sws.geonames.org/6087883,43.00012,-79.24958
+county,Nipissing District,geonames,http://sws.geonames.org/6088501,46.0001,-78.99959
+county,Norfolk (U.K.),geonames,http://sws.geonames.org/2641455,52.66,1
+county,Norfolk County,geonames,http://sws.geonames.org/6089125,42.8334,-80.38297
+county,North Norfolk,geonames,http://sws.geonames.org/6090358,49.91642,-98.83998
+county,Northumberland County,geonames,http://sws.geonames.org/6090772,44.16682,-77.99951
+county,Orange County,geonames,http://sws.geonames.org/5379524,33.67691,-117.77617
+county,Ottawa,geonames,http://sws.geonames.org/8581623,45.41858,-75.69717
+county,Oxford County,geonames,http://sws.geonames.org/6095780,43.13339,-80.83301
+county,Oxfordshire,geonames,http://sws.geonames.org/2640726,51.83333,-1.25
+county,Parry Sound District,geonames,http://sws.geonames.org/6098746,45.75011,-79.83297
+county,Peel Regional Municipality,geonames,http://sws.geonames.org/6100475,43.75011,-79.78293
+county,Pembina,geonames,http://sws.geonames.org/6100811,49.1672,-98.48689
+county,Perth County,geonames,http://sws.geonames.org/6101545,43.50009,-81.08303
+county,Peterborough County,geonames,http://sws.geonames.org/6101646,44.55012,-78.24953
+county,Portage la Prairie,geonames,http://sws.geonames.org/6111530,49.99282,-98.26993
+county,Prescott and Russell United Counties,geonames,http://sws.geonames.org/6172002,45.4168,-75.24931
+county,Prince Edward County,geonames,http://sws.geonames.org/6113354,44.00012,-77.24946
+county,Qikiqtaaluk Region,wikidata,https://www.wikidata.org/wiki/Q1421013,70,-80
+county,Rainy River District,geonames,http://sws.geonames.org/6116135,48.49981,-92.5003
+county,Regional Municipality of Niagara,geonames,http://sws.geonames.org/6087883,43.00012,-79.24958
+county,Renfrew County,geonames,http://sws.geonames.org/6119449,45.50011,-77.08275
+county,Rhineland,geonames,http://sws.geonames.org/6121732,49.16359,-97.66292
+county,Ritchot,geonames,http://sws.geonames.org/6122576,49.7042,-97.09144
+county,Rockwood,geonames,http://sws.geonames.org/6126541,50.25001,-97.33396
+county,Rosedale,geonames,http://sws.geonames.org/6127585,50.32752,-99.50522
+county,Russell,geonames,http://sws.geonames.org/6136575,50.73059,-101.37031
+county,Simcoe County,geonames,http://sws.geonames.org/6147963,44.41681,-79.83295
+county,South Cypress,geonames,http://sws.geonames.org/6151849,49.66642,-99.33021
+county,Springfield,geonames,http://sws.geonames.org/6154185,49.9167,-96.75061
+county,Squamish-Lillooet Regional District,geonames,http://sws.geonames.org/6154640,50.4997,-123.00276
+county,St. Andrews,geonames,http://sws.geonames.org/6155131,50.25001,-97.00064
+county,St. Clements,geonames,http://sws.geonames.org/6155764,50.1642,-96.75121
+county,Strathcona,geonames,http://sws.geonames.org/6157993,49.33332,-99.50053
+county,Stuartburn,geonames,http://sws.geonames.org/6158376,49.13327,-96.51731
+county,Sudbury District,geonames,http://sws.geonames.org/6158840,47.16679,-81.9998
+county,Suffolk,geonames,http://sws.geonames.org/4952349,42.3555,-71.06575
+county,Surrey,geonames,http://sws.geonames.org/2636512,51.25,-0.33333
+county,Sussex,geonames,http://sws.geonames.org/2636510,50.91667,-0.08333
+county,Tache,geonames,http://sws.geonames.org/6160992,49.75128,-96.85011
+county,Thompson-Nicola Regional District,geonames,http://sws.geonames.org/6165501,50.99981,-120.50252
+county,Thunder Bay District,geonames,http://sws.geonames.org/6166139,49.50011,-88.50004
+county,Timiskaming,geonames,http://sws.geonames.org/6166724,47.75016,-80.3303
+county,Toronto Division,geonames,http://sws.geonames.org/8133394,43.69655,-79.42909
+county,Metropolitan Toronto,geonames,http://sws.geonames.org/8133394,43.69655,-79.42909
+county,Tyne and Wear,geonames,http://sws.geonames.org/2635274,54.91667,-1.56667
+county,United Counties of Leeds and Grenville,geonames,http://sws.geonames.org/6172001,44.83341,-75.66604
+county,"Stormont, Dundas and Glengarry United Counties",geonames,http://sws.geonames.org/6172003,45.25009,-74.66597
+county,Victoria,geonames,http://sws.geonames.org/6174040,49.66421,-98.89638
+county,Vilas County,geonames,http://sws.geonames.org/5277222,46.05289,-89.51477
+county,Waterloo,geonames,http://sws.geonames.org/6176824,43.5001,-80.49969
+county,Wellington County,geonames,http://sws.geonames.org/6177913,43.8334,-80.49969
+county,Whitehead,geonames,http://sws.geonames.org/6180469,49.77941,-100.23479
+county,Wiltshire,geonames,http://sws.geonames.org/2633868,51.25,-1.91667
+county,Winnipeg,geonames,http://sws.geonames.org/6183235,49.8844,-97.14704
+county,Yangon,geonames,http://sws.geonames.org/1298824,16.80528,96.15611
+county,Yellowhead,geonames,http://sws.geonames.org/11153049,50.4846,-100.48267
+county,York Regional Municipality,geonames,http://sws.geonames.org/6185560,44.00011,-79.46632

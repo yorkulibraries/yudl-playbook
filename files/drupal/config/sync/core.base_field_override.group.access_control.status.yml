@@ -1,0 +1,22 @@
+uuid: be4d6a02-3746-48b6-9677-5c6b04edf143
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+id: group.access_control.status
+field_name: status
+entity_type: group
+bundle: access_control
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

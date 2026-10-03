@@ -1,0 +1,11 @@
+uuid: bf3e2701-1d7b-4e86-98ab-8dd9ca7e1dd9
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rhNE6v958ibc2H-E9zcJUipCi9fBxDAk2nt4FUwcCIE
+name: Continent
+vid: continent
+description: 'Continent(s) to which the records pertain.'
+weight: 0
+new_revision: false

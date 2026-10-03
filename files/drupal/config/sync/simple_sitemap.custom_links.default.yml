@@ -1,0 +1,29 @@
+links:
+  -
+    path: /
+    priority: '1.0'
+    changefreq: yearly
+  -
+    path: /explore/collections
+    priority: '1.0'
+    changefreq: monthly
+  -
+    path: /explore/resource-types
+    priority: '1.0'
+    changefreq: monthly
+  -
+    path: /terms-of-use
+    priority: '1.0'
+    changefreq: yearly
+  -
+    path: /about/metadata
+    priority: '1.0'
+    changefreq: yearly
+  -
+    path: /about/uris
+    priority: '1.0'
+    changefreq: yearly
+  -
+    path: /about/apis
+    priority: '1.0'
+    changefreq: yearly

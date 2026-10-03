@@ -1,0 +1,23 @@
+uuid: e5b438e7-c937-4e8c-9ad9-ae1b969d359e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_modified_
+    - node.type.islandora_object
+  module:
+    - controlled_access_terms
+_core:
+  default_config_hash: 2RE8dZFVnmlWnT2ONGGbzhtnZ0OVXjCxmlrKbUfUvRc
+id: node.islandora_object.field_date_modified_
+field_name: field_date_modified_
+entity_type: node
+bundle: islandora_object
+label: 'Date Modified'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: edtf

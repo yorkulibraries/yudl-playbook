@@ -1,0 +1,20 @@
+uuid: 1684f5f2-1333-4fa8-bf8c-eef077c642f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.extracted_text
+id: media.extracted_text.name
+field_name: name
+entity_type: media
+bundle: extracted_text
+label: Name
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

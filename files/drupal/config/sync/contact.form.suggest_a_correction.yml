@@ -1,0 +1,14 @@
+uuid: 1dbf1c02-7183-442f-8965-2a1a841eb8e6
+langcode: en
+status: true
+dependencies: {  }
+id: suggest_a_correction
+label: 'Suggest a correction'
+recipients:
+  - dev@example.com
+  - dev@example.com
+  - dev@example.com
+reply: ''
+weight: 0
+message: ''
+redirect: /

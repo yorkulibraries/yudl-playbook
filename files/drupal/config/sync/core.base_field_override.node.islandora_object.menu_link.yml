@@ -1,0 +1,22 @@
+uuid: 0ba23555-8562-4d36-b31b-cbf087f53147
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.islandora_object
+_core:
+  default_config_hash: JsCXlShNN0Qit8lhfUAtCYPEP0RBYzGB_tlzYghfSOs
+id: node.islandora_object.menu_link
+field_name: menu_link
+entity_type: node
+bundle: islandora_object
+label: 'Menu link'
+description: 'Computed menu link for the node (only available during node saving).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

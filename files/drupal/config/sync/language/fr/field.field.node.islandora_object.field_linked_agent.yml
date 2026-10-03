@@ -1,0 +1,18 @@
+label: Auteurs
+settings:
+  rel_types:
+    'relators:art': Artiste
+    'relators:aut': Auteur
+    'relators:cli': Client
+    'relators:ctb': Contributeur
+    'relators:cre': Créateur
+    'relators:edt': Éditeur
+    'relators:exp': Expert
+    'relators:hst': Hôte
+    'relators:med': Moyen
+    'relators:oth': Autre
+    'relators:own': Propriétaire
+    'relators:prv': Fournisseur
+    'relators:pbl': Éditeur
+    'relators:stg': Paramètre
+    'relators:spn': Sponsor

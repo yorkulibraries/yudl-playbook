@@ -1,0 +1,34 @@
+uuid: 20ed1fdc-c508-42e0-85fc-fe675498b61b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_track
+    - media.type.audio
+  module:
+    - filehash
+    - islandora
+third_party_settings:
+  filehash:
+    dedupe: 0
+    dedupe_original: false
+_core:
+  default_config_hash: nyFltcz_B1bghGp34hIbTiqNa440C2E3h7pvNFEyZIM
+id: media.audio.field_track
+field_name: field_track
+entity_type: media
+bundle: audio
+label: Track
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: vtt
+  max_filesize: ''
+  languages: installed
+field_type: media_track

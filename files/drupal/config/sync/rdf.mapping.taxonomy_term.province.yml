@@ -1,0 +1,37 @@
+uuid: f305708a-7dbc-4075-b76f-cd0224dd55b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.province
+  module:
+    - taxonomy
+_core:
+  default_config_hash: bHHkYi_DgDBCDgEgCmw_05iEqjMTQyTre3m71TWaGqs
+id: taxonomy_term.province
+targetEntityType: taxonomy_term
+bundle: province
+types:
+  - 'dc:Location'
+  - 'schema:Place'
+fieldMappings:
+  name:
+    properties:
+      - 'schema:name'
+  description:
+    properties:
+      - 'schema:description'
+  field_authority_link:
+    properties:
+      - 'schema:sameAs'
+  field_geo_geolocation:
+    properties:
+      - 'wgs84_pos:lat_long'
+  field_geo_broader:
+    properties:
+      - 'schema:containedInPlace'
+  changed:
+    properties:
+      - 'schema:dateModified'
+    datatype_callback:
+      callable: 'Drupal\rdf\CommonDataConverter::dateIso8601Value'

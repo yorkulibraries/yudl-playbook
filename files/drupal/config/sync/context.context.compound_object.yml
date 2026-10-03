@@ -1,0 +1,49 @@
+uuid: 6f031449-f86a-4705-81ae-38281e090a76
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.members
+  module:
+    - islandora
+    - views
+label: 'Compound object'
+name: compound_object
+group: Display
+description: 'Display compound object children.'
+requireAllConditions: false
+disabled: false
+conditions:
+  node_has_term:
+    id: node_has_term
+    negate: false
+    uuid: 632c5946-3952-4cd6-bd88-c63679e51b44
+    context_mapping:
+      node: '@node.node_route_context:node'
+    uri: 'https://vocab.getty.edu/aat/300242735'
+    logic: and
+reactions:
+  blocks:
+    id: blocks
+    uuid: 0e965f1b-1460-412c-87c1-6005c414ade9
+    blocks:
+      4c4a2b6a-945e-40f4-a4a7-e211f95e3cbb:
+        uuid: 4c4a2b6a-945e-40f4-a4a7-e211f95e3cbb
+        id: 'views_block:members-block_1'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: content
+        weight: '1'
+        custom_id: views_block_members_block_1
+        theme: york_drupal_theme
+        css_class: compound-children
+        unique: 0
+        context_id: compound_object
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+    include_default_blocks: 1
+    saved: false
+weight: 0

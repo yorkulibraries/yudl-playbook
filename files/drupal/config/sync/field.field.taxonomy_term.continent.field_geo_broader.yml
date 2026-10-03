@@ -1,0 +1,30 @@
+uuid: 684c88d1-d15e-4846-8251-3110558a4dbe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_broader
+    - taxonomy.vocabulary.continent
+_core:
+  default_config_hash: l1UuDrWpHowE8D7yWW7lLnWlM8ki7Zyed3ON0djPRPQ
+id: taxonomy_term.continent.field_geo_broader
+field_name: field_geo_broader
+entity_type: taxonomy_term
+bundle: continent
+label: Broader
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      continent: continent
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

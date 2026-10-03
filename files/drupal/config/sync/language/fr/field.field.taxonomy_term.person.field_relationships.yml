@@ -1,0 +1,7 @@
+label: Relations
+settings:
+  rel_types:
+    'schema:children': Enfants
+    'schema:memberOf': 'Membre de'
+    'schema:parent': Parent
+    'schema:sponsor': Sponsor

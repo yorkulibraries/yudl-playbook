@@ -1,0 +1,31 @@
+uuid: 24a408a2-526d-4949-b0ea-e614effee1ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_county
+    - node.type.islandora_object
+    - taxonomy.vocabulary.county
+_core:
+  default_config_hash: AXWTb71KxgyI6PWddkuh_CykpkUPm7FvNZc07znKdnw
+id: node.islandora_object.field_county
+field_name: field_county
+entity_type: node
+bundle: islandora_object
+label: County
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      county: county
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

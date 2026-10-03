@@ -1,0 +1,41 @@
+uuid: df0d15c1-6d4b-4770-b0d2-fc6acaa3f9a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.rights.field_authority_link
+    - field.field.taxonomy_term.rights.field_image_url_
+    - taxonomy.vocabulary.rights
+  module:
+    - controlled_access_terms
+    - text
+_core:
+  default_config_hash: b2po_wkgOVZuAO8qMQPHftgUUt_qCCBqOpEHl7z_8Vo
+id: taxonomy_term.rights.default
+targetEntityType: taxonomy_term
+bundle: rights
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_authority_link:
+    type: authority_formatter_default
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: _blank
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_image_url_: true
+  langcode: true
+  search_api_excerpt: true

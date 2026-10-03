@@ -1,0 +1,20 @@
+uuid: ee547409-935c-42d7-a34d-b94208e10b1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.video
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: bjtAS1FFRImERWfi1Jdp1pyt2pkHj8jflHED_yLWZco
+id: media.video
+target_entity_type_id: media
+target_bundle: video
+default_langcode: current_interface
+language_alterable: true

@@ -1,0 +1,21 @@
+uuid: 4319dc4e-fc03-4109-a0bc-63819dfa700b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_corp_alt_name
+    - taxonomy.vocabulary.corporate_body
+_core:
+  default_config_hash: K-bS8JMYTTIFVjkUNLJXnemZKNSx18oX_8W6XNy5DNc
+id: taxonomy_term.corporate_body.field_corp_alt_name
+field_name: field_corp_alt_name
+entity_type: taxonomy_term
+bundle: corporate_body
+label: 'Alternate name(s)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

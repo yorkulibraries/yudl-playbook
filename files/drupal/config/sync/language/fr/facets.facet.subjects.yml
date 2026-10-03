@@ -1,0 +1,4 @@
+name: Sujets
+widget:
+  config:
+    reset_text: 'Tout afficher'

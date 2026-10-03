@@ -1,0 +1,44 @@
+display:
+  default:
+    display_options:
+      title: 'Résultats de recherche'
+      pager:
+        options:
+          tags:
+            next: "suivant\_›"
+            previous: "‹\_précédent"
+            first: '« Premier'
+            last: 'Dernier »'
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      exposed_form:
+        options:
+          submit_button: Rechercher
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      sorts:
+        search_api_relevance:
+          expose:
+            label: Pertinence
+        field_edtf_date_created:
+          expose:
+            label: 'Date de création'
+        title:
+          expose:
+            label: Titre
+        author:
+          expose:
+            label: "Nom de l'auteur"
+      filters:
+        type:
+          expose:
+            label: 'Type de contenu'
+      header:
+        result:
+          content: 'Affichage des résultats @start - @end sur @total'
+  page_1:
+    display_title: Page

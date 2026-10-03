@@ -1,0 +1,23 @@
+uuid: d33a95fe-d9e7-49b4-8ba0-0eee87ae02e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.fits_ois_file_information_md5che
+    - media.type.fits_technical_metadata
+  module:
+    - text
+_core:
+  default_config_hash: VmcX-8rAuR3i849ZK_yUZ6wI4zxZmToV_Pq9aX7fL8U
+id: media.fits_technical_metadata.fits_ois_file_information_md5che
+field_name: fits_ois_file_information_md5che
+entity_type: media
+bundle: fits_technical_metadata
+label: OIS_File_Information_Md5checksum
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

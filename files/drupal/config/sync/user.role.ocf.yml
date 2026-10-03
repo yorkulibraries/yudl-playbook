@@ -1,0 +1,14 @@
+uuid: 7b269390-f991-4ed5-ba40-09414dc04182
+langcode: en
+status: true
+dependencies:
+  module:
+    - eu_cookie_compliance
+    - file
+id: ocf
+label: 'Ojibwe Cultural Foundation (OCF)'
+weight: 4
+is_admin: null
+permissions:
+  - 'delete own files'
+  - 'display eu cookie compliance popup'

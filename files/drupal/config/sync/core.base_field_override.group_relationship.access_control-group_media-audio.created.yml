@@ -1,0 +1,18 @@
+uuid: 9836366e-79d6-4b04-8f4c-da9ca3439aef
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-group_media-audio
+id: group_relationship.access_control-group_media-audio.created
+field_name: created
+entity_type: group_relationship
+bundle: access_control-group_media-audio
+label: 'Created on'
+description: 'The time that the group relationship was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

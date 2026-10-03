@@ -1,0 +1,11 @@
+uuid: 6951c765-59ea-4ec2-9545-c4b8c3f161b1
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: GtwZmHfoUe9zdJe_uX6oD5CU40m-0jfjiDk5USbdHMc
+name: Genre
+vid: genre
+description: 'A term or terms that designate a category characterizing a particular style, form, or content, such as artistic, musical, literary composition, etc.'
+weight: 0
+new_revision: false

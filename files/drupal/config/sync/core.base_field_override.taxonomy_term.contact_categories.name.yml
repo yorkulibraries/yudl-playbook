@@ -1,0 +1,18 @@
+uuid: b690f99b-cefb-4e83-8658-e65f6f9735dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.contact_categories
+id: taxonomy_term.contact_categories.name
+field_name: name
+entity_type: taxonomy_term
+bundle: contact_categories
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

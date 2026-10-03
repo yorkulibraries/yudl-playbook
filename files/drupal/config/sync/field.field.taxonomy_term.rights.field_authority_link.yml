@@ -1,0 +1,30 @@
+uuid: 912dbcda-d5f1-4d53-a29c-959743611304
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_authority_link
+    - taxonomy.vocabulary.rights
+  module:
+    - controlled_access_terms
+_core:
+  default_config_hash: K1EJifG0xM1t6DqSk5oBd5zo6hZi1SB1yPCyGkVp71Q
+id: taxonomy_term.rights.field_authority_link
+field_name: field_authority_link
+entity_type: taxonomy_term
+bundle: rights
+label: Authority
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  authority_sources:
+    cc: CreativeCommons
+    rs: RightsStatements.org
+    tk: 'Traditional Knowledge (TK) Labels'
+    other: Other
+  title: 1
+  link_type: 16
+field_type: authority_link

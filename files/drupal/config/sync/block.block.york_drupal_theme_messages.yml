@@ -1,0 +1,22 @@
+uuid: 6089bb6d-11f0-47b4-8060-a4ae80ca9bc2
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: r9lrvBUUTSISmmSyUw-DFhk9A0Vf5-vrb7ki5Ym7N88
+id: york_drupal_theme_messages
+theme: york_drupal_theme
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

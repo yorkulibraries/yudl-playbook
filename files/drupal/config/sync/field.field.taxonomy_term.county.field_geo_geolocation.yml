@@ -1,0 +1,23 @@
+uuid: e0bcc4af-e076-490e-8f81-9ffb864b931c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_geolocation
+    - taxonomy.vocabulary.county
+  module:
+    - geolocation
+_core:
+  default_config_hash: QVXLxILfpB1YnfTW0rrNO67mxgzh8-47UCC2OkB25fg
+id: taxonomy_term.county.field_geo_geolocation
+field_name: field_geo_geolocation
+entity_type: taxonomy_term
+bundle: county
+label: Latitude/Longitude
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

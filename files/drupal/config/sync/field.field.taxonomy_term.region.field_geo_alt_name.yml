@@ -1,0 +1,21 @@
+uuid: b5e468e9-0e14-48be-8bf3-fa5ed91182e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_alt_name
+    - taxonomy.vocabulary.region
+_core:
+  default_config_hash: e9HfMt749SXV642ouWVZjbjWsdCwS4jZfTy2XN0HEeI
+id: taxonomy_term.region.field_geo_alt_name
+field_name: field_geo_alt_name
+entity_type: taxonomy_term
+bundle: region
+label: 'Alternate Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

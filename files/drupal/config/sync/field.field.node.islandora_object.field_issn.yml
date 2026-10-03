@@ -1,0 +1,21 @@
+uuid: 41ad5516-4a71-48b0-8926-91a8acebd29e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_issn
+    - node.type.islandora_object
+_core:
+  default_config_hash: kkFYdLg2NZ8u6ZVJw4TTrdO1T8j1FXnbImtAhNa24as
+id: node.islandora_object.field_issn
+field_name: field_issn
+entity_type: node
+bundle: islandora_object
+label: issn
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

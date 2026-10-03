@@ -1,0 +1,11 @@
+uuid: 0e39e01d-9d2f-4c45-9410-3d4ce2ec52dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.suggest_a_correction
+id: contact_message.suggest_a_correction
+target_entity_type_id: contact_message
+target_bundle: suggest_a_correction
+default_langcode: site_default
+language_alterable: false

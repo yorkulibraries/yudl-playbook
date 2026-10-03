@@ -1,0 +1,23 @@
+uuid: 6be8c753-1cd9-430f-bcfd-e959e49fef24
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_geolocation
+    - taxonomy.vocabulary.region
+  module:
+    - geolocation
+_core:
+  default_config_hash: BNZsA3TmKn3NvmakQufMFYhAjDSKrhvpJJNmrNhorQE
+id: taxonomy_term.region.field_geo_geolocation
+field_name: field_geo_geolocation
+entity_type: taxonomy_term
+bundle: region
+label: Latitude/Longitude
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

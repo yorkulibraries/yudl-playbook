@@ -1,0 +1,18 @@
+uuid: d6b858b2-3a2b-431f-9dd3-0084752f315c
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-group_media-file
+id: group_relationship.access_control-group_media-file.created
+field_name: created
+entity_type: group_relationship
+bundle: access_control-group_media-file
+label: 'Created on'
+description: 'The time that the group relationship was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

@@ -1,0 +1,7 @@
+settings:
+  rel_types:
+    'schema:department': Département
+    'schema:employee': Employé
+    'schema:member': Membre
+    'schema:memberOf': 'Membre de'
+    'schema:sponsor': Sponsor

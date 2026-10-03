@@ -1,0 +1,20 @@
+uuid: 7c699b79-36e1-4f92-a7a1-c933751e8727
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.fits_technical_metadata
+  module:
+    - path
+id: media.fits_technical_metadata.path
+field_name: path
+entity_type: media
+bundle: fits_technical_metadata
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

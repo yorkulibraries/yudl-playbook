@@ -1,0 +1,10 @@
+label: 'Recherche de collections'
+display:
+  block_1:
+    display_options:
+      title: 'Recherche de collections'
+  default:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Rechercher

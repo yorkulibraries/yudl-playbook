@@ -1,0 +1,14 @@
+uuid: 06a506c1-393c-4bff-9ab7-3cd4f4031ca7
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.yorku
+  module:
+    - user
+id: user_add_role_action.yorku
+label: 'Add the yorku role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: yorku

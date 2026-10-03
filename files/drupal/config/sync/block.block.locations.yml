@@ -1,0 +1,32 @@
+uuid: 02a2716a-fb80-480a-89f8-0b50d0bbdda0
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.locations
+  module:
+    - facets
+    - islandora
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: 3VfMzeM0FS0hRbmNIVPr2vpgT_zh2dN4RJz7aoq72yE
+id: locations
+theme: york_drupal_theme
+region: sidebar_first
+weight: -6
+provider: null
+plugin: 'facet_block:locations'
+settings:
+  id: 'facet_block:locations'
+  label: Locations
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: locations
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

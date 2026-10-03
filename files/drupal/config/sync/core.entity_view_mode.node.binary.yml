@@ -1,0 +1,15 @@
+uuid: fa132ab6-0fab-404e-8644-f34a8ae856e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  enforced:
+    module: {  }
+_core:
+  default_config_hash: Zctdw0Qjxs9yz0TgG8o5WEVPoCvtxKAIx8MgaMXtZzQ
+id: node.binary
+label: Binary
+description: ''
+targetEntityType: node
+cache: true

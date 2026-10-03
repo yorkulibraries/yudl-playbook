@@ -1,0 +1,13 @@
+uuid: 59d55a03-1d71-464d-9bef-13b3c456c08b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: qB9gDCE1dGxCeirzopFmz1US_h9n_xnn8Oo5QTGb7JY
+id: node.mirador
+label: Mirador
+description: ''
+targetEntityType: node
+cache: true

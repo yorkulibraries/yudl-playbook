@@ -2,68 +2,14 @@
 composer_version: "2.2.22"
 composer_version_branch: ""
 composer_keep_updated: no
-drupal_build_composer_project: true
+# Install the Drupal codebase from files/drupal/composer.{json,lock}
+# (derived from production) with a single composer install.
+drupal_build_composer_project: false
+drupal_build_composer: true
+drupal_composer_path: "{{ playbook_dir }}/files/drupal/composer.json"
 drupal_composer_install_dir: /var/www/html/drupal
-drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_owner: "{{ ansible_user }}"
-drupal_composer_dependencies:
-  # create-project with --stability dev installs core 11.x-dev; pin core to a stable release first.
-  - "--with-all-dependencies drupal/core-recommended:^11.4@stable drupal/core-composer-scaffold:^11.4@stable drupal/core-project-message:^11.4@stable drupal/core-recipe-unpack:^11.4@stable"
-  - "drupal/devel:^5.5"
-  - "drush/drush:^13"
-  - "drupal/restui:^1.21"
-  - "drupal/search_api_solr:^4.3"
-  - "drupal/facets:^2.0"
-  - "drupal/matomo:^1.22"
-  - "drupal/pdf:^1.2"
-  - "drupal/admin_toolbar:^3.4"
-  - "drupal/rest_oai_pmh:^2.0@beta"
-  - "drupal/rdf:^3.0@beta"
-  - "drupal/hal:^2.0"
-  - "drupal/config_update:^2.0@alpha"
-  - "easyrdf/easyrdf:^1.1"
-  - "drupal/context:^5.0@RC"
-  - "drupal/flysystem:^2.3"
-  - "drupal/jquery_ui_accordion:^2.1"
-  - "drupal/typed_data:^2.1"
-  - "drupal/default_content:^2.0@alpha"
-  - "drupal/flexible_permissions ^2.0"
-  - "drupal/group:^3.3"
-  - "drupal/groupmedia:^4.0"
-  - "drupal/group_permissions:^2.0@alpha"
-  - "drupal/features:^3.14"
-  - "--with-all-dependencies drupal/upgrade_status:^4.3"
-  - "drupal/islandora:^2"
-  - "--with-all-dependencies yorkulibraries/yudl_defaults:3.x-dev drupal/openseadragon:^3.0 drupal/controlled_access_terms:^2.4"
-  - "islandora-rdm/islandora_fits:dev-8.x-1.x"
-  - "drupal/bootstrap_barrio:^5.5"
-  - "drupal/simple_sitemap:^4.1"
-  - "drupal/pathauto:^1.12"
-  - "drupal/views_bulk_operations:^4.2"
-  - "drupal/views_bulk_edit:^3.0"
-  - "drupal/search_api_autocomplete:^1.8"
-  - "mjordan/islandora_workbench_integration:dev-main"
-  - "drupal/eu_cookie_compliance:^1.24"
-  - "drupal/views_block_area:^2.0@RC"
-  - "drupal/metatag:^2.0"
-  - "drupal/term_condition:^2.0"
-  - "drupal/addtoany:^2.0"
-  - "drupal/twig_tweak:^3.3"
-  - "drupal/block_class:^3.0"
-  - "drupal/oembed_providers:^2.1"
-  - "drupal/fontawesome:^3.0"
-  - "drupal/views_data_export:^1.4"
-  - "drupal/jquery_ui_slider:^2.1"
-  - "drupal/jquery_ui_touch_punch:^1.1"
-  - "yorkulibraries/yudl_customizations:1.x-dev"
-  - "drupal/views_field_view:^1.0@beta"
-  - "predis/predis"
-  - "drupal/redis"
-  - "drupal/views_infinite_scroll:^2.0"
-  - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.4"
-  - "discoverygarden/dgi_actions"
-  - "drupal/group_action:^1.2"
-drupal_composer_project_package: "drupal/recommended-project:^11@stable"
+drupal_composer_dependencies: []
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
 drupal_db_name: drupal
@@ -71,82 +17,15 @@ drupal_db_backend: "{{ claw_db }}"
 drupal_db_host: "127.0.0.1"
 drupal_domain: "yudl.dev"
 drupal_site_name: "YUDL DEV"
-drupal_install_profile: standard
+# Install the site from files/drupal/config/sync, exported from production
+# (profile switched to minimal, prod-only modules and secrets removed).
+yudl_install_from_config: true
+drupal_install_profile: minimal
+drupal_site_install_extra_args:
+  - "--existing-config"
 drupal_account_name: admin
-drupal_enable_modules:
-  - addtoany
-  - admin_toolbar
-  - admin_toolbar_tools
-  - basic_auth
-  - block_class
-  - contact
-  - context
-  - context_ui
-  - config_translation
-  - controlled_access_terms_defaults
-  - default_content
-  - devel
-  - dgi_fixity
-  - eu_cookie_compliance
-  - facets
-  - facets_range_widget
-  - facets_summary
-  - features
-  - fontawesome
-  - geolocation_leaflet
-  - gnode
-  - group
-  - group_permissions
-  - groupmedia
-  - hal
-  - islandora_breadcrumbs
-  - islandora_defaults
-  - islandora_fits
-  - islandora_iiif
-  - islandora_workbench_integration
-  - jquery_ui_accordion
-  - jquery_ui_slider
-  - layout_builder
-  - layout_discovery
-  - locale
-  - matomo
-  - media_library
-  - metatag
-  - oembed_providers
-  - pathauto
-  - pdf
-  - rdf
-  - redis
-  - responsive_image
-  - rest
-  - rest_oai_pmh
-  - restui
-  - search_api_autocomplete
-  - search_api_solr
-  - search_api_solr_autocomplete
-  - serialization
-  - simple_sitemap
-  - syslog
-  - term_condition
-  - twig_tweak
-  - upgrade_status
-  - views_block_area
-  - views_bulk_edit
-  - views_bulk_operations
-  - views_data_export
-  - views_field_view
-  - views_infinite_scroll
-  - yudl_blocks
-  - yudl_search
-  - metatag_dc
-  - metatag_dc_advanced
-  - metatag_open_graph
-  - metatag_twitter_cards
-  - dgi_actions
-  - dgi_actions_handle
-  - group_action
-  - yudl_oembed
-  - yudl_map
+# Modules come from core.extension in the config sync directory.
+drupal_enable_modules: []
 drupal_trusted_hosts:
   - ^localhost$
   - "{{ hostvars[groups['webserver'][0]].ansible_host }}"

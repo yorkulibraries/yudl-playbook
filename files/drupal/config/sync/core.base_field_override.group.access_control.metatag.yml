@@ -1,0 +1,18 @@
+uuid: dff06806-7d43-45a7-abb5-28749a671135
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+id: group.access_control.metatag
+field_name: metatag
+entity_type: group
+bundle: access_control
+label: 'Metatags (Hidden field for JSON support)'
+description: 'The meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: map

@@ -1,0 +1,20 @@
+uuid: 209d491b-3a3b-474e-bb75-c0243af482f4
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+  module:
+    - path
+id: group.access_control.path
+field_name: path
+entity_type: group
+bundle: access_control
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

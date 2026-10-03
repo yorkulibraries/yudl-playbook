@@ -1,0 +1,3 @@
+relationships:
+  'taxonomy_term:langcode:language':
+    label: Langue

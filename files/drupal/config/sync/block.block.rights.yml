@@ -1,0 +1,30 @@
+uuid: a0bb08e0-8c85-4366-9373-3163619daac7
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.rights
+  module:
+    - facets
+    - islandora
+  theme:
+    - york_drupal_theme
+id: rights
+theme: york_drupal_theme
+region: sidebar_first
+weight: -3
+provider: null
+plugin: 'facet_block:rights'
+settings:
+  id: 'facet_block:rights'
+  label: Rights
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: rights
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

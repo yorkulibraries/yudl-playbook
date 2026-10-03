@@ -1,0 +1,21 @@
+_core:
+  default_config_hash: eBtnF9UuUaXHIhDR21_xGfsRtLurc9undbU8e-OmP_M
+langcode: en
+protected_forms:
+  allowed_scripts:
+    - "Canadian Aboriginal"
+    - "Currency Symbols"
+    - "Diacritical Marks"
+    - Latin
+    - "Miscellaneous Symbols"
+    - Myanmar
+    - "Old Persian"
+  check_quantity: 50
+  reject_message: "Oops! Your message looks a bit like spam and couldn’t be sent. Please check it and try again."
+  reject_patterns: "http://, https://, www, ftp://, mailto:, smb://, afp://, gopher://, news://, ssl://, sslv2://, sslv3://, tls://, tcp://, udp://, url=, href=\r\ndating, sex, porn, fuck, buy, captcha, spam, hello. and bye., mail.ru, reading this message, reading my message, reading through my message, are whitelisted, great website, late client, ciao a tutti, viagra, cheap, casino, advertising, keyword, promotion, porntubered,  ps: how are you?, beautiful models, privet, beautiful girls, best girls, dosug, trustable, look at the, v7bomdefex, what is it -, email marketing, read your site,newstoday,today.com,д,ক্,П,Casino,,pills,today.com,.ru"
+  log_rejected: true
+  allowed_patterns: "https://digital.library.yorku.ca,Service-file,asc,pid:, yul:,hdl,identifier:\r\n"
+  excluded_forms:
+    - user_login_form
+    - user_register_form
+    - user_pass

@@ -1,0 +1,20 @@
+uuid: 377229ac-ecb4-4989-8611-96bdaf9adfc8
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-b46d5f39e98b2e6c5
+  module:
+    - path
+id: group_relationship.access_control-b46d5f39e98b2e6c5.path
+field_name: path
+entity_type: group_relationship
+bundle: access_control-b46d5f39e98b2e6c5
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

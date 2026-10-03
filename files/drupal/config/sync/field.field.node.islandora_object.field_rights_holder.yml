@@ -1,0 +1,35 @@
+uuid: 9060fda4-2980-46de-99aa-e6b93aaabb04
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rights_holder
+    - node.type.islandora_object
+    - taxonomy.vocabulary.corporate_body
+    - taxonomy.vocabulary.family
+    - taxonomy.vocabulary.person
+_core:
+  default_config_hash: dQuJwbW4koTdiqhic06_S17MJBD_U9aC5B1AkUlYnE4
+id: node.islandora_object.field_rights_holder
+field_name: field_rights_holder
+entity_type: node
+bundle: islandora_object
+label: 'Rights Holder'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      corporate_body: corporate_body
+      family: family
+      person: person
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: corporate_body
+field_type: entity_reference

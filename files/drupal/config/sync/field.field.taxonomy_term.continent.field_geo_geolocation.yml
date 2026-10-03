@@ -1,0 +1,23 @@
+uuid: db53690d-13c7-4996-be97-89e1db8edeff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_geolocation
+    - taxonomy.vocabulary.continent
+  module:
+    - geolocation
+_core:
+  default_config_hash: IcxO9oN4tAD1dRr353E5fBzSgfpxq2F-KdaC0IT_jEM
+id: taxonomy_term.continent.field_geo_geolocation
+field_name: field_geo_geolocation
+entity_type: taxonomy_term
+bundle: continent
+label: Latitude/Longitude
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

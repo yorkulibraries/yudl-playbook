@@ -1,0 +1,27 @@
+uuid: d9f8aacf-f258-472f-b958-0603b94bf201
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: public
+_core:
+  default_config_hash: kf9Jl5HubngMsUL563fcvtycqbl6iS_kkhWDU1H3los
+id: node.field_issn
+field_name: field_issn
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,14 @@
+uuid: c94d5f6d-7b41-46c4-a541-749c99b8f15d
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.yorku
+  module:
+    - user
+id: user_remove_role_action.yorku
+label: 'Remove the yorku role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: yorku

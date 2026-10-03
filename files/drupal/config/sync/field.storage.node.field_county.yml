@@ -1,0 +1,26 @@
+uuid: 91b49175-f924-4c73-a521-b52dbae9d99e
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - taxonomy
+third_party_settings:
+  field_permissions:
+    permission_type: public
+_core:
+  default_config_hash: SSz-562LURkIHDZQAetEi-sxKMIls57GU4k1kHtwWt0
+id: node.field_county
+field_name: field_county
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

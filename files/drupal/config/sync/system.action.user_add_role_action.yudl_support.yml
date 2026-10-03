@@ -1,0 +1,14 @@
+uuid: 6a92726a-64cc-49cf-bdfb-a3f2384ee5fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.yudl_support
+  module:
+    - user
+id: user_add_role_action.yudl_support
+label: 'Add the YUDL Support role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: yudl_support

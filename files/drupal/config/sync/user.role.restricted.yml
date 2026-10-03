@@ -1,0 +1,16 @@
+uuid: 6f1311fb-3bd8-4bed-a618-5f4a2d3d07cd
+langcode: en
+status: true
+dependencies:
+  module:
+    - eu_cookie_compliance
+    - file
+_core:
+  default_config_hash: yWsv9gl5Ky17twqAW2ENwIjdlkWaETJmh0pVqTBl59E
+id: restricted
+label: RESTRICTED
+weight: 4
+is_admin: null
+permissions:
+  - 'delete own files'
+  - 'display eu cookie compliance popup'

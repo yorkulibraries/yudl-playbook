@@ -1,0 +1,37 @@
+uuid: 04682da7-5342-466b-810c-f15849f9260d
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+    - user.role.authenticated
+id: access_control-member
+label: Member
+weight: -100
+admin: false
+scope: insider
+global_role: authenticated
+group_type: access_control
+permissions:
+  - 'view group_media:audio entity'
+  - 'view group_media:audio relationship'
+  - 'view group_media:document entity'
+  - 'view group_media:document relationship'
+  - 'view group_media:extracted_text entity'
+  - 'view group_media:extracted_text relationship'
+  - 'view group_media:file entity'
+  - 'view group_media:file relationship'
+  - 'view group_media:fits_technical_metadata entity'
+  - 'view group_media:fits_technical_metadata relationship'
+  - 'view group_media:image entity'
+  - 'view group_media:image relationship'
+  - 'view group_media:remote_video entity'
+  - 'view group_media:remote_video relationship'
+  - 'view group_media:video entity'
+  - 'view group_media:video relationship'
+  - 'view group_node:article entity'
+  - 'view group_node:article relationship'
+  - 'view group_node:islandora_object entity'
+  - 'view group_node:islandora_object relationship'
+  - 'view group_node:page entity'
+  - 'view group_node:page relationship'

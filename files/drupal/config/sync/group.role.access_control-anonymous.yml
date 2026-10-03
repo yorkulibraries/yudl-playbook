@@ -1,0 +1,15 @@
+uuid: 36a6079d-6b0f-4529-b0ae-a5d215152b02
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+    - user.role.anonymous
+id: access_control-anonymous
+label: Anonymous
+weight: -102
+admin: false
+scope: outsider
+global_role: anonymous
+group_type: access_control
+permissions: {  }

@@ -1,0 +1,45 @@
+uuid: b8c61c56-f16d-4365-85ac-10873488c97a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_authority_link
+    - taxonomy.vocabulary.person
+  module:
+    - controlled_access_terms
+_core:
+  default_config_hash: 03PnHXXZ56UG-cq6uzK2Gt7qDuIDo2EHf2G6CdOBlwE
+id: taxonomy_term.person.field_authority_link
+field_name: field_authority_link
+entity_type: taxonomy_term
+bundle: person
+label: Authority
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  authority_sources:
+    archeion: 'Archives Association of Ontario'
+    asc: "York University Libraries' Clara Thomas Archives & Special Collections"
+    cash: 'Canadian Subject Headings'
+    census: 'CENSUS of Modern Greek Literature'
+    dahr: 'Discography of American Historical Recordings'
+    discogs: Discogs
+    lcshac: "Library of Congress Children's Subject Headings"
+    lcnaf: 'LC Name Authority File'
+    naf: 'NACO Authority File'
+    nad: 'NAD / ARK II Name Authority Database'
+    nal: 'National Agricultural Library subject headings'
+    orcid: 'Open Researcher and Contributor ID (ORCID)'
+    rvm: 'Répertoire de vedettes-matière'
+    snac: 'Social Networks and Archival Context'
+    ulan: 'Union List of Artist Names'
+    viaf: 'Virtual International Authority File'
+    wiki: Wikidata
+    worldcat: 'Worldcat Identities'
+    other: Other
+  title: 1
+  link_type: 16
+field_type: authority_link

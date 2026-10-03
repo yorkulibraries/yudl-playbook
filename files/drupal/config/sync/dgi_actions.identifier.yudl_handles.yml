@@ -1,0 +1,14 @@
+uuid: 0ca635c6-2e14-426f-9f09-65e65662cd0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - dgi_actions.service_data.yudl_handle_server
+    - field.field.node.islandora_object.field_hdl
+id: yudl_handles
+label: 'YUDL Handles'
+entity: node
+bundle: islandora_object
+field: field_hdl
+service_data: yudl_handle_server
+data_profile: ''

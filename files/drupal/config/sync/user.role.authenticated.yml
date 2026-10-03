@@ -1,0 +1,24 @@
+uuid: a0d77acf-ebad-4135-aba5-fb141e86cbe6
+langcode: en
+status: true
+dependencies:
+  module:
+    - contact
+    - eu_cookie_compliance
+    - file
+    - matomo
+    - media
+    - system
+_core:
+  default_config_hash: fmOhga6jqEueCds8CcCj5slXLX5bNBEw2hllPCRZ4qY
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'delete own files'
+  - 'display eu cookie compliance popup'
+  - 'opt-in or out of matomo tracking'
+  - 'view media'

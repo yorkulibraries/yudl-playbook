@@ -1,0 +1,20 @@
+uuid: 855156fe-0ebf-437c-8fbe-b9bb45491d8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.city
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: AZ-AAeEcVwBB-eUYzFoe_R6j5ffAwCqRNGJMQR5cfIY
+id: taxonomy_term.city
+target_entity_type_id: taxonomy_term
+target_bundle: city
+default_langcode: current_interface
+language_alterable: false

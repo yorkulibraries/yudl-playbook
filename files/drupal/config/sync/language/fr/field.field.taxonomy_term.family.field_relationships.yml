@@ -1,0 +1,5 @@
+settings:
+  rel_types:
+    'schema:member': Membre
+    'schema:memberOf': 'Membre de'
+    'schema:sponsor': Sponsor

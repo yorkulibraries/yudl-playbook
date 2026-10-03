@@ -1,0 +1,21 @@
+uuid: 5664e692-29d5-41ee-a428-da00c9ce8481
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_lccn
+    - node.type.islandora_object
+_core:
+  default_config_hash: DaQOiZraHXWa2TOyIvQQ30W9b90bC4GLCXlen_N88bs
+id: node.islandora_object.field_lccn
+field_name: field_lccn
+entity_type: node
+bundle: islandora_object
+label: lccn
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

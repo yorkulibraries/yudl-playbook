@@ -1,0 +1,13 @@
+_core:
+  default_config_hash: PIBEWJZCwdKYgY_8fYtbvk_w3YIVzgU1em9j8zAy-TE
+session:
+  parameter: language
+url:
+  source: path_prefix
+  prefixes:
+    en: ''
+    fr: fr
+  domains:
+    en: ''
+    fr: ''
+selected_langcode: site_default

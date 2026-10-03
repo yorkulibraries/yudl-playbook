@@ -1,0 +1,16 @@
+uuid: 8f80ff01-1dd9-4216-b683-9e31d75ef5c8
+langcode: en
+status: true
+dependencies:
+  module:
+    - eu_cookie_compliance
+    - file
+_core:
+  default_config_hash: e6W733rBSNmewsIQsvWQ-8mIE5H-CIeArLBwIbN5vVQ
+id: fedoraadmin
+label: fedoraAdmin
+weight: 3
+is_admin: null
+permissions:
+  - 'delete own files'
+  - 'display eu cookie compliance popup'

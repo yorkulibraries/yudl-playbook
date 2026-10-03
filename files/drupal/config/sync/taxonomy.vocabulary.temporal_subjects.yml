@@ -1,0 +1,11 @@
+uuid: ab75d259-70f3-4baf-8e09-2f9dd9e5f916
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: IaNlO4qrmB2pECrwmlQdDhh7SOdOqVoO_QGwGXALAe0
+name: 'Temporal Subjects'
+vid: temporal_subjects
+description: 'Subject terms expressing periods of time'
+weight: 0
+new_revision: false

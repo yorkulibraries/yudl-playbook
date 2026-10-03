@@ -1,0 +1,21 @@
+third_party_settings:
+  field_group:
+    group_down:
+      label: Téléchargement
+    group_item:
+      label: "Description de l'objet"
+    group_rights:
+      label: Droits
+    group_notes:
+      label: Remarques
+    group_geographic:
+      label: Géographique
+content:
+  field_coordinates:
+    settings:
+      map_provider_settings:
+        map_features:
+          leaflet_control_geocoder:
+            settings:
+              settings:
+                label: Adresse

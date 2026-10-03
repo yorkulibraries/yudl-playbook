@@ -34,6 +34,16 @@ islandora_extra_ubuntu_packages:
   - ffmpeg
   - graphicsmagick
   - libturbojpeg-dev
+  # ImageMagick delegates, matching production's build (magick -version)
+  - libfontconfig1-dev
+  - libfreetype-dev
+  - libgs-dev
+  - libjbig-dev
+  - liblcms2-dev
+  - liblzma-dev
+  - libx11-dev
+  - libxext-dev
+  - libxml2-dev
 
 islandora_jwt_expiry: "+7 days"
 
@@ -46,3 +56,8 @@ mysql_users:
 # Used by both the webserver and crayfish role for CentOS.
 php_enablerepo: "remi-php80"
 php_packages_state: "latest"
+
+# ImageMagick 7, matching production. Leave imagemagick_prebuilt_url empty to build from
+# source (always done on non-x86_64 hosts).
+imagemagick_version: "7.1.1-2"
+imagemagick_prebuilt_url: "https://alpha.library.yorku.ca/imagemagick/imagemagick-7.1.1-2-jammy-amd64.tar.gz"

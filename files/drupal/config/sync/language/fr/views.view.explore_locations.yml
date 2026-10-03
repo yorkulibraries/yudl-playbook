@@ -1,0 +1,35 @@
+display:
+  page_1:
+    display_options:
+      title: 'Parcourir les lieux'
+      arguments:
+        name:
+          exception:
+            title: Tout
+      menu:
+        title: Emplacements
+    display_title: Page
+  default:
+    display_options:
+      title: 'Parcourir les lieux'
+      fields:
+        name:
+          separator: ', '
+        name_1:
+          separator: ', '
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+    display_title: 'Par défaut'
+  block_1:
+    display_title: Bloc
+    display_options:
+      arguments:
+        name:
+          exception:
+            title: Tout
+label: 'Parcourir les lieux'

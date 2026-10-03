@@ -1,0 +1,11 @@
+uuid: 79f58cb1-2f03-49d0-b6f7-343289a895a2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: kjPHjzTfVkB0E2-_guta7CBIxBHp7FTq6mTQ4ciTMYY
+name: Rights
+vid: rights
+description: 'Rights prescribed to an cultural heritage object.'
+weight: 0
+new_revision: false

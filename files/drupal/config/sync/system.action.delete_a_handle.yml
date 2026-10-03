@@ -1,0 +1,14 @@
+uuid: 22a0eced-9435-45b8-90d5-9f73b8352662
+langcode: en
+status: true
+dependencies:
+  config:
+    - dgi_actions.identifier.yudl_handles
+  module:
+    - dgi_actions_handle
+id: delete_a_handle
+label: 'Delete a Handle'
+type: entity
+plugin: dgi_actions_delete_handle
+configuration:
+  identifier_entity: yudl_handles

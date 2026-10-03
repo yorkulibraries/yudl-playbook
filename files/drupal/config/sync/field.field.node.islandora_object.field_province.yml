@@ -1,0 +1,31 @@
+uuid: 8663d937-2046-4c01-b665-cb606aa16000
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_province
+    - node.type.islandora_object
+    - taxonomy.vocabulary.province
+_core:
+  default_config_hash: cAPvoKT8XzC4UHCFi0IxAQd-p2Rr3eA4CJqYhwtjzt8
+id: node.islandora_object.field_province
+field_name: field_province
+entity_type: node
+bundle: islandora_object
+label: Province
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      province: province
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

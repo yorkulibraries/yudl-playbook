@@ -26,6 +26,8 @@
         version: main
         update: true
       register: york_theme_repo
+      # files/drupal/composer.lock already provides it.
+      when: not (drupal_build_composer | default(false))
 
     - name: Chown york_drupal_theme
       file:

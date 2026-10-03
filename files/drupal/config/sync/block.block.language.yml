@@ -1,0 +1,32 @@
+uuid: fcb4d079-dcb6-4c10-99ff-33a642d7c66f
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.language
+  module:
+    - facets
+    - islandora
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: wRZzlGaxWzkFhhKpO0ET5qYJsQQQ_8DunkEoFmL9iV0
+id: language
+theme: york_drupal_theme
+region: sidebar_first
+weight: -7
+provider: null
+plugin: 'facet_block:language'
+settings:
+  id: 'facet_block:language'
+  label: Language
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: language
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

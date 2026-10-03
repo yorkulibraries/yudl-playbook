@@ -1,0 +1,135 @@
+display:
+  default:
+    display_title: 'Par défaut'
+    display_options:
+      title: 'Extracted Text'
+      fields:
+        title_1:
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      header:
+        result:
+          content: 'Affichage de @start à @end sur @total'
+  data_export_1:
+    display_title: 'Exportation de données'
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+        field_member_of:
+          label: 'Membre de'
+          separator: ', '
+  page_1:
+    display_title: 'Extracted Text'
+    display_options:
+      title: 'Extracted Text'
+  page_2:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        field_member_of:
+          label: 'Membre de'
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+  page_3:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        field_member_of:
+          label: 'Membre de'
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+  page_4:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        field_member_of:
+          label: 'Membre de'
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+  page_5:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        field_member_of:
+          label: 'Membre de'
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+  page_6:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+  page_7:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '
+  page_8:
+    display_options:
+      fields:
+        title_1:
+          separator: ', '
+        field_member_of:
+          label: 'Membre de'
+          separator: ', '
+        changed:
+          label: 'Mis à jour'
+          separator: ', '
+        field_model:
+          label: Modèle
+          separator: ', '

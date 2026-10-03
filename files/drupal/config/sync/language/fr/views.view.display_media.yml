@@ -1,0 +1,33 @@
+display:
+  entity_view_3:
+    display_options:
+      fields:
+        field_media_audio_file:
+          separator: ', '
+        field_media_file:
+          separator: ', '
+        field_media_image:
+          separator: ', '
+        field_media_video_file:
+          separator: ', '
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      fields:
+        name:
+          separator: ', '
+      arguments:
+        field_media_of_target_id:
+          exception:
+            title: Tout
+  thumbnail:
+    display_title: Vignette
+    display_options:
+      title: Vignette

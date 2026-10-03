@@ -1,0 +1,22 @@
+uuid: 97346c0b-786f-4661-b2e9-5f6bb6e627dc
+langcode: en
+status: true
+dependencies:
+  module:
+    - islandora_image
+_core:
+  default_config_hash: oOGPt1IpgVVlcZyQ13XiVUA1nB6kq9ZjxWqbq9HUg5w
+id: video_generate_a_thumbnail_from_an_original_file
+label: 'Video - Generate a thumbnail from an original file'
+type: node
+plugin: generate_image_derivative
+configuration:
+  queue: islandora-connector-homarus
+  event: 'Generate Derivative'
+  destination_media_type: image
+  source_term_uri: 'http://pcdm.org/use#OriginalFile'
+  derivative_term_uri: 'http://pcdm.org/use#ThumbnailImage'
+  mimetype: image/jpeg
+  args: '-ss 00:00:10.000 -frames 1 -vf scale=300:-2'
+  scheme: public
+  path: '[date:custom:Y]-[date:custom:m]/[node:nid]-[term:name].jpg'

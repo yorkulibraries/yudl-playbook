@@ -1,0 +1,37 @@
+uuid: a1bc3fa7-bcda-4cd4-b6ca-59a7808c3faf
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.country
+  module:
+    - taxonomy
+_core:
+  default_config_hash: BXy8bFC7-Do5baWM-9CokNXoNsnBi_SckPk70tEDTU8
+id: taxonomy_term.country
+targetEntityType: taxonomy_term
+bundle: country
+types:
+  - 'dc:Location'
+  - 'schema:Place'
+fieldMappings:
+  name:
+    properties:
+      - 'schema:name'
+  description:
+    properties:
+      - 'schema:description'
+  field_authority_link:
+    properties:
+      - 'schema:sameAs'
+  field_geo_geolocation:
+    properties:
+      - 'wgs84_pos:lat_long'
+  field_geo_broader:
+    properties:
+      - 'schema:containedInPlace'
+  changed:
+    properties:
+      - 'schema:dateModified'
+    datatype_callback:
+      callable: 'Drupal\rdf\CommonDataConverter::dateIso8601Value'

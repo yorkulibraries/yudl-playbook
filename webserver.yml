@@ -35,6 +35,71 @@
         host: "%"
         state: present
 
+    # geerlingguy.drupal only copies composer.json; put the lock next to it so
+    # composer install uses the locked versions instead of resolving them.
+    - name: Ensure Drupal codebase directory exists
+      file:
+        path: "{{ drupal_composer_install_dir }}"
+        state: directory
+        owner: "{{ drupal_core_owner }}"
+        group: "{{ drupal_core_owner }}"
+        mode: "0775"
+      when: drupal_build_composer | default(false)
+
+    - name: Copy composer.lock into the Drupal codebase directory
+      copy:
+        src: "{{ drupal_composer_path | dirname }}/composer.lock"
+        dest: "{{ drupal_composer_install_dir }}/composer.lock"
+        owner: "{{ drupal_core_owner }}"
+        group: "{{ drupal_core_owner }}"
+        mode: "0644"
+        force: false
+      when: drupal_build_composer | default(false)
+
+    # Install the site from files/drupal/config/sync (drush site:install --existing-config).
+    - name: Ensure Drupal config sync and default site directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ drupal_core_owner }}"
+        group: "{{ drupal_core_owner }}"
+        mode: "0775"
+      loop:
+        - "{{ drupal_composer_install_dir }}/config/sync"
+        - "{{ drupal_composer_install_dir }}/migrate"
+        - "{{ drupal_core_path }}/sites/default"
+      when: yudl_install_from_config | default(false)
+
+    # Config in config/sync; taxonomy CSVs its migrations read (source path ../migrate/).
+    - name: Sync Drupal config and migration data into the codebase
+      ansible.posix.synchronize:
+        src: "{{ playbook_dir }}/files/drupal/{{ item }}/"
+        dest: "{{ drupal_composer_install_dir }}/{{ item }}/"
+        delete: true
+      loop:
+        - config/sync
+        - migrate
+      become: false
+      when: yudl_install_from_config | default(false)
+
+    # The installer adds database settings to this; it only needs to know
+    # where the config lives beforehand.
+    - name: Point settings.php at the config sync directory
+      copy:
+        dest: "{{ drupal_core_path }}/sites/default/settings.php"
+        content: |
+          <?php
+
+          $settings['config_sync_directory'] = '../config/sync';
+
+          // No Matomo tracking in dev; production's server isn't reachable from here.
+          $config['matomo.settings']['site_id'] = '';
+        owner: "{{ drupal_core_owner }}"
+        group: "{{ drupal_core_owner }}"
+        mode: "0664"
+        force: false
+      when: yudl_install_from_config | default(false)
+
   vars:
     php_version: "8.3"
 

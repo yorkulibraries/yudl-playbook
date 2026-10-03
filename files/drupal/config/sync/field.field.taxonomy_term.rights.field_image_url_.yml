@@ -1,0 +1,25 @@
+uuid: d9583565-4882-4bc8-8941-8673669b74c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_image_url_
+    - taxonomy.vocabulary.rights
+  module:
+    - link
+_core:
+  default_config_hash: 5ZkCRDcBmb2KsPQU7Lgiv7p6S-tXwK43qqE5twYBNos
+id: taxonomy_term.rights.field_image_url_
+field_name: field_image_url_
+entity_type: taxonomy_term
+bundle: rights
+label: 'Image (url)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

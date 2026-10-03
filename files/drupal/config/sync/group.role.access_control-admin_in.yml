@@ -1,0 +1,15 @@
+uuid: 0a202b80-49fe-4373-bf6b-7c86a3559998
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+    - user.role.administrator
+id: access_control-admin_in
+label: Administrator
+weight: 102
+admin: true
+scope: insider
+global_role: administrator
+group_type: access_control
+permissions: {  }

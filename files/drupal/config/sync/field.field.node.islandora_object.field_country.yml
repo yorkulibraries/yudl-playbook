@@ -1,0 +1,31 @@
+uuid: 07fab170-912e-4a2f-92d5-3c7ec500fe0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_country
+    - node.type.islandora_object
+    - taxonomy.vocabulary.country
+_core:
+  default_config_hash: 8B_pMyTy31Rf4e_7ldBoZlVzUFZZFB-98FnCveI8lOc
+id: node.islandora_object.field_country
+field_name: field_country
+entity_type: node
+bundle: islandora_object
+label: Country
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      country: country
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

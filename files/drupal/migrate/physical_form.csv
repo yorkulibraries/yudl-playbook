@@ -1,0 +1,84 @@
+vid,name,authority,field_authority_link
+physical_form,aperture card,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,atlas,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,braille,marcform,https://www.loc.gov/standards/valuelist/marcform.html
+physical_form,braille,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,celestial globe,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,chart,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,chip cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,collage,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,combination,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,computer optical disc cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,cylinder,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,diagram,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,drawing,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,earth moon globe,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,electronic,marcform,https://www.loc.gov/standards/valuelist/marcform.html
+physical_form,electronic resource,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,film cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,film cassette,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,film reel,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,filmslip,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,filmstrip cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,filmstrip roll,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,flash card,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,globe,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,large print,marcform,https://www.loc.gov/standards/valuelist/marcform.html
+physical_form,large print,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,magnetic disk,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,magneto-optical disc,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,map,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microfiche,marcform,https://www.loc.gov/standards/valuelist/marcform.html
+physical_form,microfiche,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microfiche cassette,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microfilm,marcform,https://www.loc.gov/standards/valuelist/marcform.html
+physical_form,microfilm cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microfilm cassette,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microfilm reel,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microform,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,microopaque,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,model,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,moon,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,motion picture,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,nonprojected graphic,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,optical disc,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,other filmstrip type,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,painting,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,photomechanical print,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,photonegative,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,photoprint,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,picture,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,planetary or lunar globe,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,print,marcform,https://www.loc.gov/standards/valuelist/marcform.html
+physical_form,print,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,profile,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,projected graphic,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,regular print,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,remote,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,remote-sensing image,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,roll,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,section,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,slide,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,sound cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,sound cassette,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,sound disc,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,sound recording,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,sound-tape reel,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,sound-track film,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,tactile material,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,"tactile, with no writing system",marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,tape cartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,tape cassette,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,tape reel,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,technical drawing,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,terrestrial globe,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,text,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,text in looseleaf binder,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,transparency,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,videocartridge,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,videocassette,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,videodisc,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,videorecording,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,videoreel,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,view,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html
+physical_form,wire recording,marcsmd,https://www.loc.gov/standards/valuelist/marcsmd.html

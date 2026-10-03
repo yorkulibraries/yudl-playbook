@@ -1,0 +1,21 @@
+uuid: 992b1598-2f4e-4c10-8119-1cb3480ad80a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pid
+    - node.type.islandora_object
+_core:
+  default_config_hash: tCQNRkhTube14oXnYrxn8uYeVvNQ0U89pfeFI6lovPw
+id: node.islandora_object.field_pid
+field_name: field_pid
+entity_type: node
+bundle: islandora_object
+label: PID
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

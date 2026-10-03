@@ -1,0 +1,23 @@
+uuid: ca1c46e4-8bb8-47fe-b42b-1dd84b8d8486
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_geolocation
+    - taxonomy.vocabulary.province
+  module:
+    - geolocation
+_core:
+  default_config_hash: fJFf1FpcA3xH2WGIsIRKVTdMYczodhyM62eDXOBm6FY
+id: taxonomy_term.province.field_geo_geolocation
+field_name: field_geo_geolocation
+entity_type: taxonomy_term
+bundle: province
+label: Latitude/Longitude
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

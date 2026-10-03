@@ -1,0 +1,31 @@
+uuid: 63a1e823-cc67-4d5e-8eef-a1bc3eda5db3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_city_section
+    - node.type.islandora_object
+    - taxonomy.vocabulary.city_section
+_core:
+  default_config_hash: Af25GKth7a2stzwEaBMMlv2S9-KDDlbR6QM2zDS-pmU
+id: node.islandora_object.field_city_section
+field_name: field_city_section
+entity_type: node
+bundle: islandora_object
+label: 'City Section'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      city_section: city_section
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

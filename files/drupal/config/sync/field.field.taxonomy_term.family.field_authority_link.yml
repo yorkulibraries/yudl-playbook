@@ -1,0 +1,37 @@
+uuid: fd15910a-13f2-4fee-9fac-bff09885aa66
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_authority_link
+    - taxonomy.vocabulary.family
+  module:
+    - controlled_access_terms
+_core:
+  default_config_hash: ojMxRWKApvkFXV0grLizDy7lwuhqXNZ1KU7NXZmy79s
+id: taxonomy_term.family.field_authority_link
+field_name: field_authority_link
+entity_type: taxonomy_term
+bundle: family
+label: Authority
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  authority_sources:
+    archeion: 'Archives Association of Ontario'
+    asc: "York University Libraries' Clara Thomas Archives & Special Collections"
+    dahr: 'Discography of American Historical Recordings'
+    discogs: Discogs
+    naf: 'NACO Authority File'
+    viaf: 'Virtual International Authority File'
+    lcnaf: 'LC Name Authority File'
+    snac: 'Social Networks and Archival Context'
+    wiki: Wikidata
+    worldcat: 'Worldcat Identities'
+    other: Other
+  title: 1
+  link_type: 16
+field_type: authority_link

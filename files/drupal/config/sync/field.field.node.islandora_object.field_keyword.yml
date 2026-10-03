@@ -1,0 +1,31 @@
+uuid: 61afd3c5-97ec-43f9-9767-3567edee8549
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_keyword
+    - node.type.islandora_object
+    - taxonomy.vocabulary.tags
+_core:
+  default_config_hash: 9swwp9iIEe8ob7rHa_AU-Z89Yc6ht_k7Ls_wXHUOamY
+id: node.islandora_object.field_keyword
+field_name: field_keyword
+entity_type: node
+bundle: islandora_object
+label: Keywords
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tags: tags
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

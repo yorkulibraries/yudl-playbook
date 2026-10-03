@@ -75,32 +75,58 @@
         path: /usr/local/bin/magick
       register: imagemagick_installed
 
+    # ImageMagick 7 (Houdini and Hypercube call `magick`; Ubuntu only packages 6).
+    # Install a pre-built archive when one is set for this architecture, otherwise
+    # build from source. The archive is `make install DESTDIR=...` of the source build.
+    - name: Decide how to install ImageMagick
+      set_fact:
+        imagemagick_use_prebuilt: "{{ (imagemagick_prebuilt_url | default('')) != '' and ansible_architecture == 'x86_64' }}"
+
+    - name: Install pre-built ImageMagick
+      unarchive:
+        src: "{{ imagemagick_prebuilt_url }}"
+        dest: /
+        remote_src: true
+        creates: /usr/local/bin/magick
+      when: not imagemagick_installed.stat.exists and imagemagick_use_prebuilt
+
     - name: Clone ImageMagick git repo
       git:
         repo: https://github.com/ImageMagick/ImageMagick.git
         dest: /opt/imagemagick
-        version: 7.1.0-61
-      when: not imagemagick_installed.stat.exists
+        version: "{{ imagemagick_version | default('7.1.1-2') }}"
+        # Only the tagged source is needed, not the full history.
+        depth: 1
+      when: not imagemagick_installed.stat.exists and not imagemagick_use_prebuilt
 
     - name: Check if Makefile exists
       stat:
         path: /opt/imagemagick/Makefile
       register: imagemagick_makefile
-      when: not imagemagick_installed.stat.exists
+      when: not imagemagick_installed.stat.exists and not imagemagick_use_prebuilt
 
     - name: Configure ImageMagick
       command: "./configure --disable-shared --with-jp2=yes --with-openjp2=yes --with-png=yes"
       args:
         chdir: "/opt/imagemagick"
       when: >
-        not imagemagick_installed.stat.exists and
+        not imagemagick_installed.stat.exists and not imagemagick_use_prebuilt and
         (imagemagick_makefile is defined and not imagemagick_makefile.stat.exists)
 
     - name: Make and install ImageMagick
-      shell: "make -j {{ ansible_processor_vcpus }} && make install && ldconfig"
+      shell: "make -j {{ ansible_processor_vcpus }} && make install"
       args:
         chdir: "/opt/imagemagick"
+      when: not imagemagick_installed.stat.exists and not imagemagick_use_prebuilt
+
+    - name: Update ldconfig for ImageMagick
+      command: ldconfig
       when: not imagemagick_installed.stat.exists
+
+    - name: Check ImageMagick
+      command: /usr/local/bin/magick -version
+      register: imagemagick_check
+      changed_when: false
 
     - name: Ensure Redis is installed
       package:

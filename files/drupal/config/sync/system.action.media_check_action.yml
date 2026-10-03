@@ -1,0 +1,14 @@
+uuid: ac0caf06-9750-42e3-9d5c-296e6bb662ef
+langcode: en
+status: true
+dependencies:
+  module:
+    - dgi_fixity
+    - media
+_core:
+  default_config_hash: uCUPUXH5mkcObRYWdnMI3bkSjBHydU5696q4IGkUwoQ
+id: media_check_action
+label: 'Check media'
+type: media
+plugin: 'dgi_fixity:check_action:media'
+configuration: {  }

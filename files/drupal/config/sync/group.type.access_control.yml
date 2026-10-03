@@ -1,0 +1,12 @@
+uuid: c95d2c71-b9df-47d8-aaa6-f5e13b59f20b
+langcode: en
+status: true
+dependencies: {  }
+id: access_control
+label: 'Access Control'
+description: ''
+new_revision: true
+creator_membership: true
+creator_wizard: true
+creator_roles:
+  - access_control-admin

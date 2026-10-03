@@ -1,0 +1,33 @@
+uuid: 1f4f38d1-e8d6-474f-9720-34c6a4570c95
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_display_hints
+    - node.type.islandora_object
+    - taxonomy.vocabulary.islandora_display
+  enforced:
+    module: {  }
+_core:
+  default_config_hash: 0PTvIS3-VovLt_PMKWjQzCAYv1790rkdBbqaL3ER-VM
+id: node.islandora_object.field_display_hints
+field_name: field_display_hints
+entity_type: node
+bundle: islandora_object
+label: 'Display hints'
+description: 'Terms that will change how this resource is displayed.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      islandora_display: islandora_display
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

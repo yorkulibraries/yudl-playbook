@@ -1,0 +1,20 @@
+uuid: da05f783-c3b8-40dd-81d6-efdceee80bc2
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.fits_technical_metadata
+id: media.fits_technical_metadata.name
+field_name: name
+entity_type: media
+bundle: fits_technical_metadata
+label: Name
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

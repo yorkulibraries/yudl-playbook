@@ -1,0 +1,14 @@
+uuid: 290389d6-7eb7-4cb0-806c-fb5c0f92b701
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 1noCXlegCr5HFehQRF1ViXy1jhU1jZ_sNN99a8Sj5jo
+id: front
+label: 'Front page'
+tags:
+  canonical_url: '[site:url]'
+  description: 'York University Digital Library is an online collection that helps steward, preserve, and disseminate unique cultural heritage objects under the custody and control of the university. It is part of a regional, national, and international network of cultural heritage repositories. '
+  robots: 'index, follow'
+  shortlink: '[site:url]'
+  title: 'York University Digital Library'

@@ -1,0 +1,10 @@
+_core:
+  default_config_hash: T_ds3REH4r3NJRKBQ8cLc-RVnb4uooa-F_oEyWxdB8w
+cron_frequency: 86400
+use_time_interval: true
+time_interval_start: '01:30'
+time_interval_end: '02:30'
+all_tables: true
+write_log: false
+table_list:
+  drupal: {  }

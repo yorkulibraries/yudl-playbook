@@ -1,0 +1,22 @@
+uuid: ae337bbf-2e32-4c62-b0f8-44b5a26aa3d6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group_relationship.group_roles
+    - group.relationship_type.access_control-group_membership
+id: group_relationship.access_control-group_membership.group_roles
+field_name: group_roles
+entity_type: group_relationship
+bundle: access_control-group_membership
+label: Roles
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'group_type:group_role'
+  handler_settings:
+    group_type_id: access_control
+field_type: entity_reference

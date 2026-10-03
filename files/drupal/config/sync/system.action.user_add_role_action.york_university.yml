@@ -1,0 +1,14 @@
+uuid: b1e9f136-7050-4bd6-b5c1-f48ca472060b
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.york_university
+  module:
+    - user
+id: user_add_role_action.york_university
+label: 'Add the York University role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: york_university

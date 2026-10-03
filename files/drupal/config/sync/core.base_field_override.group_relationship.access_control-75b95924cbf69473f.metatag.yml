@@ -1,0 +1,18 @@
+uuid: da3ba892-52af-4d00-bb93-150ffe1584c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-75b95924cbf69473f
+id: group_relationship.access_control-75b95924cbf69473f.metatag
+field_name: metatag
+entity_type: group_relationship
+bundle: access_control-75b95924cbf69473f
+label: 'Metatags (Hidden field for JSON support)'
+description: 'The meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: map

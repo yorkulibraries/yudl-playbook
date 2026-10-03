@@ -1,0 +1,18 @@
+uuid: 76ad4ab8-4eb8-45dc-926a-a402d5ef4042
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.islandora_access
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: taxonomy_term.islandora_access
+target_entity_type_id: taxonomy_term
+target_bundle: islandora_access
+default_langcode: current_interface
+language_alterable: false

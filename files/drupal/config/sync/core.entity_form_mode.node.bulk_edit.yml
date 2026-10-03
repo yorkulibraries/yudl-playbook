@@ -1,0 +1,11 @@
+uuid: a328cdc5-9727-420a-ac21-228dff5c2c22
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.bulk_edit
+label: 'Bulk Edit'
+description: null
+targetEntityType: node
+cache: true

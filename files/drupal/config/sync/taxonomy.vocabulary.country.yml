@@ -1,0 +1,11 @@
+uuid: 3c9d0aef-3575-46ff-a524-92953eef0e7b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vuRadrIm4ZcHjnMqG0-g6VrPtQy5BdQg6IBJ-W6WuZE
+name: Country
+vid: country
+description: 'Country or countries to which the records pertain.'
+weight: 0
+new_revision: false

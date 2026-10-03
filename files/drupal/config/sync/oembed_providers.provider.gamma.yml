@@ -1,0 +1,16 @@
+uuid: 4bbcf82d-795b-41dc-9e13-50b5fcc84d82
+langcode: en
+status: true
+dependencies: {  }
+id: gamma
+label: yudl
+provider_url: 'https://digital.library.yorku.ca'
+endpoints:
+  -
+    schemes:
+      - 'https://digital.library.yorku.ca/media/*'
+    url: 'https://digital.library.yorku.ca/oembed'
+    discovery: false
+    formats:
+      json: true
+      xml: false

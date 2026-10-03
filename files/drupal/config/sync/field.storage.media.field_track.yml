@@ -1,0 +1,26 @@
+uuid: 0538ddb5-fee9-483d-8684-af5f23e8ca7c
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - islandora
+    - media
+_core:
+  default_config_hash: 3zCHO53sVHFazBT8_1zNElOM-Yy1B0bL7gEF51rbgYk
+id: media.field_track
+field_name: field_track
+entity_type: media
+type: media_track
+settings:
+  target_type: file
+  display_field: false
+  display_default: false
+  uri_scheme: public
+module: islandora
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

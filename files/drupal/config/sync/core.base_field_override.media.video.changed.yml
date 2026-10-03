@@ -1,0 +1,20 @@
+uuid: 5f66aa6c-96bf-46f2-9d34-1e25b8b246c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.video
+_core:
+  default_config_hash: A5f2t6b-bDZUUX83-suEhkxFFE3UP_MmxqZOprX2baU
+id: media.video.changed
+field_name: changed
+entity_type: media
+bundle: video
+label: Changed
+description: 'The time the media item was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

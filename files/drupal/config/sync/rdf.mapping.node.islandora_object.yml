@@ -1,0 +1,178 @@
+uuid: 4f39a3b1-ad2d-4559-8aba-e26dc52237dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.islandora_object
+  module:
+    - node
+  enforced:
+    module: {  }
+_core:
+  default_config_hash: zP9k5y-Ps7rDkU6UY2Azu8w7EZx2Iz2BK55awBnhiDo
+id: node.islandora_object
+targetEntityType: node
+bundle: islandora_object
+types:
+  - 'pcdm:Object'
+fieldMappings:
+  field_alternative_title:
+    properties:
+      - 'dcterms:alternative'
+  field_city:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_city_section:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_field_continent:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_coordinates:
+    properties:
+      - 'dcterms:spatial'
+  field_country:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_county:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_edtf_date:
+    properties:
+      - 'dcterms:date'
+    datatype_callback:
+      callable: 'Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value'
+  field_edtf_date_created:
+    properties:
+      - 'dcterms:created'
+    datatype_callback:
+      callable: 'Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value'
+  field_edtf_date_issued:
+    properties:
+      - 'dcterms:issued'
+    datatype_callback:
+      callable: 'Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value'
+  field_date_modified_:
+    properties:
+      - 'dcterms:modified'
+    datatype_callback:
+      callable: 'Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value'
+  field_description:
+    properties:
+      - 'dcterms:description'
+  field_extent:
+    properties:
+      - 'dcterms:extent'
+  field_genre:
+    properties:
+      - 'dcterms:type'
+  field_geographic_subject:
+    properties:
+      - 'dcterms:spatial'
+  field_language:
+    properties:
+      - 'dcterms:language'
+  field_member_of:
+    properties:
+      - 'pcdm:memberOf'
+    mapping_type: rel
+  field_note:
+    properties:
+      - 'skos:note'
+  field_physical_form:
+    properties:
+      - 'dcterms:format'
+  field_physical_location:
+    properties:
+      - 'bf:physicalLocation'
+  field_place_published:
+    properties:
+      - 'relators:pup'
+  field_province:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_region:
+    properties:
+      - 'dcterms:coverage'
+    mapping_type: rel
+  field_resource_type:
+    properties:
+      - 'dcterms:type'
+    mapping_type: rel
+  field_rights:
+    properties:
+      - 'dcterms:rights'
+    mapping_type: rel
+  field_relation:
+    properties:
+      - 'dcterms:relation'
+  field_rights_holder:
+    properties:
+      - 'dcterms:rightsHolder'
+    mapping_type: rel
+  field_subject:
+    properties:
+      - 'dcterms:subject'
+    mapping_type: rel
+  field_keyword:
+    properties:
+      - 'dcterms:subject'
+    mapping_type: rel
+  field_subjects_name:
+    properties:
+      - 'dcterms:subject'
+    mapping_type: rel
+  field_temporal_subject:
+    properties:
+      - 'dcterms:temporal'
+    mapping_type: rel
+  field_weight:
+    properties:
+      - 'co:index'
+  title:
+    properties:
+      - 'dcterms:title'
+  created:
+    properties:
+      - 'schema:dateCreated'
+    datatype_callback:
+      callable: 'Drupal\rdf\CommonDataConverter::dateIso8601Value'
+  changed:
+    properties:
+      - 'schema:dateModified'
+    datatype_callback:
+      callable: 'Drupal\rdf\CommonDataConverter::dateIso8601Value'
+  uid:
+    properties:
+      - 'schema:author'
+    mapping_type: rel
+  field_local_identifier:
+    properties:
+      - 'dcterms:identifier'
+  field_call_number:
+    properties:
+      - 'dcterms:identifier'
+  field_doi:
+    properties:
+      - 'identifiers:doi'
+  field_hdl:
+    properties:
+      - 'dcterms:hdl'
+  field_isbn:
+    properties:
+      - 'identifiers:isbn'
+  field_issn:
+    properties:
+      - 'identifiers:issn'
+  field_lccn:
+    properties:
+      - 'identifiers:lccn'
+  field_oclc:
+    properties:
+      - 'dbpedia:oclc'

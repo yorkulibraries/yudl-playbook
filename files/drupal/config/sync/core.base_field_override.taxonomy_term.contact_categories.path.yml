@@ -1,0 +1,20 @@
+uuid: e7630cbb-e1cc-4682-95b5-66e7492ecadc
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.contact_categories
+  module:
+    - path
+id: taxonomy_term.contact_categories.path
+field_name: path
+entity_type: taxonomy_term
+bundle: contact_categories
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

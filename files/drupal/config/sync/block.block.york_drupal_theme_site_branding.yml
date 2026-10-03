@@ -1,0 +1,25 @@
+uuid: 7d668193-6a1d-4949-b581-c8b899ec995f
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: XJO9eFG46Bcy5KBx3M5Qhf_dMgNF7aus6wCNcSnSfcQ
+id: york_drupal_theme_site_branding
+theme: york_drupal_theme
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: false
+  use_site_name: true
+  use_site_slogan: false
+visibility: {  }

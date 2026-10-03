@@ -1,0 +1,15 @@
+uuid: f9aef94a-9007-4a65-bf07-3c085bb86780
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 92bXZdyYJ5xqukdfmGRr_CYcwm1vfuS8b8aJ7X_G7E0
+id: taxonomy_term
+label: 'Taxonomy term'
+tags:
+  canonical_url: '[term:url]'
+  description: '[term:description]'
+  geo_position: '[term:field_geo_geolocation]'
+  icbm: '[term:field_geo_geolocation]'
+  robots: 'index, follow'
+  title: '[term:name] | [term:vocabulary]'

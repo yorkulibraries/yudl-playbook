@@ -108,13 +108,16 @@
   changed_when: false
   ignore_errors: true
 
+# Not needed when the site is installed from files/drupal/config/sync.
 - name: Import features
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y fim islandora_core_feature,islandora_defaults"
-  when: >
-    ('islandora_core_feature' not in (imported_features.stdout|from_json)) or
-    ('islandora_defaults' not in (imported_features.stdout|from_json)) or
-    ((imported_features.stdout|from_json).islandora_core_feature.status != 'Enabled') or
-    ((imported_features.stdout|from_json).islandora_defaults.status != 'Enabled')
+  when:
+    - not (yudl_install_from_config | default(false))
+    - >
+      ('islandora_core_feature' not in (imported_features.stdout|from_json)) or
+      ('islandora_defaults' not in (imported_features.stdout|from_json)) or
+      ((imported_features.stdout|from_json).islandora_core_feature.status != 'Enabled') or
+      ((imported_features.stdout|from_json).islandora_defaults.status != 'Enabled')
 
 - name: Check if EVA views are enabled
   command: "{{ drush_path }} --root {{ drupal_core_path }} pml --format=json"
@@ -125,11 +128,12 @@
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y ven display_media"
   when: "(enabled_modules.stdout|from_json).eva.status != 'Enabled'"
 
+# Apache (not the owner) needs to traverse this to serve the PDF.js viewer.
 - name: Ensure pdf.js directory exists
   file:
     path: "{{ drupal_external_libraries_directory }}/pdf.js"
     state: directory
-    mode: "0754"
+    mode: "0755"
 
 - name: Unarchive pdf.js library
   unarchive:

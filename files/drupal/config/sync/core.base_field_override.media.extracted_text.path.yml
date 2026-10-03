@@ -1,0 +1,20 @@
+uuid: f8d5eee7-782b-4144-ac59-a6cbd04f8099
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.extracted_text
+  module:
+    - path
+id: media.extracted_text.path
+field_name: path
+entity_type: media
+bundle: extracted_text
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

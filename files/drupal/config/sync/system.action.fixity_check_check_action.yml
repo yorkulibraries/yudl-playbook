@@ -1,0 +1,13 @@
+uuid: d8d014e9-8a56-4f48-be89-6e8dbde074d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - dgi_fixity
+_core:
+  default_config_hash: B9qoQl00-P2UFP-gvo51TEQZ8-umBNP1OvNSB6HvUtM
+id: fixity_check_check_action
+label: 'Perform check'
+type: fixity_check
+plugin: 'dgi_fixity:check_action:fixity_check'
+configuration: {  }

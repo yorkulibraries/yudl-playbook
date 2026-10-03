@@ -1,0 +1,5 @@
+name: Langue
+url_alias: langue
+widget:
+  config:
+    reset_text: 'Tout afficher'

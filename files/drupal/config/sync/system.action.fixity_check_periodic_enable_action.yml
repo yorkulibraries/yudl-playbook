@@ -1,0 +1,13 @@
+uuid: a8dbdf7a-5f72-4d95-bb28-3a69e2126c13
+langcode: en
+status: true
+dependencies:
+  module:
+    - dgi_fixity
+_core:
+  default_config_hash: cOXzlJiDXfrtU2279XUIxpxa4sWmDeSyDGBYiNy5jNQ
+id: fixity_check_periodic_enable_action
+label: 'Enable periodic checks'
+type: fixity_check
+plugin: 'dgi_fixity:periodic_enable_action:fixity_check'
+configuration: {  }

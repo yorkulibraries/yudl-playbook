@@ -1,0 +1,30 @@
+uuid: f89fcc8b-9b4f-44fc-8353-142a79f85464
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_broader
+    - taxonomy.vocabulary.county
+_core:
+  default_config_hash: US8cQBrQP-_M5XnnOte0ey6bB0SkBo2I6RGEbfuxY_g
+id: taxonomy_term.county.field_geo_broader
+field_name: field_geo_broader
+entity_type: taxonomy_term
+bundle: county
+label: Broader
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      county: county
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

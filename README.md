@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This repository contains a collection of [Ansible](https://github.com/ansible/ansible) playbooks used to build York University Digital Library. It is based on the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
+This repository contains a collection of [Ansible](https://github.com/ansible/ansible) playbooks used to build a dev instance of York University Digital Library. It is based on the [Islandora Foundation's Playbook](https://github.com/Islandora-Devops/islandora-playbook).
 
 ## Use
 
@@ -55,10 +55,94 @@ To re-run the playbook against an existing VM, optionally passing extra argument
 ./dev.sh provision -- --start-at-task="Get sample data"
 ```
 
-### PRODUCTION
+Ansible refuses to run when its output isn't a terminal or a blocking pipe, which is the case for commands run through some tools. If you see `Ansible requires blocking IO on stdin/stdout/stderr`, add `</dev/null 2>&1 | cat` to the end of the command.
 
-1. `ansible-galaxy install -r requirements.yml`
-2. `ansible-playbook --ask-vault-pass -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" --extra-vars "env=production"`
+## Dev Drupal site
+
+The dev site is built from files in this repository rather than assembled module by module. The codebase and configuration come from production, so dev runs the same code and config as production.
+
+| What | Where | Used by |
+| --- | --- | --- |
+| Drupal codebase | `files/drupal/composer.json`, `files/drupal/composer.lock` | `composer install` (`webserver.yml`) |
+| Site configuration | `files/drupal/config/sync/` | `drush site:install --existing-config` |
+| Taxonomy data | `files/drupal/migrate/*.csv` | the `islandora_defaults_*` migrations |
+| Collections and sample objects | `files/workbench/*.csv` | Islandora Workbench (`yudl-configuration.yml`) |
+
+### Codebase
+
+`files/drupal/composer.json` is production's, plus `yudl_customizations`. It also installs our forks of `group_solr`, `openseadragon`, and `yudl_groups` from our GitHub repositories. The theme, `york_drupal_theme`, comes from Packagist, so the playbook no longer git-clones Drupal code.
+
+Update dependencies with `./dev.sh composer`. It runs Composer in the VM against a copy of `files/drupal/` and copies the updated `composer.json` and `composer.lock` back, without touching the VM's site. For example:
+
+```bash
+./dev.sh composer update --no-install drupal/core-recommended -W
+./dev.sh composer require --no-install drupal/some_module:^1.0
+```
+
+The lock is only copied into a new build, so rebuild (`./dev.sh destroy && ./dev.sh up`) to test a lock change.
+
+### Developing the theme and yudl_customizations
+
+To work on `york_drupal_theme` or `yudl_customizations`, mount your local checkout over the copy Composer installed in the VM. Edits on your machine then show up in the dev site.
+
+```bash
+./dev.sh mount theme             # ../york_drupal_theme -> web/themes/custom/york_drupal_theme
+./dev.sh mount customizations    # ../yudl_customizations -> web/modules/contrib/yudl_customizations
+./dev.sh mounts                  # show what's mounted
+./dev.sh unmount theme
+```
+
+The checkouts are expected next to this repository. To use another location, pass it as an argument (`./dev.sh mount theme ~/src/york_drupal_theme`), or set `YUDL_THEME_DIR` / `YUDL_CUSTOMIZATIONS_DIR`. `mount` checks the directory's `composer.json` name before mounting. It moves the Composer-installed copy to `<path>.composer`, and `unmount` puts it back. Both rebuild Drupal's cache.
+
+Drupal caches aggregated CSS/JS, Twig templates, `.theme`/`.module` hooks, and services. After changing any of those, rebuild the cache:
+
+```bash
+./dev.sh ssh -- 'cd /var/www/html/drupal && vendor/bin/drush cr'
+```
+
+`provision`, `up`, and `reset` refuse to run while anything is mounted. `composer install` could otherwise replace the mounted directory and delete files in your checkout. Unmount first.
+
+Both packages track a branch (`dev-main` / `1.x-dev`), but a build installs the commit recorded in `composer.lock`. After pushing changes, update the lock so new builds pick them up:
+
+```bash
+./dev.sh composer update --no-install yorkulibraries/york_drupal_theme
+./dev.sh composer update --no-install yorkulibraries/yudl_customizations
+```
+
+### Configuration
+
+`files/drupal/config/sync/` is an export of production's configuration (`drush config:export`), with these changes for dev:
+
+* Production-only modules removed from `core.extension.yml` and their config deleted: `ldap_*`, `authorization`, `externalauth`, `captcha`, `turnstile`, `islandora_microservice_rewrite` (and `views.view.authmap`). This also removes the LDAP bind password and Turnstile key.
+* Install profile changed from `standard` to `minimal` (`profile:` and the module list in `core.extension.yml`), since profiles with an install hook can't be installed from config. The `standard` dependency was removed from the three `rdf.mapping.*` files that declared one.
+* Contact form recipients set to `dev@example.com`.
+* `yudl_groups` and `yudl_default_content` removed from `core.extension.yml`; the playbook enables them later, in a fixed order (see [Known issues](#front-page-depends-on-node-ids)).
+* The `islandora_defaults_*` migrations read their CSVs from `../migrate/`.
+
+The build then overrides production-specific values: the broker URL, Solr server, IIIF server, and Matomo (disabled in `settings.php`).
+
+To refresh it from production, export production's config, apply the changes above, check for secrets (`grep -rniE 'pass|secret|token|key_value'`), and replace `files/drupal/config/sync/`.
+
+### Taxonomy data
+
+`files/drupal/migrate/` holds the CSVs for the York taxonomy migrations (tags, rights, languages, places, people, subjects, and so on), formerly in `yudl_defaults`. Edit them here.
+
+### Workbench data
+
+`files/workbench/` holds the CSVs Workbench loads: the nine `yudl-collections-NN.csv` files (all environments) and the sample objects (`single`, `paged`, `collection-image`, `contact_categories`; dev only). They replace the Google Sheets the build used to read.
+
+So the files keep working however many terms and nodes exist when Workbench runs, they avoid hardcoded IDs:
+
+* Parents (`field_member_of`, `node_id`) are given as PIDs, e.g. `yul:asc`.
+* `field_model`, `field_display_hints`, and `field_resource_type` use term names, e.g. `Collection`, `Open Seadragon`.
+
+Before each Workbench run, `files/scripts/workbench_resolve_pids.py` replaces those with node and term IDs and writes `<name>.resolved.csv`, which the configs in `templates/` read. It fails the build if a PID or term name isn't found. Parents must be created by an earlier file, or earlier in the same file. Media use and Page model settings in the sample configs are looked up at run time.
+
+Tests for the resolver:
+
+```bash
+python3 -m unittest tests/test_workbench_resolve_pids.py
+```
 
 ## Connect
 
@@ -176,3 +260,27 @@ Differences to be aware of:
 * There is no shared, downloadable base box. Each developer builds the stack locally once, with `./dev.sh up --base`.
 * Some dev settings point at the VM's IP address. If Multipass assigns the VM a new IP after a restart, run `./dev.sh provision` again.
 * State lives in `.multipass/` (SSH key, cloud-init file, generated inventory). It is gitignored.
+
+## Known issues
+
+### Front page depends on node IDs
+
+`york_drupal_theme` renders the front page from `page--node--1.html.twig` and links its featured collections by production node IDs (`path('entity.node.canonical', {'node': 59})`, and so on). Production's two front-page search blocks (`block.block.york_drupal_theme_exposedformsolr_search_contentpage_1` and `block.block.exposedformsolr_search_contentpage_1_2`) are limited to the path `/node/1`.
+
+Production's config also references taxonomy terms by ID. For example, the `explore` view's collections display filters on Islandora model terms 11 and 19 (Collection and Newspaper).
+
+To match, the dev build creates terms and nodes in production's order:
+
+1. Taxonomy terms: a "Mirador" display term (term 1, as on production; the `islandora_mirador` module itself isn't installed), `islandora_tags`, FITS tags, then the York migration.
+2. `yudl_groups` is enabled after the migrations: its groups become `islandora_access` terms via `islandora_group`, and its default content becomes node 1.
+3. The Workbench collections import creates nodes 2-142 with production's IDs, and the front page is set to `/node/1`.
+
+Anything that creates a term or node earlier in the build will shift those IDs and break the front page and any views filtering by term.
+
+To fix it properly:
+
+* Rename the theme's `page--node--1.html.twig` to `page--front.html.twig`.
+* Link featured collections by path alias instead of node ID.
+* Change the two search blocks' visibility from `/node/1` to `<front>` (on production, then re-export the config).
+
+After that, the module ordering in the playbook and the `Set YUDL front page` task no longer need to care about node IDs.

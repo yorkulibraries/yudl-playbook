@@ -1,0 +1,57 @@
+uuid: 272c7b8a-2d60-46b4-9db9-f3da2e2ec896
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.members
+  module:
+    - islandora
+    - views
+label: 'Toronto Telegram negatives'
+name: toronto_telegram_negatives
+group: Display
+description: 'Display for Toronto Telegram photograph assignments.'
+requireAllConditions: true
+disabled: false
+conditions:
+  node_has_parent:
+    id: node_has_parent
+    negate: false
+    uuid: 5367385c-30d4-4ca8-80c5-2511517df981
+    context_mapping:
+      node: '@node.node_route_context:node'
+    parent_nid: 46
+    parent_reference_field: field_member_of
+  node_has_term:
+    id: node_has_term
+    negate: false
+    uuid: 60a31d44-56cd-428c-89ec-07730c1fccd3
+    context_mapping:
+      node: '@node.node_route_context:node'
+    uri: 'https://schema.org/DigitalDocument'
+    logic: and
+reactions:
+  blocks:
+    id: blocks
+    uuid: 5bb2736d-a503-4cc1-a787-b8762b81f8ea
+    blocks:
+      d6169c4c-f1f7-493b-9414-df961e16ee17:
+        uuid: d6169c4c-f1f7-493b-9414-df961e16ee17
+        id: 'views_block:members-block_1'
+        label: 'Assignment negatives'
+        provider: views
+        label_display: visible
+        region: content
+        weight: '1'
+        custom_id: views_block_members_block_1
+        theme: york_drupal_theme
+        css_class: ''
+        unique: 0
+        context_id: toronto_telegram_negatives
+        context_mapping: {  }
+        views_label: 'Assignment negatives'
+        items_per_page: none
+        third_party_settings: {  }
+    include_default_blocks: 1
+    saved: false
+weight: 0

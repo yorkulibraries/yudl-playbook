@@ -1,0 +1,70 @@
+uuid: 019e6518-418f-4f19-9700-c57b8b96bdbf
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.index.default_solr_index
+    - views.view.solr_search_content
+  module:
+    - search_api
+_core:
+  default_config_hash: NwnxjFSNfuER0Ns0MnhuZzolQmQ4m7wcZ40PY7TK3eo
+id: year
+name: Year
+url_alias: year
+weight: 0
+min_count: 1
+missing: false
+missing_label: others
+show_only_one_result: true
+field_identifier: edtf_year
+facet_source_id: 'search_api:views_page__solr_search_content__page_1'
+widget:
+  type: range_slider
+  config:
+    show_numbers: false
+    prefix: ''
+    suffix: ''
+    min_type: search_result
+    min_value: 0.0
+    max_type: search_result
+    max_value: 10.0
+    step: 1.0
+query_operator: or
+use_hierarchy: false
+keep_hierarchy_parents_active: false
+hierarchy:
+  type: taxonomy
+  config: {  }
+expand_hierarchy: false
+enable_parent_when_child_gets_disabled: true
+hard_limit: 0
+exclude: false
+only_visible_when_facet_source_is_visible: true
+processor_configs:
+  hierarchy_processor:
+    processor_id: hierarchy_processor
+    weights:
+      build: 100
+    settings: {  }
+  range_slider:
+    processor_id: range_slider
+    weights:
+      pre_query: 60
+      post_query: 60
+      build: 20
+    settings: {  }
+  slider:
+    processor_id: slider
+    weights:
+      post_query: 60
+    settings: {  }
+  url_processor_handler:
+    processor_id: url_processor_handler
+    weights:
+      pre_query: 50
+      build: 15
+    settings: {  }
+empty_behavior:
+  behavior: none
+show_title: false

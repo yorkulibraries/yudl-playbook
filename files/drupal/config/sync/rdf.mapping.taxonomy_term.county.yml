@@ -1,0 +1,37 @@
+uuid: 4d40ea4e-a0bc-4d7d-92cf-8c0cc49aa76e
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.county
+  module:
+    - taxonomy
+_core:
+  default_config_hash: iMcHqACILFtwjADuoOdJ5GBngYMQVKXY7QpYrY5y8Ow
+id: taxonomy_term.county
+targetEntityType: taxonomy_term
+bundle: county
+types:
+  - 'dc:Location'
+  - 'schema:Place'
+fieldMappings:
+  name:
+    properties:
+      - 'schema:name'
+  description:
+    properties:
+      - 'schema:description'
+  field_authority_link:
+    properties:
+      - 'schema:sameAs'
+  field_geo_geolocation:
+    properties:
+      - 'wgs84_pos:lat_long'
+  field_geo_broader:
+    properties:
+      - 'schema:containedInPlace'
+  changed:
+    properties:
+      - 'schema:dateModified'
+    datatype_callback:
+      callable: 'Drupal\rdf\CommonDataConverter::dateIso8601Value'

@@ -1,0 +1,23 @@
+uuid: 48f370dd-8cce-4ab3-b0f0-b635d104fbf1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_geolocation
+    - taxonomy.vocabulary.city_section
+  module:
+    - geolocation
+_core:
+  default_config_hash: yvEg8-tX7lITn-Y22p5puYAsInyINKRoEx7bV3-SbbY
+id: taxonomy_term.city_section.field_geo_geolocation
+field_name: field_geo_geolocation
+entity_type: taxonomy_term
+bundle: city_section
+label: Latitude/Longitude
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

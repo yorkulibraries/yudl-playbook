@@ -1,0 +1,31 @@
+uuid: b9a7e3bc-9167-4142-9331-42b8f2122416
+langcode: en
+status: true
+dependencies:
+  module:
+    - islandora
+  enforced:
+    module: {  }
+label: 'Collection metadata'
+name: collection_metadata
+group: Display
+description: 'Collection metadata display'
+requireAllConditions: false
+disabled: false
+conditions:
+  node_has_term:
+    id: node_has_term
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    uri: 'http://purl.org/dc/dcmitype/Collection'
+    logic: and
+    tids:
+      -
+        target_id: 5
+reactions:
+  view_mode_alter:
+    id: view_mode_alter
+    saved: false
+    mode: node.collection
+weight: 0

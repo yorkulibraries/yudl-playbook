@@ -1,0 +1,15 @@
+uuid: b86eda04-870b-43ab-b521-af1be70eac9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+    - user.role.administrator
+id: access_control-admin_out
+label: Administrator
+weight: 101
+admin: true
+scope: outsider
+global_role: administrator
+group_type: access_control
+permissions: {  }

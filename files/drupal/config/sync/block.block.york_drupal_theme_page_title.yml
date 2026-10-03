@@ -1,0 +1,27 @@
+uuid: ae0e2da0-4699-4f7f-9ade-57a74e6e5264
+langcode: en
+status: true
+dependencies:
+  module:
+    - islandora
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: Vxvq1HNfXjYlJckYi7xsBoiWBUI5ApTcU9iG3BqK8LQ
+id: york_drupal_theme_page_title
+theme: york_drupal_theme
+region: content
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility:
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

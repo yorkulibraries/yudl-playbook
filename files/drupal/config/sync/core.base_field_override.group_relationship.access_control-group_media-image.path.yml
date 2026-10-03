@@ -1,0 +1,20 @@
+uuid: 3c4236ab-1e55-4cae-84ac-bf261d14378e
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-group_media-image
+  module:
+    - path
+id: group_relationship.access_control-group_media-image.path
+field_name: path
+entity_type: group_relationship
+bundle: access_control-group_media-image
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

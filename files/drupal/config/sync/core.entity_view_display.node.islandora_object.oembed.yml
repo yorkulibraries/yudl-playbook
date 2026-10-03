@@ -1,0 +1,146 @@
+uuid: 16f1f9de-8168-4bf4-85d3-dc29d6fddb04
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.oembed
+    - field.field.node.islandora_object.field_access_terms
+    - field.field.node.islandora_object.field_alternative_title
+    - field.field.node.islandora_object.field_call_number
+    - field.field.node.islandora_object.field_city
+    - field.field.node.islandora_object.field_city_section
+    - field.field.node.islandora_object.field_continent
+    - field.field.node.islandora_object.field_coordinates
+    - field.field.node.islandora_object.field_country
+    - field.field.node.islandora_object.field_county
+    - field.field.node.islandora_object.field_date_modified_
+    - field.field.node.islandora_object.field_description
+    - field.field.node.islandora_object.field_display_hints
+    - field.field.node.islandora_object.field_doi
+    - field.field.node.islandora_object.field_edtf_date
+    - field.field.node.islandora_object.field_edtf_date_created
+    - field.field.node.islandora_object.field_edtf_date_issued
+    - field.field.node.islandora_object.field_extent
+    - field.field.node.islandora_object.field_genre
+    - field.field.node.islandora_object.field_geographic_subject
+    - field.field.node.islandora_object.field_hdl
+    - field.field.node.islandora_object.field_isbn
+    - field.field.node.islandora_object.field_issn
+    - field.field.node.islandora_object.field_keyword
+    - field.field.node.islandora_object.field_language
+    - field.field.node.islandora_object.field_lccn
+    - field.field.node.islandora_object.field_linked_agent
+    - field.field.node.islandora_object.field_local_identifier
+    - field.field.node.islandora_object.field_member_of
+    - field.field.node.islandora_object.field_model
+    - field.field.node.islandora_object.field_note
+    - field.field.node.islandora_object.field_oclc
+    - field.field.node.islandora_object.field_physical_form
+    - field.field.node.islandora_object.field_physical_location
+    - field.field.node.islandora_object.field_pid
+    - field.field.node.islandora_object.field_place_published
+    - field.field.node.islandora_object.field_province
+    - field.field.node.islandora_object.field_region
+    - field.field.node.islandora_object.field_relation
+    - field.field.node.islandora_object.field_resource_type
+    - field.field.node.islandora_object.field_rights
+    - field.field.node.islandora_object.field_rights_holder
+    - field.field.node.islandora_object.field_subject
+    - field.field.node.islandora_object.field_subjects_name
+    - field.field.node.islandora_object.field_temporal_subject
+    - field.field.node.islandora_object.field_weight
+    - node.type.islandora_object
+  module:
+    - text
+    - user
+id: node.islandora_object.oembed
+targetEntityType: node
+bundle: islandora_object
+mode: oembed
+content:
+  field_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_hdl:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  openseadragon_media_evas_service_file:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  addtoany: true
+  display_media_entity_view_1: true
+  display_media_entity_view_2: true
+  display_media_entity_view_3: true
+  display_media_entity_view_4: true
+  display_media_service_file: true
+  display_media_thumbnail: true
+  field_access_terms: true
+  field_alternative_title: true
+  field_call_number: true
+  field_city: true
+  field_city_section: true
+  field_continent: true
+  field_coordinates: true
+  field_country: true
+  field_county: true
+  field_date_modified_: true
+  field_display_hints: true
+  field_doi: true
+  field_edtf_date: true
+  field_edtf_date_created: true
+  field_edtf_date_issued: true
+  field_extent: true
+  field_gemini_uri: true
+  field_genre: true
+  field_geographic_subject: true
+  field_isbn: true
+  field_issn: true
+  field_keyword: true
+  field_language: true
+  field_lccn: true
+  field_linked_agent: true
+  field_local_identifier: true
+  field_member_of: true
+  field_model: true
+  field_note: true
+  field_oclc: true
+  field_physical_form: true
+  field_physical_location: true
+  field_pid: true
+  field_place_published: true
+  field_province: true
+  field_region: true
+  field_relation: true
+  field_resource_type: true
+  field_rights: true
+  field_rights_holder: true
+  field_subject: true
+  field_subjects_name: true
+  field_temporal_subject: true
+  field_weight: true
+  islandora_fits_checksum: true
+  langcode: true
+  links: true
+  media_evas_content_entity_view_1: true
+  mirador_evas_entity_view_1: true
+  mirador_evas_entity_view_2: true
+  mirador_evas_entity_view_3: true
+  openseadragon_media_evas_entity_view_1: true
+  openseadragon_media_evas_entity_view_2: true
+  openseadragon_media_evas_entity_view_3: true
+  pdfjs_media_evas_entity_view_1: true
+  pdfjs_media_evas_entity_view_2: true
+  pdfjs_media_evas_service_file: true
+  search_api_excerpt: true

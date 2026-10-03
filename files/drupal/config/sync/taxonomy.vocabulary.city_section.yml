@@ -1,0 +1,11 @@
+uuid: e801a506-3f5a-4efd-8a0f-f6d719915582
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: gHnJx7UaUg2i22XVdLkf5PIVh3swW0LU_i02kljnSeE
+name: 'City Section'
+vid: city_section
+description: 'City section(s) to which the records pertain.'
+weight: 0
+new_revision: false

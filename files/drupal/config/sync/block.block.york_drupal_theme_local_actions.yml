@@ -1,0 +1,20 @@
+uuid: 7cae10f1-6ca8-4dac-86fa-f76c104aaba2
+langcode: en
+status: true
+dependencies:
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: nXAFyCN5gREk0AA1Q7og51htjPB1XGRgTfN5Hd3CZLU
+id: york_drupal_theme_local_actions
+theme: york_drupal_theme
+region: content
+weight: -4
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

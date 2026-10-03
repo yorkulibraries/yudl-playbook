@@ -1,0 +1,27 @@
+uuid: a5e77d33-bd1f-431f-b0cc-1cff37dafe1e
+langcode: en
+status: true
+dependencies:
+  config:
+    - rest.resource.oai_pmh
+  module:
+    - comment
+    - contact
+    - eu_cookie_compliance
+    - media
+    - rest
+    - system
+_core:
+  default_config_hash: qQzQ6Km6wVCu74TwhEyK3dRFTnDFtnMYN2yEmlckug8
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'display eu cookie compliance popup'
+  - 'restful get oai_pmh'
+  - 'restful post oai_pmh'
+  - 'view media'

@@ -1,0 +1,21 @@
+uuid: 6ddc1ac1-0ca5-4f14-842c-c36160714f70
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_local_identifier
+    - node.type.islandora_object
+_core:
+  default_config_hash: KF-ak1NqlIkf-WrwHp-1cwuTmR6eLVDBkTN4CLiokZQ
+id: node.islandora_object.field_local_identifier
+field_name: field_local_identifier
+entity_type: node
+bundle: islandora_object
+label: 'Local Identifier'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

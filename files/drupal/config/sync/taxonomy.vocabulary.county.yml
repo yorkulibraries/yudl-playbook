@@ -1,0 +1,11 @@
+uuid: 8ce84ee5-84bf-4f74-8256-fbed7fbb6014
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: GdF72pvbqrvHyWTTdV9i4qUVCs5nFRi7rHrd9SPJldo
+name: County
+vid: county
+description: 'County or counties to which the records pertain.'
+weight: 0
+new_revision: false

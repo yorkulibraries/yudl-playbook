@@ -1,0 +1,22 @@
+uuid: 839dcf48-3cba-482e-a731-d9d88a18f948
+langcode: en
+status: true
+dependencies:
+  theme:
+    - york_drupal_theme
+_core:
+  default_config_hash: DWYwv8Z7ety6Fuo9fKQL_CWkBMs22VUgZ-TDrsCj8Es
+id: york_drupal_theme_local_tasks
+theme: york_drupal_theme
+region: content
+weight: -6
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility: {  }

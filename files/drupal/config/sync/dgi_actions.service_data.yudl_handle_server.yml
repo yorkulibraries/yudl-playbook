@@ -1,0 +1,11 @@
+uuid: 1c6298b9-f6f0-4dfb-9689-56525791e0db
+langcode: en
+status: true
+dependencies: {  }
+label: 'YUDL Handle Server'
+id: yudl_handle_server
+service_data_type: handle
+data:
+  host: 'https://hdl.library.yorku.ca/api/handles'
+  prefix: 20.500.14491
+  suffix_field: ''

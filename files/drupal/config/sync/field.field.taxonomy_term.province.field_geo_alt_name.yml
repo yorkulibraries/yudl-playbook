@@ -1,0 +1,21 @@
+uuid: d64750a2-d670-4277-b981-2f900aa75330
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_geo_alt_name
+    - taxonomy.vocabulary.province
+_core:
+  default_config_hash: 2FV4X9OlpWoPWg4s2aOx3JzGaVn1hKfsKVAV0_5gimg
+id: taxonomy_term.province.field_geo_alt_name
+field_name: field_geo_alt_name
+entity_type: taxonomy_term
+bundle: province
+label: 'Alternate Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

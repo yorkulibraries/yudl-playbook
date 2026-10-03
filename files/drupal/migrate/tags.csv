@@ -1,0 +1,39 @@
+vid,name,description,external_uri,authority,field_authority_link
+islandora_display,Open Seadragon,Display using the Open Seadragon viewer,http://openseadragon.github.io,,
+islandora_display,PDFjs,Display using the PDF.js viewer,http://mozilla.github.io/pdf.js,,
+resource_types,Collection,"Aggregation of resources, generally gathered together artificially.",https://id.loc.gov/vocabulary/resourceTypes/col.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/col.html
+resource_types,Dataset,"Data encoded in a defined structure, but not normally displayed in its raw form.",https://id.loc.gov/vocabulary/resourceTypes/dat.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/dat.html
+resource_types,Still Image,"Resource expressed through line, shape, shading, etc., intended to be perceived visually as a still image or images in two dimensions.",https://id.loc.gov/vocabulary/resourceTypes/img.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/img.html
+resource_types,Interactive resource,"A resource requiring interaction from the user to be understood, executed, or experienced",http://purl.org/dc/dcmitype/InteractiveResource,dcmi_types,http://purl.org/dc/dcmitype/InteractiveResource
+resource_types,Moving image,"Images intended to be perceived as moving, including motion pictures and video recordings.",https://id.loc.gov/vocabulary/resourceTypes/mov.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/mov.html
+resource_types,Physical object,"An inanimate, three-dimensional object or substance",http://purl.org/dc/dcmitype/PhysicalObject,dcmi_types,http://purl.org/dc/dcmitype/PhysicalObject
+resource_types,Service,A system that provides one or more functions,http://purl.org/dc/dcmitype/Service,dcmi_types,http://purl.org/dc/dcmitype/Service
+resource_types,Audio,"Resources expressed in an audible form, including music or other sounds.",https://id.loc.gov/vocabulary/resourceTypes/aud.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/aud.html
+resource_types,Software,A computer program in source or compiled form,https://id.loc.gov/vocabulary/resourceTypes/sof.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/sof.html
+resource_types,Text,Resource intended to be perceived visually and understood through the use of language in written or spoken form.,https://id.loc.gov/vocabulary/resourceTypes/txt.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/txt.html
+resource_types,Mixed material,"Resource comprised of multiple types which is not driven by software; for instance, a manuscript collection of text, photographs and sound recordings.",https://id.loc.gov/vocabulary/resourceTypes/mix,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/mix
+resource_types,Remote sensing image,,https://id.loc.gov/vocabulary/resourceTypes/rsi.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/rsi.html
+resource_types,Periodical,,https://id.loc.gov/vocabulary/resourceTypes/per.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/per.html
+resource_types,Digital,"Resource that is intended for manipulation by a computer, accessed either directly or remotely.",https://id.loc.gov/vocabulary/resourceTypes/dig,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/dig
+resource_types,Unspecified,The type of resource is unknown or undetermined.,https://id.loc.gov/vocabulary/resourceTypes/unk.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/unk.html
+resource_types,Print,,https://id.loc.gov/vocabulary/resourceTypes/pri.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/pri.html
+resource_types,Kit,,https://id.loc.gov/vocabulary/resourceTypes/kit,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/kit
+resource_types,Audio musical,,https://id.loc.gov/vocabulary/resourceTypes/aum.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/aum.html
+resource_types,Newspaper,,https://id.loc.gov/vocabulary/resourceTypes/nws.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/nws.html
+resource_types,Tactile,Resource that is intended to be perceived by touch.,https://id.loc.gov/vocabulary/resourceTypes/tac.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/tac.html
+resource_types,Globe,,https://id.loc.gov/vocabulary/resourceTypes/glo.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/glo.html
+resource_types,Multimedia,Electronic resource that is a computer program or which consists of multiple media types that are software driven.,https://id.loc.gov/vocabulary/resourceTypes/mul.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/mul.html
+resource_types,Artifact,Resource in a form intended to be perceived visually in three dimensions. Includes man-made objects as well as naturally occurring objects such as specimens mounted for viewing.,https://id.loc.gov/vocabulary/resourceTypes/art.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/art.html
+resource_types,Noted movement,,https://id.loc.gov/vocabulary/resourceTypes/nmv.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/nmv.html
+resource_types,Book,,https://id.loc.gov/vocabulary/resourceTypes/bke.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/bke.html
+resource_types,Noted music,"Graphic, non-realized representations of musical works intended to be perceived visually.",https://id.loc.gov/vocabulary/resourceTypes/not.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/not.html
+resource_types,Video recording,,https://id.loc.gov/vocabulary/resourceTypes/vid.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/vid.html
+resource_types,Audio non-musical,,https://id.loc.gov/vocabulary/resourceTypes/aun.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/aun.html
+resource_types,Legislation,,https://id.loc.gov/vocabulary/resourceTypes/leg.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/leg.html
+resource_types,Manuscript,Resource that is written in handwriting or typescript. These are generally unique resources.,https://id.loc.gov/vocabulary/resourceTypes/man.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/man.html
+resource_types,Motion picture,,https://id.loc.gov/vocabulary/resourceTypes/mot.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/mot.html
+resource_types,Map,,https://id.loc.gov/vocabulary/resourceTypes/map.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/map.html
+resource_types,Cartographic,"Resource that shows spatial information, including maps, atlases, globes, digital, and other cartographic resources.",https://id.loc.gov/vocabulary/resourceTypes/car.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/car.html
+resource_types,Photograph,,https://id.loc.gov/vocabulary/resourceTypes/pho.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/pho.html
+resource_types,Website,,https://id.loc.gov/vocabulary/resourceTypes/web.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/web.html
+resource_types,Drawing,,https://id.loc.gov/vocabulary/resourceTypes/dwg.html,resource_types_scheme,https://id.loc.gov/vocabulary/resourceTypes/dwg.html

@@ -3,7 +3,6 @@ host: {{ crayfish_drupal_base_url }}
 username: admin
 password: {{ drupal_account_pass }}
 input_dir: /opt/workbench/data/single
-input_csv: 'https://docs.google.com/spreadsheets/d/1V_wP7tEKEp44F--rCTQ148K3y9X-YIZBCOysGjJWyEI/edit?usp=sharing'
-google_sheets_gid: 146628695
-media_use_tid: 5
+input_csv: /opt/workbench/csv/collection-image.resolved.csv
+media_use_tid: {{ yudl_media_use_tids["Service File"] }}
 log_file_path: /opt/workbench/logs/collection-image.log

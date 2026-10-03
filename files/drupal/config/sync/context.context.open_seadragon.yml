@@ -1,0 +1,36 @@
+uuid: 2c6ca765-816a-4eea-9b25-82a2c38f90b9
+langcode: en
+status: true
+dependencies:
+  module:
+    - islandora
+_core:
+  default_config_hash: Da9SKh2OX1dNN8-V54Zrhcsnb5bNRwQanxqlujk9tzA
+label: 'Open Seadragon'
+name: open_seadragon
+group: Display
+description: 'Open Seadragon viewer for Images'
+requireAllConditions: true
+disabled: false
+conditions:
+  request_path_exclusion:
+    id: request_path_exclusion
+    negate: true
+    uuid: 3181209c-ad2f-4cb1-8d60-fa1c8cbe49aa
+    context_mapping: {  }
+    pages: '/embed/*'
+  node_has_term:
+    id: node_has_term
+    negate: false
+    uuid: 73663045-b36b-4b25-954d-33c4a7034dcb
+    context_mapping:
+      node: '@node.node_route_context:node'
+    uri: 'http://openseadragon.github.io'
+    logic: and
+    naive_references: 0
+reactions:
+  view_mode_alter:
+    id: view_mode_alter
+    saved: false
+    mode: node.open_seadragon
+weight: -2

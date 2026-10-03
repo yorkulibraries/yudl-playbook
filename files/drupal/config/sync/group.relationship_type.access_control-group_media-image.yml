@@ -1,0 +1,18 @@
+uuid: f06100af-2fb9-4834-9ced-545333e31f5e
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+    - media.type.image
+  module:
+    - groupmedia
+    - media
+id: access_control-group_media-image
+group_type: access_control
+content_plugin: 'group_media:image'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false
+  tracking_enabled: 0

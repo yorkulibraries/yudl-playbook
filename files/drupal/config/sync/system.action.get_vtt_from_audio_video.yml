@@ -1,0 +1,22 @@
+uuid: 15944baa-efd3-4859-915f-51ea3772887e
+langcode: en
+status: true
+dependencies:
+  module:
+    - islandora_text_extraction
+_core:
+  default_config_hash: k5mWEzYBUs0yw8sFWdr-v9IcLsRW_Q52M-MTakxJKDk
+id: get_vtt_from_audio_video
+label: 'Create VTT file from Audio or Video'
+type: node
+plugin: generate_ocr_derivative
+configuration:
+  queue: islandora-connector-whisper
+  event: 'Generate Derivative'
+  source_term_uri: 'http://pcdm.org/use#OriginalFile'
+  derivative_term_uri: 'http://pcdm.org/use#ExtractedText'
+  mimetype: text/plain
+  args: ''
+  destination_media_type: extracted_text
+  scheme: private
+  path: 'derivatives/vtt/[node:nid].txt'

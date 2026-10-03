@@ -1,0 +1,4 @@
+name: Genre
+widget:
+  config:
+    reset_text: 'Tout afficher'

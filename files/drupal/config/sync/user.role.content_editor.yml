@@ -1,0 +1,167 @@
+uuid: 98f12867-10da-4eb0-bc11-7905dcca64aa
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.full_html
+    - media.type.audio
+    - media.type.document
+    - media.type.extracted_text
+    - media.type.file
+    - media.type.fits_technical_metadata
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video
+    - node.type.article
+    - node.type.islandora_object
+    - node.type.page
+    - taxonomy.vocabulary.city
+    - taxonomy.vocabulary.city_section
+    - taxonomy.vocabulary.contact_categories
+    - taxonomy.vocabulary.continent
+    - taxonomy.vocabulary.corporate_body
+    - taxonomy.vocabulary.country
+    - taxonomy.vocabulary.county
+    - taxonomy.vocabulary.family
+    - taxonomy.vocabulary.genre
+    - taxonomy.vocabulary.geo_location
+    - taxonomy.vocabulary.islandora_access
+    - taxonomy.vocabulary.islandora_display
+    - taxonomy.vocabulary.islandora_media_use
+    - taxonomy.vocabulary.islandora_models
+    - taxonomy.vocabulary.language
+    - taxonomy.vocabulary.person
+    - taxonomy.vocabulary.physical_form
+    - taxonomy.vocabulary.province
+    - taxonomy.vocabulary.region
+    - taxonomy.vocabulary.resource_types
+    - taxonomy.vocabulary.rights
+    - taxonomy.vocabulary.subject
+    - taxonomy.vocabulary.tags
+    - taxonomy.vocabulary.temporal_subjects
+  module:
+    - content_translation
+    - contextual
+    - eu_cookie_compliance
+    - file
+    - filter
+    - help
+    - honeypot
+    - media
+    - node
+    - path
+    - protected_forms
+    - system
+    - taxonomy
+    - toolbar
+_core:
+  default_config_hash: Wur9kcEOwY1Jal81NssKnz3RhVJxAvBwyWQBGcA_1Go
+id: content_editor
+label: 'Content editor'
+weight: 2
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access files overview'
+  - 'access help pages'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'administer honeypot'
+  - 'administer url aliases'
+  - 'bypass protected forms validation'
+  - 'create article content'
+  - 'create audio media'
+  - 'create content translations'
+  - 'create document media'
+  - 'create extracted_text media'
+  - 'create file media'
+  - 'create fits_technical_metadata media'
+  - 'create image media'
+  - 'create islandora_object content'
+  - 'create media'
+  - 'create page content'
+  - 'create remote_video media'
+  - 'create terms in city_section'
+  - 'create terms in contact_categories'
+  - 'create terms in continent'
+  - 'create terms in corporate_body'
+  - 'create terms in country'
+  - 'create terms in county'
+  - 'create terms in family'
+  - 'create terms in genre'
+  - 'create terms in geo_location'
+  - 'create terms in person'
+  - 'create terms in physical_form'
+  - 'create terms in province'
+  - 'create terms in region'
+  - 'create terms in resource_types'
+  - 'create terms in rights'
+  - 'create terms in subject'
+  - 'create terms in tags'
+  - 'create terms in temporal_subjects'
+  - 'create url aliases'
+  - 'create video media'
+  - 'delete article revisions'
+  - 'delete own article content'
+  - 'delete own files'
+  - 'delete own page content'
+  - 'delete page revisions'
+  - 'display eu cookie compliance popup'
+  - 'edit any audio media'
+  - 'edit any document media'
+  - 'edit any extracted_text media'
+  - 'edit any file media'
+  - 'edit any fits_technical_metadata media'
+  - 'edit any image media'
+  - 'edit any islandora_object content'
+  - 'edit any remote_video media'
+  - 'edit any video media'
+  - 'edit own article content'
+  - 'edit own audio media'
+  - 'edit own document media'
+  - 'edit own extracted_text media'
+  - 'edit own file media'
+  - 'edit own fits_technical_metadata media'
+  - 'edit own image media'
+  - 'edit own page content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'edit terms in city'
+  - 'edit terms in city_section'
+  - 'edit terms in contact_categories'
+  - 'edit terms in continent'
+  - 'edit terms in corporate_body'
+  - 'edit terms in country'
+  - 'edit terms in county'
+  - 'edit terms in family'
+  - 'edit terms in genre'
+  - 'edit terms in geo_location'
+  - 'edit terms in islandora_access'
+  - 'edit terms in islandora_display'
+  - 'edit terms in islandora_media_use'
+  - 'edit terms in islandora_models'
+  - 'edit terms in language'
+  - 'edit terms in person'
+  - 'edit terms in physical_form'
+  - 'edit terms in province'
+  - 'edit terms in region'
+  - 'edit terms in resource_types'
+  - 'edit terms in rights'
+  - 'edit terms in subject'
+  - 'edit terms in tags'
+  - 'edit terms in temporal_subjects'
+  - 'revert all revisions'
+  - 'update any media'
+  - 'update content translations'
+  - 'update media'
+  - 'use text format basic_html'
+  - 'use text format full_html'
+  - 'view all media revisions'
+  - 'view all revisions'
+  - 'view media'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view the administration theme'

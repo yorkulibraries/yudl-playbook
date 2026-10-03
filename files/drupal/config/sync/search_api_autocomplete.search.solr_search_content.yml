@@ -1,0 +1,71 @@
+uuid: 33074cf9-547b-46b0-94e9-8f1b4e2a1f81
+langcode: en
+status: false
+dependencies:
+  config:
+    - search_api.index.default_solr_index
+    - views.view.solr_search_content
+  module:
+    - search_api_solr_autocomplete
+    - views
+_core:
+  default_config_hash: qUKYcFYoHr36uyTSzHhkasts5BO0yUVQNCPKy-ASol8
+id: solr_search_content
+label: 'Solr search content'
+index_id: default_solr_index
+suggester_settings:
+  live_results:
+    fields: {  }
+    highlight:
+      enabled: false
+      field: ''
+    view_modes:
+      'entity:node':
+        article: ''
+        islandora_object: ''
+        page: ''
+      'entity:taxonomy_term':
+        city: ''
+        city_section: ''
+        continent: ''
+        corporate_body: ''
+        country: ''
+        county: ''
+        family: ''
+        genre: ''
+        geo_location: ''
+        identifier_types: ''
+        language: ''
+        person: ''
+        physical_form: ''
+        province: ''
+        region: ''
+        resource_types: ''
+        rights: ''
+        subject: ''
+        tags: ''
+        temporal_subjects: ''
+    suggest_keys: false
+  server:
+    fields: {  }
+  search_api_solr_terms:
+    fields: {  }
+suggester_weights:
+  live_results: 0
+  server: 0
+  search_api_solr_spellcheck: 0
+  search_api_solr_suggester: 0
+  search_api_solr_terms: 0
+suggester_limits: {  }
+search_settings:
+  'views:solr_search_content':
+    displays:
+      default: true
+      selected: {  }
+options:
+  limit: 10
+  min_length: 1
+  show_count: false
+  delay: null
+  submit_button_selector: ':submit'
+  autosubmit: true

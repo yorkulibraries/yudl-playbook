@@ -1,0 +1,183 @@
+vid,name,authority,field_authority_link,lat,long
+city_section,Addington,geonames,http://sws.geonames.org/2657678,51.35,-0.03333
+city_section,Agassiz Provincial Forest,geonames,http://sws.geonames.org/5882542,49.99969,-96.15056
+city_section,Alderwood,geonames,http://sws.geonames.org/5883345,43.60348,-79.54604
+city_section,Alexandra Park,wikidata,https://www.wikidata.org/wiki/Q4720721,43.65,-79.4
+city_section,Algonquin Island,geonames,http://sws.geonames.org/7870804,43.62819,-79.35966
+city_section,Armstrong's Point,wikidata,https://www.wikidata.org/wiki/Q4793894,49.8769,-97.1564
+city_section,Bell Farm,wikidata,https://www.wikidata.org/wiki/Q4883160,50.5519,-103.6797
+city_section,Quan Bình Thanh,geonames,http://sws.geonames.org/1904887,10.80491,106.70451
+city_section,Bloordale Village,wikidata,https://www.wikidata.org/wiki/Q4928407,43.659,-79.439
+city_section,Burlington Beach,geonames,http://sws.geonames.org/5911593,43.30889,-79.80139
+city_section,Casa Loma,wikidata,https://www.wikidata.org/wiki/Q1046446,43.678117,-79.409342
+city_section,Cayuga,geonames,http://sws.geonames.org/5918700,42.96681,-79.88293
+city_section,Cedarvale Park,wikidata,https://www.wikidata.org/wiki/Q5057005,43.6915,-79.4263
+city_section,Central Park (Winnipeg),wikidata,https://www.wikidata.org/wiki/Q5061598,49.896,-97.1485
+city_section,Centre Island,geonames,http://sws.geonames.org/5919186,43.61681,-79.3829
+city_section,Chesterville,geonames,http://sws.geonames.org/5921066,45.1001,-75.23262
+city_section,Chinatown (Toronto),geonames,http://sws.geonames.org/7870785,43.65086,-79.39725
+city_section,Chinatown (Winnipeg),wikidata,https://www.wikidata.org/wiki/Q5100157,49.904,-97.14
+city_section,Chippawa,geonames,http://sws.geonames.org/5921556,43.0571,-79.04717
+city_section,Cho Lon,geonames,http://sws.geonames.org/1585330,10.75,106.65
+city_section,Church and Wellesley,wikidata,https://www.wikidata.org/wiki/Q1089761,43.66569444,-79.38095556
+city_section,Toronto Old City Hall,geonames,http://sws.geonames.org/8014953,43.65249,-79.38201
+city_section,Clarkson,geonames,http://sws.geonames.org/5923329,43.51852,-79.63354
+city_section,Denton Manor,wikidata,https://www.wikidata.org/wiki/Q26642460,52.882914,-0.721282
+city_section,Don Mills,geonames,http://sws.geonames.org/5941602,43.73341,-79.3329
+city_section,Downtown Toronto,wikidata,https://www.wikidata.org/wiki/Q2944796,43.6525,-79.3836
+city_section,East Kildonan,geonames,http://sws.geonames.org/5945777,49.9222,-97.10124
+city_section,Église Sacré-Coeur,wikidata,https://www.wikidata.org/wiki/Q50924712,43.663586,-79.372846
+city_section,Exchange District,wikidata,https://www.wikidata.org/wiki/Q5419566,49.8985,-97.1403
+city_section,Exhibition Place,wikidata,https://www.wikidata.org/wiki/Q1383752,43.63277778,-79.41611111
+city_section,Forest Hill,geonames,http://sws.geonames.org/5955534,43.69711,-79.40839
+city_section,Fort Garry,geonames,http://sws.geonames.org/5955828,49.8414,-97.15065
+city_section,Fort Rouge,geonames,http://sws.geonames.org/5955943,49.8667,-97.15064
+city_section,Fort Whyte,geonames,http://sws.geonames.org/5956015,49.8111,-97.19955
+city_section,Fort York,geonames,http://sws.geonames.org/7870912,43.63667,-79.40004
+city_section,Galt,geonames,http://sws.geonames.org/5959212,43.35583,-80.31056
+city_section,Glendon College,wikidata,https://www.wikidata.org/wiki/Q2493808,43.7275,-79.3785
+city_section,Hampstead,geonames,http://sws.geonames.org/2647553,51.55744,-0.18213
+city_section,Harbord Village,geonames,http://sws.geonames.org/7870800,43.66185,-79.40583
+city_section,Harrow,geonames,http://sws.geonames.org/3333151,51.56667,-0.33333
+city_section,Highgate,geonames,http://sws.geonames.org/5974871,42.50009,-81.81647
+city_section,Humber Bay,geonames,http://sws.geonames.org/5978382,43.63611,-79.49111
+city_section,Inn on the Park,wikidata,https://www.wikidata.org/wiki/Q6035134,43.7195,-79.3493
+city_section,Innis Lake,geonames,http://sws.geonames.org/5983439,43.86917,-79.84528
+city_section,Invermara Bay,geonames,http://sws.geonames.org/5983621,44.60011,-79.38292
+city_section,Keble College,wikidata,https://www.wikidata.org/wiki/Q1276338,51.7589,-1.25771
+city_section,Keele Campus,wikidata,https://www.wikidata.org/wiki/Q6382764,43.7731,-79.5036
+city_section,Kensington Market,geonames,http://sws.geonames.org/7870802,43.65508,-79.4027
+city_section,Kleinburg,geonames,http://sws.geonames.org/5993333,43.84428,-79.62908
+city_section,Lambeth Palace,geonames,http://sws.geonames.org/6288052,51.49567,-0.11988
+city_section,Lansdowne Theatre,wikidata,https://www.wikidata.org/wiki/Q38371477,43.6588763,-79.4428914
+city_section,Leaside,geonames,http://sws.geonames.org/6051174,43.7079,-79.36794
+city_section,Leslieville,geonames,http://sws.geonames.org/7870854,43.66883,-79.3267
+city_section,Liberty Village,geonames,http://sws.geonames.org/7870915,43.6375,-79.42356
+city_section,Limberlost Lodge,geonames,http://sws.geonames.org/6054090,45.39861,-79.00111
+city_section,Little Italy,geonames,http://sws.geonames.org/7870916,43.65694,-79.41566
+city_section,Long Branch,geonames,http://sws.geonames.org/7871302,43.5914,-79.53252
+city_section,Lower Fort Garry,geonames,http://sws.geonames.org/6061209,50.1122,-96.93252
+city_section,Maple Leaf Gardens,wikidata,https://www.wikidata.org/wiki/Q1814534,43.66222222,-79.38027778
+city_section,Metro Hall,wikidata,https://www.wikidata.org/wiki/Q1777464,43.6461,-79.3883
+city_section,Moss Park Armoury,wikidata,https://www.wikidata.org/wiki/Q6916591,43.6546,-79.3729
+city_section,Nathan Phillips Square,geonames,http://sws.geonames.org/8014952,43.6523,-79.38345
+city_section,Nobleton,geonames,http://sws.geonames.org/6088775,43.90086,-79.65191
+city_section,North End,wikidata,https://www.wikidata.org/wiki/Q17012771,49.913629,-97.145739
+city_section,Sony Centre for the Performing Arts,wikidata,https://www.wikidata.org/wiki/Q2302468,43.646723,-79.376109
+city_section,Odeon Theatre Toronto,wikidata,https://www.wikidata.org/wiki/Q24191937,43.6613789,-79.3817983
+city_section,Old Toronto,geonames,http://sws.geonames.org/8436019,43.64999,-79.38206
+city_section,Ontario Science Centre,geonames,http://sws.geonames.org/6954880,43.71636,-79.3387
+city_section,Ontario Place,wikidata,https://www.wikidata.org/wiki/Q935388,43.628993,-79.415048
+city_section,Pefferlaw,geonames,http://sws.geonames.org/6100532,44.31681,-79.1996
+city_section,Point Douglas,geonames,http://sws.geonames.org/6106684,49.9036,-97.11984
+city_section,Port Arthur,wikidata,https://www.wikidata.org/wiki/Q7230482,48.45,-89.23
+city_section,Port Credit,geonames,http://sws.geonames.org/6111708,43.55011,-79.58291
+city_section,Simpsons Department Store,wikidata,https://www.wikidata.org/wiki/Q7715934,43.6519,-79.3794
+city_section,Queen's Park,wikidata,https://www.wikidata.org/wiki/Q1419018,43.6647,-79.3925
+city_section,Ontario Legislative Building,wikidata,https://www.wikidata.org/wiki/Q980270,43.6624,-79.3917
+city_section,Queenston,geonames,http://sws.geonames.org/6115144,43.16682,-79.04957
+city_section,Regent Park,geonames,http://sws.geonames.org/6119101,43.66041,-79.3615
+city_section,Ridgetown,geonames,http://sws.geonames.org/6122230,42.43536,-81.88733
+city_section,River Heights,geonames,http://sws.geonames.org/6122662,49.8642,-97.18955
+city_section,Riverdale Park,wikidata,https://www.wikidata.org/wiki/Q3433506,43.6698,-79.3554
+city_section,Rochdale,wikidata,https://www.wikidata.org/wiki/Q14875408,43.66698056,-79.40093056
+city_section,Rockcliffe Park,geonames,http://sws.geonames.org/6126245,45.4501,-75.68264
+city_section,Rockland,geonames,http://sws.geonames.org/6126439,45.56678,-72.128
+city_section,Rosedale,geonames,http://sws.geonames.org/6127580,43.68507,-79.38955
+city_section,Fairmont Royal York Hotel,geonames,http://sws.geonames.org/6466658,43.6456,-79.3816
+city_section,Sai Wan War Cemetery,wikidata,https://www.wikidata.org/wiki/Q2148037,22.25939,114.23444
+city_section,Schomberg,geonames,http://sws.geonames.org/6142145,44.00011,-79.68293
+city_section,Rogers Centre,wikidata,https://www.wikidata.org/wiki/Q76318,43.64138889,-79.38916667
+city_section,Spadina Avenue,wikidata,https://www.wikidata.org/wiki/Q3120143,43.6525,-79.398
+city_section,St. Boniface,geonames,http://sws.geonames.org/6155709,49.8828,-97.11133
+city_section,Saint-Léonard,geonames,http://sws.geonames.org/6138625,45.58773,-73.59501
+city_section,St. Norbert,geonames,http://sws.geonames.org/6157098,49.7664,-97.14785
+city_section,St. Vital,geonames,http://sws.geonames.org/6158671,49.8056,-97.08534
+city_section,Swansea,geonames,http://sws.geonames.org/7870923,43.64372,-79.47716
+city_section,Tan Binh District,geonames,http://sws.geonames.org/9290449,10.13489,105.75968
+city_section,The Annex,geonames,http://sws.geonames.org/6163268,43.67098,-79.40437
+city_section,The Forks National Historic Site,geonames,http://sws.geonames.org/6053605,49.8889,-97.12984
+city_section,Toronto City Hall,geonames,http://sws.geonames.org/8014951,43.65347,-79.38416
+city_section,Toronto Harbour,geonames,http://sws.geonames.org/6167870,43.63341,-79.3663
+city_section,Jack Layton Ferry Terminal,wikidata,https://www.wikidata.org/wiki/Q17514005,43.6403,-79.3753
+city_section,Toronto Islands,geonames,http://sws.geonames.org/6167872,43.61681,-79.3663
+city_section,Toronto Township,wikidata,https://www.wikidata.org/wiki/Q7826543,43.60583333,-79.67305556
+city_section,Towne Cinema,wikidata,https://www.wikidata.org/wiki/Q38372132,43.6705515,-79.3852043
+city_section,Transcona,geonames,http://sws.geonames.org/6168420,49.8956,-97.00593
+city_section,Trefann Court,geonames,http://sws.geonames.org/7870807,43.65589,-79.36425
+city_section,J.B. Tudhope Memorial Park,wikidata,https://www.wikidata.org/wiki/Q90047840,44.606738,-79.388212
+city_section,Toronto Union Station,geonames,http://sws.geonames.org/6615458,43.64517,-79.38068
+city_section,University Avenue,wikidata,https://www.wikidata.org/wiki/Q3551335,43.652334,-79.387251
+city_section,University College London,wikidata,https://www.wikidata.org/wiki/Q193196,51.5245592,-0.1340401
+city_section,University of Toronto,geonames,http://sws.geonames.org/7671013,43.66219,-79.3942
+city_section,Upper Fort Garry,wikidata,https://www.wikidata.org/wiki/Q29000488,49.88751,-97.135062
+city_section,Ure Creek,geonames,http://sws.geonames.org/6172775,50.26642,-122.58598
+city_section,Varsity Stadium,wikidata,https://www.wikidata.org/wiki/Q3554861,43.66666667,-79.39722222
+city_section,Vaughan Road,wikidata,https://www.wikidata.org/wiki/Q14875463,43.6889,-79.4325
+city_section,Victoria Square,geonames,http://sws.geonames.org/6174147,43.90011,-79.36631
+city_section,Wahn,geonames,http://sws.geonames.org/2815381,50.85666,7.08786
+city_section,Watford,geonames,http://sws.geonames.org/6176902,42.95008,-81.88309
+city_section,Westview Park,wikidata,https://www.wikidata.org/wiki/Q97585812,49.9027,-97.192
+city_section,Willoughby,geonames,http://sws.geonames.org/6182363,43.00012,-79.06627
+city_section,Windermere,geonames,http://sws.geonames.org/6182850,45.16599,-79.55135
+city_section,Woodbine Avenue North of Danforth,wikidata,https://www.wikidata.org/wiki/Q8032367,43.682719,-79.311541
+city_section,Woodbridge,geonames,http://sws.geonames.org/6184009,43.78341,-79.59962
+city_section,Yonge-Dundas Square,wikidata,https://www.wikidata.org/wiki/Q607810,43.65611111,-79.38027778
+city_section,Yonge Street,wikidata,https://www.wikidata.org/wiki/Q20725,43.67026,-79.38677
+city_section,Keele Campus,wikidata,https://www.wikidata.org/wiki/Q849751,43.77305556,-79.50361111
+city_section,Yorkville,geonames,http://sws.geonames.org/6185610,43.67043,-79.39346
+city_section,North Kildonan,geonames,http://sws.geonames.org/6090181,49.9408,-97.08924
+city_section,Ottawa Civic Centre,wikidata,https://www.wikidata.org/wiki/Q1143666,45.3988,-75.685
+city_section,The Ward,wikidata,https://www.wikidata.org/wiki/Q3523289,43.656,-79.384
+city_section,Park Hyatt Toronto,wikidata,https://www.wikidata.org/wiki/Q7137802,43.669,-79.3946
+city_section,Beth Tzedec Congregation,wikidata,https://www.wikidata.org/wiki/Q19873364,43.6955,-79.4234
+city_section,Holy Blossom Temple,wikidata,https://www.wikidata.org/wiki/Q14875189,43.6983,-79.4251
+city_section,Auteuil,geonames,http://sws.geonames.org/6545275,48.84694,2.26366
+city_section,Distillery District,geonames,http://sws.geonames.org/7870792,43.6516,-79.35609
+city_section,"The Toronto Evening Telegram, Front Street",wikidata,https://www.wikidata.org/wiki/Q17152683,43.642389,-79.395806
+city_section,CAA Theatre,wikidata,https://www.wikidata.org/wiki/Q14875381,43.6679,-79.3856
+city_section,Adelphi,wikidata,https://www.wikidata.org/wiki/Q4579847,51.5092,-0.1225
+city_section,Bryanston Square,geonames,http://sws.geonames.org/12047929,51.51955,-0.16197
+city_section,Ealing,geonames,http://sws.geonames.org/2650567,51.51216,-0.30204
+city_section,St John's Wood,geonames,http://sws.geonames.org/2638768,51.52991,-0.17467
+city_section,Trieste,geonames,http://sws.geonames.org/11396179,41.92685,12.51308
+city_section,Moss Park,geonames,http://sws.geonames.org/7870782,43.65498,-79.37153
+city_section,Massey Hall,wikidata,https://www.wikidata.org/wiki/Q1122776,43.65416667,-79.37902778
+city_section,Acton,geonames,http://sws.geonames.org/2657697,51.50901,-0.2762
+city_section,Consumers' Gas Building,wikidata,https://www.wikidata.org/wiki/Q5164734,43.6505,-79.3761
+city_section,Bloomsbury,geonames,http://sws.geonames.org/12048275,51.52199,-0.13144
+city_section,Chelsea,geonames,http://sws.geonames.org/2653265,51.48755,-0.16936
+city_section,Castro Pretorio,geonames,http://sws.geonames.org/11396127,41.90306,12.5014
+city_section,Greektown,wikidata,https://www.wikidata.org/wiki/Q9357917,43.6785,-79.3472
+city_section,Vintry,geonames,http://sws.geonames.org/12047992,51.51058,-0.09381
+city_section,Regal Constellation Hotel,wikidata,https://www.wikidata.org/wiki/Q7307912,43.6874,-79.5944
+city_section,Farnham Common,geonames,http://sws.geonames.org/7287967,51.55476,-0.61544
+city_section,St. James Town,wikidata,https://www.wikidata.org/wiki/Q7588527,43.66916667,-79.37277778
+city_section,Eatonville,wikidata,https://www.wikidata.org/wiki/Q5331415,43.6389,-79.5478
+city_section,Mackenzie House,wikidata,https://www.wikidata.org/wiki/Q3884309,43.6557,-79.3783
+city_section,Willowdale,geonames,http://sws.geonames.org/8558534,43.76672,-79.39909
+city_section,Danforth Music Hall,wikidata,https://www.wikidata.org/wiki/Q38371135,43.6764496,-79.3570998
+city_section,The Danforth,geonames,http://sws.geonames.org/12156834,43.68403,-79.32982
+city_section,Corso Italia,geonames,http://sws.geonames.org/7870907,43.67659,-79.44574
+city_section,Cabbagetown,geonames,http://sws.geonames.org/5912932,43.66443,-79.36794
+city_section,Financial District,geonames,http://sws.geonames.org/7870795,43.64713,-79.38094
+city_section,Toronto-Dominon Centre,wikidata,https://www.wikidata.org/wiki/Q1239847,43.6479,-79.3808
+city_section,Scarborough Village,geonames,http://sws.geonames.org/6141900,43.73899,-79.22124
+city_section,David Mirvish Gallery,wikidata,https://www.wikidata.org/wiki/Q15961554,43.664,-79.4123
+city_section,Trinity Bellwoods,geonames,http://sws.geonames.org/7870920,43.64791,-79.40849
+city_section,Jarvis Street,wikidata,https://www.wikidata.org/wiki/Q6161258,43.6604,-79.3758
+city_section,Yonge and Eglinton,geonames,http://sws.geonames.org/10794151,43.70638,-79.39665
+city_section,Toronto Evening Telegram Building,wikidata,https://www.wikidata.org/wiki/Q106628710,43.6481,-79.3798
+city_section,Elwick,geonames,http://sws.geonames.org/7299066,54.66468,-1.32443
+city_section,Baldwin Village,geonames,http://sws.geonames.org/7870787,43.65586,-79.39326
+city_section,Toronto Pearson International Airport,geonames,http://sws.geonames.org/6296338,43.68066,-79.61286
+city_section,CFB Downsview,wikidata,https://www.wikidata.org/wiki/Q5010460,43.7439,-79.4656
+city_section,Little Portugal,geonames,http://sws.geonames.org/7870917,43.64663,-79.42956
+city_section,The Riverboat Coffee House,wikidata,https://www.wikidata.org/wiki/Q23461911,43.670278,-79.391111
+city_section,Lawrence Park,geonames,http://sws.geonames.org/7870868,43.72396,-79.39416
+city_section,The Rivoli,wikidata,https://www.wikidata.org/wiki/Q7761046,43.6493,-79.3949
+city_section,Church-Yonge Corridor,geonames,http://sws.geonames.org/12156882,43.65965,-79.37902
+city_section,Concord,geonames,http://sws.geonames.org/5926526,43.80011,-79.48291
+city_section,Trinity Bellwoods Park,geonames,http://sws.geonames.org/7870921,43.64806,-79.41429
+city_section,Lachine,geonames,https://www.geonames.org/6024449,45.4315,-73.66908,
+city_section,Longue-Pointe,geonames,https://www.geonames.org/6059888,45.57837,-73.53959,

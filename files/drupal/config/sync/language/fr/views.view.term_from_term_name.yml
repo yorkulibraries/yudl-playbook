@@ -1,0 +1,36 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+          tags:
+            previous: ‹‹
+            next: ››
+      fields:
+        name:
+          separator: ', '
+      arguments:
+        field_external_uri_uri:
+          exception:
+            title: Tout
+  rest_export_1:
+    display_options:
+      arguments:
+        name:
+          exception:
+            title: Tout
+        vid:
+          exception:
+            title: Tout

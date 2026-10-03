@@ -1,0 +1,4 @@
+name: Emplacements
+widget:
+  config:
+    reset_text: 'Tout afficher'

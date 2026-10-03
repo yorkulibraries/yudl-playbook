@@ -1,0 +1,4 @@
+name: 'Type de ressource'
+widget:
+  config:
+    reset_text: 'Tout afficher'

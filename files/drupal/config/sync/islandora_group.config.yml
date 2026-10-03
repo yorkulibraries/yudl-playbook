@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: a61jX-O3Zi8EBQ_ztm73H38bKoTfIeBi8dLWKylMDUs
+islandora_group: null
+access_control: islandora_access
+node-type-access-fields:
+  islandora_object: field_access_terms
+media-type-access-fields:
+  audio: field_access_terms
+  document: field_access_terms
+  extracted_text: field_access_terms
+  file: field_access_terms
+  image: field_access_terms
+  remote_video: field_access_terms
+  video: field_access_terms

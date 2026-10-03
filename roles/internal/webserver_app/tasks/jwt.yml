@@ -38,23 +38,31 @@
     repo: https://github.com/yorkulibraries/yudl_groups.git
     dest: "{{ drupal_core_path }}/modules/contrib/yudl_groups"
     version: 2.x
+  when: not (drupal_build_composer | default(false))
 
 - name: Gather list of enabled modules
   command: "{{ drush_path }} --root {{ drupal_core_path }} pml --status=enabled --type=module --format=list"
   register: enabled_modules
   changed_when: false
 
+# Config-install builds enable yudl_groups in yudl-configuration.yml instead, after the
+# taxonomy migrations and before Workbench, so term and node IDs match production.
 - name: Enable YUDL Groups
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en yudl_groups"
-  when: "'yudl_groups' not in (enabled_modules.stdout_lines | default([]))"
+  when:
+    - not (yudl_install_from_config | default(false))
+    - "'yudl_groups' not in (enabled_modules.stdout_lines | default([]))"
 
 ###
 # Install this here since we run into a composer wanting stable over dev issue.
+# Skipped when the codebase comes from files/drupal/composer.lock, which
+# already provides islandora_group and group_solr (the yorkulibraries fork).
 - name: Get Islandora Group
   git:
     repo: https://github.com/digitalutsc/islandora_group.git
     dest: "{{ drupal_core_path }}/modules/contrib/islandora_group"
     version: 2.x
+  when: not (drupal_build_composer | default(false))
 
 - name: Enable Islandora Group
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_group"
@@ -65,6 +73,7 @@
     repo: https://github.com/yorkulibraries/group_solr.git
     dest: "{{ drupal_core_path }}/modules/contrib/group_solr"
     version: main
+  when: not (drupal_build_composer | default(false))
 
 - name: Enable Group Solr
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en group_solr"
@@ -85,6 +94,7 @@
     awk '{print $1}'
   register: yudl_optional_config_hash
   changed_when: false
+  when: not (yudl_install_from_config | default(false))
 
 - name: Check optional config hash marker
   stat:
@@ -101,9 +111,12 @@
   set_fact:
     yudl_optional_config_hash_previous: "{{ (yudl_optional_config_hash_current.content | b64decode | trim) if yudl_optional_config_hash_marker.stat.exists else '' }}"
 
+# Not needed when the site is installed from files/drupal/config/sync.
 - name: Import YUDL features moved to optional
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y cim --partial --source=/var/www/html/drupal/web/modules/contrib/yudl_defaults/config/optional"
-  when: yudl_optional_config_hash.stdout | trim != yudl_optional_config_hash_previous
+  when:
+    - not (yudl_install_from_config | default(false))
+    - yudl_optional_config_hash.stdout | trim != yudl_optional_config_hash_previous
 
 - name: Update optional config hash marker
   copy:
@@ -112,4 +125,6 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
     mode: "0644"
-  when: yudl_optional_config_hash.stdout | trim != yudl_optional_config_hash_previous
+  when:
+    - not (yudl_install_from_config | default(false))
+    - yudl_optional_config_hash.stdout | trim != yudl_optional_config_hash_previous

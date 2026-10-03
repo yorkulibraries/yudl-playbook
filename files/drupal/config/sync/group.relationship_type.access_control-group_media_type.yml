@@ -1,0 +1,16 @@
+uuid: 17fc6e46-8d2d-4b93-b95f-217d3b504d6f
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+  module:
+    - groupmedia
+    - media
+id: access_control-group_media_type
+group_type: access_control
+content_plugin: group_media_type
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 0
+  use_creation_wizard: false

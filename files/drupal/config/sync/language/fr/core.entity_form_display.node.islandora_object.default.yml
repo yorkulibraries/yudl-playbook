@@ -1,0 +1,16 @@
+third_party_settings:
+  field_group:
+    group_structure:
+      label: Système
+    group_title:
+      label: Titre
+    group_rights:
+      label: Droits
+    group_subject:
+      label: Sujet
+    group_geographic:
+      label: Géographique
+    group_dates:
+      label: Dates
+    group_creators_and_contributors:
+      label: Auteurs

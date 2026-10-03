@@ -1,0 +1,20 @@
+uuid: 5cd7d90f-f734-4147-a973-85b5f3314437
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-1f71dcad5210d3c36
+id: group_relationship.access_control-1f71dcad5210d3c36.uid
+field_name: uid
+entity_type: group_relationship
+bundle: access_control-1f71dcad5210d3c36
+label: 'Group relationship creator'
+description: 'The username of the group relationship creator.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\group\Entity\GroupRelationship::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

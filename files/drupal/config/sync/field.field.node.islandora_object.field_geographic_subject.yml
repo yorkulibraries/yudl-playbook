@@ -1,0 +1,45 @@
+uuid: acf31ae2-b720-4e4c-aec4-6652b00cf58a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_geographic_subject
+    - node.type.islandora_object
+    - taxonomy.vocabulary.city
+    - taxonomy.vocabulary.city_section
+    - taxonomy.vocabulary.continent
+    - taxonomy.vocabulary.country
+    - taxonomy.vocabulary.county
+    - taxonomy.vocabulary.geo_location
+    - taxonomy.vocabulary.province
+    - taxonomy.vocabulary.region
+_core:
+  default_config_hash: FJ15nBZcbDL9n8nMY1t0US8ZQbl4_o7rk1U2mdtqvY4
+id: node.islandora_object.field_geographic_subject
+field_name: field_geographic_subject
+entity_type: node
+bundle: islandora_object
+label: 'Geographic Subject'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      city: city
+      city_section: city_section
+      continent: continent
+      country: country
+      county: county
+      geo_location: geo_location
+      province: province
+      region: region
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: geo_location
+field_type: entity_reference

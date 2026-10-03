@@ -1,0 +1,20 @@
+uuid: 303dfb56-29f2-4c65-a1b9-a472f918ebb3
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.access_control-group_media-video
+  module:
+    - path
+id: group_relationship.access_control-group_media-video.path
+field_name: path
+entity_type: group_relationship
+bundle: access_control-group_media-video
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

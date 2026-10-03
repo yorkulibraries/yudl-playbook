@@ -1,0 +1,16 @@
+uuid: ea4fe121-bd4a-4f6c-8315-6b101d63f1e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - eu_cookie_compliance
+    - file
+_core:
+  default_config_hash: 78zMIwzEvBgTkciCYMtUyLlwupBQrH9lhs9Y0USUTrk
+id: york_university
+label: 'York University'
+weight: 5
+is_admin: null
+permissions:
+  - 'delete own files'
+  - 'display eu cookie compliance popup'

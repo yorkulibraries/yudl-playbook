@@ -1,0 +1,44 @@
+uuid: 2d696b45-d8f9-4633-9bd9-b383392bdd6d
+langcode: en
+status: true
+dependencies:
+  config:
+    - dgi_actions.identifier.yudl_handles
+  module:
+    - dgi_actions
+    - islandora
+label: Handles
+name: handles
+group: Islandora
+description: 'Create handles for repository items.'
+requireAllConditions: true
+disabled: false
+conditions:
+  node_is_islandora_object:
+    id: node_is_islandora_object
+    negate: 0
+    uuid: 08c4ce5c-96e8-422e-8372-38b3f4bde2ad
+    context_mapping:
+      node: '@dgi_actions.entity_hook_context:node'
+  node_has_term:
+    id: node_has_term
+    negate: true
+    uuid: 74c55825-8722-45c6-acc2-b764ea53a892
+    context_mapping:
+      node: '@node.node_route_context:node'
+    uri: 'https://vocab.getty.edu/aat/300242735,http://id.loc.gov/ontologies/bibframe/part'
+    logic: or
+  dgi_actions_entity_persistent_identifier_populated:
+    id: dgi_actions_entity_persistent_identifier_populated
+    negate: true
+    uuid: 4bbb3561-d312-445a-8331-8bbe57ea1219
+    context_mapping:
+      entity: '@dgi_actions.entity_hook_context:node'
+    identifier: yudl_handles
+reactions:
+  dgi_actions_entity_mint_reaction:
+    id: dgi_actions_entity_mint_reaction
+    actions:
+      mint_a_handle: mint_a_handle
+    saved: false
+weight: 0

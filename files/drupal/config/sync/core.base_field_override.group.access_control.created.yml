@@ -1,0 +1,18 @@
+uuid: 0e8adf73-865d-4a6c-b44c-e49d09af1f34
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+id: group.access_control.created
+field_name: created
+entity_type: group
+bundle: access_control
+label: 'Created on'
+description: 'The time that the group was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

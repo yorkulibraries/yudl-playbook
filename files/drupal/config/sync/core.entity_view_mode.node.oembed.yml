@@ -1,0 +1,11 @@
+uuid: a0b19f19-3974-4ba6-84ef-7a47995d955a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.oembed
+label: oEmbed
+description: ''
+targetEntityType: node
+cache: true

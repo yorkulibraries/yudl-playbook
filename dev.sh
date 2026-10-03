@@ -23,6 +23,9 @@ DISK="${YUDL_VM_DISK:-40G}"
 UBUNTU_RELEASE="${YUDL_UBUNTU_RELEASE:-22.04}"
 ASK_VAULT_PASS="$(echo "${YUDL_ASK_VAULT_PASS:-false}" | tr '[:upper:]' '[:lower:]')"
 MOUNT_REPO="$(echo "${YUDL_MOUNT:-false}" | tr '[:upper:]' '[:lower:]')"
+DRUPAL_ROOT="/var/www/html/drupal"
+# Packages './dev.sh mount' can replace with a local checkout.
+DEV_PACKAGES="theme customizations"
 
 # The playbooks hardcode vagrant_user: "vagrant", so keep that user name.
 VM_USER="vagrant"
@@ -50,6 +53,16 @@ Commands:
   reset                       Restore the "base" snapshot and re-apply the YUDL layer.
   snapshots                   List snapshots.
   ssh [cmd...]                SSH into the VM as $VM_USER.
+  composer <args>             Run composer in the VM against files/drupal and copy the
+                              updated composer.json/composer.lock back, e.g.
+                                ./dev.sh composer update --no-install drupal/core-recommended -W
+  mount <package> [dir]       Mount a local checkout over the composer-installed package
+                              so host edits show up in Drupal. The installed copy is set
+                              aside, not deleted. Packages (default local dir):
+                                theme           ../york_drupal_theme  (\$YUDL_THEME_DIR)
+                                customizations  ../yudl_customizations (\$YUDL_CUSTOMIZATIONS_DIR)
+  unmount <package>           Unmount it and put the composer-installed copy back.
+  mounts                      Show which packages are mounted from local checkouts.
   forward                     Forward the old Vagrant ports to localhost (runs until Ctrl-C).
   ip                          Print the VM's IP address.
   status                      Show Multipass info for the VM.
@@ -64,6 +77,8 @@ Environment:
   YUDL_UBUNTU_RELEASE  (default: 22.04) - should match production
   YUDL_ASK_VAULT_PASS  true to pass --ask-vault-pass
   YUDL_MOUNT           true to mount this repo at /home/$VM_USER/islandora
+  YUDL_THEME_DIR            local checkout for 'mount theme' (default: ../york_drupal_theme)
+  YUDL_CUSTOMIZATIONS_DIR   local checkout for 'mount customizations' (default: ../yudl_customizations)
 EOF
 }
 
@@ -164,6 +179,12 @@ run_playbook() {
   shift 2
 
   require ansible-playbook "Install Ansible on this machine."
+  # composer install could replace a mounted package's directory, which would
+  # delete files in the local checkout through the mount.
+  local pkg
+  for pkg in $DEV_PACKAGES; do
+    pkg_mounted "$pkg" && die "'$pkg' is mounted from a local checkout; run './dev.sh unmount $pkg' first."
+  done
   write_inventory
 
   info "Installing Galaxy roles"
@@ -244,6 +265,115 @@ cmd_provision() {
   run_playbook false "$build_all" "$@"
 }
 
+ssh_vm() {
+  ssh "${SSH_OPTS[@]}" "$VM_USER@$(vm_ip)" "$@"
+}
+
+# Runs composer in the VM against a scratch copy of files/drupal, then copies
+# composer.json and composer.lock back. The VM's Drupal install is untouched.
+cmd_composer() {
+  local src="$ROOT/files/drupal" dir=/tmp/yudl-composer
+  [ $# -gt 0 ] || die "usage: ./dev.sh composer <composer args>"
+  vm_exists || die "$VM_NAME does not exist; run './dev.sh up' first."
+
+  info "Running 'composer $*' against files/drupal in $VM_NAME"
+  ssh_vm "rm -rf $dir && mkdir -p $dir"
+  ssh_vm "cat > $dir/composer.json" <"$src/composer.json"
+  ssh_vm "cat > $dir/composer.lock" <"$src/composer.lock"
+  ssh_vm "cd $dir && COMPOSER_MEMORY_LIMIT=-1 composer $(printf '%q ' "$@")"
+
+  # Copy to temp files first so a failed transfer can't truncate the originals.
+  ssh_vm "cat $dir/composer.json" >"$STATE_DIR/composer.json.new"
+  ssh_vm "cat $dir/composer.lock" >"$STATE_DIR/composer.lock.new"
+  mv "$STATE_DIR/composer.json.new" "$src/composer.json"
+  mv "$STATE_DIR/composer.lock.new" "$src/composer.lock"
+  info "Updated files/drupal/composer.json and composer.lock"
+}
+
+# pkg_info <package> <field>: vm_path | local_dir | composer_name
+pkg_info() {
+  case "$1:$2" in
+    theme:vm_path) echo "$DRUPAL_ROOT/web/themes/custom/york_drupal_theme" ;;
+    theme:local_dir) echo "${YUDL_THEME_DIR:-$ROOT/../york_drupal_theme}" ;;
+    theme:composer_name) echo "yorkulibraries/york_drupal_theme" ;;
+    customizations:vm_path) echo "$DRUPAL_ROOT/web/modules/contrib/yudl_customizations" ;;
+    customizations:local_dir) echo "${YUDL_CUSTOMIZATIONS_DIR:-$ROOT/../yudl_customizations}" ;;
+    customizations:composer_name) echo "yorkulibraries/yudl_customizations" ;;
+    *) die "unknown package '$1' (choose from: $DEV_PACKAGES)" ;;
+  esac
+}
+
+pkg_mounted() {
+  vm_exists && multipass info "$VM_NAME" | grep -q "=> $(pkg_info "$1" vm_path)\$"
+}
+
+# Mounts a local checkout over a composer-installed package so edits on the
+# host show up in Drupal immediately (after a cache rebuild for CSS/JS
+# aggregation, Twig, PHP hooks and services). The installed copy is moved to
+# <path>.composer meanwhile.
+cmd_mount() {
+  local pkg="${1:-}" dir vm_path name uid gid
+  [ -n "$pkg" ] || die "usage: ./dev.sh mount <$(echo $DEV_PACKAGES | tr ' ' '|')> [dir]"
+  vm_path="$(pkg_info "$pkg" vm_path)"
+  name="$(pkg_info "$pkg" composer_name)"
+  dir="${2:-$(pkg_info "$pkg" local_dir)}"
+  vm_exists || die "$VM_NAME does not exist; run './dev.sh up' first."
+
+  [ -d "$dir" ] || die "$dir does not exist."
+  dir="$(cd "$dir" && pwd)"
+  grep -q "\"name\": *\"$name\"" "$dir/composer.json" 2>/dev/null ||
+    die "$dir doesn't look like $name (no matching composer.json name)."
+  pkg_mounted "$pkg" && die "'$pkg' is already mounted; run './dev.sh unmount $pkg' first."
+
+  ssh_vm "set -e
+    if [ -e '$vm_path.composer' ]; then
+      echo 'dev.sh: $vm_path.composer already exists; refusing to overwrite it.' >&2; exit 1
+    fi
+    sudo mv '$vm_path' '$vm_path.composer'
+    sudo mkdir '$vm_path'"
+
+  # Owned by the vagrant user in the VM (files stay world-readable for
+  # Apache), and by you on the host.
+  uid="$(multipass exec "$VM_NAME" -- id -u "$VM_USER")"
+  gid="$(multipass exec "$VM_NAME" -- id -g "$VM_USER")"
+  info "Mounting $dir at $vm_path"
+  if ! multipass mount -u "$(id -u):$uid" -g "$(id -g):$gid" "$dir" "$VM_NAME:$vm_path"; then
+    ssh_vm "sudo rmdir '$vm_path' && sudo mv '$vm_path.composer' '$vm_path'"
+    die "mount failed; restored the composer-installed copy."
+  fi
+  ssh_vm "cd $DRUPAL_ROOT && vendor/bin/drush cr"
+  info "Edit $dir. After CSS/JS/Twig/PHP changes run:"
+  info "  ./dev.sh ssh -- 'cd $DRUPAL_ROOT && vendor/bin/drush cr'"
+}
+
+cmd_unmount() {
+  local pkg="${1:-}" vm_path
+  [ -n "$pkg" ] || die "usage: ./dev.sh unmount <$(echo $DEV_PACKAGES | tr ' ' '|')>"
+  vm_path="$(pkg_info "$pkg" vm_path)"
+  pkg_mounted "$pkg" || die "'$pkg' is not mounted."
+
+  info "Unmounting $vm_path"
+  multipass umount "$VM_NAME:$vm_path"
+  ssh_vm "set -e
+    sudo rmdir '$vm_path'
+    sudo mv '$vm_path.composer' '$vm_path'
+    cd $DRUPAL_ROOT && vendor/bin/drush cr"
+  info "Restored the composer-installed $pkg."
+}
+
+cmd_mounts() {
+  local pkg any=false
+  vm_exists || die "$VM_NAME does not exist; run './dev.sh up' first."
+  for pkg in $DEV_PACKAGES; do
+    if pkg_mounted "$pkg"; then
+      any=true
+      printf '%-15s %s\n' "$pkg" "$(multipass info "$VM_NAME" | grep "=> $(pkg_info "$pkg" vm_path)\$" | sed 's/^ *Mounts: *//; s/^ *//')"
+    else
+      printf '%-15s %s\n' "$pkg" "composer-installed"
+    fi
+  done
+}
+
 cmd_forward() {
   local ip args=() port
   ip="$(vm_ip)"
@@ -266,6 +396,10 @@ main() {
     reset) restore_snapshot base; run_playbook false false ;;
     snapshots) multipass list --snapshots ;;
     ssh) exec ssh "${SSH_OPTS[@]}" "$VM_USER@$(vm_ip)" "$@" ;;
+    composer) cmd_composer "$@" ;;
+    mount) cmd_mount "$@" ;;
+    unmount | umount) cmd_unmount "$@" ;;
+    mounts) cmd_mounts ;;
     forward) cmd_forward ;;
     ip) vm_ip ;;
     status) multipass info "$VM_NAME" ;;

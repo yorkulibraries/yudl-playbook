@@ -1,0 +1,4 @@
+label: 'Epinglé en haut des listes'
+settings:
+  on_label: Activé
+  off_label: Désactivé

@@ -1,0 +1,37 @@
+uuid: 0e4a509f-64a6-4936-8ceb-6f943758cdbc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_video_file
+    - media.type.video
+  module:
+    - file
+    - filehash
+  enforced:
+    module:
+      - islandora_core_feature
+third_party_settings:
+  filehash:
+    dedupe: 0
+    dedupe_original: false
+_core:
+  default_config_hash: aVsH94glMbKDyF_GDPdx83nXIjQmnd9chf7vHN1ApGc
+id: media.video.field_media_video_file
+field_name: field_media_video_file
+entity_type: media
+bundle: video
+label: 'Fichier vidéo'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'mp4 mov avi m4v'
+  max_filesize: ''
+  description_field: false
+field_type: file

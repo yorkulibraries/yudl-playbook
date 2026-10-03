@@ -1,0 +1,14 @@
+uuid: 13d4405b-d123-4b0c-8b34-925d8f72e910
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.access_control
+id: access_control-admin
+label: Admin
+weight: 100
+admin: true
+scope: individual
+global_role: null
+group_type: access_control
+permissions: {  }

@@ -1,0 +1,37 @@
+uuid: d80675df-4913-4ae6-962b-6e72fa9787a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.city_section
+  module:
+    - taxonomy
+_core:
+  default_config_hash: uVB3orKq8j1stXt4Yz6uAVRGhRIhq8EkYk4_vItj3Nk
+id: taxonomy_term.city_section
+targetEntityType: taxonomy_term
+bundle: city_section
+types:
+  - 'dc:Location'
+  - 'schema:Place'
+fieldMappings:
+  name:
+    properties:
+      - 'schema:name'
+  description:
+    properties:
+      - 'schema:description'
+  field_authority_link:
+    properties:
+      - 'schema:sameAs'
+  field_geo_geolocation:
+    properties:
+      - 'wgs84_pos:lat_long'
+  field_geo_broader:
+    properties:
+      - 'schema:containedInPlace'
+  changed:
+    properties:
+      - 'schema:dateModified'
+    datatype_callback:
+      callable: 'Drupal\rdf\CommonDataConverter::dateIso8601Value'

@@ -1,0 +1,30 @@
+uuid: 4d3819e5-f98e-4426-89cb-99d15160da9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_authority_link
+    - taxonomy.vocabulary.resource_types
+  module:
+    - controlled_access_terms
+_core:
+  default_config_hash: LOJkGIsBPWMwvZoLOUyJUIfaJXQVf1ngJJO4UFC9kxM
+id: taxonomy_term.resource_types.field_authority_link
+field_name: field_authority_link
+entity_type: taxonomy_term
+bundle: resource_types
+label: Authority
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  authority_sources:
+    dcmi_types: 'DCMI Type Vocabulary'
+    marc_resource_types: 'MARC Resource Types'
+    resource_types_scheme: 'Resource Types Scheme'
+    other: Other
+  title: 1
+  link_type: 16
+field_type: authority_link

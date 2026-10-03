@@ -1,0 +1,36 @@
+display:
+  default:
+    display_options:
+      fields:
+        field_media_file:
+          separator: ', '
+        field_media_image:
+          separator: ', '
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        field_member_of_target_id:
+          exception:
+            title: Tout
+  rest_export_1:
+    display_title: 'Export REST'
+  rest_export_2:
+    display_options:
+      arguments:
+        field_media_of_target_id:
+          exception:
+            title: Tout

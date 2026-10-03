@@ -1,0 +1,9 @@
+uuid: 22dcc03b-9b47-44ce-beaf-b509724bf988
+langcode: en
+status: true
+dependencies: {  }
+name: 'Contact categories'
+vid: contact_categories
+description: null
+weight: 0
+new_revision: false

@@ -1,0 +1,11 @@
+uuid: fe323404-d46d-4106-a52b-a5f6091be030
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.collection_search
+label: 'Collection Search'
+description: ''
+targetEntityType: node
+cache: true

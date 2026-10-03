@@ -1,0 +1,21 @@
+uuid: 75efd596-61c2-4c34-a55f-f4d314675c8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_isbn
+    - node.type.islandora_object
+_core:
+  default_config_hash: 8C7npKQqnWgUklcmBAuDqqj7ZDvgj5DW-9SSx4Qnq1Y
+id: node.islandora_object.field_isbn
+field_name: field_isbn
+entity_type: node
+bundle: islandora_object
+label: isbn
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

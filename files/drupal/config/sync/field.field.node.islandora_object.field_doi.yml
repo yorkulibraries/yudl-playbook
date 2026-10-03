@@ -1,0 +1,21 @@
+uuid: 87dea0db-f656-4cf1-8708-75811252f1c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_doi
+    - node.type.islandora_object
+_core:
+  default_config_hash: 3wqSPNV4pLNmfiUs5X_aBEZGO1S3eHqqs76iZZixCN4
+id: node.islandora_object.field_doi
+field_name: field_doi
+entity_type: node
+bundle: islandora_object
+label: doi
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

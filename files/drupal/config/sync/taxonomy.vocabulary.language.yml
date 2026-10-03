@@ -1,0 +1,11 @@
+uuid: 7dec5455-8a97-4b0e-bfaa-898df186d64c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: G4w8uzqFCblUQ6pFa1EBJtVxpBLKH9sWZX1VncabSkw
+name: Language
+vid: language
+description: 'Codes to describe language of resource content. Intended for use with ISO639-2'
+weight: 0
+new_revision: false
