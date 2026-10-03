@@ -3,7 +3,7 @@
 - name: Download and unarchive
   unarchive:
     remote_src: yes
-    src: http://archive.apache.org/dist/activemq/{{ activemq_version }}/apache-activemq-{{ activemq_version }}-bin.tar.gz
+    src: "{{ activemq_mirror }}/activemq/{{ activemq_version }}/apache-activemq-{{ activemq_version }}-bin.tar.gz"
     dest: "{{ activemq_install_root }}"
     owner: "{{ activemq_user }}"
     creates: "{{ activemq_install_root }}/activemq"

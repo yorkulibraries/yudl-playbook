@@ -2,5 +2,7 @@ solr_cores:
   - ISLANDORA
 solr_install_path: /opt/solr
 solr_version: "8.11.2"
+# archive.apache.org is heavily throttled; serve the tarball from York instead.
+solr_mirror: "https://alpha.library.yorku.ca"
 solr_user: solr
 solr_instance_conf_path: "/var/solr/data/{{ solr_cores[0] }}/conf"

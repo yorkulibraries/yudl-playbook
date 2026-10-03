@@ -1,6 +1,7 @@
 ---
 
 activemq_version: 5.18.3
+activemq_mirror: http://archive.apache.org/dist
 activemq_install_root: /opt
 activemq_user: activemq
 activemq_create_user: yes

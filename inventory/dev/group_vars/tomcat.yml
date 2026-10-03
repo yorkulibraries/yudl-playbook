@@ -92,3 +92,6 @@ cantaloupe_StreamProcessor_retrieval_strategy: CacheStrategy
 cantaloupe_processor_fallback_retrieval_strategy: CacheStrategy
 cantaloupe_KakaduProcessor_path_to_binaries: /opt/kakadu
 cantaloupe_processor_tif: ImageMagickProcessor
+
+# archive.apache.org is heavily throttled; serve the ActiveMQ tarball from York instead.
+activemq_mirror: "https://alpha.library.yorku.ca"

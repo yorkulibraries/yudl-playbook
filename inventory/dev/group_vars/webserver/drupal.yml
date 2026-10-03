@@ -7,6 +7,8 @@ drupal_composer_install_dir: /var/www/html/drupal
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 drupal_core_owner: "{{ ansible_user }}"
 drupal_composer_dependencies:
+  # create-project with --stability dev installs core 11.x-dev; pin core to a stable release first.
+  - "--with-all-dependencies drupal/core-recommended:^11.4@stable drupal/core-composer-scaffold:^11.4@stable drupal/core-project-message:^11.4@stable drupal/core-recipe-unpack:^11.4@stable"
   - "drupal/devel:^5.5"
   - "drush/drush:^13"
   - "drupal/restui:^1.21"
@@ -61,7 +63,7 @@ drupal_composer_dependencies:
   - "--with-all-dependencies  discoverygarden/dgi_fixity:^1.4"
   - "discoverygarden/dgi_actions"
   - "drupal/group_action:^1.2"
-drupal_composer_project_package: "drupal/recommended-project:^11"
+drupal_composer_project_package: "drupal/recommended-project:^11@stable"
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_db_user: drupal
 drupal_db_name: drupal
