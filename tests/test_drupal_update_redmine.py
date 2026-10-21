@@ -35,6 +35,10 @@ def main_args(parent_issue_id=4336):
         redmine_tracker_name=None,
         redmine_priority_id=2,
         redmine_security_priority_id=4,
+        redmine_category_id=None,
+        redmine_category_name="Maintenance",
+        redmine_version_id=None,
+        redmine_version_name="2026-2027 Workplan",
         redmine_api_key_env="REDMINE_API_KEY",
         dry_run=False,
     )
@@ -155,6 +159,118 @@ class RedminePayloadTests(unittest.TestCase):
             )
         payload = request.call_args.args[4]
         self.assertNotIn("priority_id", payload["issue"])
+        self.assertNotIn("category_id", payload["issue"])
+        self.assertNotIn("fixed_version_id", payload["issue"])
+
+    def test_create_issue_sets_category_and_version(self):
+        with mock.patch.object(
+            drupal_update_redmine,
+            "redmine_request",
+            return_value={"issue": {"id": 99}},
+        ) as request:
+            drupal_update_redmine.create_issue(
+                "https://redmine.example.com",
+                "key",
+                "subject",
+                "description",
+                self.args,
+                tracker_id=3,
+                priority_id=4,
+                category_id=7,
+                version_id=21,
+            )
+        payload = request.call_args.args[4]
+        self.assertEqual(payload["issue"]["category_id"], 7)
+        self.assertEqual(payload["issue"]["fixed_version_id"], 21)
+
+
+def lookup_args(**overrides):
+    values = {
+        "redmine_project_id": "islandora",
+        "redmine_category_id": None,
+        "redmine_category_name": None,
+        "redmine_version_id": None,
+        "redmine_version_name": None,
+    }
+    values.update(overrides)
+    return argparse.Namespace(**values)
+
+
+class CategoryVersionLookupTests(unittest.TestCase):
+    def test_parse_args_accepts_category_and_version_names(self):
+        argv = [
+            "drupal_update_redmine.py",
+            "--drupal-root",
+            "/var/www/html/drupal/web",
+            "--redmine-category-name",
+            "Maintenance",
+            "--redmine-version-name",
+            "2026-2027 Workplan",
+        ]
+        with mock.patch.object(sys, "argv", argv):
+            args = drupal_update_redmine.parse_args()
+        self.assertEqual(args.redmine_category_name, "Maintenance")
+        self.assertEqual(args.redmine_version_name, "2026-2027 Workplan")
+
+    def test_explicit_ids_skip_lookup(self):
+        args = lookup_args(redmine_category_id=7, redmine_version_id=21)
+        with mock.patch.object(drupal_update_redmine, "redmine_request") as request:
+            self.assertEqual(drupal_update_redmine.resolve_category_id("u", "k", args), 7)
+            self.assertEqual(drupal_update_redmine.resolve_version_id("u", "k", args), 21)
+        request.assert_not_called()
+
+    def test_unset_returns_none(self):
+        args = lookup_args()
+        with mock.patch.object(drupal_update_redmine, "redmine_request") as request:
+            self.assertIsNone(drupal_update_redmine.resolve_category_id("u", "k", args))
+            self.assertIsNone(drupal_update_redmine.resolve_version_id("u", "k", args))
+        request.assert_not_called()
+
+    def test_category_name_lookup_is_case_insensitive(self):
+        args = lookup_args(redmine_category_name="maintenance")
+        data = {"issue_categories": [{"id": 5, "name": "Bug"}, {"id": 7, "name": "Maintenance"}]}
+        with mock.patch.object(
+            drupal_update_redmine, "redmine_request", return_value=data
+        ) as request:
+            self.assertEqual(drupal_update_redmine.resolve_category_id("u", "k", args), 7)
+        self.assertEqual(request.call_args.args[3], "projects/islandora/issue_categories.json")
+
+    def test_missing_category_raises(self):
+        args = lookup_args(redmine_category_name="Maintenance")
+        with mock.patch.object(
+            drupal_update_redmine, "redmine_request", return_value={"issue_categories": []}
+        ):
+            with self.assertRaises(RuntimeError):
+                drupal_update_redmine.resolve_category_id("u", "k", args)
+
+    def test_version_name_lookup(self):
+        args = lookup_args(redmine_version_name="2026-2027 Workplan")
+        data = {
+            "versions": [
+                {"id": 20, "name": "2025-2026 Workplan", "status": "closed"},
+                {"id": 21, "name": "2026-2027 Workplan", "status": "open"},
+            ]
+        }
+        with mock.patch.object(
+            drupal_update_redmine, "redmine_request", return_value=data
+        ) as request:
+            self.assertEqual(drupal_update_redmine.resolve_version_id("u", "k", args), 21)
+        self.assertEqual(request.call_args.args[3], "projects/islandora/versions.json")
+
+    def test_closed_version_raises(self):
+        args = lookup_args(redmine_version_name="2026-2027 Workplan")
+        data = {"versions": [{"id": 21, "name": "2026-2027 Workplan", "status": "locked"}]}
+        with mock.patch.object(drupal_update_redmine, "redmine_request", return_value=data):
+            with self.assertRaises(RuntimeError):
+                drupal_update_redmine.resolve_version_id("u", "k", args)
+
+    def test_missing_version_raises(self):
+        args = lookup_args(redmine_version_name="2026-2027 Workplan")
+        with mock.patch.object(
+            drupal_update_redmine, "redmine_request", return_value={"versions": []}
+        ):
+            with self.assertRaises(RuntimeError):
+                drupal_update_redmine.resolve_version_id("u", "k", args)
 
 
 class ClassificationTests(unittest.TestCase):
@@ -174,6 +290,23 @@ class ClassificationTests(unittest.TestCase):
         self.assertTrue(actionable[0]["security_update"])
 
 
+class ModuleDescriptionTests(unittest.TestCase):
+    def test_core_description_has_single_drupal_core_line(self):
+        item = update_item(name="drupal", security=False)
+        item.update({"title": "Drupal core", "kind": "core"})
+        description = drupal_update_redmine.build_module_description(
+            update_report(), item, [], main_args()
+        )
+        self.assertNotIn("Drupal core: Drupal core", description)
+        self.assertEqual(description.count("Drupal core:"), 1)
+
+    def test_module_description_names_module(self):
+        description = drupal_update_redmine.build_module_description(
+            update_report(), update_item(), [], main_args()
+        )
+        self.assertIn("Module: Webform", description)
+
+
 class MainFlowTests(unittest.TestCase):
     def run_main(self, args, actionable, existing=None):
         with mock.patch.object(
@@ -188,6 +321,10 @@ class MainFlowTests(unittest.TestCase):
             return_value=(actionable, []),
         ), mock.patch.object(
             drupal_update_redmine, "resolve_tracker_id", return_value=3
+        ), mock.patch.object(
+            drupal_update_redmine, "resolve_category_id", return_value=7
+        ), mock.patch.object(
+            drupal_update_redmine, "resolve_version_id", return_value=21
         ), mock.patch.object(
             drupal_update_redmine, "open_issue_exists", return_value=existing
         ), mock.patch.object(
@@ -217,6 +354,15 @@ class MainFlowTests(unittest.TestCase):
         )
         self.assertEqual(result, 0)
         self.assertEqual(create_issue.call_args.args[-1], 4)
+
+    def test_category_and_version_are_passed_to_create_issue(self):
+        for parent_issue_id in (4336, None):
+            result, create_issue = self.run_main(
+                main_args(parent_issue_id=parent_issue_id), [update_item()]
+            )
+            self.assertEqual(result, 0)
+            self.assertEqual(create_issue.call_args.kwargs["category_id"], 7)
+            self.assertEqual(create_issue.call_args.kwargs["version_id"], 21)
 
     def test_existing_parent_issue_is_not_modified_or_recreated(self):
         result, create_issue = self.run_main(

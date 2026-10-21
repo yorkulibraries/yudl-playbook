@@ -136,6 +136,13 @@ def parse_args():
     parser.add_argument("--redmine-tracker-id", type=int, help="Optional Redmine tracker id")
     parser.add_argument("--redmine-tracker-name", help="Optional Redmine tracker name, for example Support")
     parser.add_argument("--redmine-priority-id", type=int, help="Optional Redmine priority id")
+    parser.add_argument("--redmine-category-id", type=int, help="Optional Redmine issue category id")
+    parser.add_argument("--redmine-category-name", help="Optional Redmine issue category name, for example Maintenance")
+    parser.add_argument("--redmine-version-id", type=int, help="Optional Redmine target version id")
+    parser.add_argument(
+        "--redmine-version-name",
+        help="Optional Redmine target version name, for example 2026-2027 Workplan (must be open)",
+    )
     parser.add_argument(
         "--redmine-security-priority-id",
         type=int,
@@ -272,17 +279,21 @@ def build_description(report, actionable, blocked, args):
 def build_module_description(report, item, blocked, args):
     site_name = report.get("site_name") or args.site_label or args.site_uri
     core_version = ((report.get("core") or {}).get("existing_version")) or "unknown"
-    item_label = "Drupal core" if item.get("kind") == "core" else "Module"
     lines = [
         f"Drupal update check for {site_name}.",
         "",
-        f"{item_label}: {item['title']}",
-        f"Current version: {item['existing_version']}",
-        f"Recommended version: {item['recommended']}",
-        f"Site URI: {args.site_uri}",
-        f"Drupal core: {core_version}",
-        f"Generated at: {report.get('generated_at', 'unknown')}",
     ]
+    if item.get("kind") != "core":
+        lines.append(f"Module: {item['title']}")
+    lines.extend(
+        [
+            f"Current version: {item['existing_version']}",
+            f"Recommended version: {item['recommended']}",
+            f"Site URI: {args.site_uri}",
+            f"Drupal core: {core_version}",
+            f"Generated at: {report.get('generated_at', 'unknown')}",
+        ]
+    )
     if item.get("compatibility_message"):
         lines.append(item["compatibility_message"])
     if item["security_update"]:
@@ -311,7 +322,15 @@ def redmine_request(base_url, api_key, method, path, data=None):
             raw = response.read().decode("utf-8")
             if not raw:
                 return {}
-            return json.loads(raw)
+            try:
+                return json.loads(raw)
+            except json.JSONDecodeError as exc:
+                content_type = response.headers.get("Content-Type", "unknown")
+                raise RuntimeError(
+                    f"Redmine returned non-JSON response for {method} {url} "
+                    f"(status {response.status}, final URL {response.geturl()}, "
+                    f"Content-Type {content_type}): {raw[:300]!r}"
+                ) from exc
     except urllib.error.HTTPError as exc:
         details = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"Redmine API error {exc.code}: {details}") from exc
@@ -329,6 +348,37 @@ def resolve_tracker_id(base_url, api_key, args):
         if tracker.get("name", "").lower() == args.redmine_tracker_name.lower():
             return tracker.get("id")
     raise RuntimeError(f"Redmine tracker not found: {args.redmine_tracker_name}")
+
+
+def resolve_category_id(base_url, api_key, args):
+    if args.redmine_category_id is not None:
+        return args.redmine_category_id
+    if not args.redmine_category_name:
+        return None
+    project = urllib.parse.quote(str(args.redmine_project_id), safe="")
+    data = redmine_request(base_url, api_key, "GET", f"projects/{project}/issue_categories.json")
+    for category in data.get("issue_categories", []):
+        if category.get("name", "").lower() == args.redmine_category_name.lower():
+            return category.get("id")
+    raise RuntimeError(f"Redmine issue category not found: {args.redmine_category_name}")
+
+
+def resolve_version_id(base_url, api_key, args):
+    if args.redmine_version_id is not None:
+        return args.redmine_version_id
+    if not args.redmine_version_name:
+        return None
+    project = urllib.parse.quote(str(args.redmine_project_id), safe="")
+    data = redmine_request(base_url, api_key, "GET", f"projects/{project}/versions.json")
+    for version in data.get("versions", []):
+        if version.get("name", "").lower() != args.redmine_version_name.lower():
+            continue
+        if version.get("status") != "open":
+            raise RuntimeError(
+                f"Redmine version is not open: {args.redmine_version_name} ({version.get('status')})"
+            )
+        return version.get("id")
+    raise RuntimeError(f"Redmine version not found: {args.redmine_version_name}")
 
 
 def open_issue_exists(base_url, api_key, project_id, subject):
@@ -362,7 +412,15 @@ def select_priority_id(args, updates):
 
 
 def create_issue(
-    base_url, api_key, subject, description, args, tracker_id=None, priority_id=None
+    base_url,
+    api_key,
+    subject,
+    description,
+    args,
+    tracker_id=None,
+    priority_id=None,
+    category_id=None,
+    version_id=None,
 ):
     issue = {
         "project_id": args.redmine_project_id,
@@ -377,6 +435,10 @@ def create_issue(
         issue["tracker_id"] = tracker_id
     if priority_id is not None:
         issue["priority_id"] = priority_id
+    if category_id is not None:
+        issue["category_id"] = category_id
+    if version_id is not None:
+        issue["fixed_version_id"] = version_id
 
     data = redmine_request(base_url, api_key, "POST", "issues.json", {"issue": issue})
     return data.get("issue", {})
@@ -434,6 +496,8 @@ def main():
         ) from exc
 
     tracker_id = resolve_tracker_id(args.redmine_url, api_key, args)
+    category_id = resolve_category_id(args.redmine_url, api_key, args)
+    version_id = resolve_version_id(args.redmine_url, api_key, args)
 
     if args.redmine_parent_issue_id is not None:
         created = 0
@@ -453,6 +517,8 @@ def main():
                 args,
                 tracker_id,
                 priority_id,
+                category_id=category_id,
+                version_id=version_id,
             )
             print(f"Created Redmine issue for {item['name']}: #{issue.get('id')}")
             created += 1
@@ -474,6 +540,8 @@ def main():
             args,
             tracker_id,
             priority_id,
+            category_id=category_id,
+            version_id=version_id,
         )
         print()
         print(f"Created Redmine issue #{issue.get('id')}")
