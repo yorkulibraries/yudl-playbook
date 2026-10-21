@@ -53,8 +53,6 @@ mysql_users:
     password: "{{ drupal_db_password }}"
     priv: "{{ drupal_db_name }}.*:ALL"
 
-# Used by both the webserver and crayfish role for CentOS.
-php_enablerepo: "remi-php80"
 php_packages_state: "latest"
 
 # ImageMagick 7, matching production. Leave imagemagick_prebuilt_url empty to build from
