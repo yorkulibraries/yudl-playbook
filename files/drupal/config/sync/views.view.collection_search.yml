@@ -484,6 +484,7 @@ display:
           fields:
             - collection_search
             - field_description
+            - field_edited_text
             - field_note
             - rendered_item
             - title
@@ -687,6 +688,7 @@ display:
           fields:
             - collection_search
             - field_description
+            - field_edited_text
             - field_note
             - rendered_item
             - title

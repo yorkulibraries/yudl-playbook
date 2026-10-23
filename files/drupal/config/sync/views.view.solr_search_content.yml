@@ -279,6 +279,8 @@ display:
             expose_fields: false
             placeholder: ''
             searched_fields_id: search_api_fulltext_searched_fields
+            value_maxlength: 128
+            value_max_words: null
           is_grouped: false
           group_info:
             label: ''
@@ -296,6 +298,7 @@ display:
           fields:
             - collection_search
             - field_description
+            - field_edited_text
             - field_note
             - rendered_item
             - title
