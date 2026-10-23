@@ -15110,12 +15110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yorkulibraries/yudl_customizations.git",
-                "reference": "43151face5af01cc1057ab18927f23e037219c36"
+                "reference": "cec6bfb20424d1913588cb4f927ff78c973758c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yorkulibraries/yudl_customizations/zipball/43151face5af01cc1057ab18927f23e037219c36",
-                "reference": "43151face5af01cc1057ab18927f23e037219c36",
+                "url": "https://api.github.com/repos/yorkulibraries/yudl_customizations/zipball/cec6bfb20424d1913588cb4f927ff78c973758c3",
+                "reference": "cec6bfb20424d1913588cb4f927ff78c973758c3",
                 "shasum": ""
             },
             "default-branch": true,
@@ -15141,7 +15141,7 @@
                 "issues": "https://github.com/yorkulibraries/yudl_customizations/issues",
                 "source": "https://github.com/yorkulibraries/yudl_customizations/tree/1.x"
             },
-            "time": "2026-08-26T15:59:53+00:00"
+            "time": "2026-10-23T00:56:01+00:00"
         },
         {
             "name": "yorkulibraries/yudl_default_content",
