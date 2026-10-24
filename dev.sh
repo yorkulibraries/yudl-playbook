@@ -56,9 +56,11 @@ Commands:
   composer <args>             Run composer in the VM against files/drupal and copy the
                               updated composer.json/composer.lock back, e.g.
                                 ./dev.sh composer update --no-install drupal/core-recommended -W
+  drush <args>                Run drush in the VM's Drupal root, e.g. ./dev.sh drush cr
   mount <package> [dir]       Mount a local checkout over the composer-installed package
-                              so host edits show up in Drupal. The installed copy is set
-                              aside, not deleted. Packages (default local dir):
+                              so host edits show up in Drupal (restarts the VM). The
+                              installed copy is set aside, not deleted. Packages (default
+                              local dir):
                                 theme           ../york_drupal_theme  (\$YUDL_THEME_DIR)
                                 customizations  ../yudl_customizations (\$YUDL_CUSTOMIZATIONS_DIR)
   unmount <package>           Unmount it and put the composer-installed copy back.
@@ -161,6 +163,19 @@ wait_for_ssh() {
   until ssh "${SSH_OPTS[@]}" -o ConnectTimeout=5 "$VM_USER@$ip" true 2>/dev/null; do
     tries=$((tries - 1))
     [ "$tries" -gt 0 ] || die "SSH to $VM_USER@$ip never came up"
+    sleep 2
+  done
+}
+
+# Restarts the VM (for native mount changes) and waits until Drupal can reach
+# its database again.
+restart_vm() {
+  multipass start "$VM_NAME"
+  wait_for_ssh
+  local tries=30
+  until ssh_vm "cd $DRUPAL_ROOT && vendor/bin/drush sql:query 'SELECT 1'" >/dev/null 2>&1; do
+    tries=$((tries - 1))
+    [ "$tries" -gt 0 ] || die "Drupal's database never came up after restarting $VM_NAME"
     sleep 2
   done
 }
@@ -307,14 +322,22 @@ pkg_mounted() {
   vm_exists && multipass info "$VM_NAME" | grep -q "=> $(pkg_info "$1" vm_path)\$"
 }
 
+# Where the composer-installed copy waits while a checkout is mounted. It has
+# to be outside web/: Drupal scans web/ for extensions, and a second copy with
+# the same machine name there wins over the mounted one.
+pkg_backup() {
+  echo "$DRUPAL_ROOT/dev-mount-backups/$1"
+}
+
 # Mounts a local checkout over a composer-installed package so edits on the
 # host show up in Drupal immediately (after a cache rebuild for CSS/JS
 # aggregation, Twig, PHP hooks and services). The installed copy is moved to
-# <path>.composer meanwhile.
+# $DRUPAL_ROOT/dev-mount-backups/<package> meanwhile.
 cmd_mount() {
-  local pkg="${1:-}" dir vm_path name uid gid
+  local pkg="${1:-}" dir vm_path name backup
   [ -n "$pkg" ] || die "usage: ./dev.sh mount <$(echo $DEV_PACKAGES | tr ' ' '|')> [dir]"
   vm_path="$(pkg_info "$pkg" vm_path)"
+  backup="$(pkg_backup "$pkg")"
   name="$(pkg_info "$pkg" composer_name)"
   dir="${2:-$(pkg_info "$pkg" local_dir)}"
   vm_exists || die "$VM_NAME does not exist; run './dev.sh up' first."
@@ -326,37 +349,51 @@ cmd_mount() {
   pkg_mounted "$pkg" && die "'$pkg' is already mounted; run './dev.sh unmount $pkg' first."
 
   ssh_vm "set -e
-    if [ -e '$vm_path.composer' ]; then
-      echo 'dev.sh: $vm_path.composer already exists; refusing to overwrite it.' >&2; exit 1
-    fi
-    sudo mv '$vm_path' '$vm_path.composer'
+    for old in '$backup' '$vm_path.composer'; do
+      if [ -e \"\$old\" ]; then
+        echo \"dev.sh: \$old already exists; refusing to overwrite it.\" >&2; exit 1
+      fi
+    done
+    sudo mkdir -p '$(dirname "$backup")'
+    sudo mv '$vm_path' '$backup'
     sudo mkdir '$vm_path'"
 
-  # Owned by the vagrant user in the VM (files stay world-readable for
-  # Apache), and by you on the host.
-  uid="$(multipass exec "$VM_NAME" -- id -u "$VM_USER")"
-  gid="$(multipass exec "$VM_NAME" -- id -g "$VM_USER")"
-  info "Mounting $dir at $vm_path"
-  if ! multipass mount -u "$(id -u):$uid" -g "$(id -g):$gid" "$dir" "$VM_NAME:$vm_path"; then
-    ssh_vm "sudo rmdir '$vm_path' && sudo mv '$vm_path.composer' '$vm_path'"
+  # A native mount (the hypervisor's own file sharing), not multipass's
+  # default sshfs one: PHP's RecursiveDirectoryIterator sees sshfs mounts as
+  # empty, so Drupal's extension and template discovery never finds the
+  # mounted code. Native mounts can only be changed while the VM is stopped.
+  info "Mounting $dir at $vm_path (restarts the VM)"
+  multipass stop "$VM_NAME"
+  if ! multipass mount --type native "$dir" "$VM_NAME:$vm_path"; then
+    restart_vm
+    ssh_vm "sudo rmdir '$vm_path' && sudo mv '$backup' '$vm_path'"
     die "mount failed; restored the composer-installed copy."
   fi
+  restart_vm
   ssh_vm "cd $DRUPAL_ROOT && vendor/bin/drush cr"
   info "Edit $dir. After CSS/JS/Twig/PHP changes run:"
-  info "  ./dev.sh ssh -- 'cd $DRUPAL_ROOT && vendor/bin/drush cr'"
+  info "  ./dev.sh drush cr"
 }
 
 cmd_unmount() {
-  local pkg="${1:-}" vm_path
+  local pkg="${1:-}" vm_path backup
   [ -n "$pkg" ] || die "usage: ./dev.sh unmount <$(echo $DEV_PACKAGES | tr ' ' '|')>"
   vm_path="$(pkg_info "$pkg" vm_path)"
+  backup="$(pkg_backup "$pkg")"
   pkg_mounted "$pkg" || die "'$pkg' is not mounted."
 
-  info "Unmounting $vm_path"
+  info "Unmounting $vm_path (restarts the VM)"
+  multipass stop "$VM_NAME"
   multipass umount "$VM_NAME:$vm_path"
+  restart_vm
+  # Mounts made before dev-mount-backups/ kept the copy at <path>.composer.
   ssh_vm "set -e
     sudo rmdir '$vm_path'
-    sudo mv '$vm_path.composer' '$vm_path'
+    if [ -e '$backup' ]; then
+      sudo mv '$backup' '$vm_path'
+    else
+      sudo mv '$vm_path.composer' '$vm_path'
+    fi
     cd $DRUPAL_ROOT && vendor/bin/drush cr"
   info "Restored the composer-installed $pkg."
 }
@@ -397,6 +434,7 @@ main() {
     snapshots) multipass list --snapshots ;;
     ssh) exec ssh "${SSH_OPTS[@]}" "$VM_USER@$(vm_ip)" "$@" ;;
     composer) cmd_composer "$@" ;;
+    drush) ssh_vm "cd $DRUPAL_ROOT && vendor/bin/drush $(printf '%q ' "$@")" ;;
     mount) cmd_mount "$@" ;;
     unmount | umount) cmd_unmount "$@" ;;
     mounts) cmd_mounts ;;

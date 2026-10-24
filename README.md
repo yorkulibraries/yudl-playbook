@@ -92,13 +92,17 @@ To work on `york_drupal_theme` or `yudl_customizations`, mount your local checko
 ./dev.sh unmount theme
 ```
 
-The checkouts are expected next to this repository. To use another location, pass it as an argument (`./dev.sh mount theme ~/src/york_drupal_theme`), or set `YUDL_THEME_DIR` / `YUDL_CUSTOMIZATIONS_DIR`. `mount` checks the directory's `composer.json` name before mounting. It moves the Composer-installed copy to `<path>.composer`, and `unmount` puts it back. Both rebuild Drupal's cache.
+The checkouts are expected next to this repository. To use another location, pass it as an argument (`./dev.sh mount theme ~/src/york_drupal_theme`), or set `YUDL_THEME_DIR` / `YUDL_CUSTOMIZATIONS_DIR`. `mount` checks the directory's `composer.json` name before mounting. It moves the Composer-installed copy to `/var/www/html/drupal/dev-mount-backups/<package>`, outside `web/` so Drupal doesn't find two copies of the extension, and `unmount` puts it back. Both rebuild Drupal's cache.
+
+`mount` and `unmount` restart the VM: they stop it, add or remove the mount, start it, and wait for SSH and the database before rebuilding the cache. This takes about a minute and restarts the VM's services. The mounts are Multipass *native* mounts (`--type native`), which can only be changed while the VM is stopped. The default *classic* mounts use sshfs, which PHP's `RecursiveDirectoryIterator` sees as empty, so Drupal never finds a mounted theme, module, or Twig template. Native mounts stay in place across `./dev.sh stop` / `start`. Editing files in a mounted checkout doesn't need a restart.
 
 Drupal caches aggregated CSS/JS, Twig templates, `.theme`/`.module` hooks, and services. After changing any of those, rebuild the cache:
 
 ```bash
-./dev.sh ssh -- 'cd /var/www/html/drupal && vendor/bin/drush cr'
+./dev.sh drush cr
 ```
+
+`./dev.sh drush <args>` runs any drush command in the VM's Drupal root.
 
 `provision`, `up`, and `reset` refuse to run while anything is mounted. `composer install` could otherwise replace the mounted directory and delete files in your checkout. Unmount first.
 
